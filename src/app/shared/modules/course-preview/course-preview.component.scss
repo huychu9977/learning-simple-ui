@@ -1,0 +1,119 @@
+.course-preview {
+    position: absolute;
+    top: 10px;
+    width: calc(100% - 30px);
+    margin-top: 18px;
+    z-index: 20;
+    .module {
+        background-color: #fff;
+        box-shadow: 0 0 1px 1px rgba(20,23,28,.1), 0 3px 1px 0 rgba(20,23,28,.1);
+        border-radius: 4px;
+        color: #505763;
+        padding: 3px;
+    }
+}
+.course-preview.slideDown {
+    position: fixed;
+    margin-top: 0;
+}
+.introduction-asset {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #fff;
+    position: relative;
+    .introduction-asset-child {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid #fff;
+        position: relative;
+        .introduction-asset-gradient {
+            background: linear-gradient(rgba(41,48,59,0),rgba(41,48,59,0),#29303B);
+            height: 100%;
+            position: absolute;
+            width: 100%;
+        }
+    }
+    .introduction-asset-placeholder {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+        color: #fff;
+        font-weight: 700;
+        height: 100%;
+        position: absolute;
+        text-align: center;
+        width: 100%;
+    }
+    .introduction-asset-text {
+        color: #fff;
+        font-weight: 700;
+        text-align: center;
+        font-size: 15px;
+        margin-bottom: 10px;
+        z-index: 1;
+    }
+    .introduction-asset-img {
+        width: 100%;
+        height: auto;
+    }
+}
+.purchase-text {
+    background-color: #e6f2f5;
+    display: flex;
+    margin: 10px 0;
+    padding: 10px;
+    i {
+        color: #007791;
+        margin-right: 5px;
+        margin-top: 3px;
+    }
+}
+.col-inner {
+    padding: 15px 30px;
+    .top-border {
+        border-top: 1px solid #e8e9eb;
+        margin: 24px 0;
+    }
+    .price-text {
+        border-top: 1px solid #e8e9eb;
+        margin-bottom: 15px;
+        padding-top: 15px;
+        .price-text-title {
+            font-weight: 700;
+        }
+    }
+    .btn-link i {
+        transform: none;
+    }
+}
+.btn-secondary {
+    color: #fff;
+    background-color: #00576b;
+    border-color: transparent;
+    &:hover {
+        color: #fff;
+        background-color: #003440;
+        border-color: transparent;
+    }
+}
+.info-course {
+    padding-left: 20px;
+    li {
+        padding: 5px;
+        i {
+            margin-right: 5px;
+        }
+    }
+}
+.btn-register {
+    background-color: #ec5252;
+    color: white;
+}
+.btn-block {
+    padding: 16px 12px;
+}
+.icon-click-here {
+    i {
+        color: #eb4646;
+    }
+}

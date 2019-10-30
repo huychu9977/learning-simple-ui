@@ -1,0 +1,113 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3><span jhiTranslate="lectureManagement.home.chapter.title"></span></h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <button id="jh-create-entity"
+                                            class="btn btn-primary jh-create-entity"
+                                            [routerLink]="['new']">
+                                            <i class="fa fa-plus"></i>
+                                        <span jhiTranslate="lectureManagement.home.chapter.createLabel">
+                               Tạo mới
+                               </span>
+                                    </button>
+                                </div>
+                                <div class="col-sm-2 col-lg-4"></div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" [(ngModel)]="keyword" (input)="search($event.target.value)"
+                                               placeholder="..."/>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <table class="table table-striped text-center">
+                                <thead>
+                                <tr jhiSort>
+                                    <th jhiSortBy="id">
+                                        <span jhiTranslate="global.field.id">ID</span>
+                                    </th>
+                                    <th jhiSortBy="code">
+                                        <span jhiTranslate="lectureManagement.code">code</span>
+                                    </th>
+                                    <th jhiSortBy="email">
+                                        <span jhiTranslate="lectureManagement.name">name</span>
+                                    </th>
+                                    <th><span jhiTranslate="lectureManagement.active">Active</span></th>
+                                    <th jhiTranslate="lectureManagement.home.lecture.title">Action</th>
+                                    <th jhiTranslate="lectureManagement.action">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngIf="courseLectures">
+                                <tr *ngFor="let lecture of courseLectures; trackBy: trackIdentity">
+                                    <td><a [routerLink]="[lecture.code, 'view']">{{lecture.id}}</a></td>
+                                    <td>{{lecture.code}}</td>
+                                    <td>{{lecture.name}}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm" (click)="setActive(lecture, true)"
+                                                *ngIf="!lecture.activated"
+                                                jhiTranslate="lectureManagement.deactivated">Deactivated
+                                        </button>
+                                        <button class="btn btn-success btn-sm" (click)="setActive(lecture, false)"
+                                                *ngIf="lecture.activated"
+                                                
+                                                jhiTranslate="lectureManagement.activated">Activated
+                                        </button>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group flex-btn-group-container">
+                                            <button type="button" (click)="openModal(lecture)"
+                                                    class="btn btn-info btn-sm color-white">
+                                                <i class="fa fa-plus"></i>
+                                                <span class="d-none d-md-inline" jhiTranslate="lectureManagement.detail.title">detail</span>
+                                                <strong>({{lecture.lectures?.length}})</strong>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group flex-btn-group-container">
+                                            <button type="submit"
+                                                    [routerLink]="[ lecture.code, 'view']"
+                                                    class="btn btn-info btn-sm color-white">
+                                                <i class="fa fa-eye"></i>
+                                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                                            </button>
+                                            <button type="submit"
+                                                    [routerLink]="[ lecture.code, 'edit']"
+                                                    queryParamsHandling="merge"
+                                                    class="btn btn-primary btn-sm">
+                                                <i class="fa fa-pencil"></i>
+                                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                                            </button>
+                                            <button type="button" (click)="deleteLecture(lecture)"
+                                                    class="btn btn-danger btn-sm">
+                                                <i class="fa fa-times"></i>
+                                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div *ngIf="courseLectures && courseLectures.length" class="w-100">
+                            <div class="row justify-content-center">
+                                <pagination [totalItems]="totalItems" [(ngModel)]="page" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

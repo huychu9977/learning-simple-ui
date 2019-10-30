@@ -1,0 +1,80 @@
+<!--********************
+ navbar-part start
+********************-->
+<nav class="bg-light">
+    <div class="header-container">
+        <div class="header-logo mr-4">
+            <a href="#">
+                <img src="../../../assets/images/download.svg" alt="logo">
+            </a>
+        </div>
+        <div class="header-left">
+            <div  class="dropdown" dropdown>
+                <a dropdownToggle class="text-center btn btn-md btn-primary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Explore
+                </a>
+                <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="menu1">
+                    <li >
+                        <ul class="dropdown-menu_list">
+                            <li class="menu_link" *ngFor="let p of parents"> 
+                                <a href="javascript:void(0)" [routerLink]="[ '/courses', p.code ]"> <span>{{p.name}}</span> <i *ngIf="loadSubs(p.code).length > 0" class="fa fa-angle-right" aria-hidden="true"></i></a> 
+                                <div class="dropdown-menu dropdown-menu-sub" *ngIf="loadSubs(p.code).length > 0">
+                                    <ul class="dropdown-menu_list">
+                                        <li class="menu_link" *ngFor="let cat of loadSubs(p.code)"> 
+                                            <a href="javascript:void(0)" [routerLink]="[ '/courses', p.code, cat.code ]"> <span>{{cat.name}}</span> <i *ngIf="loadTopics(cat.code).length > 0" class="fa fa-angle-right" aria-hidden="true"></i></a> 
+                                            <div class="dropdown-menu dropdown-menu-sub" *ngIf="loadTopics(cat.code).length > 0">
+                                                <ul class="dropdown-menu_list">
+                                                    <li class="menu_link" *ngFor="let t of loadTopics(cat.code)"> 
+                                                        <a href="javascript:void(0)" [routerLink]="[ '/courses', p.code, cat.code, t.code ]"> <span>{{t.name}}</span> </a> 
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="header-search">
+                <form>
+                    <div class="input-group">
+                        <input [(ngModel)]="keyword" (keyup.enter)="search()" name="keyword" type="text" class="form-control" placeholder="What do you want to learn?"/>
+                        <div class="input-group-prepend">
+                            <span (click)="search()" class="input-group-text"><i class="fa fa-search"></i></span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="header-right">
+            
+            <div class="mr-4 my-learning">
+                <div  class="dropdown" dropdown>
+                    <a dropdownToggle class="text-center dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" href="javascript:void(0)">
+                        My Course
+                    </a>
+                    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="menu2">
+                        <li >
+                            <ul class="dropdown-menu_list">
+                                <li class="menu_link"> <a href="javascript:void(0)"> <span>Development</span> <i class="fa fa-angle-right" aria-hidden="true"></i></a> </li>
+                                <li class="menu_link"> <a href="javascript:void(0)"> <span>Development</span> <i class="fa fa-angle-right" aria-hidden="true"></i></a> </li>
+                                <li class="menu_link"> <a href="javascript:void(0)"> <span>Development</span> <i class="fa fa-angle-right" aria-hidden="true"></i></a> </li>
+                                <li class="menu_link"> <a href="javascript:void(0)"> <span>Development</span> <i class="fa fa-angle-right" aria-hidden="true"></i></a> </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="driver"></div>
+            <div class="header-account">
+                <user-header></user-header>
+            </div>
+        </div>
+    </div>
+</nav>
+<!--********************
+ navbar-part end
+********************-->

@@ -1,0 +1,26 @@
+.accordion {
+    transition: 0.4s;
+    * {
+        pointer-events: none;
+    }
+}
+.panel {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+  }
+#formSearch {
+    width: 100%;
+    margin: 10px 0;
+    i {
+        transition: all 0.4s;
+    }
+    .active {
+        i.fa {
+            transform: rotate(180deg);
+        }
+    }
+    .jh-create-entity {
+        margin-top: 11px;
+    }
+}

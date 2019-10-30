@@ -1,0 +1,174 @@
+// =================== page-our-course ============//
+.course-started {
+    h2 {
+        font-size: 24px;
+        font-weight: 600;
+        line-height: 1.33em;
+        color: #29303b;
+        margin-top: 21px;
+        margin-bottom: 10.5px;
+    }
+}
+#course_trend {
+    .course-button-select {
+        border-bottom: 1px solid #dedfe0;
+        display: flex;
+        margin-bottom: 16px;
+        .btn-link-active {
+            border-color: #fbaa33 !important;
+            color: #14171c;
+        }
+        button.btn-block {
+            border: none;
+            border-radius: 0;
+            border-bottom: 6px solid transparent;
+            color: #29303b;
+            margin-top: 0!important;
+            width: inherit;
+        }
+        
+    }
+}
+  #our_course1 {
+    h1.courses-title {
+      font-size: 34px;
+      font-weight: 600;
+      line-height: 1.3em;
+      margin-top: 32px;
+      margin-bottom: 16px;
+    }
+    .course_page_slider {
+      padding-top: 30px;
+    }
+    .course-one {
+      margin-bottom: 25px;
+      padding: 13px 17px;
+      .b-top {
+        border-top: 1px dotted #ccc;
+      }
+      .Pro_img img {
+        height: 50px;
+      }
+      .crs-details {
+        h4 {
+          font-size: 18px;
+          padding-bottom: 10px;
+          padding-top: 13px;
+        }
+        p {
+          display: none;
+        }
+      }
+      .profile {
+        margin-left: 5px;
+        p {
+          margin-top: 6px;
+        }
+      }
+      .pro-rating i {
+        font-size: 11px;
+      }
+    }
+    .crs_footer {
+      padding-bottom: 5px;
+    }
+    .enroll {
+      display: none;
+    }
+  }
+  .product-filter {
+    width: 100%;
+    margin-top: 10px;
+    background-color: #f7f8fa;
+    padding: 16px;
+    select {
+      width: auto;
+    }
+    label {
+      font-size: 13px;
+    }
+    .button-filter {
+        border: 1px solid #cacbcc;
+        padding-top: 8px;
+        margin-bottom: 1px;
+        color: #686f7a;
+        background-color: #fff;
+    }
+    #panelFilter {
+        max-height: 0;
+        overflow: hidden;
+        transition: 0.4s;
+        width: 100%;
+    }
+    .panel {
+        display: block;
+        .panel-body {
+            padding: 15px;
+            .filter-container {
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: flex-start;
+                padding: 16px;
+                * {
+                    width: 100%;
+                    max-width: 300px;
+                }
+                .filter-item {
+                    padding-bottom: 30px;
+                    .filter-title {
+                        border: none;
+                        color: #505763;
+                        font-size: 15px;
+                        font-weight: 600;
+                        margin-bottom: 8px;
+                    }
+                    .filter-option-checkbox {
+                        font-size: 15px;
+                        margin: 0 0 0 2px;
+                        padding-bottom: 8px;
+                        white-space: nowrap;
+                        .checkbox-custom {
+                            width: auto;
+                            padding-left: 25px;
+                            input:checked  ~ .checkmark {
+                                background: #2196F3;
+                            }
+                            .checkmark {
+                                background-color: #fff;
+                                border: 1px solid #cacbcc;
+                                border-radius: 2px;
+                                transition: all .2s;
+                                height: 18px;
+                                width: 18px;
+                                &::after {
+                                    left: 5px;
+                                    top: 2px;
+                                }
+                            }
+                        }
+                        .filter-option--checkbox-content {
+                            font-size: 13px;
+                            color: #505763;
+                            white-space: normal;
+                            .pro-rating {
+                              i {
+                                display: inherit;
+                                margin-right: 5px;
+                              }
+                            }
+                        }
+                        .filter-option--checkbox-content__item-count {
+                            color: #a1a7b3;
+                            margin-left: 4px;
+                        }
+                        &:hover {
+                          .checkmark {
+                            border-color: #2196F3 !important;
+                          }
+                        }
+                    }
+                }
+            }
+        }
+    }
+  }

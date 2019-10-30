@@ -1,0 +1,62 @@
+<div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title" jhiTranslate="lectureManagement.quiz.updated">update</h4>
+    <button type="button" class="close" aria-label="Close" (click)="clear()">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<div class="modal-body">
+    <div class="row justify-content-center">
+        <div class="row">
+            <div class="form-group ckedit">
+                <label >Tiêu đề</label>
+                <ck-editor name="editor1" skin="moono-lisa" language="vi" [fullPage]="false" 
+                    [config]="config" class="form-control" [(ngModel)]="questionTmp.content" required></ck-editor>
+            </div>
+        </div>
+        <div class="row w-100 justify-content-center">
+            <div class="col-md-4">
+                <div class="row justify-content-center" style="position: relative; top: 25%;">
+                    <div class="col-md-4 text-right">
+                        <label style="margin-top: 2px;" jhiTranslate="lectureManagement.activated">activated</label>
+                    </div>
+                    <div class="col-md-4">
+                        <label class="switch switch-label switch-success">
+                            <input type="checkbox" class="switch-input" checked id="activated" name="activated" [(ngModel)]="questionTmp.activated">
+                            <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="input-group">
+                    <input type="text" class="form-control" [(ngModel)]="answerContent" (keyup.enter)="createAnswer()" placeholder="Thêm câu trả lời..."/>
+                    <div class="input-group-prepend" (click)="createAnswer()">
+                        <span class="input-group-text"><i class="fa fa-plus"></i></span>
+                    </div>
+                </div>
+                <div *ngIf="questionTmp.answers">
+                    <div class="d-flex mt-3 px-3" *ngFor="let a of questionTmp.answers; let i=index">
+                        <label class="checkbox-custom"> 
+                            <input type="radio" id="r_{{i}}" (change)="handleChange($event, a)" [checked]="a.isCorrect" name="answers"> 
+                            <span class="checkmark"></span> 
+                        </label>
+                        <span *ngIf="!a.isEdit">{{a.content}}</span>
+                        <span *ngIf="a.isEdit">
+                            <input type="text" [(ngModel)]="a.content">
+                        </span>
+                        <span *ngIf="a.isEdit" (click)="a.isEdit = !a.isEdit" class="pl-3 text-primary" title="Sửa"><i class="fa fa-floppy-o"></i>Lưu</span>
+                        <span *ngIf="!a.isEdit" (click)="a.isEdit = !a.isEdit" class="pl-3 text-primary" title="Sửa"><i class="fa fa-pencil"></i>Sửa</span>
+                        <span *ngIf="!a.isEdit" (click)="deleteAnswer(i)" class="pl-3 text-danger" title="Xóa"><i class="fa fa-times"></i>Xóa</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal-footer">
+    <span class="text-danger">{{error}}</span>
+    <button type="button" (click)="save()" class="btn btn-primary">
+        <i class="fa fa-floppy-o" aria-hidden="true"></i>
+        &nbsp;<span jhiTranslate="entity.action.save">Save</span>
+    </button>
+</div>

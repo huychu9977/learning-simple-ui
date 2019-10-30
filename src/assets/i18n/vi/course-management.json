@@ -1,0 +1,51 @@
+{
+    "courseManagement": {
+      "navName": "Quản lý khoá học",
+      "home": {
+        "title": "Danh sách Khóa học",
+        "createLabel": "Tạo Khóa học mới",
+        "createOrEditLabel": "Tạo hoặc sửa Khóa học"
+      },
+      "created": "Một Khóa học mới đã được tạo với định danh {{ param }}",
+      "updated": "Một Khóa học đã được cập nhật với định danh {{ param }}",
+      "deleted": "Một Khóa học đã bị xóa với định danh {{ param }}",
+      "delete": {
+        "question": "Bạn có chắc chắn muốn xóa Khóa học {{ login }}?"
+      },
+      "detail": {
+        "title": "Khóa học"
+      },
+      "objective": {
+        "title": "Mục tiêu khóa học",
+        "name": "Mục tiêu",
+        "createLabel": "Thêm mục tiêu"
+      },
+      "required": {
+        "title": "Yêu cầu khóa học",
+        "name": "Yêu cầu",
+        "createLabel": "Thêm yêu cầu"
+      },
+      "editMore": "Nội dung",
+      "chapter": "Chương",
+      "image": "Image",
+      "action": "Hành động",
+      "active": "Hoạt động",
+      "code": "Mã khóa học",
+      "name": "Tên khóa học",
+      "title": "Tiêu đề",
+      "sortDescription": "Miêu tả ngắn",
+      "description": "Miêu tả",
+      "requiredCompleteRate": "Yêu cầu hoàn thành",
+      "category": "Danh mục",
+      "level": "Trình độ",
+      "topic": "Đề tài",
+      "video": "Video",
+      "activated": "Kích hoạt",
+      "deactivated": "Khóa",
+      "createdBy": "Người tạo",
+      "createdAt": "Ngày tạo",
+      "modifiedBy": "Người sửa",
+      "modifiedAt": "Ngày sửa"
+    }
+  }
+  

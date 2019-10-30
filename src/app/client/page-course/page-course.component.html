@@ -1,0 +1,141 @@
+<div class="course-banner" #banner>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-8">
+        <course-banner-text [course]="course"
+          [rateAvg]="rates[0]?.rateAvg"
+          [rateAvgRound]="rateAvg" 
+          [totalUserEnroll]="course?.totalUserEnroll"
+          ></course-banner-text>
+      </div>
+      <div class="col-md-4">
+          <course-preview 
+          [userRegistration]="userRegistration"
+          [course]="course"
+          [lectureCode]="getLectures(chapters[0]?.code)[0]?.code"
+          [totalLectureQuiz]="totalLectureQuiz"
+          [totalLectureVideo]="totalLectureVideo"
+          [totalLectureExercise]="totalLectureExercise"></course-preview>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container" #container>
+<div class="row">
+  <div class="col-md-8">
+    <div style="margin-top: 40px;">
+        <course-will-learn [objectives]="course?.objectiveSummaryBOs"></course-will-learn>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-8">
+      <div style="margin-top: 40px;">
+          
+          <div>
+              <div class="curriculum-header-container">
+                  <div class="header-left">
+                    <div class="curriculum-header-title">Course content</div>
+                  </div>
+                  <div class="header-right">
+                    <span>
+                      <a class="sections-toggle" href="javascript:void(0)"></a> 
+                      <span class="dib">{{course?.lectures?.length - chapters?.length}} lectures</span>
+                    </span>
+                    <span class="curriculum-header-length">03:36:33</span>
+                  </div>
+                </div>
+                <!--  -->
+                <div *ngFor="let chapter of chapters;let i = index;">
+                    <a href="javascript:void(0)" class="accordion" (click)="toggleAccordian($event, i)">
+                        <div class="section-header-left">
+                          <span class="section-title-wrapper">
+                            <span class="section-title-toggle">
+                              <span class="section-title-toggle-plus">+</span>
+                              <span class="section-title-toggle-minus">–</span>
+                            </span>
+                            <span class="section-title-text">{{chapter.name}}</span>
+                          </span>
+                        </div>
+                        <div class="section-header-right">
+                          <span class="num-items-in-section">{{getLectures(chapter.code).length}} lectures</span>
+                          <span class="section-header-length">16:41</span>
+                        </div>
+                    </a>
+                    <div class="panel" hide="!chapter.isActive">
+                      <div *ngFor="let lecture of getLectures(chapter.code)" class="lecture-container">
+                          <div class="left-content">
+                              <span class="udi"><i class="fa fa-play-circle" aria-hidden="true"></i></span>
+                              <div class="top">
+                                  <div class="title">{{lecture.name}} </div>
+                              </div>
+                          </div>
+                          <div class="details"><span class="content-summary">01:57</span></div>
+                      </div>
+                    </div>
+                </div>
+          </div>
+      </div>
+  </div>
+</div>
+<div class="row">
+    <div class="col-md-8">
+        <div style="margin-top: 40px;">
+            <div class="requirements">
+                <div class="requirements-title">
+                    Requirements
+                </div>
+                <div class="requirements-content" *ngIf="course?.requirementBOs">
+                    <ul class="requirements-list" *ngFor="let r of course?.requirementBOs">
+                        <li class="requirements-item">{{r.name}}</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-md-8">
+          <div style="margin-top: 40px;">
+            <div [ngClass]=" descriptionMore ? 'collape-description-more' : 'collape-description'" #hh>
+              <div class="description">
+                <div class="description-title">
+                  Description
+                </div>
+                <div [innerHTML]="course?.description">
+                    
+                </div>
+              </div>
+              <span *ngIf="!descriptionMore && elementView?.nativeElement?.offsetHeight >= 260" class="wrapper-more-btn">
+                <button (click)="descriptionMore = true" class="more-btn btn-sm btn btn-link">+ See more</button>
+              </span>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8">
+        <div style="margin-top: 40px;">
+          <course-reviews [rates]="rates" [rateAvg]="rates[0]?.rateAvg" [rateAvgRound]="rateAvg"></course-reviews>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div style="margin-top: 40px;" class="course-recommend owl-carousel-width">
+          <owl-carousel-o [options]="customOptions">
+            <div *ngFor="let slide of images1">
+              <ng-template carouselSlide [id]="slide.id">
+                <div>
+                  <div class="course-item">
+                    <course-list ></course-list>
+                  </div>
+                </div>
+              </ng-template>
+            </div>
+          </owl-carousel-o>
+        </div>
+      </div>
+    </div>
+</div>
+<div #script></div>

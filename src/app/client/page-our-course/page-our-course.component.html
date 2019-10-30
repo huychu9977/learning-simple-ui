@@ -1,0 +1,149 @@
+<banner-image [imageSrc]="'../../../assets/images/main/02_about_us_Banner.png'"></banner-image>
+
+<section id="our_course1">
+  <div class="container">
+    <h1 class="courses-title">Danh sách khóa học {{title}}
+    </h1>
+      <div class="row">
+          <div class="product-filter">
+              <div class="row isFilter">
+                <div class="col-md-2">
+                    <button type="button" class="btn button-filter"  (click)="togglePanelFilter()">
+                        <i class="fa fa-exchange" aria-hidden="true"></i>
+                        <span>Lọc</span>
+                    </button>
+                </div>
+                <div class="col-md-5">
+                </div>
+              </div>
+              <div class="row isFilter d-none">
+                <div class="col-md-6">
+                    <button type="button" class="btn btn-md btn-primary" (click)="togglePanelFilter()">Xong</button>
+                    <button type="button" class="btn btn-md btn-default" (click)="clear()">Làm mới</button>
+                </div>
+              </div>
+              <div class="row">
+                  <div class="panel" id="panelFilter">
+                      <div class="panel-body">
+                          <form action="" class="filter-container">
+                            <fieldset class="filter-item" name="Category" >
+                                <legend class="filter-title">Category</legend>
+                                <div class="filter-option-checkbox checkbox" *ngFor="let cat of parents; let i=index">
+                                    <label class="checkbox-custom">
+                                        <input type="checkbox" (change)="filter($event, 'category')" [value]="cat.code" [checked]="categoryCode === cat.code">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <span class="filter-option--checkbox-content">
+                                        <span> {{cat.name}}
+                                            <span class="filter-option--checkbox-content__item-count">539</span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </fieldset>
+                            <fieldset class="filter-item" name="subCategory" *ngIf="loadSubCategoriesByParent(categoryCode).length > 0">
+                                <legend class="filter-title">Sub Category</legend>
+                                <div class="filter-option-checkbox checkbox" *ngFor="let sub of loadSubCategoriesByParent(categoryCode)">
+                                    <label class="checkbox-custom">
+                                        <input type="checkbox" (change)="filter($event, 'subCategory')" [checked]="subCategoryCode === sub.code"[value]="sub.code">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <span class="filter-option--checkbox-content">
+                                        <span> {{sub.name}}
+                                            <span class="filter-option--checkbox-content__item-count">539</span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </fieldset>
+                            <fieldset class="filter-item" name="topic" *ngIf="loadTopics(subCategoryCode).length > 0">
+                                <legend class="filter-title">Chủ đề</legend>
+                                <div class="filter-option-checkbox checkbox" *ngFor="let t of loadTopics(subCategoryCode)">
+                                    <label class="checkbox-custom">
+                                        <input type="checkbox" (change)="filter($event, 'topic')" [checked]="topicCode === t.code" [value]="t.code">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <span class="filter-option--checkbox-content">
+                                        <span> {{t.name}}
+                                            <span class="filter-option--checkbox-content__item-count">539</span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </fieldset>
+                            <fieldset class="filter-item" name="level" *ngIf="levels?.length > 0">
+                                <legend class="filter-title">Mức độ</legend>
+                                <div class="filter-option-checkbox checkbox" *ngFor="let l of levels">
+                                    <label class="checkbox-custom">
+                                        <input type="radio" name="levels" [(ngModel)]="levelCode" (change)="select()" [value]="l.code">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <span class="filter-option--checkbox-content">
+                                        <span> {{l.name}}
+                                            <span class="filter-option--checkbox-content__item-count">539</span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </fieldset>
+                            <fieldset class="filter-item" name="rate" *ngIf="rates?.length > 0">
+                                <legend class="filter-title">Đánh giá</legend>
+                                <div class="filter-option-checkbox checkbox" *ngFor="let r of rates">
+                                    <label class="checkbox-custom">
+                                        <input type="radio" name="rates" [(ngModel)]="rate" (change)="select()" [value]="r.code">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <span class="filter-option--checkbox-content">
+                                        <span class="pro-rating">
+                                            <i class="fa fa-star" *ngFor="let i of [].constructor(r.star)"></i><i *ngIf="r.starO === 1" class="fa fa-star-half-o" aria-hidden="true"></i><i class="fa fa-star-o" *ngFor="let j of [].constructor(5 - r.star-r.starO)"></i>
+                                        </span>    
+                                        <span> {{r.name}}
+                                            <span class="filter-option--checkbox-content__item-count"></span>
+                                        </span>
+                                    </span>
+                                </div>
+                            </fieldset>
+                          </form>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+      <div class="row">
+            <lbp-loading-screen></lbp-loading-screen>
+            <div class="w-100">
+                <div class="row course_page_slider" *ngIf="courses?.length > 0">
+                    <div class="col-md-12" *ngFor="let course of courses">
+                        <course-card [course]="course"></course-card>
+                    </div>
+                </div>
+                <div class="row course_page_slider" *ngIf="courses?.length === 0">
+                    <h2>Danh sách trống!!</h2>
+                </div>
+                <div class="d-flex justify-content-end" *ngIf="totalItems > 0">
+                    <pagination [totalItems]="totalItems" [(ngModel)]="page" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"></pagination>
+                </div>
+            </div>
+      </div>
+  </div>
+</section>
+<section id="course_trend">
+        <div class="container">
+            <div class="course-started">
+                <h2>Courses to get you started</h2>
+            </div>
+            <div class="course-button-select">
+                <button type="button" class="btn btn-link btn-block btn-link-active">Most popular</button>
+                <button type="button" class="btn btn-link btn-block">Trending</button>
+            </div>
+        </div>
+        <div class="container owl-carousel-nav-custom">
+            <owl-carousel-o [options]="customOptions">
+                <div *ngFor="let slide of images1">
+                    <ng-template carouselSlide [id]="slide.id">
+                        <div>
+                            <div class="course-item">
+                                <course-list ></course-list>
+                            </div>
+                        </div>
+                    </ng-template>
+                </div>
+            </owl-carousel-o>
+        </div>
+    </section>

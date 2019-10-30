@@ -1,0 +1,105 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3><span jhiTranslate="roleManagement.home.title">Users</span></h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <button id="jh-create-entity" 
+                                            class="btn btn-primary jh-create-entity create-organization"
+                                            [routerLink]="['new']">
+                                            <i class="fa fa-plus"></i>
+                                        <span jhiTranslate="roleManagement.home.createLabel">
+                               Tạo mới
+                               </span>
+                                    </button>
+                                </div>
+                                <div class="col-sm-2 col-lg-4"></div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" [(ngModel)]="keyword" (input)="search($event.target.value)"
+                                               placeholder="..."/>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <table class="table table-striped text-center">
+                                <thead>
+                                <tr jhiSort>
+                                    <th jhiSortBy="id">
+                                        <span jhiTranslate="global.field.id">ID</span>
+                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
+                                    </th>
+                                    <th jhiSortBy="code">
+                                        <span jhiTranslate="roleManagement.code">code</span>
+                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
+                                    </th>
+                                    <th jhiSortBy="email">
+                                        <span jhiTranslate="roleManagement.name">name</span>
+                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
+                                    </th>
+                                    <th><span jhiTranslate="roleManagement.permissions">permissions</span></th>
+                                    <th jhiTranslate="roleManagement.action">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngIf="roles">
+                                <tr *ngFor="let role of roles; trackBy: trackIdentity">
+                                    <td>{{role.id}}</td>
+                                    <td>{{role.code}}</td>
+                                    <td>{{role.name}}</td>
+                                    <td>
+                                        <div *ngFor="let p of role.permissionBOs">
+                                            <span class="badge badge-info">{{ p }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group flex-btn-group-container">
+                                            <button type="button" (click)="openModalDetail(role)"
+                                                    class="btn btn-info btn-sm color-white">
+                                                <i class="fa fa-eye"></i>
+                                                <span class="d-none d-md-inline"
+                                                      jhiTranslate="entity.action.view">View</span>
+                                            </button>
+                                            <button type="submit"
+                                                    [routerLink]="[ role.id, 'edit']"
+                                                    queryParamsHandling="merge"
+                                                    class="btn btn-primary btn-sm">
+                                                <i class="fa fa-pencil"></i>
+                                                <span class="d-none d-md-inline"
+                                                      jhiTranslate="entity.action.edit">Edit</span>
+                                            </button>
+                                            <!-- [disabled]="currentAccount.id === role.id" -->
+                                            <button type="button" (click)="deleteRole(role)"
+                                                    class="btn btn-danger btn-sm">
+                                                <i class="fa fa-times"></i>
+                                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div *ngIf="roles && roles.length" class="w-100">
+                            <div class="row justify-content-center">
+                                <!-- <jhi-item-count [page]="page" [total]="totalItems"
+                                                [itemsPerPage]="itemsPerPage"></jhi-item-count> -->
+                            </div>
+                            <div class="row justify-content-center">
+                                <pagination [totalItems]="totalItems" [(ngModel)]="page" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

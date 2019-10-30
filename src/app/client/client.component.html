@@ -1,0 +1,5 @@
+<header *ngIf="!route.url.includes('/lecture/')"></header>
+<div class="page-client" [style.margin-top]="route.url.includes('/lecture/') ? '0px' : '70px'">
+    <router-outlet></router-outlet>
+</div>
+<footer *ngIf="!route.url.includes('/not-found') && !route.url.includes('/lecture/')"></footer>

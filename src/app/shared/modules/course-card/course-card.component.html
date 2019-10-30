@@ -1,0 +1,44 @@
+<div class="course-card-list">
+  <div class="course-card-container">
+    <a href="">
+      <div class="course-card-content">
+        <div class="course-card-image">
+          <img *ngIf="course.imageId" alt="Free Website Builder" width="240" height="135" srcset="api/image/{{course.imageId}}" >
+        </div>
+        <div class="course-card-body">
+          <div class="course-card-body-title">
+            <h4>{{course.name}}</h4>
+          </div>
+          <div class="courese-card-body-instructor">
+            <div class="detail">
+              <span>{{course.sortDescription}}</span>
+              " | " <span>Bởi {{course.createdBy}}</span>
+            </div>
+            <div class="enroll-btn">
+              <a href="" [routerLink]="[ '/course', course.code ]">
+                Tham gia
+              </a>
+            </div>
+          </div>
+          <div class="course-card-body-sort-info">
+            <span class="product-rating">
+              <div class="pro-rating">
+                  <i class="fa fa-star" *ngFor="let i of [].constructor(rateAvg)"></i><i class="fa fa-star-o" *ngFor="let j of [].constructor(5 - rateAvg)"></i>
+                <span>{{course.rateAvg}}</span>
+              </div>
+            </span>
+            <span class="product-meta">
+              <span>{{course.totalLecture}} bài học</span>
+            </span>
+            <span class="product-meta">
+              <span>60 hours</span>
+            </span>
+            <span class="product-meta">
+              {{course.leveName}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </a>
+  </div>
+</div>

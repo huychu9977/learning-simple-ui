@@ -1,0 +1,30 @@
+<div>
+  <div class="clp">
+    <h1 class="title">{{course?.name}}</h1>
+    <div class="headline">
+    {{course?.sortDescription}}
+    </div>
+  </div>
+  <div class="element-row">
+      <div class="element-item">
+          <span class="badge badge-accented coral" data-purpose="badge-free">Free tutorial</span>
+      </div>
+      <div class="element-item">
+          <div class="pro-rating">
+              <i class="fa fa-star" *ngFor="let i of [].constructor(rateAvgRound ? rateAvgRound : 0)"></i><i class="fa fa-star-o" *ngFor="let j of [].constructor(5-(rateAvgRound ? rateAvgRound : 0))"></i>
+              <span>({{rateAvg}})</span>
+          </div>
+      </div>
+      <div class="element-item">
+        {{totalUserEnroll}} học sinh đăng ký
+      </div>
+  </div>
+  <div class="element-row">
+    <div class="element-item">
+      <span>Created by <a href="">{{course?.createdBy}}</a></span>
+    </div>
+    <div class="element-item">
+      <span>Last updated {{course?.modifiedAt | date:'MM/yyyy'}}</span>
+    </div>
+  </div>
+</div>

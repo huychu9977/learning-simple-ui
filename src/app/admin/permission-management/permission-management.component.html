@@ -1,0 +1,93 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3><span jhiTranslate="permissionManagement.home.title">Users</span></h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <button id="jh-create-entity"
+                                            class="btn btn-primary jh-create-entity create-organization"
+                                            [routerLink]="['new']">
+                                            <i class="fa fa-plus"></i>
+                                        <span jhiTranslate="permissionManagement.home.createLabel">
+                               Tạo mới
+                               </span>
+                                    </button>
+                                </div>
+                                <div class="col-sm-2 col-lg-4"></div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" [(ngModel)]="keyword" (input)="search($event.target.value)"
+                                               placeholder="..."/>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br/>
+                            <table class="table table-striped text-center">
+                                <thead>
+                                <tr jhiSort>
+                                    <th jhiSortBy="id">
+                                        <span jhiTranslate="global.field.id">ID</span>
+                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
+                                    </th>
+                                    <th jhiSortBy="code">
+                                        <span jhiTranslate="permissionManagement.code">code</span>
+                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
+                                    </th>
+                                    <th jhiSortBy="name">
+                                        <span jhiTranslate="permissionManagement.name">Email</span>
+                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
+                                    </th>
+                                    <th jhiTranslate="permissionManagement.action">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody *ngIf="permissions">
+                                <tr *ngFor="let permission of permissions; trackBy: trackIdentity">
+                                    <td>{{permission.id}}</td>
+                                    <td>{{permission.code}}</td>
+                                    <td>{{permission.name}}</td>
+                                    <td class="text-center">
+                                        <div class="btn-group flex-btn-group-container">
+                                            <button type="submit"
+                                                    [routerLink]="[ permission.id, 'edit']"
+                                                    queryParamsHandling="merge"
+                                                    class="btn btn-primary btn-sm">
+                                                <i class="fa fa-pencil"></i>
+                                                <span class="d-none d-md-inline"
+                                                      jhiTranslate="entity.action.edit">Edit</span>
+                                            </button>
+                                            <!-- [disabled]="currentAccount.id === permission.id" -->
+                                            <button type="button" (click)="deletePermission(permission)"
+                                                    class="btn btn-danger btn-sm">
+                                                <i class="fa fa-times"></i>
+                                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div *ngIf="permissions && permissions.length" class="w-100">
+                            <div class="row justify-content-center">
+                                <!-- <jhi-item-count [page]="page" [total]="totalItems"
+                                                [itemsPerPage]="itemsPerPage"></jhi-item-count> -->
+                            </div>
+                            <div class="row justify-content-center">
+                                <pagination [totalItems]="totalItems" [(ngModel)]="page" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"></pagination>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

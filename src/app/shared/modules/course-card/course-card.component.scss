@@ -1,0 +1,104 @@
+.course-card-list {
+    &:hover {
+        background-color: #f7f8fa;
+    }
+    .course-card-container {
+        border-top: 1px solid #dedfe0;
+        padding: 0 4px 16px;
+        .course-card-content {
+            display: flex;
+            position: relative;
+            padding: 8px 0;
+            margin: 0;
+            padding-top: 16px;
+            align-items: flex-start;
+            .course-card-image {
+                width: 210px;
+                height: auto;
+                margin-bottom: 16px;
+                img {
+                    box-shadow: 0 0 0 1px rgba(232,233,235,.5);
+                    object-fit: cover;
+                    width: 100%;
+                    height: 100%;
+                }
+            }
+            .course-card-body {
+                flex: 1;
+                position: relative;
+                padding: 0 16px;
+                .course-card-body-title {
+                    margin-bottom: 4px;
+                    h4 {
+                        font-size: 18px;
+                        font-weight: 600;
+                        line-height: 1.43em;
+                        color: #29303b;
+                    }
+                }
+                .courese-card-body-instructor {
+                    display: block;
+                    
+                    margin-top: 10px;
+                    margin-bottom: 20px;
+                    color: #686f7a;
+                    position: relative;
+                    .detail {
+                        font-size: 13px;
+                        max-width: 440px;
+                    }
+                    .enroll-btn {
+                        position: absolute;
+                        right: 0;
+                        bottom: 10px;
+                        a {
+                            border: 1px solid transparent;
+                            border-radius: 2px;
+                            line-height: 1rem;
+                            text-align: center;
+                            color: white;
+                            font-weight: 600;
+                            background-color: #2d3e50;
+                            border: 1px solid #2d3e50;
+                            padding: 0.9rem 2rem;
+                            min-height: 48px;
+                            transition: all linear 0.5s;
+                            &:hover {
+                                background-color: #fbaa33;
+                                border: 1px solid #fbaa33;
+                            }
+                        }
+                    }
+                }
+                .course-card-body-sort-info {
+                    height: 20px;
+                    width: 100%;
+                    text-transform: uppercase;
+                    font-size: 12px;
+                    font-weight: 700;
+                    padding: 0;
+                    margin: 14px 0 0;
+                    overflow: hidden;
+                    color: #373a3c;
+                    .product-rating {
+                        display: inline-block;
+                        float: left;
+                        padding-right: 10px;
+                        i {
+                            font-size: 15px;
+                            margin-right: 3px;
+                        }
+                    }
+                    .product-meta {
+                        display: inline-block;
+                        float: left;
+                        &:not(:first-child) {
+                            padding: 0 10px;
+                            border-left: 1px solid #979797;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

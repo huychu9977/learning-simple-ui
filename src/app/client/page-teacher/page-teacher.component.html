@@ -1,0 +1,217 @@
+<section id="page-teacher">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 white">
+        <div class="teacher-avatar">
+          <div class="techer-img">
+            <img src="../../../assets/images/main/teacher2.png" alt="teacher1" class="img-fluid  w-100">
+          </div>
+          <span class="teacher-username">huyct2</span>
+        </div>
+        <div class="teacher-info">
+          <h3>Thông tin</h3>
+          <ul>
+            <li>
+              <span><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
+              <span>anb@gamil.com</span>
+            </li>
+            <li>
+              <span><i class="fa fa-phone" aria-hidden="true"></i></span>
+              <span>0658265466</span>
+            </li>
+            <li>
+              <span><i class="fa fa-map-marker" aria-hidden="true"></i></span>
+              <span>Hà Nội - Việt Nam</span>
+            </li>
+            <li>
+              <span><i class="fa fa-calendar" aria-hidden="true"></i></span>
+              <span>20-06-1685</span>
+            </li>
+          </ul>
+        </div>
+        <div class="break-line"></div>
+        <div class="teacher-exp">
+          <b>Kinh nghiệm</b>
+          <div class="teacher-exp-content">
+            <div class="info-number">
+              <span class="circle"></span>
+              <p class="time">01/08/2015 - Hiện nay.</p>
+              <h4 class="title">Solution architect</h4>
+              <p class="description">FPT Software</p>
+            </div>
+            <div class="info-number">
+              <span class="circle"></span>
+              <p class="time">01/08/2015 - Hiện nay.</p>
+              <h4 class="title">Solution architect</h4>
+              <p class="description">FPT Software</p>
+            </div>
+          </div>
+        </div>
+        <div class="break-line"></div>
+        <div class="teacher-exp">
+          <b>Học vấn</b>
+          <div class="teacher-exp-content">
+            <div class="info-number">
+              <span class="circle"></span>
+              <p class="time">01/08/2015 - Hiện nay.</p>
+              <h4 class="title">ĐH Hà Nội</h4>
+              <p class="description">FPT Software</p>
+            </div>
+            <div class="info-number">
+              <span class="circle"></span>
+              <p class="time">01/08/2015 - Hiện nay.</p>
+              <h4 class="title">PTIT</h4>
+              <p class="description">FPT Software</p>
+            </div>
+          </div>
+        </div>
+        <div class="break-line"></div>
+        <div class="teacher-skill">
+          <h3>Kỹ năng</h3>
+          <ul>
+            <li>
+                <img src="https://codelearnstorage.s3.amazonaws.com/Themes/TheCodeCampPro/assets/languages/C.svg">
+                <span>C++</span>
+                <div class="pull-right pro-rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                </div>
+            </li>
+            <li>
+                <img src="https://codelearnstorage.s3.amazonaws.com/Themes/TheCodeCampPro/assets/languages/Java.svg">
+                <span>Java</span>
+                <div class="pull-right pro-rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+            </li>
+            <li>
+                <img src="https://codelearnstorage.s3.amazonaws.com/Themes/TheCodeCampPro/assets/languages/JS.svg">
+                <span>JavaScript</span>
+                <div class="pull-right pro-rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+            </li>
+            <li>
+                <img src="https://codelearnstorage.s3.amazonaws.com/Themes/TheCodeCampPro/assets/languages/Python.svg">
+                <span>Python2</span>
+                <div class="pull-right pro-rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+            </li>
+            <li>
+                <img src="https://codelearnstorage.s3.amazonaws.com/Themes/TheCodeCampPro/assets/languages/Python.svg">
+                <span>Python3</span>
+                <div class="pull-right pro-rating">
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star"></i>
+                    <i class="fa fa-star-o"></i>
+                </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-9">
+        <div class="section-course right-section">
+          <h3>Học tập
+            <span class="total-records">(4)</span>
+            <span>
+              <select name="" id="">
+                <option value="">Tất cả</option>
+                <option value="">Đã đăng ký</option>
+                <option value="">Đã tạo</option>
+              </select>
+            </span>
+          </h3>
+          <div class="section-course-content">
+            <div class="row">
+              <div class="col-md-4" *ngFor="let item of items">
+                <course-list></course-list>
+              </div>
+            </div>
+            <p style="padding: 5px 0;"></p>
+            <div class="d-flex justify-content-between">
+                <span class="align-self-center flex-grow-1">Hiển thị kết quả.</span>
+                <pagination [totalItems]="totalItems" [(ngModel)]="page" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"></pagination>
+            </div>
+          </div>
+        </div>
+        <div class="section-challenges right-section">
+          <h3>Luyện tập</h3>
+          <div class="container-challenge">
+              <ul class="challenge-badge">
+                <li>
+                    <img src="https://codelearnstorage.s3.amazonaws.com/CodeCamp/CodeCamp.UserProfile/Images/cv/badge-created.svg?v=4">
+                    <div class="badge-label created"><span></span>Đã tạo</div>
+                    <div class="badge-point created">
+                      <div id="challenge-created">80</div>
+                      <span>Bài tập</span>
+                    </div>
+                </li>
+                <li>
+                  <img src="https://codelearnstorage.s3.amazonaws.com/CodeCamp/CodeCamp.UserProfile/Images/cv/badge-1.svg?v=4">
+                  <div class="badge-label easy">
+                    <span id="challenge-easy">158</span>
+                    <span>bài đơn giản</span>
+                    <span class="badge-sub-text">đã làm</span>
+                  </div>
+                  <div class="badge-point">
+                    <div id="total-easy-challenge">15285</div>
+                    <img src="https://codelearnstorage.s3.amazonaws.com/CodeCamp/CodeCamp.UserProfile/Images/cv/point_v4.svg?v=2">
+                  </div>
+                </li>
+                <li>
+                    <img src="https://codelearnstorage.s3.amazonaws.com/CodeCamp/CodeCamp.UserProfile/Images/cv/badge-1.svg?v=4">
+                    <div class="badge-label medium">
+                        <span id="challenge-medium">58</span>
+                        <span>bài trung bình</span>
+                        <span class="badge-sub-text">đã làm</span>
+                    </div>
+                    <div class="badge-point">
+                        <div id="total-medium-challenge">8064</div>
+                        <img src="https://codelearnstorage.s3.amazonaws.com/CodeCamp/CodeCamp.UserProfile/Images/cv/point_v4.svg?v=2">
+                    </div>
+                </li>
+                <li>
+                    <img src="https://codelearnstorage.s3.amazonaws.com/CodeCamp/CodeCamp.UserProfile/Images/cv/badge-1.svg?v=4">
+                    <div class="badge-label hard">
+                        <span id="challenge-hard">21</span>
+                        <span>bài phức tạp </span>
+                        <span class="badge-sub-text">đã làm</span>
+                    </div>
+                    <div class="badge-point">
+                        <div id="total-hard-challenge">5275</div>
+                        <img src="https://codelearnstorage.s3.amazonaws.com/CodeCamp/CodeCamp.UserProfile/Images/cv/point_v4.svg?v=2">
+                    </div>
+                </li>
+                <li>
+                    <img src="https://codelearnstorage.s3.amazonaws.com/CodeCamp/CodeCamp.UserProfile/Images/cv/badge-total.svg?v=4">
+                    <div class="badge-label total"><span id="challenge-total"></span> Tổng điểm</div>
+                    <div class="badge-point">
+                        <div id="total-point-challenge">28639</div>
+                        <img src="https://codelearnstorage.s3.amazonaws.com/CodeCamp/CodeCamp.UserProfile/Images/cv/point_v4.svg?v=2">
+                    </div>
+                </li>
+              </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

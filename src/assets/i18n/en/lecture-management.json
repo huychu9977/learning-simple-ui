@@ -1,0 +1,51 @@
+{
+    "lectureManagement": {
+      "home": {
+        "lecture" : {
+          "title": "List lecture",
+          "createLabel": "Create a new  lecture",
+          "createOrEditLabel": "Create or edit a  lecture"
+        },
+        "chapter" : {
+          "title": "List chapter",
+          "createLabel": "Create a new chapter",
+          "createOrEditLabel": "Create or edit a chapter"
+        }
+      },
+      "created": "A new lecture is created with identifier {{ param }}",
+      "updated": "A lecture is updated with identifier {{ param }}",
+      "deleted": "A lecture is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete lecture {{ login }}?"
+      },
+      "detail": {
+        "title": "lecture",
+        "quiz": "Quiz TEST"
+      },
+      "quiz": {
+        "list": "List Quiz",
+        "created": "Create Quiz",
+        "updated": "Update Quiz"
+      },
+      "parents": "Chapter",
+      "chapterOrder": "Chapter Order",
+      "lectureOrder": "Lecture Order",
+      "limitCodeCharacter": "Limit Code Character",
+      "limitNumberSubmit": "Limit Number Submit",
+      "sampleCode": "Sample Code",
+      "action": "Action",
+      "active": "Active",
+      "code": "Code",
+      "name": "Name",
+      "description": "Description",
+      "video": "Video",
+      "activated": "Activated",
+      "deactivated": "Deactivated",
+      "createdBy": "Created by",
+      "createdAt": "Created at",
+      "modifiedBy": "Modified by",
+      "type": "Type",
+      "modifiedAt": "Modified at"
+    }
+  }
+  

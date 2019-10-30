@@ -1,0 +1,27 @@
+<!--********************
+     Our Courses part start
+    **********************-->
+    <section id="our_course">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section_title">
+                        <h1>Our Courses</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidiunt ut labore et dolore magna aliqua.</p>
+                    </div>
+                </div>
+            </div>
+            <owl-carousel-o [options]="customOptions">
+                <div *ngFor="let slide of images">
+                    <ng-template carouselSlide [id]="slide.id">
+                            <div class="col-lg-12 ">
+                                <course-gird [data]="slide"></course-gird>
+                            </div>
+                    </ng-template>
+                </div>
+            </owl-carousel-o>
+        </div>
+    </section>
+    <!--********************
+     Our Courses part end
+    **********************-->

@@ -1,0 +1,65 @@
+.clp {
+    margin-top: 20px;
+    .title {
+        font-size: 36px;
+        line-height: 41px;
+        font-weight: 600;
+    }
+    .headline {
+        font-size: 21px;
+        line-height: 27px;
+    }
+}
+.element-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    .element-item {
+        margin-top: 5px;
+        margin-right: 20px;
+        .badge.badge-accented.coral {
+            background: #ec5252;
+            color: #fff;
+        }
+        .badge.badge-accented {
+            border-radius: 3px;
+            font-size: 9px;
+            padding: 1px 8px;
+            background: #14171c;
+            border: none;
+            color: #fff;
+            min-width: inherit;
+            display: inline-block;
+            font-weight: 700;
+            line-height: 1.5;
+            position: relative;
+            text-align: center;
+            text-transform: uppercase;
+            top: -3px;
+            z-index: 2;
+            vertical-align: baseline;
+            &:after {
+                background: inherit;
+                content: '';
+                height: 11px;
+                position: absolute;
+                top: 2px;
+                border-radius: 3px;
+                right: -4px;
+                transform: rotate(45deg);
+                width: 11px;
+                z-index: 1;
+                display: block;
+            }
+        }
+    }
+}
+
+.element-item-flex {
+    display: flex;
+    flex-wrap: wrap;
+    div {
+        margin-right: 20px;
+    }
+}

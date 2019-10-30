@@ -1,0 +1,206 @@
+<div class="lecture-content">
+  <div>
+    <div class="lecture-header">
+      <div class="lecture-content-row">
+        <div class="lecture-header-dashboard">
+          <a href="/"><img class="udemy-logo" alt="udemy-logo" width="110" height="32" src="https://www.udemy.com/staticx/udemy/images/v6/logo-coral-light.svg"></a>
+          <div class="lecture-header-vertical"></div>
+          <div class="lecture-header-title">
+            <a href="javascript:void(0)" class="header-link" [routerLink]="[ '../../']">
+              <span>{{course?.name}}</span>
+            </a>
+          </div>
+          <div class="lecture-header-user">
+            <div class="lecture-header-rate" *ngIf="!currentReview" (click)="openReviewModal(content)">
+              <span><i class="fa fa-star-o"></i></span>
+              <span>Để lại đánh giá</span>
+            </div>
+            <div class="lecture-header-rate" *ngIf="currentReview" (click)="openReviewModal(content)">
+              <span><i class="fa fa-star"></i></span>
+              <span>Chỉnh sửa đánh giá</span>
+            </div>
+            <div class="lecture-header-user-label">
+                <user-header></user-header>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="lecture-container">
+      <div class="lecture-container-content">
+        <div class="lecture-container-content-body">
+          <div class="video-play" *ngIf="lecture?.type.code === 'lecture'">
+            <video *ngIf="lecture?.videoId" src="api/video/{{lecture?.videoId}}" controls></video>
+          </div>
+          <div class="quiz" *ngIf="lecture?.type.code === 'quiz'">
+            <div>
+            <div class="quiz-header">
+              <span>Question {{page+1}}: </span>
+              <div class="quiz-header-content">
+                <p [innerHTML]="lecture?.questions[page]?.content"></p>
+              </div>
+            </div>
+            <ul>
+              <li *ngFor="let answer of lecture?.questions[page]?.answers; let i=index">
+                <div class="quiz-answer">
+                  <label (click)="answerChecked[page].answer = i+1">
+                    <div class="pos-r">
+                        <input name="answer" data-index="0" type="radio" [checked]="answerChecked[page].answer === i+1">
+                        <span class="radio-label">&#8203;</span>
+                    </div>
+                    <div class="quiz-answer-content">
+                      <div> {{answer?.content}}</div>
+                    </div>
+                  </label>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <footer>
+            <p *ngFor="let ans of answerChecked">{{ans.answer}}</p>
+            <div class="footer-left">
+              <span>Question 1 of 1</span>
+            </div>
+            <div class="footer-right">
+              <span class="mr-2" *ngIf="page > 0">
+                <button class="btn btn-sm btn-tertiary" (click)="page = page - 1">Quay lại</button>
+              </span>
+              <span class="mr-2" *ngIf="page < lecture?.questions?.length - 1">
+                <button class="btn btn-sm btn-tertiary" (click)="page = page + 1">Tiếp theo</button>
+              </span>
+              <button class="btn btn-sm btn-primary mr-2" [disabled]="canTest()">Kiểm tra {{canTest()}}</button>
+              <div class="tooltip-container">
+                <button class="btn btn-text"><i class="fa fa-expand" aria-hidden="true"></i></button>
+              </div>
+              <div class="tooltip-container">
+                <button class="btn btn-text"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
+              </div>
+            </div>
+          </footer>
+          </div>
+        </div>
+        <div class="lecture-container-content-description">
+          <div class="lecture-container-content-description-row">
+            <div style="margin-bottom: 50px;">
+              <div class="description-row-flex">
+                <div class="description-tabs-container">
+                  <ul class="nav-side nav-tabs">
+                    <li class="active">
+                      <a href="">Overview</a>
+                    </li>
+                    <li>
+                      <a href="">Overview 1</a>
+                    </li>
+                    <li>
+                      <a href="">Overview 2</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <div class="description-dashboard-content">
+                <div [ngClass]=" descriptionMore ? 'collape-description-more' : 'collape-description'" #more>
+                  <div class="description-dashboard-content-body">
+                    <div class="lecture-overview-header">
+                        <div class="font-heading-lg mb-space-sm">Thông tin khóa học</div>
+                        <p>{{course?.sortDescription}}</p>
+                    </div>
+                    <div class="lecture-overview-row">
+                      <div>Thông số</div>
+                      <div>
+                        <div>Mức độ: {{course?.levelBO.name}}</div>
+                        <div>Students: 129779</div>
+                        <div>Languages: English</div>
+                      </div>
+                      <div>
+                        <div>Lectures: {{course?.lectures.length - chapters?.length}}</div>
+                        <div>Video: 3.5 hours</div>
+                      </div>
+                    </div>
+                    <div class="lecture-overview-row">
+                      <div>Features</div>
+                      <div>
+                        <p>bababab</p>
+                      </div>
+                    </div>
+                    <div class="lecture-overview-row">
+                      <div>Miêu tả</div>
+                      <div class="p-magrin" [innerHTML]="course?.description">
+                      </div>
+                    </div>
+                  </div>
+                  <span *ngIf="!descriptionMore && elementView.nativeElement.offsetHeight >= 260" class="wrapper-more-btn">
+                    <button (click)="descriptionMore = true" class="more-btn btn-sm btn btn-link">+ See more</button>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="lecture-container-sidebar">
+        <div class="lecture-container-sidebar-content">
+          <div class="content-sidebar-header" style="width: 361px;">
+              Course content
+              <button type="button">
+                  <i class="fa fa-times" aria-hidden="true"></i>
+              </button>
+          </div>
+          <div class="content-sidebar-content" style="width: 361px;">
+            <div *ngIf="course?.lectures && course.lectures.length > 0">
+              <div class="sidebar-content-section" *ngFor="let c of chapters; let i=index">
+                <div class="sidebar-content-section-header" [ngClass]="{'active': c.isActive}" (click)="c.isActive = !c.isActive">
+                    <div class="section-header-title">
+                      <span>Chương {{c.sortOrder}}: {{c.name}}</span>
+                    </div>
+                    <span><i class="fa fa-chevron-up" aria-hidden="true"></i></span>
+                </div>
+                <ul [style.max-height]="c.isActive ? 'unset' : '0px'" class="section-list">
+                  <li class="section-item" *ngFor="let l of getLectures(c.code)" [routerLink]="[ '../', l.code ]"
+                   [ngClass]="{'item-current': l.code === lectureSelected.code}" (click)="this.lectureSelected = l;">
+                    <div>
+                      <div class="section-item-container">
+                        <div class="section-item-container-title">
+                          <span>{{l.sortOrder}}. {{l.name}}</span>
+                        </div>
+                        <div class="section-item-container-duration">
+                          <div>
+                            <span>
+                              <span><i class="fa fa-play-circle" aria-hidden="true"></i></span>
+                              <span>2mins</span>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #content let-modal>
+    <div class="modal-body">
+      <h4 class="modal-title">Đánh giá của bạn</h4>
+      <div class="row">
+          <div class="col-sm-12">
+              <ul class="list-inline rating-list" 
+                  *ngFor="let star of stars" style="display: inline-block" >
+                    <li (click)="selectedValue = star"
+                        [ngClass]="{'selected': (star <= selectedValue)}">
+                      <i class="fa fa-star"></i>
+                    </li> 
+              </ul>
+          </div>
+        </div>
+      <textarea class="form-control" [defaultValue]="currentReview?.content" placeholder="Đánh giá của bạn..."></textarea>
+      <div class="d-flex justify-content-end">
+          <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Đóng</button>
+          <button type="button" class="btn btn-primary ml-2" (click)="modal.close('Close click')">Lưu</button>
+      </div>
+    </div>
+  </ng-template>

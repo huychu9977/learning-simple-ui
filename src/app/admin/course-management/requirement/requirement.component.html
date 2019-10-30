@@ -1,0 +1,76 @@
+<div class="animated fadeIn">
+    
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><span jhiTranslate="courseManagement.required.title"></span></h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="row justify-content-center">
+                            <form class="form-inline col-sm-9">
+                                <div class="form-group col-sm-9 mb-2">
+                                    <label for="required" jhiTranslate="courseManagement.required.createLabel">createLabel</label>
+                                    <textarea [(ngModel)]="requiredName" name="requiredName" class="form-control w-100" id="required" rows="3"></textarea>
+                                </div>
+                                <button type="button" class="btn btn-primary mb-2" (click)="add()">Thêm</button>
+                            </form>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <br/>
+                                <table class="table table-striped text-center table-bordered">
+                                    <thead>
+                                    <tr>
+                                        <th style="width: 10%"><span jhiTranslate="global.field.id">ID</span></th>
+                                        <th style="width: 74%"><span jhiTranslate="courseManagement.name">name</span></th>
+                                        <th style="width: 15%" jhiTranslate="courseManagement.action">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody *ngIf="courseRequireds">
+                                    <tr *ngFor="let o of courseRequireds; let i=index">
+                                        <td>{{i+1}}</td>
+                                        <td *ngIf="!o.isEdit">{{o.name}}</td>
+                                        <td *ngIf="o.isEdit">
+                                            <div class="form-group mb-2">
+                                                <textarea class="form-control h-auto" name="name" cols="80" rows="3" [(ngModel)]="o.name"></textarea>
+                                            </div>
+                                        </td>
+                                        <td class="text-center">
+                                            <div class="btn-group flex-btn-group-container" *ngIf="!o.isEdit">
+                                                <button type="button" (click)="delete(i)"
+                                                        class="btn btn-danger btn-sm color-white">
+                                                    <i class="fa fa-times"></i>
+                                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">delete</span>
+                                                </button>
+                                                <button type="button" class="btn btn-primary btn-sm" (click)="o.isEdit = !o.isEdit">
+                                                    <i class="fa fa-pencil"></i>
+                                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                                                </button>
+                                            </div>
+                                            <div *ngIf="o.isEdit">
+                                                <button type="button" class="btn btn-primary btn-sm" (click)="o.isEdit = !o.isEdit">
+                                                    <i class="fa fa-floppy-o"></i>
+                                                    <span class="d-none d-md-inline" jhiTranslate="entity.action.save">save</span>
+                                                </button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-12">
+                                <button type="button" class="btn btn-secondary" (click)="previousState()">
+                                    &nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+                                </button>
+                                <button type="button" class="btn btn-primary" (click)="save()">
+                                    &nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        

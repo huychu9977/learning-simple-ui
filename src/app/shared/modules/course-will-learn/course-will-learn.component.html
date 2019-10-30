@@ -1,0 +1,23 @@
+
+<div [ngClass]=" courseWillLearnMore ? 'collape-course-will-learn-more' : 'collape-course-will-learn'" #courseWillLearnE>
+<div class="what-you-get">
+    <div class="what-you-get-card">
+        <div class="inner">
+            <div class="what-you-get-content">
+                <div class="what-you-get-title ">
+                    What you'll learn
+                </div>
+                <ul class="what-you-get-items ">
+                    <li class="what-you-get-item what-you-get-item-columns" *ngFor="let o of objectives">
+                        <span class="udi what-you-get-icon"><i class="fa fa-check" aria-hidden="true"></i></span>
+                        <span class="what-you-get-text">{{o?.name}}</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<span *ngIf="!courseWillLearnMore && courseWillLearnElement?.nativeElement?.offsetHeight >= 301" class="wrapper-more-btn">
+    <button (click)="courseWillLearnMore = true" class="more-btn btn-sm btn btn-link">+ See more</button>
+  </span>
+</div>

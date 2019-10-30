@@ -1,0 +1,74 @@
+<div class="course-preview" style="width: 360px;">
+  <div class="module">
+    <div class="is-show">
+      <div class="introduction-asset">
+          <div class="introduction-asset-child">
+              <div class="introduction-asset-gradient"></div>
+              <a (click)="openVideoModal(content)" role="button" class="introduction-asset-link">
+                <div class="play-button-trigger introduction-asset-placeholder">
+                  <div class="play-button styles-play-button"></div>
+                  <span class="introduction-asset-text">Preview this course</span>
+                </div>
+              </a>
+              <img *ngIf="course?.courseImageId" class="introduction-asset-img" alt="" srcset="api/image/{{course?.courseImageId}}" width="240" height="135">
+          </div>  
+      </div>  
+    </div>
+    <div>
+      <div class="purchase-text" *ngIf="userRegistration">
+        <span><i class="fa fa-info-circle" aria-hidden="true"></i></span>
+        <span>{{userRegistration.enrollDate}}</span>
+      </div>
+    </div>
+    <div class="col-inner">
+      <div>
+        <h1 class="icon-click-here">
+          <i class="fa fa-level-down" aria-hidden="true"></i>
+          <i class="fa fa-level-down" aria-hidden="true"></i>
+        </h1>
+        <div>
+            <button *ngIf="userRegistration" [routerLink]="[ 'lecture', lectureCode ]" type="button" class="course-cta btn btn-lg btn-secondary btn-block">Vào học</button>
+            <button *ngIf="!userRegistration" [disabled]="isSaving" (click)="registrationCourse(course?.code)" type="button" class="course-cta btn btn-lg btn-register btn-block">Đăng ký</button>
+        </div>
+      </div>
+      <div>
+        <div>
+          <div class="top-border"></div>
+          <button type="button" class="btn btn-link">
+              <i class="fa fa-share" aria-hidden="true"></i>
+              <span style="margin-left: 8px;">Share this course</span>
+          </button>
+        </div>
+      </div>
+      <div>
+        <div class="price-text">
+        </div>
+      </div>
+      <div class="info-course">
+        <div>
+          <span>Khóa học bao gồm:</span>
+        </div>
+        <ul style="list-style: none;">
+          <li><i class="fa fa-play" aria-hidden="true"></i> 3.5 giờ học</li>
+          <li><i class="fa fa-file-video-o" aria-hidden="true"></i> {{totalLectureVideo}} bài giảng có video</li>
+          <li><i class="fa fa-files-o" aria-hidden="true"></i> {{totalLectureQuiz}} bài kiểm tra</li>
+          <li><i class="fa fa-code" aria-hidden="true"></i> {{totalLectureExercise}} bài luyện tập</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title">Bản giới thiệu khóa học</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <video class="w-100" src="api/video/{{course?.videoId}}" controls></video>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Đóng</button>
+    </div>
+  </ng-template>

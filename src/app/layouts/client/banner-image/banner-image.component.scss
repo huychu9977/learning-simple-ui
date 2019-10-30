@@ -1,0 +1,60 @@
+#course_banner_part {
+    position: relative;
+    .support {
+      position: absolute;
+      top: 62%;
+      left: -15px;
+      width: 100%;
+      z-index: 99;
+    }
+    .about_banner_text {
+        .breadcrumb {
+            padding-bottom: 0px;
+            border-bottom:none;
+        }
+    }
+  }
+  .about_banner {
+    background: url('../../../../assets/images/02_about_us_Banner.png');
+    position: relative;
+    text-align: center;
+    background-size: cover !important;
+    background-repeat: no-repeat !important;
+    background-position: center;
+    z-index: 1;
+    max-height: 220px;
+    &:after {
+      position: absolute;
+      content: '';
+      background: rgba(0, 0, 0, 0.6);
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  }
+  
+  .about_banner_text {
+    h3 {
+      font-family: 'Arimo';
+      font-weight: 400;
+      font-size: 20px;
+      text-transform: uppercase;
+      padding-top: 60px;
+      color: #f1f1f1;
+    }
+    p {
+      font-family: 'Arimo';
+      font-weight: 400;
+      font-size: 14px;
+      color: #f1f1f1;
+      padding-bottom: 155px;
+      span {
+        font-family: 'Arimo';
+        font-weight: 400;
+        font-size: 14px;
+        color: #fbaa33;
+      }
+    }
+  }
