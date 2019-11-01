@@ -104,8 +104,9 @@
                             </table>
                         </div>
                         <div *ngIf="users && users.length" class="w-100">
-                            <div class="row justify-content-end">
-                                <pagination [totalItems]="totalItems" [(ngModel)]="page" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"></pagination>
+                            <div class="d-flex justify-content-end">
+                                <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
+                                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
                             </div>
                         </div>
                     </div>

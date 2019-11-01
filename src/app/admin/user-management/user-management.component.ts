@@ -13,13 +13,10 @@ const swal: SweetAlert = _swal as any;
   templateUrl: './user-management.component.html',
   styleUrls: ['./user-management.component.scss']
 })
-export class UserManagementComponent implements OnInit, OnDestroy {
+export class UserManagementComponent implements OnInit {
 
-  currentAccount: any;
+    currentAccount: any;
     users?: UserBO[];
-    error: any;
-    success: any;
-    routeData: any;
     totalItems: any;
     itemsPerPage: any;
     page: any;
@@ -30,16 +27,15 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     constructor(
         private modalService: BsModalService,
         private userService: UserService,
-        private activatedRoute: ActivatedRoute,
+        private route: ActivatedRoute,
         private router: Router
     ) {
         this.itemsPerPage = 2;
-        this.routeData = this.activatedRoute.data.subscribe(data => {
-            this.page = data.pagingParams.page;
-            this.previousPage = data.pagingParams.page;
-            this.reverse = data.pagingParams.ascending;
-            this.predicate = data.pagingParams.predicate;
-        });
+        this.route.queryParams.subscribe(params => {
+            this.page = params.page || 1;
+            this.previousPage = params.page || 1;
+            this.keyword = params.keyword || '';
+          });
     }
 
     ngOnInit() {
@@ -50,9 +46,6 @@ export class UserManagementComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
 
-    ngOnDestroy() {
-        this.routeData.unsubscribe();
-    }
     setActive(user?: UserBO, isActivated?: boolean) {
         user.activated = isActivated;
         delete user.imageDTO;
@@ -64,12 +57,8 @@ export class UserManagementComponent implements OnInit, OnDestroy {
         }));
         this.userService.updateWithImage(formdata).subscribe(response => {
             if (response.status === 200) {
-                this.error = null;
-                this.success = 'OK';
                 this.loadAll();
             } else {
-                this.success = null;
-                this.error = 'ERROR';
             }
         });
     }
@@ -79,11 +68,10 @@ export class UserManagementComponent implements OnInit, OnDestroy {
             .query({
                 page: this.page - 1,
                 size: this.itemsPerPage,
-                sort: this.sort(),
                 keyword: this.keyword
             })
             .subscribe(
-                (res: HttpResponse<UserBO[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpResponse<UserBO[]>) => this.onSuccess(res.body),
                 (res: HttpResponse<any>) => this.onError(res.body)
             );
     }
@@ -92,15 +80,8 @@ export class UserManagementComponent implements OnInit, OnDestroy {
         return item.id;
     }
 
-    sort() {
-        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
-            result.push('id');
-        }
-        return result;
-    }
-
     loadPage(event: any) {
+        this.page = event.page;
         if (event.page !== this.previousPage) {
             this.transition();
             this.previousPage = event.page;
@@ -110,8 +91,7 @@ export class UserManagementComponent implements OnInit, OnDestroy {
     transition() {
         const param = {
             page: this.page,
-            keyword: this.keyword,
-            sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+            keyword: this.keyword
         };
         if (this.keyword === '' || !this.keyword) { delete param.keyword; }
         this.router.navigate(['/admin/user-management'], {
@@ -146,12 +126,12 @@ export class UserManagementComponent implements OnInit, OnDestroy {
         });
     }
     openModalDetail(user?: UserBO) {
-        const modalRef = this.modalService.show(UserMgmtDetailComponent);
-        modalRef.content.myContent = user;
+        const modalRef = this.modalService.show(UserMgmtDetailComponent, {class: 'modal-lg'});
+        modalRef.content.user = user;
     }
-    private onSuccess(data, headers) {
-        this.totalItems = headers.get('X-Total-Count');
-        this.users = data;
+    private onSuccess(data) {
+        this.totalItems = data.totalResult;
+        this.users = data.results;
     }
 
     private onError(error) {

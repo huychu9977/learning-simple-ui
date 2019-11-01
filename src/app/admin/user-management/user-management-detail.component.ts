@@ -10,8 +10,7 @@ import { BsModalRef } from 'ngx-bootstrap';
 })
 export class UserMgmtDetailComponent implements OnInit {
   user: UserBO;
-  bsModalRef: BsModalRef;
-  constructor() {}
+  constructor(public bsModalRef: BsModalRef) {}
   clear() {
     this.bsModalRef.hide();
   }

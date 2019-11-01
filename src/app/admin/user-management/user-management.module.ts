@@ -7,7 +7,7 @@ import { CommonModule } from '@angular/common';
 import { UserManagementComponent } from './user-management.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserMgmtDetailComponent } from './user-management-detail.component';
-import { PaginationModule } from 'ngx-bootstrap';
+import { PaginationModule, ModalModule } from 'ngx-bootstrap';
 
 
 @NgModule({
@@ -19,6 +19,7 @@ import { PaginationModule } from 'ngx-bootstrap';
     TranslateModule,
     RouterModule,
     NgSelectModule,
+    ModalModule.forRoot(),
     PaginationModule.forRoot()
   ],
   entryComponents: [UserMgmtDetailComponent],

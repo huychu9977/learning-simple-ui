@@ -19,6 +19,7 @@ import { CourseManagementModule } from './course-management/course-management.mo
 import { LectureManagementModule } from './lecture-management/lecture-management.module';
 import { LoginModule } from './login/login.module';
 import { CommonModule } from '@angular/common';
+import { CollapseModule } from 'ngx-bootstrap';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { CommonModule } from '@angular/common';
     RouterModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
+    CollapseModule.forRoot(),
     NgSelectModule,
     CKEditorModule,
     UserManagementModule,

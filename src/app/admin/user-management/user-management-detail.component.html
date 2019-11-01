@@ -7,10 +7,10 @@
 <div class="modal-body" style="padding-top: 0;">
     <div class="row border-bottom">
         <div class="col-md-3 border-right py-3">
-            <img class="img-fluid" width="150" height="150" srcset="api/image/{{user.imageDTO.id}}" alt="Ảnh đại diện" />
+            <img *ngIf="user?.imageDTO" class="img-fluid" width="150" height="150" srcset="api/image/{{user?.imageDTO.id}}" alt="Ảnh đại diện" />
         </div>
         <div class="col-md-9" style="height: 100px; display: table;">
-            <h3 style="display: table-cell; vertical-align: middle;">{{user.name}}</h3>
+            <h3 style="display: table-cell; vertical-align: middle;">{{user?.name}}</h3>
         </div>
     </div>
     <div class="row justify-content-center py-3">
@@ -19,28 +19,28 @@
                 <tr>
                     <td class="text-right"><span jhiTranslate="userManagement.username"></span></td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td><b>{{user.username}}</b></td>
+                    <td><b>{{user?.username}}</b></td>
                 </tr>
                 <tr>
                     <td class="text-right"><span jhiTranslate="userManagement.email"></span></td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td><b>{{user.email}}</b></td>
+                    <td><b>{{user?.email}}</b></td>
                 </tr>
                 <tr>
                     <td class="text-right"><span jhiTranslate="userManagement.phone"></span></td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td><b>{{user.phone}}</b></td>
+                    <td><b>{{user?.phone}}</b></td>
                 </tr>
                 <tr>
                     <td class="text-right"><span jhiTranslate="userManagement.address"></span></td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
-                    <td><b>{{user.address}}</b></td>
+                    <td><b>{{user?.address}}</b></td>
                 </tr>
                 <tr>
                     <td class="text-right"><span jhiTranslate="userManagement.roles"></span></td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td>
-                        <div *ngFor="let role of user.roleBOs">
+                        <div *ngFor="let role of user?.roleBOs">
                             <span class="badge badge-info">{{ role }}</span>
                             <br>
                         </div>

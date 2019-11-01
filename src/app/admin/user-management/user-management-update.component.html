@@ -3,7 +3,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h3><span jhiTranslate="userManagement.home.createOrEditLabel">createOrEditLabel</span></h3>
+                    <h3><span [translate]="'courseManagement.home.createOrEditLabel'">createOrEditLabel</span></h3>
                 </div>
                 <div class="card-body">
                     <form name="editForm" enctype="multipart/form-data" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
@@ -38,7 +38,7 @@
                                                     </span>
                                                 </span>
                                                 <input class="form-control" id="username" name="username" type="text"
-                                                 formControlName="username" placeholder="{{'userManagement.placeholder.username' | translate}}" [readOnly]="user.id ? true : false">
+                                                 formControlName="username" placeholder="{{'courseManagement.home.createOrEditLabel' | translate}}" [readOnly]="user.id ? true : false">
                                             </div>
                                             <div *ngIf="editForm.get('username').invalid && (editForm.get('username').dirty || editForm.get('username').touched) || isSaving && f['username'].errors">
                                                 <small class="form-text text-danger"

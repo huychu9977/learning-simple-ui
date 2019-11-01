@@ -1,0 +1,261 @@
+{
+    "courseManagement":{
+       "navName":"Quản lý khoá học",
+       "home":{
+          "title":"Danh sách Khóa học",
+          "createLabel":"Tạo Khóa học mới",
+          "createOrEditLabel":"Tạo hoặc sửa Khóa học"
+       },
+       "created":"Một Khóa học mới đã được tạo với định danh {{ param }}",
+       "updated":"Một Khóa học đã được cập nhật với định danh {{ param }}",
+       "deleted":"Một Khóa học đã bị xóa với định danh {{ param }}",
+       "delete":{
+          "question":"Bạn có chắc chắn muốn xóa Khóa học {{ login }}?"
+       },
+       "detail":{
+          "title":"Khóa học"
+       },
+       "objective":{
+          "title":"Mục tiêu khóa học",
+          "name":"Mục tiêu",
+          "createLabel":"Thêm mục tiêu"
+       },
+       "required":{
+          "title":"Yêu cầu khóa học",
+          "name":"Yêu cầu",
+          "createLabel":"Thêm yêu cầu"
+       },
+       "editMore":"Nội dung",
+       "chapter":"Chương",
+       "image":"Image",
+       "action":"Hành động",
+       "active":"Hoạt động",
+       "code":"Mã khóa học",
+       "name":"Tên khóa học",
+       "title":"Tiêu đề",
+       "sortDescription":"Miêu tả ngắn",
+       "description":"Miêu tả",
+       "requiredCompleteRate":"Yêu cầu hoàn thành",
+       "category":"Danh mục",
+       "level":"Trình độ",
+       "topic":"Đề tài",
+       "video":"Video",
+       "activated":"Kích hoạt",
+       "deactivated":"Khóa",
+       "createdBy":"Người tạo",
+       "createdAt":"Ngày tạo",
+       "modifiedBy":"Người sửa",
+       "modifiedAt":"Ngày sửa"
+    },
+    "error":{
+       "title":"Trang thông tin lỗi!",
+       "http":{
+          "400":"Bad request.",
+          "403":"Bạn không có quyền xem trang này.",
+          "404":"Trang không tồn tại.",
+          "405":"The HTTP verb you used is not supported for this URL.",
+          "500":"Internal server error."
+       },
+       "concurrencyFailure":"Another user modified this data at the same time as you. Your changes were rejected.",
+       "validation":"Validation error on the server."
+    },
+    "global":{
+       "dashboard":{
+          "navName":"Trang chủ"
+       },
+       "title":"LearningSimple",
+       "menu":{
+          "home":"Trang chủ",
+          "account":{
+             "main":"Tài khoản",
+             "settings":"Cài đặt",
+             "password":"Mật khẩu",
+             "sessions":"Phiên đăng nhập",
+             "login":"Đăng nhập",
+             "logout":"Đăng xuất",
+             "register":"Đăng ký"
+          },
+          "language":"Ngôn ngữ",
+          "form":{
+             "username.label":"Tên tài khoản",
+             "username.placeholder":"Nhập tên tài khoản của bạn",
+             "newpassword.label":"Mật khẩu mới",
+             "newpassword.placeholder":"Nhập mật khẩu mới",
+             "confirmpassword.label":"Xác nhận mật khẩu mới",
+             "confirmpassword.placeholder":"Nhập lại mật khẩu mới",
+             "email.label":"Email",
+             "email.placeholder":"Nhập email của bạn"
+          },
+          "messages":{
+             "validate":{
+                "email":{
+                   "invalid":"Email bạn nhập không hợp lệ."
+                }
+             }
+          },
+          "field":{
+             "id":"ID"
+          }
+       }
+    },
+    "entity":{
+       "action":{
+          "addblob":"Thêm nội dung",
+          "addimage":"Thêm ảnh",
+          "back":"Quay lại",
+          "cancel":"Hủy",
+          "delete":"Xóa",
+          "edit":"Sửa",
+          "open":"Mở",
+          "save":"Lưu",
+          "view":"Xem"
+       }
+    },
+    "lectureManagement":{
+       "home":{
+          "lecture":{
+             "title":"Danh sách bài học",
+             "createLabel":"Tạo bài học mới",
+             "createOrEditLabel":"Tạo hoặc sửa bài học"
+          },
+          "chapter":{
+             "title":"Danh sách chương",
+             "createLabel":"Tạo mới",
+             "createOrEditLabel":"Tạo hoặc sửa chương"
+          }
+       },
+       "created":"Một bài học mới đã được tạo với định danh {{ param }}",
+       "updated":"Một bài học đã được cập nhật với định danh {{ param }}",
+       "deleted":"Một bài học đã bị xóa với định danh {{ param }}",
+       "delete":{
+          "question":"Bạn có chắc chắn muốn xóa bài học {{ login }}?"
+       },
+       "detail":{
+          "title":"Bài học",
+          "quiz":"Bài quiz"
+       },
+       "quiz":{
+          "list":"Danh sách câu hỏi",
+          "created":"Tạo câu hỏi",
+          "updated":"Sửa câu hỏi"
+       },
+       "parents":"Chương",
+       "chapterOrder":"Số thứ tự chương",
+       "lectureOrder":"Số thứ tự bài học",
+       "limitCodeCharacter":"Ký tự code tối đa",
+       "action":"Hành động",
+       "limitNumberSubmit":"Số lần submit tối đa",
+       "code":"Mã",
+       "name":"Tên",
+       "active":"Hoạt động",
+       "sampleCode":"Code mẫu",
+       "description":"Miêu tả",
+       "type":"Thể loại",
+       "video":"Video",
+       "activated":"Kích hoạt",
+       "deactivated":"Khóa",
+       "createdBy":"Người tạo",
+       "createdAt":"Ngày tạo",
+       "modifiedBy":"Người sửa",
+       "modifiedAt":"Ngày sửa"
+    },
+    "login":{
+       "title":"Đăng nhập",
+       "form":{
+          "password":"Mật khẩu",
+          "password.placeholder":"Nhập mật khầu của bạn",
+          "rememberme":"Nhớ tài khoản",
+          "button":"Đăng nhập"
+       },
+       "messages":{
+          "error":{
+             "authentication":"<strong>Đăng nhập thất bại!</strong> Bạn vui lòng kiểm tra thông tin đăng nhập và thử lại."
+          }
+       },
+       "password":{
+          "forgot":"Bạn quên mật khẩu?"
+       }
+    },
+    "permissionManagement":{
+       "navName":"Quản lý quyền hạn",
+       "home":{
+          "title":"Danh sách quyền hạn",
+          "createLabel":"Tạo quyền hạn mới",
+          "createOrEditLabel":"Tạo hoặc sửa quyền hạn"
+       },
+       "created":"Một quyền hạn mới đã được tạo với định danh {{ param }}",
+       "updated":"Một quyền hạn đã được cập nhật với định danh {{ param }}",
+       "deleted":"Một quyền hạn đã bị xóa với định danh {{ param }}",
+       "delete":{
+          "question":"Bạn có chắc chắn muốn xóa quyền hạn {{ login }}?"
+       },
+       "detail":{
+          "title":"vai trò"
+       },
+       "code":"Mã quyền hạn",
+       "action":"Hành động",
+       "name":"Tên quyền hạn"
+    },
+    "roleManagement":{
+       "navName":"Quản lý vai trò",
+       "home":{
+          "title":"Danh sách vai trò",
+          "createLabel":"Tạo vai trò mới",
+          "createOrEditLabel":"Tạo hoặc sửa vai trò"
+       },
+       "created":"Một vai trò mới đã được tạo với định danh {{ param }}",
+       "updated":"Một vai trò đã được cập nhật với định danh {{ param }}",
+       "deleted":"Một vai trò đã bị xóa với định danh {{ param }}",
+       "delete":{
+          "question":"Bạn có chắc chắn muốn xóa vai trò {{ login }}?"
+       },
+       "detail":{
+          "title":"vai trò"
+       },
+       "code":"Mã vai trò",
+       "name":"Tên vai trò",
+       "action":"Hành động",
+       "permissions":"Các quyền hạn"
+    },
+    "userManagement":{
+       "navName":"Quản lý người dùng",
+       "home":{
+          "title":"Danh sách tài khoản",
+          "createLabel":"Tạo tài khoản mới",
+          "createOrEditLabel":"Tạo hoặc sửa tài khoản"
+       },
+       "created":"Một tài khoản mới đã được tạo với định danh {{ param }}",
+       "updated":"Một tài khoản đã được cập nhật với định danh {{ param }}",
+       "deleted":"Một tài khoản đã bị xóa với định danh {{ param }}",
+       "delete":{
+          "question":"Bạn có chắc chắn muốn xóa tài khoản {{ login }}?"
+       },
+       "detail":{
+          "title":"Tài khoản"
+       },
+       "placeholder":{
+          "username":"Nhập vào tên đăng nhập",
+          "name":"Nhập vào họ tên",
+          "address":"Nhập vào địa chỉ",
+          "email":"Nhập vào email",
+          "phone":"Nhập vào số điện thoại",
+          "roles":"Chọn các quyền"
+       },
+       "imageUrl":"Ảnh đại diện",
+       "action":"Hành động",
+       "active":"Hoạt động",
+       "username":"Tên đăng nhập",
+       "name":"Họ tên",
+       "address":"Địa chỉ",
+       "email":"Email",
+       "activated":"Kích hoạt",
+       "deactivated":"Khóa",
+       "profiles":"Các quyền",
+       "phone":"Số điện thoại",
+       "createdBy":"Người tạo",
+       "createdAt":"Ngày tạo",
+       "modifiedBy":"Người sửa",
+       "modifiedAt":"Ngày sửa",
+       "roles":"Các quyền"
+    }
+}

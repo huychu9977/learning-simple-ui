@@ -11,7 +11,7 @@ import { AccountService } from '../core/auth/account.service';
 @Component({
     selector: 'page-admin',
     templateUrl: './admin.component.html',
-    styles: []
+    styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit, OnDestroy {
   languages: any[];
@@ -20,6 +20,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   private changes: MutationObserver;
   public element: HTMLElement;
   public route;
+  public isCollapsed = true;
   constructor(
     private languageHelper: JhiLanguageHelper,
     private sessionStorage: SessionStorageService,
@@ -59,32 +60,32 @@ export class AdminComponent implements OnInit, OnDestroy {
   translateMenu() {
     // translate menu
     this.navItems = JSON.parse(JSON.stringify(navItems));
-    localStorage.removeItem('menu');
-    if (localStorage.getItem('menu') === null) {
-        this.navItems.forEach(nav => {
-          if (nav.hasOwnProperty('key')) {
-            this.translateIntoVN(nav);
-          }
-        });
-        localStorage.setItem('menu', JSON.stringify(this.navItems));
-        const principal = this.principal;
-        this.principal.identity().then(account => {
-            this.navItems = (this.navItems || []).filter(menu => {
-              if (menu.hasOwnProperty('authorities')) {
-                const authorities = menu.authorities;
-                if (!authorities || authorities.length === 0) {
-                    return true;
-                }
-                if (account) {
-                    return principal.hasAnyAuthority(authorities);
-                }
-              }
-              return true;
-            });
-        });
-    } else {
-        this.navItems = JSON.parse(localStorage.getItem('menu'));
-    }
+    // localStorage.removeItem('menu');
+    // if (localStorage.getItem('menu') === null) {
+    //     this.navItems.forEach(nav => {
+    //       if (nav.hasOwnProperty('key')) {
+    //         this.translateIntoVN(nav);
+    //       }
+    //     });
+    //     localStorage.setItem('menu', JSON.stringify(this.navItems));
+    //     const principal = this.principal;
+    //     this.principal.identity().then(account => {
+    //         this.navItems = (this.navItems || []).filter(menu => {
+    //           if (menu.hasOwnProperty('authorities')) {
+    //             const authorities = menu.authorities;
+    //             if (!authorities || authorities.length === 0) {
+    //                 return true;
+    //             }
+    //             if (account) {
+    //                 return principal.hasAnyAuthority(authorities);
+    //             }
+    //           }
+    //           return true;
+    //         });
+    //     });
+    // } else {
+    //     this.navItems = JSON.parse(localStorage.getItem('menu'));
+    // }
   }
   translateIntoVN(item: any) {
     item.name = this.translateService.instant(item.key);

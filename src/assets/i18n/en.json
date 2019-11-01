@@ -1,0 +1,271 @@
+{
+    "courseManagement":{
+        "navName":"Course Management",
+        "home":{
+            "title":"List Courses",
+            "createLabel":"Create a new course",
+            "createOrEditLabel":"Create or edit a course"
+        },
+        "created":"A new course is created with identifier {{ param }}",
+        "updated":"A course is updated with identifier {{ param }}",
+        "deleted":"A course is deleted with identifier {{ param }}",
+        "delete":{
+            "question":"Are you sure you want to delete course {{ login }}?"
+        },
+        "detail":{
+            "title":"Course"
+        },
+        "objective":{
+            "title":"Title",
+            "name":"Name",
+            "createLabel":"Create a new objective"
+        },
+        "required":{
+            "title":"Title",
+            "name":"Name",
+            "createLabel":"Create a new required"
+        },
+        "editMore":"Edit More",
+        "chapter":"Chapter",
+        "action":"Action",
+        "active":"Active",
+        "code":"Code",
+        "name":"Name",
+        "title":"Title",
+        "sortDescription":"Sort Description",
+        "description":"Description",
+        "category":"Category",
+        "requiredCompleteRate":"Required Complete Rate",
+        "image":"Image",
+        "topic":"Topic",
+        "video":"Video",
+        "activated":"Activated",
+        "deactivated":"Deactivated",
+        "createdBy":"Created by",
+        "createdAt":"Created at",
+        "modifiedBy":"Modified by",
+        "level":"Level",
+        "modifiedAt":"Modified at",
+        "roles":"Roles"
+    },
+    "error":{
+        "title":"Error page!",
+        "http":{
+            "400":"Bad request.",
+            "403":"You are not authorized to access this page.",
+            "404":"The page does not exist.",
+            "405":"The HTTP verb you used is not supported for this URL.",
+            "500":"Internal server error."
+        },
+        "concurrencyFailure":"Another user modified this data at the same time as you. Your changes were rejected.",
+        "validation":"Validation error on the server."
+    },
+    "global":{
+        "dashboard":{
+            "navName":"Dashboard"
+        },
+        "title":"LearningSimple",
+        "menu":{
+            "home":"Home",
+            "account":{
+                "main":"Account",
+                "settings":"Settings",
+                "password":"Password",
+                "sessions":"Sessions",
+                "login":"Sign in",
+                "logout":"Sign out",
+                "register":"Register"
+            },
+            "language":"Language"
+        },
+        "form":{
+            "username.label":"Username",
+            "username.placeholder":"Your username",
+            "currentpassword.label":"Current password",
+            "currentpassword.placeholder":"Current password",
+            "newpassword.label":"New password",
+            "newpassword.placeholder":"New password",
+            "confirmpassword.label":"New password confirmation",
+            "confirmpassword.placeholder":"Confirm the new password",
+            "email.label":"Email",
+            "email.placeholder":"Your email"
+        },
+        "messages":{
+            "validate":{
+                "email":{
+                "invalid":"Your email is invalid."
+                }
+            }
+        },
+        "field":{
+            "id":"ID"
+        }
+    },
+    "entity":{
+        "action":{
+            "addblob":"Add blob",
+            "addimage":"Add image",
+            "back":"Back",
+            "cancel":"Cancel",
+            "delete":"Delete",
+            "edit":"Edit",
+            "open":"Open",
+            "save":"Save",
+            "view":"View"
+        },
+        "detail":{
+            "field":"Field",
+            "value":"Value"
+        },
+        "delete":{
+            "title":"Confirm delete operation"
+        }
+    },
+    "lectureManagement":{
+        "home":{
+            "lecture":{
+                "title":"List lecture",
+                "createLabel":"Create a new  lecture",
+                "createOrEditLabel":"Create or edit a  lecture"
+            },
+            "chapter":{
+                "title":"List chapter",
+                "createLabel":"Create a new chapter",
+                "createOrEditLabel":"Create or edit a chapter"
+            }
+        },
+        "created":"A new lecture is created with identifier {{ param }}",
+        "updated":"A lecture is updated with identifier {{ param }}",
+        "deleted":"A lecture is deleted with identifier {{ param }}",
+        "delete":{
+            "question":"Are you sure you want to delete lecture {{ login }}?"
+        },
+        "detail":{
+            "title":"lecture",
+            "quiz":"Quiz TEST"
+        },
+        "quiz":{
+            "list":"List Quiz",
+            "created":"Create Quiz",
+            "updated":"Update Quiz"
+        },
+        "parents":"Chapter",
+        "chapterOrder":"Chapter Order",
+        "lectureOrder":"Lecture Order",
+        "limitCodeCharacter":"Limit Code Character",
+        "limitNumberSubmit":"Limit Number Submit",
+        "sampleCode":"Sample Code",
+        "action":"Action",
+        "active":"Active",
+        "code":"Code",
+        "name":"Name",
+        "description":"Description",
+        "video":"Video",
+        "activated":"Activated",
+        "deactivated":"Deactivated",
+        "createdBy":"Created by",
+        "createdAt":"Created at",
+        "modifiedBy":"Modified by",
+        "type":"Type",
+        "modifiedAt":"Modified at"
+    },
+    "login":{
+        "title":"Sign in",
+        "form":{
+            "password":"Password",
+            "password.placeholder":"Your password",
+            "rememberme":"Remember me",
+            "button":"Sign in"
+        },
+        "messages":{
+            "error":{
+                "authentication":"<strong>Failed to sign in!</strong> Please check your credentials and try again."
+            }
+        },
+        "password":{
+            "forgot":"Did you forget your password?"
+        }
+    },
+    "permissionManagement":{
+        "navName":"Permission Management",
+        "home":{
+            "title":"List Permissions",
+            "createLabel":"Create a new Permission",
+            "createOrEditLabel":"Create or edit a Permission"
+        },
+        "created":"A new Permission is created with identifier {{ param }}",
+        "updated":"A Permission is updated with identifier {{ param }}",
+        "deleted":"A Permission is deleted with identifier {{ param }}",
+        "delete":{
+            "question":"Are you sure you want to delete Permission {{ login }}?"
+        },
+        "detail":{
+            "title":"Permission"
+        },
+        "code":"Code",
+        "name":"Name",
+        "action":"Action"
+    },
+    "roleManagement":{
+        "navName":"Role Management",
+        "home":{
+            "title":"List Roles",
+            "createLabel":"Create a new Role",
+            "createOrEditLabel":"Create or edit a Role"
+        },
+        "created":"A new Role is created with identifier {{ param }}",
+        "updated":"A Role is updated with identifier {{ param }}",
+        "deleted":"A Role is deleted with identifier {{ param }}",
+        "delete":{
+            "question":"Are you sure you want to delete Role {{ login }}?"
+        },
+        "detail":{
+            "title":"Role"
+        },
+        "code":"Code",
+        "name":"Name",
+        "action":"Action",
+        "permissions":"Permisisons"
+    },
+    "userManagement":{
+        "navName":"User Management",
+        "home":{
+            "title":"List Users",
+            "createLabel":"Create a new user",
+            "createOrEditLabel":"Create or edit a user"
+        },
+        "created":"A new user is created with identifier {{ param }}",
+        "updated":"A user is updated with identifier {{ param }}",
+        "deleted":"A user is deleted with identifier {{ param }}",
+        "delete":{
+            "question":"Are you sure you want to delete user {{ login }}?"
+        },
+        "detail":{
+            "title":"User"
+        },
+        "placeholder":{
+            "username":"Input username",
+            "name":"Input name",
+            "address":"Input address",
+            "email":"Input email",
+            "phone":"Input phone",
+            "roles":"Choose roles"
+        },
+        "imageUrl":"Avatar",
+        "action":"Action",
+        "active":"Active",
+        "username":"Username",
+        "name":"Full name",
+        "email":"Email",
+        "activated":"Activated",
+        "deactivated":"Deactivated",
+        "profiles":"Profiles",
+        "phone":"Phone",
+        "createdBy":"Created by",
+        "createdAt":"Created at",
+        "modifiedBy":"Modified by",
+        "address":"Address",
+        "modifiedAt":"Modified at",
+        "roles":"Roles"
+    }
+}
