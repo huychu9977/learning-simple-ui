@@ -60,7 +60,7 @@ export class PermissionManagementComponent implements OnInit, OnDestroy {
                 keyword: this.keyword
             })
             .subscribe(
-                (res: HttpResponse<PermissionBO[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpResponse<PermissionBO[]>) => this.onSuccess(res.body),
                 (res: HttpResponse<any>) => this.onError(res.body)
             );
     }
@@ -119,9 +119,9 @@ export class PermissionManagementComponent implements OnInit, OnDestroy {
             }
         });
     }
-    private onSuccess(data, headers) {
-        this.totalItems = headers.get('X-Total-Count');
-        this.permissions = data;
+    private onSuccess(data) {
+        this.totalItems = data.totalResult;
+        this.permissions = data.results;
     }
 
     private onError(error) {

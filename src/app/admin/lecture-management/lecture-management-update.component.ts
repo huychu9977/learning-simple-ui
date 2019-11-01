@@ -204,7 +204,8 @@ export class LectureManagementUpdateComponent implements OnInit {
     }, 1700);
   }
 
-  private onSaveError(error) {
-    this.toastr.error(error.error.title);
+  private onSaveError(err) {
+    this.toastr.error('Thao tác thất bại!', err.error.message);
+    this.isSaving = false;
   }
 }

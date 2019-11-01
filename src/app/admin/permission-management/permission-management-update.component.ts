@@ -71,9 +71,9 @@ export class PermissionMgmtUpdateComponent implements OnInit {
   confirm() {
     this.updatePermission();
     if (this.permission.id !== null) {
-      this.permissionService.update(this.permission).subscribe(response => this.onSaveSuccess(response), () => this.onSaveError());
+      this.permissionService.update(this.permission).subscribe(response => this.onSaveSuccess(response), (err) => this.onSaveError(err));
     } else {
-      this.permissionService.create(this.permission).subscribe(response => this.onSaveSuccess(response), () => this.onSaveError());
+      this.permissionService.create(this.permission).subscribe(response => this.onSaveSuccess(response), (err) => this.onSaveError(err));
     }
   }
   private updatePermission() {
@@ -89,8 +89,8 @@ export class PermissionMgmtUpdateComponent implements OnInit {
     }, 1700);
   }
 
-  private onSaveError() {
-    this.toastr.error('Thao tác thất bại!');
+  private onSaveError(err) {
+    this.toastr.error('Thao tác thất bại!', err.error.message);
     this.isSaving = false;
   }
 }

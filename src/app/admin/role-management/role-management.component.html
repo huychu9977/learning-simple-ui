@@ -3,7 +3,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h3><span jhiTranslate="roleManagement.home.title">Users</span></h3>
+                    <h3><span [translate]="'roleManagement.home.title'">Users</span></h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -14,7 +14,7 @@
                                             class="btn btn-primary jh-create-entity create-organization"
                                             [routerLink]="['new']">
                                             <i class="fa fa-plus"></i>
-                                        <span jhiTranslate="roleManagement.home.createLabel">
+                                        <span [translate]="'roleManagement.home.createLabel'">
                                Tạo mới
                                </span>
                                     </button>
@@ -35,19 +35,16 @@
                                 <thead>
                                 <tr jhiSort>
                                     <th jhiSortBy="id">
-                                        <span jhiTranslate="global.field.id">ID</span>
-                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
+                                        <span [translate]="'global.field.id'">ID</span>
                                     </th>
                                     <th jhiSortBy="code">
-                                        <span jhiTranslate="roleManagement.code">code</span>
-                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
+                                        <span [translate]="'roleManagement.code'">code</span>
                                     </th>
                                     <th jhiSortBy="email">
-                                        <span jhiTranslate="roleManagement.name">name</span>
-                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
+                                        <span [translate]="'roleManagement.name'">name</span>
                                     </th>
-                                    <th><span jhiTranslate="roleManagement.permissions">permissions</span></th>
-                                    <th jhiTranslate="roleManagement.action">Action</th>
+                                    <th><span [translate]="'roleManagement.permissions'">permissions</span></th>
+                                    <th [translate]="'roleManagement.action'">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody *ngIf="roles">
@@ -66,7 +63,7 @@
                                                     class="btn btn-info btn-sm color-white">
                                                 <i class="fa fa-eye"></i>
                                                 <span class="d-none d-md-inline"
-                                                      jhiTranslate="entity.action.view">View</span>
+                                                      [translate]="'entity.action.view'">View</span>
                                             </button>
                                             <button type="submit"
                                                     [routerLink]="[ role.id, 'edit']"
@@ -74,13 +71,13 @@
                                                     class="btn btn-primary btn-sm">
                                                 <i class="fa fa-pencil"></i>
                                                 <span class="d-none d-md-inline"
-                                                      jhiTranslate="entity.action.edit">Edit</span>
+                                                      [translate]="'entity.action.edit'">Edit</span>
                                             </button>
                                             <!-- [disabled]="currentAccount.id === role.id" -->
                                             <button type="button" (click)="deleteRole(role)"
                                                     class="btn btn-danger btn-sm">
                                                 <i class="fa fa-times"></i>
-                                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                                <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
                                             </button>
                                         </div>
                                     </td>

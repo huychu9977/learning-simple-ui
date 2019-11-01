@@ -140,9 +140,9 @@ export class CourseManagementUpdateComponent implements OnInit {
         type: 'application/json'
       }));
       if (this.course.id !== null) {
-        this.courseService.update(formdata).subscribe(response => this.onSaveSuccess(response), () => this.onSaveError());
+        this.courseService.update(formdata).subscribe(response => this.onSaveSuccess(response), (err) => this.onSaveError(err));
       } else {
-        this.courseService.create(formdata).subscribe(response => this.onSaveSuccess(response), () => this.onSaveError());
+        this.courseService.create(formdata).subscribe(response => this.onSaveSuccess(response), (err) => this.onSaveError(err));
       }
     }
   }
@@ -239,8 +239,8 @@ export class CourseManagementUpdateComponent implements OnInit {
     }, 1700);
   }
 
-  private onSaveError() {
-    this.toastr.error('Thao tác thất bại!');
+  private onSaveError(err) {
+    this.toastr.error('Thao tác thất bại!', err.error.message);
     this.isSaving = false;
   }
 

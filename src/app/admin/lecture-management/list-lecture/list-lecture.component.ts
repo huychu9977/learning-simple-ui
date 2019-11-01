@@ -72,11 +72,11 @@ export class ListLectureComponent implements OnInit {
                 keyword: this.keyword
             })
             .subscribe(
-                (res: HttpResponse<LectureBO[]>) => this.onSuccess(res.body, res.headers)
+                (res: HttpResponse<LectureBO[]>) => this.onSuccess(res.body)
             );
     }
-    private onSuccess(data, headers) {
-        this.totalItems = headers.get('X-Total-Count');
-        this.lectures = data;
+    private onSuccess(data) {
+        this.totalItems = data.totalResult;
+        this.lectures = data.results;
     }
 }

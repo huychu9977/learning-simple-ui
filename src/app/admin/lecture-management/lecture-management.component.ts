@@ -80,7 +80,7 @@ export class LectureManagementComponent implements OnInit, OnDestroy {
                 keyword: this.keyword
             })
             .subscribe(
-                (res: HttpResponse<LectureBO[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpResponse<LectureBO[]>) => this.onSuccess(res.body),
                 (res: HttpResponse<any>) => this.onError(res.body)
             );
     }
@@ -140,9 +140,9 @@ export class LectureManagementComponent implements OnInit, OnDestroy {
             // }
         });
     }
-    private onSuccess(data, headers) {
-        this.totalItems = headers.get('X-Total-Count');
-        this.courseLectures = data;
+    private onSuccess(data) {
+        this.totalItems = data.totalResult;
+        this.courseLectures = data.results;
     }
 
     private onError(error) {

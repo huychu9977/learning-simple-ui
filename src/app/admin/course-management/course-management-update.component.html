@@ -3,7 +3,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h3><span jhiTranslate="courseManagement.home.createOrEditLabel">createOrEditLabel</span></h3>
+                    <h3><span [translate]="'courseManagement.home.createOrEditLabel'">createOrEditLabel</span></h3>
                 </div>
                 <div class="card-body">
                     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
@@ -12,13 +12,13 @@
                             <div class="col-9">
                                 <div>
                                     <div class="form-group" [hidden]="!course.id">
-                                        <!-- <label jhiTranslate="global.field.id">ID</label> -->
+                                        <!-- <label [translate]="'global.field.id">ID</label> -->
                                         <input type="hidden" class="form-control" name="id" formControlName="id" readonly>
                                     </div>
                     
                                     <div class="row">
                                         <fieldset class="form-group col-md-6">
-                                            <label jhiTranslate="courseManagement.code">code</label>
+                                            <label [translate]="'courseManagement.code'">code</label>
                                             <div class="input-group">
                                                 <span class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -29,19 +29,19 @@
                                             </div>
                                             <div *ngIf="editForm.get('code').invalid && (editForm.get('code').dirty || editForm.get('code').touched) || isSaving && f['code'].errors">
                                                 <small class="form-text text-danger"
-                                                *ngIf="f['code'].errors.required" jhiTranslate="entity.validation.required">
+                                                *ngIf="f['code'].errors.required" [translate]="'entity.validation.required'">
                                                     This field is required.
                                                 </small>
                             
                                                 <small class="form-text text-danger"
-                                                *ngIf="f['code'].errors.pattern" jhiTranslate="entity.validation.patternLogin">
+                                                *ngIf="f['code'].errors.pattern" [translate]="'entity.validation.patternLogin'">
                                                     This field can only contain letters, digits and e-mail addresses.
                                                 </small>
                                             </div>
                                             <small class="text-muted">ex. java-dev</small>
                                         </fieldset>
                                         <fieldset class="form-group col-md-6">
-                                            <label jhiTranslate="courseManagement.name">name</label>
+                                            <label [translate]="'courseManagement.name'">name</label>
                                             <div class="input-group">
                                                 <span class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -52,7 +52,7 @@
                                             </div>
                                             <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched) || isSaving && f['name'].errors">
                                                 <small class="form-text text-danger"
-                                                *ngIf="f['name'].errors.required" jhiTranslate="entity.validation.required">
+                                                *ngIf="f['name'].errors.required" [translate]="'entity.validation.required'">
                                                     This field is required.
                                                 </small>
                                             </div>
@@ -62,7 +62,7 @@
                                     
                                     <div class="row">
                                         <fieldset class="form-group col-md-6">
-                                            <label jhiTranslate="courseManagement.requiredCompleteRate">requiredCompleteRate</label>
+                                            <label [translate]="'courseManagement.requiredCompleteRate'">requiredCompleteRate</label>
                                             <div class="input-group">
                                                 <span class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -74,7 +74,7 @@
                                             <small class="text-muted">ex. 80</small>
                                         </fieldset>
                                         <div class="form-group col-md-6">
-                                            <label jhiTranslate="courseManagement.level">level</label>
+                                            <label [translate]="'courseManagement.level'">level</label>
                                             <ng-select [items]="levels" bindValue="code" bindLabel="name" [multiple]="false"
                                                 placeholder="Chọn trình độ..."
                                                 [searchable]="false"
@@ -85,7 +85,7 @@
                                             </ng-select>
                                             <div *ngIf="editForm.get('level').invalid && (editForm.get('level').dirty || editForm.get('level').touched) || isSaving && f['level'].errors">
                                                 <small class="form-text text-danger"
-                                                *ngIf="f['level'].errors.required" jhiTranslate="entity.validation.required">
+                                                *ngIf="f['level'].errors.required" [translate]="'entity.validation.required'">
                                                     This field is required.
                                                 </small>
                                             </div>
@@ -93,7 +93,7 @@
                                     </div>
                                     <div class="row">
                                         <div class="form-group col-md-6">
-                                            <label jhiTranslate="courseManagement.category">category</label>
+                                            <label [translate]="'courseManagement.category'">category</label>
                                             <ng-select [items]="courseCategorys" bindValue="code" bindLabel="name" [multiple]="false"
                                                 placeholder="Chọn danh mục..."
                                                 [searchable]="false"
@@ -105,7 +105,7 @@
                                             </ng-select>
                                         </div>
                                         <div class="form-group col-md-6">
-                                            <label jhiTranslate="courseManagement.topic">topic</label>
+                                            <label [translate]="'courseManagement.topic'">topic</label>
                                             <ng-select [items]="courseTopics" bindValue="code" bindLabel="name" [multiple]="false"
                                                 placeholder="Chọn đề tài..."
                                                 [searchable]="false"
@@ -116,7 +116,7 @@
                                             </ng-select>
                                             <div *ngIf="editForm.get('courseTopic').invalid && (editForm.get('courseTopic').dirty || editForm.get('courseTopic').touched) || isSaving && f['courseTopic'].errors">
                                                 <small class="form-text text-danger"
-                                                *ngIf="f['courseTopic'].errors.required" jhiTranslate="entity.validation.required">
+                                                *ngIf="f['courseTopic'].errors.required" [translate]="'entity.validation.required'">
                                                     This field is required.
                                                 </small>
                                             </div>
@@ -124,7 +124,7 @@
                                     </div>
                                     <div class="row">
                                         <fieldset class="form-group col-md-12">
-                                            <label jhiTranslate="courseManagement.sortDescription">sortDescription</label>
+                                            <label [translate]="'courseManagement.sortDescription'">sortDescription</label>
                                             <div class="input-group">
                                                 <span class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -144,7 +144,7 @@
                                             </div>
                                             <div class="col-md-12 text-center mt-3">
                                                 <span class="btn btn-success btn-file">
-                                                    <strong jhiTranslate="courseManagement.image"></strong>
+                                                    <strong [translate]="'courseManagement.image'"></strong>
                                                     <i class="fa fa-camera" aria-hidden="true"></i>
                                                     <input type="file" accept="image/x-png,image/jpeg" class="form-control" name="imageFile" id="fileImage" (change)="onImageChange($event)">
                                                 </span>
@@ -158,7 +158,7 @@
                                             </div>
                                             <div class="col-md-12 text-center mt-3">
                                                 <span class="btn btn-success btn-file">
-                                                    <strong jhiTranslate="courseManagement.video"></strong>
+                                                    <strong [translate]="'courseManagement.video'"></strong>
                                                     <i class="fa fa-camera" aria-hidden="true"></i>
                                                     <input type="file" accept="video/*" class="form-control" name="imageFile" id="fileVideo" (change)="onVideoChange($event)">
                                                 </span>
@@ -167,7 +167,7 @@
                                         <div class="col-md-4">
                                             <div class="row justify-content-center" style="position: relative; top: 25%;">
                                                 <div class="col-md-6">
-                                                    <label style="margin-top: 2px;" jhiTranslate="courseManagement.activated">activated</label>
+                                                    <label style="margin-top: 2px;" [translate]="'courseManagement.activated'">activated</label>
                                                 </div>
                                                 <div class="col-md-6">
                                                     <label class="switch switch-label switch-success">
@@ -182,14 +182,14 @@
                                     <div class="row py-3"></div>
                                     <div class="row">
                                         <div class="form-group ckedit">
-                                            <label jhiTranslate="courseManagement.description">description</label>
+                                            <label [translate]="'courseManagement.description'">description</label>
                                             <ck-editor name="editor1" skin="moono-lisa" language="vi" [fullPage]="false" 
                                                 [config]="config" formControlName='description'
                                                  class="form-control"
                                                 required></ck-editor>
                                             <div *ngIf="editForm.get('description').invalid && (editForm.get('description').dirty || editForm.get('description').touched) || isSaving && f['description'].errors">
                                                 <small class="form-text text-danger"
-                                                *ngIf="f['description'].errors.required" jhiTranslate="entity.validation.required">
+                                                *ngIf="f['description'].errors.required" [translate]="'entity.validation.required'">
                                                     This field is required.
                                                 </small>
                                             </div>
@@ -200,11 +200,11 @@
                                     <button type="button" class="btn btn-secondary" (click)="previousState()">
                                         <!-- <fa-icon [icon]="'ban'"></fa-icon> -->
                                         &nbsp;<span
-                                        jhiTranslate="entity.action.cancel">Cancel</span>
+                                        [translate]="'entity.action.cancel'">Cancel</span>
                                     </button>
                                     <button type="submit" class="btn btn-primary">
                                         <!-- <fa-icon [icon]="'save'"></fa-icon> -->
-                                        &nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                                        &nbsp;<span [translate]="'entity.action.save'">Save</span>
                                     </button>
                                 </div>
                             </div>

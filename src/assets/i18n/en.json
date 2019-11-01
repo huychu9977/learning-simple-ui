@@ -93,7 +93,7 @@
         "messages":{
             "validate":{
                 "email":{
-                "invalid":"Your email is invalid."
+                    "invalid":"Your email is invalid."
                 }
             }
         },
@@ -113,12 +113,18 @@
             "save":"Save",
             "view":"View"
         },
-        "detail":{
-            "field":"Field",
-            "value":"Value"
-        },
-        "delete":{
-            "title":"Confirm delete operation"
+        "validation": {
+          "required": "This field is required.",
+          "minlength": "This field is required to be at least {{ min }} characters.",
+          "maxlength": "This field cannot be longer than {{ max }} characters.",
+          "min": "This field should be at least {{ min }}.",
+          "max": "This field cannot be more than {{ max }}.",
+          "minbytes": "This field should be at least {{ min }} bytes.",
+          "maxbytes": "This field cannot be more than {{ max }} bytes.",
+          "pattern": "This field should follow pattern for {{ pattern }}.",
+          "number": "This field should be a number.",
+          "datetimelocal": "This field should be a date and time.",
+          "patternLogin": "This field can only contain letters, digits and e-mail addresses."
         }
     },
     "lectureManagement":{

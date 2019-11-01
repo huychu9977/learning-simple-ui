@@ -3,7 +3,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h3><span jhiTranslate="userManagement.home.title">Users</span></h3>
+                    <h3><span [translate]="'userManagement.home.title'">Users</span></h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -14,7 +14,7 @@
                                             class="btn btn-primary jh-create-entity create-organization"
                                             [routerLink]="['new']">
                                             <i class="fa fa-plus"></i>
-                                        <span jhiTranslate="userManagement.home.createLabel">
+                                        <span [translate]="'userManagement.home.createLabel'">
                                Tạo mới
                                </span>
                                     </button>
@@ -35,21 +35,21 @@
                                 <thead>
                                 <tr jhiSort>
                                     <th jhiSortBy="id">
-                                        <span jhiTranslate="global.field.id">ID</span>
+                                        <span [translate]="'global.field.id'">ID</span>
                                         <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
                                     </th>
                                     <th jhiSortBy="username">
-                                        <span jhiTranslate="userManagement.username">username</span>
+                                        <span [translate]="'userManagement.username'">username</span>
                                         <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
                                     </th>
                                     <th jhiSortBy="email">
-                                        <span jhiTranslate="userManagement.email">Email</span>
+                                        <span [translate]="'userManagement.email'">Email</span>
                                         <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
                                     </th>
-                                    <th><span jhiTranslate="userManagement.active">Active</span></th>
-                                    <th><span jhiTranslate="userManagement.roles">Roles</span></th>
-                                    <th><span jhiTranslate="userManagement.createdAt">createdAt</span></th>
-                                    <th jhiTranslate="userManagement.action">Action</th>
+                                    <th><span [translate]="'userManagement.active'">Active</span></th>
+                                    <th><span [translate]="'userManagement.roles'">Roles</span></th>
+                                    <th><span [translate]="'userManagement.createdAt'">createdAt</span></th>
+                                    <th [translate]="'userManagement.action'">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody *ngIf="users">
@@ -60,13 +60,13 @@
                                     <td>
                                         <button class="btn btn-danger btn-sm" (click)="setActive(user, true)"
                                                 *ngIf="!user.activated"
-                                                jhiTranslate="userManagement.deactivated">Deactivated
+                                                [translate]="'userManagement.deactivated'">Deactivated
                                         </button>
                                         <!-- [disabled]="currentAccount.login === user.username" -->
                                         <button class="btn btn-success btn-sm" (click)="setActive(user, false)"
                                                 *ngIf="user.activated"
                                                 
-                                                jhiTranslate="userManagement.activated">Activated
+                                                [translate]="'userManagement.activated'">Activated
                                         </button>
                                     </td>
                                     <td>
@@ -81,7 +81,7 @@
                                                     class="btn btn-info btn-sm color-white">
                                                 <i class="fa fa-eye"></i>
                                                 <span class="d-none d-md-inline"
-                                                      jhiTranslate="entity.action.view">View</span>
+                                                      [translate]="'entity.action.view'">View</span>
                                             </button>
                                             <button type="submit"
                                                     [routerLink]="[ user.username, 'edit']"
@@ -89,13 +89,13 @@
                                                     class="btn btn-primary btn-sm">
                                                 <i class="fa fa-pencil"></i>
                                                 <span class="d-none d-md-inline"
-                                                      jhiTranslate="entity.action.edit">Edit</span>
+                                                      [translate]="'entity.action.edit'">Edit</span>
                                             </button>
                                             <!-- [disabled]="currentAccount.id === user.id" -->
                                             <button type="button" (click)="deleteUser(user)"
                                                     class="btn btn-danger btn-sm">
                                                 <i class="fa fa-times"></i>
-                                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                                <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
                                             </button>
                                         </div>
                                     </td>

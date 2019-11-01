@@ -14,7 +14,7 @@
                                 </div>
                                 <div class="col-md-12 text-center mt-3">
                                     <span class="btn btn-success btn-file">
-                                        <strong jhiTranslate="userManagement.imageUrl"></strong>
+                                        <strong [translate]="'userManagement.imageUrl'"></strong>
                                         <i class="fa fa-camera" aria-hidden="true"></i>
                                         <input type="file" class="form-control" name="imageFile" id="filevideo" (change)="onFileChange($event)" formControlName="imageUrl">
                                     </span>
@@ -24,13 +24,12 @@
                             <div class="col-8">
                                 <div>
                                     <div class="form-group" [hidden]="!user.id">
-                                        <!-- <label jhiTranslate="global.field.id">ID</label> -->
                                         <input type="hidden" class="form-control" name="id" formControlName="id" readonly>
                                     </div>
                     
                                     <div class="row">
                                         <fieldset class="form-group col-md-6">
-                                            <label jhiTranslate="userManagement.username">username</label> <small class="text-danger">*</small>
+                                            <label [translate]="'userManagement.username'">username</label> <small class="text-danger">*</small>
                                             <div class="input-group">
                                                 <span class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -38,22 +37,22 @@
                                                     </span>
                                                 </span>
                                                 <input class="form-control" id="username" name="username" type="text"
-                                                 formControlName="username" placeholder="{{'courseManagement.home.createOrEditLabel' | translate}}" [readOnly]="user.id ? true : false">
+                                                 formControlName="username" placeholder="{{'userManagement.placeholder.username' | translate}}" [readOnly]="user.id ? true : false">
                                             </div>
                                             <div *ngIf="editForm.get('username').invalid && (editForm.get('username').dirty || editForm.get('username').touched) || isSaving && f['username'].errors">
                                                 <small class="form-text text-danger"
-                                                *ngIf="f['username'].errors.required" jhiTranslate="entity.validation.required">
+                                                *ngIf="f['username'].errors.required" [translate]="'entity.validation.required'">
                                                     This field is required.
                                                 </small>
                             
                                                 <small class="form-text text-danger"
-                                                *ngIf="f['username'].errors.pattern" jhiTranslate="entity.validation.patternLogin">
+                                                *ngIf="f['username'].errors.pattern" [translate]="'entity.validation.patternLogin'">
                                                     This field can only contain letters, digits and e-mail addresses.
                                                 </small>
                                             </div>
                                         </fieldset>
                                         <fieldset class="form-group col-md-6">
-                                            <label jhiTranslate="userManagement.phone">Phone input</label>
+                                            <label [translate]="'userManagement.phone'">Phone input</label>
                                             <div class="input-group">
                                                 <span class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -66,7 +65,7 @@
                                     </div>
                                     <div class="row">
                                         <fieldset class="form-group col-md-6">
-                                            <label jhiTranslate="userManagement.name">name</label> <small class="text-danger">*</small>
+                                            <label [translate]="'userManagement.name'">name</label> <small class="text-danger">*</small>
                                             <div class="input-group">
                                                 <span class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -77,13 +76,13 @@
                                             </div>
                                             <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched) || isSaving && f['name'].errors">
                                                 <small class="form-text text-danger"
-                                                *ngIf="f['name'].errors.required" jhiTranslate="entity.validation.required">
+                                                *ngIf="f['name'].errors.required" [translate]="'entity.validation.required'">
                                                     This field is required.
                                                 </small>
                                             </div>
                                         </fieldset>
                                         <fieldset class="form-group col-md-6">
-                                            <label jhiTranslate="userManagement.email">email</label> <small class="text-danger">*</small>
+                                            <label [translate]="'userManagement.email'">email</label> <small class="text-danger">*</small>
                                             <div class="input-group">
                                                 <span class="input-group-prepend">
                                                     <span class="input-group-text">
@@ -94,11 +93,11 @@
                                             </div>
                                             <div *ngIf="editForm.get('email').invalid && (editForm.get('email').dirty || editForm.get('email').touched) || isSaving && f['email'].errors">
                                                 <small class="form-text text-danger"
-                                                *ngIf="f['email'].errors.required" jhiTranslate="entity.validation.required">
+                                                *ngIf="f['email'].errors.required" [translate]="'entity.validation.required'">
                                                     This field is required.
                                                 </small>
                                                 <small class="form-text text-danger"
-                                                *ngIf="f['email'].errors.email" jhiTranslate="global.messages.validate.email.invalid">
+                                                *ngIf="f['email'].errors.email" [translate]="'global.messages.validate.email.invalid'">
                                                     This field is email.
                                                 </small>
                                             </div>
@@ -106,7 +105,7 @@
                                     </div>
                     
                                     <fieldset class="form-group">
-                                        <label jhiTranslate="userManagement.address">address</label>
+                                        <label [translate]="'userManagement.address'">address</label>
                                         <div class="input-group">
                                             <span class="input-group-prepend">
                                                 <span class="input-group-text">
@@ -119,7 +118,7 @@
                                     <div class="form-group">
                                         <div class="row justify-content-center">
                                             <div class="col-md-2">
-                                                <label style="margin-top: 2px;" jhiTranslate="userManagement.activated">activated</label>
+                                                <label style="margin-top: 2px;" [translate]="'userManagement.activated'">activated</label>
                                             </div>
                                             <div class="col-md-3">
                                                 <label class="switch switch-label switch-success">
@@ -130,7 +129,7 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label jhiTranslate="userManagement.roles">roles</label> <small class="text-danger">*</small>
+                                        <label [translate]="'userManagement.roles'">roles</label> <small class="text-danger">*</small>
                                         <ng-select [items]="roleBOs" bindValue="code" bindLabel="name" [multiple]="true"
                                             placeholder="{{'userManagement.placeholder.roles' | translate}}"
                                             [(ngModel)]="selectedRoles" 
@@ -143,21 +142,21 @@
                                         </ng-select>
                                         <div *ngIf="editForm.get('roleBOs').invalid && (editForm.get('roleBOs').dirty || editForm.get('roleBOs').touched) || isSaving && f['roleBOs'].errors">
                                             <small class="form-text text-danger"
-                                            *ngIf="f['roleBOs'].errors.required" jhiTranslate="entity.validation.required">
+                                            *ngIf="f['roleBOs'].errors.required" [translate]="'entity.validation.required'">
                                                 This field is required.
                                             </small>
                                         </div>
                                     </div>
                                 </div>
-                                <div>
+                                <div class="d-flex justify-content-end">
                                     <button type="button" class="btn btn-secondary" (click)="previousState()">
                                         <!-- <fa-icon [icon]="'ban'"></fa-icon> -->
                                         &nbsp;<span
-                                        jhiTranslate="entity.action.cancel">Cancel</span>
+                                        [translate]="'entity.action.cancel'">Cancel</span>
                                     </button>
-                                    <button type="submit" class="btn btn-primary">
+                                    <button type="submit" class="btn btn-primary ml-2">
                                         <!-- <fa-icon [icon]="'save'"></fa-icon> -->
-                                        &nbsp;<span jhiTranslate="entity.action.save">Save</span>
+                                        &nbsp;<span [translate]="'entity.action.save'">Save</span>
                                     </button>
                                 </div>
                             </div>

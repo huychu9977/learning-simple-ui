@@ -63,7 +63,7 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
                 keyword: this.keyword
             })
             .subscribe(
-                (res: HttpResponse<RoleBO[]>) => this.onSuccess(res.body, res.headers),
+                (res: HttpResponse<RoleBO[]>) => this.onSuccess(res.body),
                 (res: HttpResponse<any>) => this.onError(res.body)
             );
     }
@@ -126,9 +126,9 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
         const modalRef = this.modalService.show(RoleMgmtDetailComponent);
         modalRef.content.role = role;
     }
-    private onSuccess(data, headers) {
-        this.totalItems = headers.get('X-Total-Count');
-        this.roles = data;
+    private onSuccess(data) {
+        this.totalItems = data.totalResult;
+        this.roles = data.results;
     }
 
     private onError(error) {

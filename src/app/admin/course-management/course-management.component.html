@@ -3,7 +3,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h3><span jhiTranslate="courseManagement.home.title">Users</span></h3>
+                    <h3><span [translate]="'courseManagement.home.title'">Users</span></h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -15,7 +15,7 @@
                                             <button class="btn btn-primary jh-create-entity ml-3"
                                                     [routerLink]="['new']">
                                                     <i class="fa fa-plus"></i>
-                                                <span jhiTranslate="courseManagement.home.createLabel">Tạo mới</span>
+                                                <span [translate]="'courseManagement.home.createLabel'">Tạo mới</span>
                                             </button>
                                         </div>
                                         <div class="col-md-8">
@@ -69,18 +69,18 @@
                                 <thead>
                                 <tr jhiSort>
                                     <th jhiSortBy="id">
-                                        <span jhiTranslate="global.field.id">ID</span>
+                                        <span [translate]="'global.field.id'">ID</span>
                                     </th>
                                     <th jhiSortBy="code">
-                                        <span jhiTranslate="courseManagement.code">code</span>
+                                        <span [translate]="'courseManagement.code'">code</span>
                                     </th>
                                     <th jhiSortBy="email">
-                                        <span jhiTranslate="courseManagement.name">name</span>
+                                        <span [translate]="'courseManagement.name'">name</span>
                                     </th>
-                                    <th><span jhiTranslate="courseManagement.active">Active</span></th>
-                                    <th><span jhiTranslate="courseManagement.topic">Topic</span></th>
-                                    <th jhiTranslate="courseManagement.editMore">editMore</th>
-                                    <th jhiTranslate="courseManagement.action">Action</th>
+                                    <th><span [translate]="'courseManagement.active'">Active</span></th>
+                                    <th><span [translate]="'courseManagement.topic'">Topic</span></th>
+                                    <th [translate]="'courseManagement.editMore'">editMore</th>
+                                    <th [translate]="'courseManagement.action'">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody *ngIf="courses">
@@ -91,12 +91,12 @@
                                     <td>
                                         <button class="btn btn-danger btn-sm" (click)="setActive(course, true)"
                                                 *ngIf="!course.activated"
-                                                jhiTranslate="courseManagement.deactivated">Deactivated
+                                                [translate]="'courseManagement.deactivated'">Deactivated
                                         </button>
                                         <button class="btn btn-success btn-sm" (click)="setActive(course, false)"
                                                 *ngIf="course.activated"
                                                 
-                                                jhiTranslate="courseManagement.activated">Activated
+                                                [translate]="'courseManagement.activated'">Activated
                                         </button>
                                     </td>
                                     <td>
@@ -108,21 +108,21 @@
                                                         [routerLink]="[ course.code, 'lecture']"
                                                         class="btn btn-success btn-sm">
                                                     <i class="fa fa-plus"></i>
-                                                    <span class="d-none d-md-inline" jhiTranslate="courseManagement.chapter">chapter</span>
+                                                    <span class="d-none d-md-inline" [translate]="'courseManagement.chapter'">chapter</span>
                                                     <strong>({{course.totalLecture}})</strong>
                                                 </button>
                                                 <button type="submit"
                                                         [routerLink]="[ course.code, 'objectives']"
                                                         class="btn btn-info btn-sm color-white">
                                                     <i class="fa fa-plus"></i>
-                                                    <span class="d-none d-md-inline" jhiTranslate="courseManagement.objective.name">name</span>
+                                                    <span class="d-none d-md-inline" [translate]="'courseManagement.objective.name'">name</span>
                                                     <strong>({{course.totalObjective}})</strong>
                                                 </button>
                                                 <button type="submit"
                                                         [routerLink]="[ course.code, 'requireds']"
                                                         class="btn btn-primary btn-sm">
                                                     <i class="fa fa-plus"></i>
-                                                    <span class="d-none d-md-inline" jhiTranslate="courseManagement.required.name">requiredName</span>
+                                                    <span class="d-none d-md-inline" [translate]="'courseManagement.required.name'">requiredName</span>
                                                     <strong>({{course.totalRequirement}})</strong>
                                                 </button>
                                             </div>
@@ -133,19 +133,19 @@
                                                     [routerLink]="[ course.code, 'view']"
                                                     class="btn btn-info btn-sm color-white">
                                                 <i class="fa fa-eye"></i>
-                                                <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                                                <span class="d-none d-md-inline" [translate]="'entity.action.view'">View</span>
                                             </button>
                                             <button type="submit"
                                                     [routerLink]="[ course.code, 'edit']"
                                                     queryParamsHandling="merge"
                                                     class="btn btn-primary btn-sm">
                                                 <i class="fa fa-pencil"></i>
-                                                <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                                                <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
                                             </button>
                                             <button type="button" (click)="deleteCourse(course)"
                                                     class="btn btn-danger btn-sm">
                                                 <i class="fa fa-times"></i>
-                                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                                <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
                                             </button>
                                         </div>
                                     </td>

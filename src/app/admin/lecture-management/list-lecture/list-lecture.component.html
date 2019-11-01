@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title" jhiTranslate="lectureManagement.home.lecture.title"></h4>
+    <h4 class="modal-title" [translate]="'lectureManagement.home.lecture.title'"></h4>
     <button type="button" class="close" aria-label="Close" (click)="clear()">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -10,7 +10,7 @@
             <button type="button" (click)="goToLink('null', 'new')"
                     class="btn btn-primary jh-create-entity" >
                     <i class="fa fa-plus"></i>
-                <span jhiTranslate="lectureManagement.home.chapter.createLabel">
+                <span [translate]="'lectureManagement.home.chapter.createLabel'">
         Tạo mới
         </span>
             </button>
@@ -29,11 +29,11 @@
     <table class="mt-4 table table-striped text-center table-bordered">
         <thead>
         <tr jhiSort>
-            <th><span jhiTranslate="lectureManagement.code">code</span></th>
-            <th><span jhiTranslate="lectureManagement.name">name</span></th>
-            <th><span jhiTranslate="lectureManagement.type">type</span></th>
-            <th><span jhiTranslate="lectureManagement.active">Active</span></th>
-            <th jhiTranslate="lectureManagement.action">Action</th>
+            <th><span [translate]="'lectureManagement.code'">code</span></th>
+            <th><span [translate]="'lectureManagement.name'">name</span></th>
+            <th><span [translate]="'lectureManagement.type'">type</span></th>
+            <th><span [translate]="'lectureManagement.active'">Active</span></th>
+            <th [translate]="'lectureManagement.action'">Action</th>
         </tr>
         </thead>
         <tbody *ngIf="lectures">
@@ -44,12 +44,12 @@
             <td>
                 <button class="btn btn-danger btn-sm" (click)="setActive(lecture, true)"
                         *ngIf="!lecture.activated"
-                        jhiTranslate="lectureManagement.deactivated">Deactivated
+                        [translate]="'lectureManagement.deactivated'">Deactivated
                 </button>
                 <button class="btn btn-success btn-sm" (click)="setActive(lecture, false)"
                         *ngIf="lecture.activated"
                         
-                        jhiTranslate="lectureManagement.activated">Activated
+                        [translate]="'lectureManagement.activated'">Activated
                 </button>
             </td>
             <td class="text-center">
@@ -58,23 +58,23 @@
                             *ngIf="lecture.type.code === 'quiz'"
                             class="btn btn-success btn-sm">
                         <i class="fa fa-plus"></i>
-                        <span class="d-none d-md-inline" jhiTranslate="lectureManagement.detail.quiz">quiz</span>
+                        <span class="d-none d-md-inline" [translate]="'lectureManagement.detail.quiz'">quiz</span>
                     </button>
                     <button type="submit"
                             [routerLink]="[ lecture.code, 'view']"
                             class="btn btn-info btn-sm color-white">
                         <i class="fa fa-eye"></i>
-                        <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                        <span class="d-none d-md-inline" [translate]="'entity.action.view'">View</span>
                     </button>
                     <button type="button" (click)="goToLink(lecture.code, 'edit')"
                             class="btn btn-primary btn-sm">
                         <i class="fa fa-pencil"></i>
-                        <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                        <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
                     </button>
                     <button type="button" (click)="deleteLecture(lecture)"
                             class="btn btn-danger btn-sm">
                         <i class="fa fa-times"></i>
-                        <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                        <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
                     </button>
                 </div>
             </td>

@@ -1,6 +1,6 @@
 
 <div class="modal-header">
-    <h4 class="modal-title" jhiTranslate="userManagement.detail.title"></h4>
+    <h4 class="modal-title" [translate]="'userManagement.detail.title'"></h4>
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
         (click)="clear()">&times;</button>
 </div>
@@ -17,27 +17,27 @@
         <table>
             <tbody>
                 <tr>
-                    <td class="text-right"><span jhiTranslate="userManagement.username"></span></td>
+                    <td class="text-right"><span [translate]="'userManagement.username'"></span></td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td><b>{{user?.username}}</b></td>
                 </tr>
                 <tr>
-                    <td class="text-right"><span jhiTranslate="userManagement.email"></span></td>
+                    <td class="text-right"><span [translate]="'userManagement.email'"></span></td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td><b>{{user?.email}}</b></td>
                 </tr>
                 <tr>
-                    <td class="text-right"><span jhiTranslate="userManagement.phone"></span></td>
+                    <td class="text-right"><span [translate]="'userManagement.phone'"></span></td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td><b>{{user?.phone}}</b></td>
                 </tr>
                 <tr>
-                    <td class="text-right"><span jhiTranslate="userManagement.address"></span></td>
+                    <td class="text-right"><span [translate]="'userManagement.address'"></span></td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td><b>{{user?.address}}</b></td>
                 </tr>
                 <tr>
-                    <td class="text-right"><span jhiTranslate="userManagement.roles"></span></td>
+                    <td class="text-right"><span [translate]="'userManagement.roles'"></span></td>
                     <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
                     <td>
                         <div *ngFor="let role of user?.roleBOs">
@@ -52,6 +52,6 @@
 </div>
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="clear()">
-        &nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        &nbsp;<span [translate]="'entity.action.cancel'">Cancel</span>
     </button>
 </div>

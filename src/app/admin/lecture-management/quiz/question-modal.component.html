@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h4 class="modal-title" id="modal-basic-title" jhiTranslate="lectureManagement.quiz.updated">update</h4>
+    <h4 class="modal-title" id="modal-basic-title" [translate]="'lectureManagement.quiz.updated'">update</h4>
     <button type="button" class="close" aria-label="Close" (click)="clear()">
         <span aria-hidden="true">&times;</span>
     </button>
@@ -17,7 +17,7 @@
             <div class="col-md-4">
                 <div class="row justify-content-center" style="position: relative; top: 25%;">
                     <div class="col-md-4 text-right">
-                        <label style="margin-top: 2px;" jhiTranslate="lectureManagement.activated">activated</label>
+                        <label style="margin-top: 2px;" [translate]="'lectureManagement.activated'">activated</label>
                     </div>
                     <div class="col-md-4">
                         <label class="switch switch-label switch-success">
@@ -57,6 +57,6 @@
     <span class="text-danger">{{error}}</span>
     <button type="button" (click)="save()" class="btn btn-primary">
         <i class="fa fa-floppy-o" aria-hidden="true"></i>
-        &nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        &nbsp;<span [translate]="'entity.action.save'">Save</span>
     </button>
 </div>

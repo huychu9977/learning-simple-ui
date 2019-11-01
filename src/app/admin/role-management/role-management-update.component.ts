@@ -119,9 +119,9 @@ export class RoleMgmtUpdateComponent implements OnInit {
   confirm() {
     this.updateRole();
     if (this.role.id !== null) {
-      this.roleService.update(this.role).subscribe(response => this.onSaveSuccess(response), () => this.onSaveError());
+      this.roleService.update(this.role).subscribe(response => this.onSaveSuccess(response), (err) => this.onSaveError(err));
     } else {
-      this.roleService.create(this.role).subscribe(response => this.onSaveSuccess(response), () => this.onSaveError());
+      this.roleService.create(this.role).subscribe(response => this.onSaveSuccess(response), (err) => this.onSaveError(err));
     }
   }
   private updateRole() {
@@ -138,8 +138,8 @@ export class RoleMgmtUpdateComponent implements OnInit {
     }, 1700);
   }
 
-  private onSaveError() {
-    this.toastr.error('Thao tác thất bại!');
+  private onSaveError(err) {
+    this.toastr.error('Thao tác thất bại!', err.error.message);
     this.isSaving = false;
   }
 }

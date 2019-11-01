@@ -3,7 +3,7 @@
         <div class="col-sm-12">
             <div class="card">
                 <div class="card-header">
-                    <h3><span jhiTranslate="permissionManagement.home.title">Users</span></h3>
+                    <h3><span [translate]="'permissionManagement.home.title'">Users</span></h3>
                 </div>
                 <div class="card-body">
                     <div class="row">
@@ -14,7 +14,7 @@
                                             class="btn btn-primary jh-create-entity create-organization"
                                             [routerLink]="['new']">
                                             <i class="fa fa-plus"></i>
-                                        <span jhiTranslate="permissionManagement.home.createLabel">
+                                        <span [translate]="'permissionManagement.home.createLabel'">
                                Tạo mới
                                </span>
                                     </button>
@@ -35,18 +35,15 @@
                                 <thead>
                                 <tr jhiSort>
                                     <th jhiSortBy="id">
-                                        <span jhiTranslate="global.field.id">ID</span>
-                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
+                                        <span [translate]="'global.field.id'">ID</span>
                                     </th>
                                     <th jhiSortBy="code">
-                                        <span jhiTranslate="permissionManagement.code">code</span>
-                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
+                                        <span [translate]="'permissionManagement.code'">code</span>
                                     </th>
                                     <th jhiSortBy="name">
-                                        <span jhiTranslate="permissionManagement.name">Email</span>
-                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
+                                        <span [translate]="'permissionManagement.name'">Email</span>
                                     </th>
-                                    <th jhiTranslate="permissionManagement.action">Action</th>
+                                    <th [translate]="'permissionManagement.action'">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody *ngIf="permissions">
@@ -62,13 +59,13 @@
                                                     class="btn btn-primary btn-sm">
                                                 <i class="fa fa-pencil"></i>
                                                 <span class="d-none d-md-inline"
-                                                      jhiTranslate="entity.action.edit">Edit</span>
+                                                      [translate]="'entity.action.edit'">Edit</span>
                                             </button>
                                             <!-- [disabled]="currentAccount.id === permission.id" -->
                                             <button type="button" (click)="deletePermission(permission)"
                                                     class="btn btn-danger btn-sm">
                                                 <i class="fa fa-times"></i>
-                                                <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                                                <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
                                             </button>
                                         </div>
                                     </td>

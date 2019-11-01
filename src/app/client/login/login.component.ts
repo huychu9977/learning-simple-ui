@@ -40,7 +40,7 @@ export class LoginModalComponent implements AfterViewInit {
     });
     this.modalRef.hide();
   }
-
+  requestResetPassword() {}
   login() {
     this.loginService
       .login({

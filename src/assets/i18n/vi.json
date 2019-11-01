@@ -63,6 +63,23 @@
        "dashboard":{
           "navName":"Trang chủ"
        },
+       "messages": {
+         "info": {
+           "register": {
+             "noaccount": "Bạn vẫn chưa có tài khoản?",
+             "account": "Bạn đã có tài khoản?",
+             "link": "Đăng ký tài khoản mới"
+           }
+         },
+         "validate": {
+           "email": {
+             "required": "Bạn phải nhập email.",
+             "invalid": "Email bạn nhập không hợp lệ.",
+             "minlength": "Email phải có ít nhất 5 ký tự.",
+             "maxlength": "Email không được vượt quá 50 ký tự."
+           }
+         }
+       },
        "title":"LearningSimple",
        "menu":{
           "home":"Trang chủ",
@@ -96,6 +113,9 @@
           "field":{
              "id":"ID"
           }
+       },
+       "field": {
+         "id": "ID"
        }
     },
     "entity":{
@@ -109,6 +129,19 @@
           "open":"Mở",
           "save":"Lưu",
           "view":"Xem"
+       },
+       "validation": {
+         "required": "Trường này bắt buộc phải nhập.",
+         "minlength": "Trường này phải có ít nhất {{ min }} ký tự.",
+         "maxlength": "Trường này không được vượt quá {{ max }} ký tự.",
+         "min": "Trường này phải lớn hơn {{ min }}.",
+         "max": "Trường này phải nhỏ hơn {{ max }}.",
+         "minbytes": "Dung lượng trường này phải lớn hơn {{ min }} bytes.",
+         "maxbytes": "Dung lượng trường này phải nhỏ hơn {{ max }} bytes.",
+         "pattern": "Trường này phải theo định dạng {{ pattern }}.",
+         "number": "Trường này phải là một số.",
+         "datetimelocal": "Trường này phải là định dạng thời gian.",
+         "patternLogin": "Trường này phải đúng định dạng mã."
        }
     },
     "lectureManagement":{
