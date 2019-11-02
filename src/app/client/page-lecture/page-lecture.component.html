@@ -13,11 +13,11 @@
           <div class="lecture-header-user">
             <div class="lecture-header-rate" *ngIf="!currentReview" (click)="openReviewModal(content)">
               <span><i class="fa fa-star-o"></i></span>
-              <span>Để lại đánh giá</span>
+              <span class="ml-1">Để lại đánh giá</span>
             </div>
             <div class="lecture-header-rate" *ngIf="currentReview" (click)="openReviewModal(content)">
               <span><i class="fa fa-star"></i></span>
-              <span>Chỉnh sửa đánh giá</span>
+              <span class="ml-1">Chỉnh sửa đánh giá</span>
             </div>
             <div class="lecture-header-user-label">
                 <user-header></user-header>
@@ -58,7 +58,6 @@
             </ul>
           </div>
           <footer>
-            <p *ngFor="let ans of answerChecked">{{ans.answer}}</p>
             <div class="footer-left">
               <span>Question 1 of 1</span>
             </div>
@@ -185,22 +184,21 @@
 </div>
 <ng-template #content let-modal>
     <div class="modal-body">
-      <h4 class="modal-title">Đánh giá của bạn</h4>
-      <div class="row">
-          <div class="col-sm-12">
-              <ul class="list-inline rating-list" 
-                  *ngFor="let star of stars" style="display: inline-block" >
-                    <li (click)="selectedValue = star"
-                        [ngClass]="{'selected': (star <= selectedValue)}">
-                      <i class="fa fa-star"></i>
-                    </li> 
-              </ul>
-          </div>
-        </div>
-      <textarea class="form-control" [defaultValue]="currentReview?.content" placeholder="Đánh giá của bạn..."></textarea>
-      <div class="d-flex justify-content-end">
-          <button type="button" class="btn btn-light" (click)="modal.close('Close click')">Đóng</button>
-          <button type="button" class="btn btn-primary ml-2" (click)="modal.close('Close click')">Lưu</button>
+      <h4 class="modal-title mb-3">Đánh giá của bạn</h4>
+      <p class="mb-2 text-center"><span>{{titleRates[selectedValue-1]}}</span></p>
+      <div class="row d-flex justify-content-center mb-2">
+          <rating [max]="5" [(ngModel)]="selectedValue" [customTemplate]="tt" [titles]="titleRates"></rating>
+          <ng-template #tt let-i="index" let-v="value">
+            <button class="btn btn-{{i < v ? 'warning' : 'default'}} mr-2">
+              {{i < v ? '&#9733;' : '&#9734;'}}
+            </button>
+          </ng-template>
+      </div>
+      <textarea rows="6" class="form-control" [(ngModel)]="reviewContent" placeholder="Đánh giá của bạn..."></textarea>
+      <small [hidden]="!reviewContentError" class="text-danger mt-1">Vui lòng điền đánh giá!!</small>
+      <div class="d-flex justify-content-end mt-3">
+          <button type="button" class="btn btn-light" (click)="close()">Đóng</button>
+          <button type="button" class="btn btn-primary ml-2" (click)="update(currentReview)">Lưu</button>
       </div>
     </div>
   </ng-template>

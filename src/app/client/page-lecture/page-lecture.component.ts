@@ -8,6 +8,8 @@ import { LectureService } from 'src/app/services/lecture.service';
 import { CourseService } from 'src/app/services/course.service';
 import { HttpResponse } from '@angular/common/http';
 import { BsModalService } from 'ngx-bootstrap';
+import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'page-lecture',
@@ -27,17 +29,21 @@ export class PageLectureComponent implements OnInit {
   page?: any = 0;
   answerChecked?: any = [];
   currentReview: any;
-  stars: number[] = [1, 2, 3, 4, 5];
-  selectedValue: number;
-  isMouseEnter = false;
+  selectedValue = 1;
+  reviewContent = '';
+  titleRates = ['Bad', 'Not Bad', 'OK', 'Good', 'Excellent'];
+  reviewContentError = false;
   constructor(
+    private modalRef: BsModalRef,
     private reviewService: ReviewService,
     private route: ActivatedRoute,
     private titleService: Title,
     private lectureService: LectureService,
     private modalService: BsModalService,
-    private courseService?: CourseService
-    ) { }
+    private courseService?: CourseService,
+    private toastr?: ToastrService
+    ) {
+    }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -107,6 +113,49 @@ export class PageLectureComponent implements OnInit {
     });
   }
   openReviewModal(content) {
-    this.modalService.show(content);
+    this.selectedValue = this.currentReview ? this.currentReview.rate : 1;
+    this.reviewContent = this.currentReview ? this.currentReview.content : '';
+    this.modalRef = this.modalService.show(content, {class: 'modal-md'});
+  }
+  update(reviewBO?: any) {
+    if (this.reviewContent === '') {
+      this.reviewContentError = true;
+      return;
+    } else {
+      this.reviewContentError = false;
+      const review = {
+        courseCode : this.courseCode,
+        content : this.reviewContent,
+        rate : +this.selectedValue
+      };
+      if (this.currentReview) {
+        this.reviewService.update(review).subscribe(
+          (res) => {
+            if (res) {
+              this.loadReviewByCourse();
+              this.modalRef.hide();
+            }
+          },
+          (err) => {
+            this.toastr.error(err.error.message, 'Thất bại!');
+          }
+        );
+      } else {
+        this.reviewService.create(review).subscribe(
+          (res) => {
+            if (res) {
+              this.loadReviewByCourse();
+              this.modalRef.hide();
+            }
+          },
+          (err) => {
+            this.toastr.error(err.error.message, 'Thất bại!');
+          }
+        );
+      }
+    }
+  }
+  close() {
+    this.modalRef.hide();
   }
 }

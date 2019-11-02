@@ -1,0 +1,170 @@
+.footer {
+    width: 100%;
+    text-align: center;
+    .hr-primary {
+        margin: 0;
+        border-top: 6px solid #ec5252;
+    }
+    .copyright {
+        padding: 11px 0;
+        background: #2d3e50;
+        color: white;
+        span {
+            color: #fbaa33;
+            text-transform: uppercase;
+        }
+    }
+    .overlay_social {
+        position: absolute;
+        content: '';
+        background: rgba(0, 0, 0, .4);
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 1;
+        opacity: 0;
+        transition: all linear .4s;
+        &:hover {
+            opacity: 1;
+        }
+        a {
+            position: absolute;
+            color: #2d3e50;
+            font-family: 'Arimo';
+            font-weight: 400;
+            font-size: 13px;
+            padding: 12px 10px;
+            text-align: center;
+            background: white;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+    }
+}
+
+/* ==================================
+     Our Contact Info part start
+=================================== */
+
+#contact-info {
+	background: url(../images/contactpartbanner.png) no-repeat;
+	background-position: center !important;
+	background-size: cover !important;
+	z-index: 1;
+}
+
+#contact-info .cheader-left {
+	margin-top: 30px;
+	margin-bottom: 30px;
+}
+
+#contact-info .cheader-center h3 {
+	color: white;
+	font-family: 'Arimo';
+	font-weight: 700;
+	font-size: 20px;
+	padding-top: 60px;
+	padding-bottom: 30px;
+}
+
+#contact-info .content-text {
+    .c-text-left {
+        .nipa {
+            padding-bottom: 32px;
+        }
+        p {
+            color: white;
+            font-family: 'Arimo';
+            font-weight: 400;
+            font-size: 14px;
+        }
+        ul li {
+            display: inline-block;
+            margin-top: 33px;
+            margin-bottom: 73px;
+            margin-right: 15px;
+            a i {
+                color: #2d3e50;
+                width: 40px;
+                height: 40px;
+                border-radius: 50%;
+                line-height: 40px;
+                text-align: center;
+                background: white;
+                font-size: 20px;
+                transition: all linear .5s;
+                -webkit-transition: all linear .5s;
+                -moz-transition: all linear .5s;
+                -ms-transition: all linear .5s;
+                -o-transition: all linear .5s;
+                &:hover {
+                    color: white;
+                    background: #fbaa33;
+                }
+            }
+        }
+    }
+    .c-text-menu1 ul li a {
+        color: white;
+        font-family: 'Arimo';
+        font-weight: 400;
+        font-size: 16px;
+        padding-bottom: 28px;
+        display: block;
+        transition: all linear .5s;
+        -webkit-transition: all linear .5s;
+        -moz-transition: all linear .5s;
+        -ms-transition: all linear .5s;
+        -o-transition: all linear .5s;
+        &:hover {
+            color: #fbaa33;
+        }
+    }
+    .c-text-location {
+        ul {
+            padding-top: 10px;
+            li {
+                padding-bottom: 37px;
+                a i {
+                    color: #2d3e50;
+                    width: 50px;
+                    height: 50px;
+                    border-radius: 50%;
+                    line-height: 50px;
+                    text-align: center;
+                    background: white;
+                    font-size: 20px;
+                    transition: all linear .5s;
+                    -webkit-transition: all linear .5s;
+                    -moz-transition: all linear .5s;
+                    -ms-transition: all linear .5s;
+                    -o-transition: all linear .5s;
+                    &:hover {
+                        color: white;
+                        background: #fbaa33;
+                    }
+                }
+            }
+        }
+        .address {
+            text-align: left;
+            margin-top: 10px;
+            .address_title {
+                color: #fbaa33;
+                font-family: 'Arimo';
+                font-weight: 400;
+                font-size: 16px;
+                padding-bottom: 10px;
+            }
+            p {
+                color: white;
+                font-family: 'Arimo';
+                font-weight: 400;
+                font-size: 14px;
+                padding-bottom: 25px;
+            }    
+        }
+    }
+}

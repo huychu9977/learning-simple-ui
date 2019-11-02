@@ -62,9 +62,11 @@ export class CourseReviewsComponent implements OnInit {
             );
   }
   private onSuccess(data, headers) {
-    this.totalItems = headers.get('X-Total-Count');
-    this.reviews = data;
+    this.totalItems = data.totalResult;
+    this.reviews = data.results;
   }
   loadPage(event: any) {
+    this.page = event.page;
+    this.loadAll();
   }
 }

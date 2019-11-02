@@ -15,12 +15,12 @@ export class ReviewService {
         return this.http.get<any>(`${this.resourceUrl}/course?courseCode=${courseCode}`);
     }
 
-    create(permission: ReviewBO): Observable<HttpResponse<ReviewBO>> {
-        return this.http.post<ReviewBO>(this.resourceUrl, permission, { observe: 'response' });
+    create(reivew: ReviewBO): Observable<HttpResponse<ReviewBO>> {
+        return this.http.post<ReviewBO>(this.resourceUrl, reivew, { observe: 'response' });
     }
 
-    update(permission: ReviewBO): Observable<HttpResponse<ReviewBO>> {
-        return this.http.put<ReviewBO>(this.resourceUrl, permission, { observe: 'response' });
+    update(reivew: ReviewBO): Observable<HttpResponse<ReviewBO>> {
+        return this.http.put<ReviewBO>(this.resourceUrl, reivew, { observe: 'response' });
     }
 
     query(req?: any): Observable<HttpResponse<ReviewBO[]>> {

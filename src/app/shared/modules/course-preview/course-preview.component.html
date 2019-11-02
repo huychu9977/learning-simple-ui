@@ -17,14 +17,13 @@
     <div>
       <div class="purchase-text" *ngIf="userRegistration">
         <span><i class="fa fa-info-circle" aria-hidden="true"></i></span>
-        <span>{{userRegistration.enrollDate}}</span>
+        <span>Bạn đã tham gia khóa học ngày {{userRegistration.enrollDate | date:'dd/MM/yy'}}</span>
       </div>
     </div>
     <div class="col-inner">
       <div>
         <h1 class="icon-click-here">
-          <i class="fa fa-level-down" aria-hidden="true"></i>
-          <i class="fa fa-level-down" aria-hidden="true"></i>
+          
         </h1>
         <div>
             <button *ngIf="userRegistration" [routerLink]="[ 'lecture', lectureCode ]" type="button" class="course-cta btn btn-lg btn-secondary btn-block">Vào học</button>

@@ -12,7 +12,6 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 export class LoginModalComponent implements AfterViewInit {
   authenticationError: boolean;
   isLoginForm = true;
-  modalRef: BsModalRef;
   loginForm = this.fb.group({
     username: [''],
     password: [''],
@@ -25,7 +24,8 @@ export class LoginModalComponent implements AfterViewInit {
     private elementRef: ElementRef,
     private renderer: Renderer,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private modalRef: BsModalRef
   ) {}
 
   ngAfterViewInit() {

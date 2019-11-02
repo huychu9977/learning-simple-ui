@@ -21,6 +21,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HeaderModule } from './page-header/header.module';
 import { LoginModalModule } from './login/login.module';
 import { UserRouteAccessCourseService } from '../core/auth/user-route-access-course-service';
+import { PageMyCourseComponent } from './page-my-course/page-my-course.component';
+import { PageMyCourseModule } from './page-my-course/page-my-course.module';
 const clientRoute: Routes = [
     {
       path: '',
@@ -63,32 +65,27 @@ const clientRoute: Routes = [
           }
         },
         {
-          path: 'course/:course-code',
-          component: PageCourseComponent,
+          path: 'account/my-courses',
+          component: PageMyCourseComponent,
           data: {
-            pageTitle: 'global.menu.account.settings'
+            pageTitle: 'courseManagement.home.title'
           }
+        },
+        {
+          path: 'course/:course-code',
+          component: PageCourseComponent
         },
         {
           path: 'our-teacher',
-          component: PageOurTeacherComponent,
-          data: {
-            pageTitle: 'global.menu.account.settings'
-          }
+          component: PageOurTeacherComponent
         },
         {
           path: 'teacher',
-          component: PageTeacherComponent,
-          data: {
-            pageTitle: 'global.menu.account.settings'
-          }
+          component: PageTeacherComponent
         },
         {
           path: 'course/:course-code/lecture/:code',
           component: PageLectureComponent,
-          data: {
-            pageTitle: 'global.menu.account.settings'
-          },
           canActivate: [UserRouteAccessCourseService]
         },
         { path: 'not-found', component: PageNotFoundComponent},
@@ -111,7 +108,8 @@ const clientRoute: Routes = [
       PageCourseModule,
       PageLectureModule,
       PageOurTeacherModule,
-      PageTeacherModule
+      PageTeacherModule,
+      PageMyCourseModule
     ]
   })
   export class ClientModule { }

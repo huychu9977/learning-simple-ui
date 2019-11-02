@@ -151,6 +151,7 @@ export class PageOurCourseComponent implements OnInit {
   }
 
   loadPage(event: any) {
+    this.page = event.page;
     if (event.page !== this.previousPage) {
       const route = this.transition();
       const url = this.router

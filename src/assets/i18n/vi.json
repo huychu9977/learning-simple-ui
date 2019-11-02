@@ -60,6 +60,16 @@
        "validation":"Validation error on the server."
     },
     "global":{
+      "form": {
+         "username.label": "Tên tài khoản",
+         "username.placeholder": "Nhập tên tài khoản của bạn",
+         "newpassword.label": "Mật khẩu mới",
+         "newpassword.placeholder": "Nhập mật khẩu mới",
+         "confirmpassword.label": "Xác nhận mật khẩu mới",
+         "confirmpassword.placeholder": "Nhập lại mật khẩu mới",
+         "email.label": "Email",
+         "email.placeholder": "Nhập email của bạn"
+       },
        "dashboard":{
           "navName":"Trang chủ"
        },
