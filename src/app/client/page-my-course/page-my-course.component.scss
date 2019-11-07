@@ -83,6 +83,15 @@
                     display: block;
                 }
             }
+            .product-rating {
+                display: inline-block;
+                text-align: right;
+                width: 44%;
+                i {
+                    font-size: 14px;
+                    margin-right: 2px;
+                }
+            }
         }
     }
 }

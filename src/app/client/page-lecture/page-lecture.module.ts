@@ -1,22 +1,26 @@
-import { FormsModule } from '@angular/forms';
 import { UserHeaderModule } from './../../core/user-header/user-header.module';
 import { RouterModule } from '@angular/router';
 import { PageLectureComponent } from './page-lecture.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { TranslateModule } from '@ngx-translate/core';
-import { RatingModule, BsModalRef, ModalModule } from 'ngx-bootstrap';
+// tslint:disable-next-line:max-line-length
+import { RatingModule, BsModalRef, ModalModule, ProgressbarModule, TabsModule, PaginationModule, AlertModule, BsDropdownModule } from 'ngx-bootstrap';
+import { SharedLibsModule } from 'src/app/shared/shared-libs.module';
+import { CKEditorModule } from 'ngx-ckeditor';
 
 @NgModule({
   declarations: [PageLectureComponent],
   imports: [
-    CommonModule,
     RouterModule,
-    TranslateModule,
     UserHeaderModule,
-    FormsModule,
+    SharedLibsModule,
     RatingModule.forRoot(),
-    ModalModule.forRoot()
+    ModalModule.forRoot(),
+    ProgressbarModule.forRoot(),
+    TabsModule.forRoot(),
+    PaginationModule.forRoot(),
+    AlertModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    CKEditorModule
   ],
   providers: [BsModalRef],
   exports: [PageLectureComponent]

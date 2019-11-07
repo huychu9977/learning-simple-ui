@@ -48,4 +48,17 @@ export class CourseService {
     getLevels(): Observable<any[]> {
         return this.http.get<any[]>(`${this.resourceUrl}/levels`);
     }
+    //
+    queryMyCourses(req?: any): Observable<HttpResponse<any>> {
+        const options = createRequestOption(req);
+        return this.http.get<any>(`${this.resourceUrl}/employer/my-courses`, { params: options, observe: 'response' });
+    }
+
+    queryLectureCompleted(courseCode?: string): Observable<any[]> {
+        return this.http.get<any[]>(`${this.resourceUrl}/employer/lecture-completed/${courseCode}`);
+    }
+
+    toggleCompletedLecture(lectureId?: any) {
+        return this.http.post(`${this.resourceUrl}/employer/lecture-completed/${lectureId}`, { observe: 'response' });
+    }
 }

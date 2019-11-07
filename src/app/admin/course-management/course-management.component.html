@@ -67,14 +67,11 @@
                             <br/>
                             <table class="table table-striped text-center">
                                 <thead>
-                                <tr jhiSort>
-                                    <th jhiSortBy="id">
-                                        <span [translate]="'global.field.id'">ID</span>
-                                    </th>
-                                    <th jhiSortBy="code">
+                                <tr>
+                                    <th>
                                         <span [translate]="'courseManagement.code'">code</span>
                                     </th>
-                                    <th jhiSortBy="email">
+                                    <th>
                                         <span [translate]="'courseManagement.name'">name</span>
                                     </th>
                                     <th><span [translate]="'courseManagement.active'">Active</span></th>
@@ -84,8 +81,7 @@
                                 </tr>
                                 </thead>
                                 <tbody *ngIf="courses">
-                                <tr *ngFor="let course of courses; trackBy: trackIdentity">
-                                    <td><a [routerLink]="[course.code, 'view']">{{course.id}}</a></td>
+                                <tr *ngFor="let course of courses;">
                                     <td>{{course.code}}</td>
                                     <td>{{course.name}}</td>
                                     <td>
@@ -157,7 +153,8 @@
                             <div class="row justify-content-center">
                             </div>
                             <div class="row justify-content-center">
-                                <pagination [totalItems]="totalItems" [(ngModel)]="page" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"></pagination>
+                                    <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
+                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
                             </div>
                         </div>
                     </div>

@@ -6,6 +6,7 @@ import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 import { CategoryService } from 'src/app/services/category.service';
+import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'page-our-course',
@@ -113,6 +114,7 @@ export class PageOurCourseComponent implements OnInit {
   title;
   constructor(
     private location: Location,
+    private pageReloadService: PageReloadService,
     private route: ActivatedRoute,
     private router: Router,
     private categoryService: CategoryService,
@@ -267,6 +269,7 @@ export class PageOurCourseComponent implements OnInit {
       [route.link],
       {queryParams: route.param}
     );
+    this.pageReloadService.reload(this.router);
   }
   transition() {
     this.params = {};

@@ -1,21 +1,32 @@
-<div  class="dropdown pl-3 py-4" dropdown>
-    <a dropdownToggle class="text-center dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" href="javascript:void(0)">
-            <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i>
-            <span *ngIf="currentAccount">{{currentAccount.name}}</span>
-            <span *ngIf="!currentAccount">Tài khoản</span>
-    </a>
-    <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="menu3">
-        <li >
-            <ul class="dropdown-menu_list" *ngIf="!currentAccount">
-                <li class="menu_link"> <a href="javascript:void(0)" (click)="login()"> <span>Đăng nhập</span> </a> </li>
-                <!-- <li class="menu_link"> <a href="javascript:void(0)"> <span>My Account</span> </a> </li>
-                <li class="menu_link"> <a href="javascript:void(0)"> <span>Log out</span> </a> </li> -->
-            </ul>
-            <ul class="dropdown-menu_list" *ngIf="currentAccount">
-                <li class="menu_link"> <a href="javascript:void(0)"> <span>Tài khoản</span> </a> </li>
-                <li class="menu_link"> <a href="javascript:void(0)" [routerLink]="[ '/account/my-courses' ]"> <span>Khóa học của tôi</span> </a> </li>
-                <li class="menu_link"> <a href="javascript:void(0)" (click)="logout()"> <span>Đăng xuất</span> </a> </li>
-            </ul>
-        </li>
-    </ul>
+<div style="display: -webkit-box;">   
+    <div class="notification" [popover]="popTemplate" popoverTitle="Thông báo" container="body" *ngIf="isShowNotification()">
+        <i class="fa fa-bell" aria-hidden="true"></i>
+    </div>
+    <div  class="w-100 dropdown pl-3 py-4" dropdown>
+        <a dropdownToggle class="text-center dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true" href="javascript:void(0)">
+                <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i>
+                <span *ngIf="currentAccount">{{currentAccount.name}}</span>
+                <span *ngIf="!currentAccount">Tài khoản</span>
+        </a>
+        <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="menu3">
+            <li >
+                <ul class="dropdown-menu_list" *ngIf="!currentAccount">
+                    <li class="menu_link"> <a href="javascript:void(0)" (click)="login()"> <span>Đăng nhập</span> </a> </li>
+                </ul>
+                <ul class="dropdown-menu_list" *ngIf="currentAccount">
+                    <li class="menu_link"> <a href="javascript:void(0)"> <span>Tài khoản</span> </a> </li>
+                    <li class="menu_link"> <a href="javascript:void(0)" [routerLink]="[ '/account/my-courses' ]"> <span>Khóa học của tôi</span> </a> </li>
+                    <li class="menu_link"> <a href="javascript:void(0)" (click)="logout()"> <span>Đăng xuất</span> </a> </li>
+                </ul>
+            </li>
+        </ul>
+    </div>
 </div>
+<ng-template #popTemplate>
+    <div class="list-group">
+        <button type="button" class="list-group-item list-group-item-action" *ngFor="let notifi of notifications"
+        [routerLink]="[ '/course', notifi.courseCode, 'lecture', notifi.lectureCode ]" [queryParams]="{commentId: notifi.commentId}">
+            {{notifi.createdBy}} đã phản hồi bình luận của bạn
+        </button>
+    </div>
+</ng-template>

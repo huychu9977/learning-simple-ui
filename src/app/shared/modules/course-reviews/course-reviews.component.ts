@@ -19,7 +19,7 @@ export class CourseReviewsComponent implements OnInit {
   reviews: ReviewBO[];
   starSelected = [];
   starNumber = 0;
-
+  colors = ['#f4c150', '#76c5d6', '#686f7a', '#00576b'];
   @Input() rates: any[] = [];
   @Input() rateAvg: any;
   @Input() rateAvgRound?: any = 0;

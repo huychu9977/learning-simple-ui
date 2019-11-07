@@ -33,14 +33,11 @@
                             <br/>
                             <table class="table table-striped text-center">
                                 <thead>
-                                <tr jhiSort>
-                                    <th jhiSortBy="id">
-                                        <span [translate]="'global.field.id'">ID</span>
-                                    </th>
-                                    <th jhiSortBy="code">
+                                <tr>
+                                    <th >
                                         <span [translate]="'lectureManagement.code'">code</span>
                                     </th>
-                                    <th jhiSortBy="email">
+                                    <th >
                                         <span [translate]="'lectureManagement.name'">name</span>
                                     </th>
                                     <th><span [translate]="'lectureManagement.active'">Active</span></th>
@@ -50,7 +47,6 @@
                                 </thead>
                                 <tbody *ngIf="courseLectures">
                                 <tr *ngFor="let lecture of courseLectures; trackBy: trackIdentity">
-                                    <td><a [routerLink]="[lecture.code, 'view']">{{lecture.id}}</a></td>
                                     <td>{{lecture.code}}</td>
                                     <td>{{lecture.name}}</td>
                                     <td>
@@ -102,7 +98,8 @@
                         </div>
                         <div *ngIf="courseLectures && courseLectures.length" class="w-100">
                             <div class="row justify-content-center">
-                                <pagination [totalItems]="totalItems" [(ngModel)]="page" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"></pagination>
+                                <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
+                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
                             </div>
                         </div>
                     </div>

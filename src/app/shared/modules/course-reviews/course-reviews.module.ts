@@ -1,15 +1,12 @@
-import { HighlightSearch } from './../../util/highlight-text.pipe';
 import { CourseReviewsComponent } from './course-reviews.component';
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { PaginationModule } from 'ngx-bootstrap';
+import { SharedLibsModule } from '../../shared-libs.module';
 
 @NgModule({
-  declarations: [CourseReviewsComponent, HighlightSearch],
+  declarations: [CourseReviewsComponent],
   imports: [
-    CommonModule,
-    FormsModule,
+    SharedLibsModule,
     PaginationModule.forRoot()
   ],
   exports: [CourseReviewsComponent]

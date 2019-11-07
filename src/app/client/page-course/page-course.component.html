@@ -15,7 +15,8 @@
           [lectureCode]="getLectures(chapters[0]?.code)[0]?.code"
           [totalLectureQuiz]="totalLectureQuiz"
           [totalLectureVideo]="totalLectureVideo"
-          [totalLectureExercise]="totalLectureExercise"></course-preview>
+          [totalLectureExercise]="totalLectureExercise"
+          [totalTimeEstimateVideo]="totalTimeEstimate() | minuteSeconds"></course-preview>
       </div>
     </div>
   </div>
@@ -35,14 +36,14 @@
           <div>
               <div class="curriculum-header-container">
                   <div class="header-left">
-                    <div class="curriculum-header-title">Course content</div>
+                    <div class="curriculum-header-title">Nội dung</div>
                   </div>
                   <div class="header-right">
                     <span>
                       <a class="sections-toggle" href="javascript:void(0)"></a> 
                       <span class="dib">{{course?.lectures?.length - chapters?.length}} lectures</span>
                     </span>
-                    <span class="curriculum-header-length">03:36:33</span>
+                    <span class="curriculum-header-length">{{totalTimeEstimate() | minuteSeconds}}</span>
                   </div>
                 </div>
                 <!--  -->
@@ -58,19 +59,22 @@
                           </span>
                         </div>
                         <div class="section-header-right">
-                          <span class="num-items-in-section">{{getLectures(chapter.code).length}} lectures</span>
-                          <span class="section-header-length">16:41</span>
+                          <span class="num-items-in-section">{{getLectures(chapter.code).length}} bài học</span>
+                          <span class="section-header-length">{{totalChapterTimeEstimate(chapter.code) | minuteSeconds}}</span>
                         </div>
                     </a>
                     <div class="panel" hide="!chapter.isActive">
                       <div *ngFor="let lecture of getLectures(chapter.code)" class="lecture-container">
                           <div class="left-content">
-                              <span class="udi"><i class="fa fa-play-circle" aria-hidden="true"></i></span>
+                              <span class="udi">
+                                <i *ngIf="lecture.type.code === 'lecture'" class="fa fa-play-circle" aria-hidden="true"></i>
+                                <i *ngIf="lecture.type.code === 'quiz'" class="fa fa-question-circle-o" aria-hidden="true"></i>
+                              </span>
                               <div class="top">
                                   <div class="title">{{lecture.name}} </div>
                               </div>
                           </div>
-                          <div class="details"><span class="content-summary">01:57</span></div>
+                          <div class="details"><span class="content-summary" [hidden]="lecture.type.code !== 'lecture'">{{lecture.videoTimeEstimation | minuteSeconds}}</span></div>
                       </div>
                     </div>
                 </div>
@@ -83,7 +87,7 @@
         <div style="margin-top: 40px;">
             <div class="requirements">
                 <div class="requirements-title">
-                    Requirements
+                    Yêu cầu 
                 </div>
                 <div class="requirements-content" *ngIf="course?.requirementBOs">
                     <ul class="requirements-list" *ngFor="let r of course?.requirementBOs">
@@ -100,7 +104,7 @@
             <div [ngClass]=" descriptionMore ? 'collape-description-more' : 'collape-description'" #hh>
               <div class="description">
                 <div class="description-title">
-                  Description
+                  Mô tả
                 </div>
                 <div [innerHTML]="course?.description">
                     

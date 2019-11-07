@@ -17,7 +17,7 @@ export class LoginModalComponent implements AfterViewInit {
     password: [''],
     rememberMe: [false]
   });
-
+  load = false;
   constructor(
     private loginService: LoginService,
     private page: PageReloadService,
@@ -42,6 +42,7 @@ export class LoginModalComponent implements AfterViewInit {
   }
   requestResetPassword() {}
   login() {
+    this.load = true;
     this.loginService
       .login({
         username: this.loginForm.get('username').value,
@@ -55,6 +56,7 @@ export class LoginModalComponent implements AfterViewInit {
       })
       .catch(() => {
         this.authenticationError = true;
+        this.load = false;
       });
   }
 }

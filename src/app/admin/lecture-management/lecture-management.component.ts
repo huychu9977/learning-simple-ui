@@ -8,7 +8,7 @@ import { SweetAlert } from 'sweetalert/typings/core';
 import { ToastrService } from 'ngx-toastr';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { LectureService } from 'src/app/services/lecture.service';
-import { BsModalService } from 'ngx-bootstrap';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 const swal: SweetAlert = _swal as any;
 @Component({
   selector: 'lecture-management',
@@ -35,25 +35,24 @@ export class LectureManagementComponent implements OnInit, OnDestroy {
         private toastr?: ToastrService,
     ) {
         this.itemsPerPage = 2;
-        this.routeData = this.activatedRoute.data.subscribe(data => {
-            this.page = data.pagingParams.page;
-            this.previousPage = data.pagingParams.page;
+        this.routeData = this.activatedRoute.queryParams.subscribe(params => {
+            this.page = params.page || 1;
+            this.previousPage = params.page || 1;
+            this.keyword = params.keyword || '';
         });
     }
 
     ngOnInit() {
-        // this.accountService.identity().then(account => {
-        //     this.currentAccount = account;
-        //     this.loadAll();
-        // });
         this.activatedRoute.data.subscribe(({ course }) => {
           this.course = course.body ? course.body : course;
         });
         this.loadAll();
     }
     openModal(lecture?: LectureBO) {
-        const modalRef = this.modalService.show(ListLectureComponent);
-        modalRef.content.lecture = lecture;
+        const initialState = {
+            lecture
+        };
+        this.modalService.show(ListLectureComponent, {initialState, class: 'modal-max'});
     }
     ngOnDestroy() {
         this.routeData.unsubscribe();
@@ -90,6 +89,7 @@ export class LectureManagementComponent implements OnInit, OnDestroy {
     }
 
     loadPage(event: any) {
+        this.page = event.page;
         if (event.page !== this.previousPage) {
             this.transition();
             this.previousPage = event.page;

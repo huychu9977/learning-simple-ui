@@ -10,6 +10,9 @@
               <span>{{course?.name}}</span>
             </a>
           </div>
+          <div>
+              <progressbar max="100" [value]="getPercentCompleted()" type="danger" [striped]="true" [animate]="true"><i>{{getPercentCompleted()}} / 100</i></progressbar>
+          </div>
           <div class="lecture-header-user">
             <div class="lecture-header-rate" *ngIf="!currentReview" (click)="openReviewModal(content)">
               <span><i class="fa fa-star-o"></i></span>
@@ -28,124 +31,283 @@
       </div>
     </div>
     <div class="lecture-container">
-      <div class="lecture-container-content">
+      <button class="open-course-content" title="OPEN COURSE CONTENT" [hidden]="!expand" (click)="expand = false">
+        <span><i class="fa fa-arrow-left"></i></span>
+      </button>
+      <div class="lecture-container-content" [ngStyle]="{'width': expand ? '100%' : '75%'}">
         <div class="lecture-container-content-body">
           <div class="video-play" *ngIf="lecture?.type.code === 'lecture'">
             <video *ngIf="lecture?.videoId" src="api/video/{{lecture?.videoId}}" controls></video>
           </div>
           <div class="quiz" *ngIf="lecture?.type.code === 'quiz'">
-            <div>
-            <div class="quiz-header">
-              <span>Question {{page+1}}: </span>
-              <div class="quiz-header-content">
-                <p [innerHTML]="lecture?.questions[page]?.content"></p>
-              </div>
+            <div *ngIf="lectureCompleted.indexOf(lecture.id) > -1" style="position: absolute; top: 50%; text-align: center;">
+                <p class="text-danger my-3" [hidden]="!correctAnswer">Đúng hết rồi! Học làm gì nữa... </p>
+                <button class="btn btn-sm btn-primary mr-2" (click)="toggleCompletedLecture(lecture.id)">Bắt đầu lại</button>
             </div>
-            <ul>
-              <li *ngFor="let answer of lecture?.questions[page]?.answers; let i=index">
-                <div class="quiz-answer">
-                  <label (click)="answerChecked[page].answer = i+1">
-                    <div class="pos-r">
-                        <input name="answer" data-index="0" type="radio" [checked]="answerChecked[page].answer === i+1">
-                        <span class="radio-label">&#8203;</span>
-                    </div>
-                    <div class="quiz-answer-content">
-                      <div> {{answer?.content}}</div>
-                    </div>
-                  </label>
+            <div *ngIf="lectureCompleted.indexOf(lecture.id) === -1">
+              <div class="quiz-header">
+                <span>Câu {{page+1}}: </span>
+                <div class="quiz-header-content">
+                  <p [ngClass]="{'text-danger': listQuestionIncorrect.indexOf(lecture?.questions[page]?.id) > -1}" [innerHTML]="lecture?.questions[page]?.content"></p>
                 </div>
-              </li>
-            </ul>
-          </div>
-          <footer>
-            <div class="footer-left">
-              <span>Question 1 of 1</span>
-            </div>
-            <div class="footer-right">
-              <span class="mr-2" *ngIf="page > 0">
-                <button class="btn btn-sm btn-tertiary" (click)="page = page - 1">Quay lại</button>
-              </span>
-              <span class="mr-2" *ngIf="page < lecture?.questions?.length - 1">
-                <button class="btn btn-sm btn-tertiary" (click)="page = page + 1">Tiếp theo</button>
-              </span>
-              <button class="btn btn-sm btn-primary mr-2" [disabled]="canTest()">Kiểm tra {{canTest()}}</button>
-              <div class="tooltip-container">
-                <button class="btn btn-text"><i class="fa fa-expand" aria-hidden="true"></i></button>
               </div>
-              <div class="tooltip-container">
-                <button class="btn btn-text"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
-              </div>
+              <ul>
+                <li *ngFor="let answer of lecture?.questions[page]?.answers; let i=index">
+                  <div class="quiz-answer">
+                    <label (click)="answerChecked[page].id = answer.id">
+                      <div class="pos-r">
+                          <input name="answer" data-index="0" type="radio" [checked]="answerChecked[page].id === answer.id">
+                          <span class="radio-label">&#8203;</span>
+                      </div>
+                      <div class="quiz-answer-content">
+                        <div> {{answer?.content}}</div>
+                      </div>
+                    </label>
+                  </div>
+                </li>
+              </ul>
             </div>
-          </footer>
+            <footer *ngIf="lectureCompleted.indexOf(lecture.id) === -1">
+              <div class="footer-left">
+                <span>Câu {{page + 1}} of {{lecture?.questions?.length}}</span>
+              </div>
+              <div class="footer-right">
+                <span class="text-danger mr-3" [hidden]="!errorAnswer">Vui lòng trả lời hết câu hỏi!</span>
+                <span class="text-danger mr-3" [hidden]="listQuestionIncorrect.length === 0">Bạn sai {{listQuestionIncorrect.length}}/{{lecture.questions.length}} câu. Kiểm tra lại!</span>
+                <span class="mr-2" *ngIf="page > 0">
+                  <button class="btn btn-sm btn-tertiary" (click)="page = page - 1">Quay lại</button>
+                </span>
+                <span class="mr-2" *ngIf="page < lecture?.questions?.length - 1">
+                  <button class="btn btn-sm btn-tertiary" (click)="page = page + 1">Tiếp theo</button>
+                </span>
+                <button class="btn btn-sm btn-primary mr-2" (click)="checkAnswer()">Kiểm tra</button>
+                <div class="tooltip-container">
+                  <button class="btn btn-text btn-sm mr-2" (click)="expand = !expand"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </footer>
+            <footer *ngIf="lectureCompleted.indexOf(lecture.id) > -1">
+
+              <div class="footer-right">
+                <div class="tooltip-container">
+                  <button class="btn btn-text btn-sm mr-2" (click)="expand = !expand"><i class="fa fa-arrows-h" aria-hidden="true"></i></button>
+                </div>
+              </div>
+            </footer>
           </div>
         </div>
         <div class="lecture-container-content-description">
           <div class="lecture-container-content-description-row">
-            <div style="margin-bottom: 50px;">
-              <div class="description-row-flex">
-                <div class="description-tabs-container">
-                  <ul class="nav-side nav-tabs">
-                    <li class="active">
-                      <a href="">Overview</a>
-                    </li>
-                    <li>
-                      <a href="">Overview 1</a>
-                    </li>
-                    <li>
-                      <a href="">Overview 2</a>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <div class="description-dashboard-content">
-                <div [ngClass]=" descriptionMore ? 'collape-description-more' : 'collape-description'" #more>
-                  <div class="description-dashboard-content-body">
-                    <div class="lecture-overview-header">
-                        <div class="font-heading-lg mb-space-sm">Thông tin khóa học</div>
-                        <p>{{course?.sortDescription}}</p>
-                    </div>
-                    <div class="lecture-overview-row">
-                      <div>Thông số</div>
-                      <div>
-                        <div>Mức độ: {{course?.levelBO.name}}</div>
-                        <div>Students: 129779</div>
-                        <div>Languages: English</div>
+            <div class="my-5">
+                <tabset #staticTabs>
+                  <tab heading="Tổng quan" id="tab1">
+                      <div class="description-dashboard-content">
+                        <div [ngClass]=" descriptionMore ? 'collape-description-more' : 'collape-description'" #more>
+                          <div class="description-dashboard-content-body">
+                            <div class="lecture-overview-header">
+                                <div class="font-heading-lg mb-space-sm">Thông tin khóa học</div>
+                                <p>{{course?.sortDescription}}</p>
+                            </div>
+                            <div class="lecture-overview-row">
+                              <div>Thông số</div>
+                              <div>
+                                <div>Mức độ: {{course?.levelName}}</div>
+                                <div>Học viên: 129779</div>
+                                <div>Languages: English</div>
+                              </div>
+                              <div>
+                                <div>Lectures: {{course?.lectures.length - chapters?.length}}</div>
+                                <div>Video: 3.5 hours</div>
+                              </div>
+                            </div>
+                            <div class="lecture-overview-row">
+                              <div>Miêu tả</div>
+                              <div class="p-magrin" style="width: 60%;" [innerHTML]="course?.description">
+                              </div>
+                            </div>
+                          </div>
+                          <span *ngIf="!descriptionMore && elementView.nativeElement.offsetHeight >= 260" class="wrapper-more-btn">
+                            <button (click)="descriptionMore = true" class="more-btn btn-sm btn btn-link">+ See more</button>
+                          </span>
+                        </div>
                       </div>
-                      <div>
-                        <div>Lectures: {{course?.lectures.length - chapters?.length}}</div>
-                        <div>Video: 3.5 hours</div>
+                  </tab>
+                  <tab heading="Hỏi đáp" (selectTab)="onSelect($event)" id="tab2" style="position: relative;">
+                    <div class="description-dashboard-content mt-3" *ngIf="isDetailComment">
+                      <a href="javascript:void(0)" class="p-2 text-info" role="button" (click)="isDetailComment = false; isEditComment = false;">
+                        Quay lại
+                      </a>
+                      <div class="mt-3">
+                        <div class="question-list">
+                          <div class="question-list-item border-0">
+                            <div class="avatar-circle" [ngStyle]="{'background-color': colors[2]}">
+                              <span class="initials">{{currentComment?.createdBy | avatarText}}</span>
+                            </div>
+                            <div class="question-list-item-container">
+                              <a href="javascript:void(0)" class="mb-0" *ngIf="!isEditComment">
+                                <div class="question-text-content">
+                                  <div class="font-weight-bold">{{currentComment?.title}}</div>
+                                  <div class="font-text-xs">
+                                    <span class="text-info">{{currentComment?.createdBy}}</span>
+                                  </div>
+                                  <div class="" [innerHTML]="currentComment?.content"></div>
+                                </div>
+                                <div class="question-response-count open-edit-delete" *ngIf="currentAccount?.id === currentComment?.createdById">
+                                  <span (click)="isShowDrop = !isShowDrop" class="dropdown-toggle"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
+                                  <ul *ngIf="isShowDrop" style="display: block;" class="dropdown-menu"
+                                    role="menu" aria-labelledby="button-basic">
+                                    <li role="menuitem"><a class="dropdown-item" (click)="openEditComment()" href="javascript:void(0)">Sửa</a></li>
+                                    <li role="menuitem"><a class="dropdown-item" (click)="openDeleteComment(template)" href="javascript:void(0)">Xóa</a></li>
+                                  </ul>
+                                </div>
+                              </a>
+                              <div *ngIf="isEditComment">
+                                <div class="form-group mt-2">
+                                    <label for="title">Tiêu đề</label>
+                                    <input type="text" id="title" class="form-control" [(ngModel)]="comment.title">
+                                  </div>
+                                  <label for="content">Nội dung</label>
+                                  <ck-editor  [(ngModel)]="comment.content" name="editor1" id="content" skin="moono-lisa" language="en" [fullPage]="false" 
+                                                            [config]="config"
+                                                            required></ck-editor>
+                                  <div class="d-flex justify-content-end row mt-2">
+                                    <button class="btn btn-sm btn-default" (click)="isEditComment = false">Quay lại</button>
+                                    <button class="btn btn-sm btn-primary mx-2" [disabled]="comment.title === ''" (click)="updateComment()">Lưu</button>
+                                  </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ml-3 question-list" *ngIf="currentComment?.replies?.length > 0">
+                          <div class="question-list-item" *ngFor="let rep of currentComment?.replies; let i=index;">
+                            <div class="avatar-circle" [ngStyle]="{'background-color': colors[i%4]}">
+                              <span class="initials">{{rep?.createdBy | avatarText}}</span>
+                            </div>
+                            <div class="question-list-item-container">
+                              <a href="javascript:void(0)">
+                                <div class="question-text-content">
+                                  <a href="javascript:void(0)" class="question-content-title text-info mb-0" >{{rep?.createdBy}}</a>
+                                  <div *ngIf="!rep?.isEdit" [innerHTML]="rep?.content"></div>
+                                  <ck-editor *ngIf="rep?.isEdit" [(ngModel)]="comment.content" name="editor1" id="content" skin="moono-lisa" language="en" [fullPage]="false" 
+                                                            [config]="config"
+                                                            required></ck-editor>
+                                  <div *ngIf="rep?.isEdit" class="d-flex justify-content-end row mt-2">
+                                    <button class="btn btn-sm btn-default" (click)="rep.isEdit = false">Quay lại</button>
+                                    <button class="btn btn-sm btn-primary mx-2" (click)="updateComment();rep.isEdit = false">Lưu</button>
+                                  </div>                          
+                                </div>
+                                <div class="question-response-count open-edit-delete" *ngIf="currentAccount?.id === rep?.createdById">
+                                  <span (click)="rep.isOpenDropDown = !rep.isOpenDropDown" class="dropdown-toggle"><i class="fa fa-ellipsis-v" aria-hidden="true"></i></span>
+                                  <ul *ngIf="rep?.isOpenDropDown" style="display: block;" class="dropdown-menu"
+                                    role="menu" aria-labelledby="button-basic">
+                                    <li role="menuitem"><a class="dropdown-item" (click)="openEditComment(rep)" href="javascript:void(0)">Sửa</a></li>
+                                    <li role="menuitem"><a class="dropdown-item" (click)="openDeleteComment(template, rep?.id)" href="javascript:void(0)">Xóa</a></li>
+                                  </ul>
+                                </div>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="ml-5 add-replies">
+                            <ck-editor  [(ngModel)]="reply" name="editor1" id="content" skin="moono-lisa" language="en" [fullPage]="false" 
+                            [config]="config"
+                            required></ck-editor>
+                            <button class="pull-right btn-sm mt-2 btn btn-primary" (click)="createReplies()">Đăng bình luận</button>
+                        </div>
                       </div>
                     </div>
-                    <div class="lecture-overview-row">
-                      <div>Features</div>
-                      <div>
-                        <p>bababab</p>
+                    <div class="description-dashboard-content mt-3" *ngIf="isAddComment">
+                      <p><strong>Bạn đang gặp vấn đề?</strong></p>
+                      <div class="form-group mt-2">
+                        <label for="title">Tiêu đề</label>
+                        <input type="text" id="title" class="form-control" [(ngModel)]="comment.title">
+                      </div>
+                      <label for="content">Nội dung</label>
+                      <ck-editor  [(ngModel)]="comment.content" name="editor1" id="content" skin="moono-lisa" language="en" [fullPage]="false" 
+                                                [config]="config"
+                                                required></ck-editor>
+                      <div class="d-flex justify-content-end row mt-2">
+                        <button class="btn btn-sm btn-default" (click)="isAddComment = false">Quay lại</button>
+                        <button class="btn btn-sm btn-primary mx-2" [disabled]="comment.title === '' || comment.content === ''" (click)="createdComment()">Đăng bình luận</button>
                       </div>
                     </div>
-                    <div class="lecture-overview-row">
-                      <div>Miêu tả</div>
-                      <div class="p-magrin" [innerHTML]="course?.description">
-                      </div>
+                    <div class="description-dashboard-content" *ngIf="!isAddComment && !isDetailComment">
+                        <form class="mt-3 d-flex justify-content-center">
+                          <div class="input-group mw-90">
+                            <input type="text" name="keyword" class="form-control" (keyup.enter)="search()" placeholder="Tìm kiếm" [(ngModel)]="keyword">
+                            <div class="input-group-btn">
+                              <button type="button" (click)="search()" class="btn btn-sm btn-secondary w-100 h-100"><i class="fa fa-search"></i></button>
+                            </div>
+                          </div>
+                        </form>
+                        <div class="ask-question d-flex justify-content-between mt-3">
+                          <span class="p-2">
+                            <strong>{{totalItems}} câu hỏi về khóa học này</strong>
+                          </span>
+                          <span>
+                              <div class="form-group">
+                                  <select class="form-control" name="type" (change)="changeSelect($event.target.value)">
+                                    <option value="all">Tất cả bài học</option>
+                                    <option value="current">Bài học hiện tại</option>
+                                  </select>
+                                </div>
+                          </span>
+                          <a href="javascript:void(0)" class="p-2 text-info" role="button" (click)="openTabAddComment()">
+                            Tạo câu hỏi của bạn
+                          </a>
+                        </div>
+                        <div class="question-list text-center text-danger" *ngIf="comments?.length === 0">Không có bình luận về khóa học này!!</div>
+                        <div class="loading" *ngIf="load">
+                          <div class="lds-ripple"><div></div><div></div></div>
+                        </div>
+                        <alert type="success" *ngIf="isAlert">
+                            <strong>Success!</strong>Đăng bình luận thành công.
+                          </alert>
+                        <div class="question-list" *ngIf="comments?.length > 0">
+                          <div class="question-list-item" *ngFor="let cmt of comments; let i=index;">
+                            <div class="avatar-circle" [ngStyle]="{'background-color': colors[i%4]}">
+                              <span class="initials">{{cmt?.createdBy | avatarText}}</span>
+                            </div>
+                            <div class="question-list-item-container">
+                              <a href="javascript:void(0)" (click)="openDetailComment(cmt?.id)">
+                                <div class="question-text-content">
+                                  <div class="question-content-title" [innerHTML]="cmt?.title | highlight : keyword"></div>
+                                  <div class="question-content-body" [innerHTML]="cmt?.content | highlight : keyword">
+                                  </div>
+                                </div>
+                                <div class="question-response-count">
+                                  <span>{{cmt?.replies?.length}}</span>
+                                  <span><i class="fa fa-comments" aria-hidden="true"></i></span>
+                                </div>
+                              </a>
+                              <div class="font-text-xs">
+                                <span class="text-info">{{cmt?.createdBy}}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div *ngIf="comments && comments.length" class="w-100">
+                            <div class="d-flex justify-content-end">
+                                <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
+                                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+                            </div>
+                        </div>
                     </div>
-                  </div>
-                  <span *ngIf="!descriptionMore && elementView.nativeElement.offsetHeight >= 260" class="wrapper-more-btn">
-                    <button (click)="descriptionMore = true" class="more-btn btn-sm btn btn-link">+ See more</button>
-                  </span>
-                </div>
-              </div>
+                  </tab>
+                </tabset>
             </div>
           </div>
         </div>
       </div>
-      <div class="lecture-container-sidebar">
+      <div class="lecture-container-sidebar" [hidden]="expand">
         <div class="lecture-container-sidebar-content">
           <div class="content-sidebar-header" style="width: 361px;">
-              Course content
-              <button type="button">
+              Nội dung
+              <button type="button" (click)="expand = true">
                   <i class="fa fa-times" aria-hidden="true"></i>
               </button>
           </div>
-          <div class="content-sidebar-content" style="width: 361px;">
+          <div class="content-sidebar-content" style="width: 361px;" [el-loading]="true">
             <div *ngIf="course?.lectures && course.lectures.length > 0">
               <div class="sidebar-content-section" *ngFor="let c of chapters; let i=index">
                 <div class="sidebar-content-section-header" [ngClass]="{'active': c.isActive}" (click)="c.isActive = !c.isActive">
@@ -155,18 +317,25 @@
                     <span><i class="fa fa-chevron-up" aria-hidden="true"></i></span>
                 </div>
                 <ul [style.max-height]="c.isActive ? 'unset' : '0px'" class="section-list">
-                  <li class="section-item" *ngFor="let l of getLectures(c.code)" [routerLink]="[ '../', l.code ]"
-                   [ngClass]="{'item-current': l.code === lectureSelected.code}" (click)="this.lectureSelected = l;">
+                  <li class="section-item" *ngFor="let l of getLectures(c.code)"
+                   [ngClass]="{'item-current': l.code === lectureSelected.code}">
                     <div>
-                      <div class="section-item-container">
+                        <label class="checkbox-custom">
+                            <input type="checkbox" (change)="toggleCompletedLecture(l.id)" [checked]="lectureCompleted.indexOf(l.id) > -1">
+                            <span class="checkmark"></span>
+                        </label>
+                      <div class="section-item-container" [routerLink]="[ '../', l.code ]" (click)="this.lectureSelected = l;">
                         <div class="section-item-container-title">
                           <span>{{l.sortOrder}}. {{l.name}}</span>
                         </div>
                         <div class="section-item-container-duration">
                           <div>
-                            <span>
-                              <span><i class="fa fa-play-circle" aria-hidden="true"></i></span>
-                              <span>2mins</span>
+                            <span *ngIf="l.type.code === 'lecture'">
+                              <span><i class="fa fa-play-circle mr-1" aria-hidden="true"></i></span>
+                              <span>{{timeEstimate(l.videoTimeEstimation)}} mins</span>
+                            </span>
+                            <span *ngIf="l.type.code === 'quiz'">
+                              <span><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
                             </span>
                           </div>
                         </div>
@@ -198,7 +367,15 @@
       <small [hidden]="!reviewContentError" class="text-danger mt-1">Vui lòng điền đánh giá!!</small>
       <div class="d-flex justify-content-end mt-3">
           <button type="button" class="btn btn-light" (click)="close()">Đóng</button>
-          <button type="button" class="btn btn-primary ml-2" (click)="update(currentReview)">Lưu</button>
+          <button type="button" class="btn btn-primary ml-2" (click)="update()">Lưu</button>
       </div>
+    </div>
+  </ng-template>
+
+  <ng-template #template>
+    <div class="modal-body text-center">
+      <p>Xoá bình luận?</p>
+      <button type="button" class="btn btn-sm btn-danger" (click)="confirm()" >Yes</button>
+      <button type="button" class="ml-2 btn-sm btn btn-primary" (click)="decline()" >No</button>
     </div>
   </ng-template>

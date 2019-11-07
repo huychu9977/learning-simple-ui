@@ -18,8 +18,8 @@ export class ListLectureComponent implements OnInit {
     page: any = 1;
     keyword = '';
     href?: string;
-    bsModalRef: BsModalRef;
     constructor(
+        private bsModalRef: BsModalRef,
         private lectureService: LectureService,
         private toastr: ToastrService,
         private router: Router) {

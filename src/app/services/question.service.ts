@@ -17,4 +17,8 @@ export class QuestionService {
     findAll(code?: string): Observable<HttpResponse<QuestionBO[]>> {
         return this.http.get<QuestionBO[]>(this.resourceUrl + `/${code}`, { observe: 'response' });
     }
+
+    checkAnswer(body: any) {
+        return this.http.post<any[]>(`${this.resourceUrl}/check-answer`, body, { observe: 'response' });
+    }
 }

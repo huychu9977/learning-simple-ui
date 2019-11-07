@@ -14,18 +14,13 @@ const swal: SweetAlert = _swal as any;
   templateUrl: './course-management.component.html',
   styleUrls: ['./course-management.component.scss']
 })
-export class CourseManagementComponent implements OnInit, OnDestroy {
+export class CourseManagementComponent implements OnInit {
     isActive = false;
-    currentAccount: any;
     courses?: CourseBO[];
-    error: any;
-    success: any;
-    routeData: any;
     totalItems: any;
     itemsPerPage: any;
     page: any;
     previousPage: any;
-    reverse: any;
     keyword = '';
     courseTopics: any[] = [];
     courseCategorys: any[];
@@ -42,16 +37,14 @@ export class CourseManagementComponent implements OnInit, OnDestroy {
         private toastr?: ToastrService,
     ) {
         this.itemsPerPage = 2;
-        this.routeData = this.activatedRoute.data.subscribe(data => {
-            this.page = data.pagingParams.page;
-            this.previousPage = data.pagingParams.page;
-            this.reverse = data.pagingParams.ascending;
-        });
         this.courseCategorys = [];
         this.categoryService.getCategories().subscribe(data => {
             this.courseCategorys = data;
         });
         this.activatedRoute.queryParams.subscribe(params => {
+            this.page = params.page || 1;
+            this.previousPage = params.page || 1;
+            this.keyword = params.keyword || '';
             this.courseCategoryCode = params.courseCategoryCode ? params.courseCategoryCode : null;
             this.courseTopicCode = params.courseTopicCode ? params.courseTopicCode : null;
             this.activated = params.activated ? params.activated : null;
@@ -60,11 +53,7 @@ export class CourseManagementComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        this.accountService.identity().then(account => {
-            this.currentAccount = account;
-            this.loadAll();
-        });
-        // this.loadAll();
+        this.loadAll();
     }
 
     selectCourseTopics() {
@@ -87,11 +76,8 @@ export class CourseManagementComponent implements OnInit, OnDestroy {
         } else {
           panel.style.maxHeight = panel.scrollHeight + 'px';
         }
-      }
-
-    ngOnDestroy() {
-        this.routeData.unsubscribe();
     }
+
     setActive(course?: CourseBO, isActivated?: boolean) {
         course.activated = isActivated;
         this.courseService.setActive(course).subscribe(response => {
@@ -99,8 +85,7 @@ export class CourseManagementComponent implements OnInit, OnDestroy {
                 this.toastr.success('Cập nhật trạng thái thành công!', 'Thành công!');
                 this.loadPage(this.page);
             } else {
-                this.success = null;
-                this.error = 'ERROR';
+                console.log('ERROR');
             }
         });
     }
@@ -126,11 +111,8 @@ export class CourseManagementComponent implements OnInit, OnDestroy {
             );
     }
 
-    trackIdentity(index, item: CourseBO) {
-        return item.id;
-    }
-
     loadPage(event: any) {
+        this.page = event.page;
         if (event.page !== this.previousPage) {
             this.transition();
             this.previousPage = event.page;

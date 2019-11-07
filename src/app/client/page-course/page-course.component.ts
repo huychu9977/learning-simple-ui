@@ -20,9 +20,6 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
 
   customOptions: OwlOptions = {
     loop: true,
-    mouseDrag: true,
-    touchDrag: false,
-    pullDrag: false,
     dots: false,
     navSpeed: 700,
     navText: ['<i class="fa fa-angle-left course-left_arrow slick-arrow"></i>',
@@ -179,6 +176,24 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
     return this.course.lectures.filter(l => {
       return (l.parentCode && l.parentCode === code);
     });
+  }
+  totalTimeEstimate() {
+    let time = 0;
+    this.course.lectures.forEach(l => {
+      if (l.parentCode && l.type.code === 'lecture') {
+        time += l.videoTimeEstimation === null ? 0 : l.videoTimeEstimation;
+      }
+    });
+    return time;
+  }
+  totalChapterTimeEstimate(code?: string) {
+    let time = 0;
+    this.course.lectures.forEach(l => {
+      if (l.parentCode && l.parentCode === code && l.type.code === 'lecture') {
+        time += l.videoTimeEstimation === null ? 0 : l.videoTimeEstimation;
+      }
+    });
+    return time;
   }
   toggleAccordian(event, index) {
     const element = event.target;

@@ -12,7 +12,7 @@
           <div class="courese-card-body-instructor">
             <div class="detail">
               <span>{{course.sortDescription}}</span>
-              " | " <span>Bởi {{course.createdBy}}</span>
+              " | " <span>Bởi <strong>{{course.createdBy}}</strong></span>
             </div>
             <div class="enroll-btn">
               <a href="" [routerLink]="[ '/course', course.code ]">
@@ -31,7 +31,7 @@
               <span>{{course.totalLecture}} bài học</span>
             </span>
             <span class="product-meta">
-              <span>60 hours</span>
+              <span>{{course.totalVideoDuration}} giờ học</span>
             </span>
             <span class="product-meta">
               {{course.leveName}}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from 'src/app/services/category.service';
+import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -15,6 +16,7 @@ export class HeaderComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
+    private page: PageReloadService,
     private categoryService: CategoryService) { }
 
   ngOnInit() {
@@ -28,6 +30,10 @@ export class HeaderComponent implements OnInit {
       this.router.navigate(['/courses'], {
         queryParams: {keyword: this.keyword}
       });
+    } else {
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+      this.router.onSameUrlNavigation = 'reload';
+      this.router.navigate([this.router.url.split('?')[0]]);
     }
   }
   loadCategory() {

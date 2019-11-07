@@ -61,3 +61,16 @@
 a {
     color: #505763;
 }
+.notification {
+    cursor: pointer;
+    i {
+        margin: 27px 20px 0 0;
+        position: relative;
+        &::after {
+            position: absolute;
+            top: -8px;
+            right: -3px;
+            content: '1';
+        }
+    }
+}

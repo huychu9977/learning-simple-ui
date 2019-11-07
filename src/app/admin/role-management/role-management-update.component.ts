@@ -82,8 +82,8 @@ export class RoleMgmtUpdateComponent implements OnInit {
         );
   }
   private onSuccess(data, headers) {
-    this.totalItems = headers.get('X-Total-Count');
-    this.permissionBOs = data;
+    this.totalItems = data.totalResult;
+    this.permissionBOs = data.results;
   }
   private onError(error) {
     console.log(error);

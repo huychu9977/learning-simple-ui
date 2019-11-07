@@ -1,7 +1,7 @@
 <div class="course-reviews">
     <div class="reviews-container">
       <div class="reviews-title">
-          Student feedback
+          Đánh giá của học sinh
       </div>
       <div class="reviews-content">
         <div class="reviews-content-rating">
@@ -11,7 +11,7 @@
                 <div class="reviews-content-sumary-avg-star">
                     <i class="fa fa-star" *ngFor="let i of [].constructor(rateAvgRound ? rateAvgRound : 0)"></i><i class="fa fa-star-o" *ngFor="let j of [].constructor(5-(rateAvgRound ? rateAvgRound : 0))"></i>
                 </div>
-                <div>Tutorial rating</div>
+                <div>Đánh giá trung bình</div>
             </div>
             <div class="reviews-content-sumary-rate">
               <button class="btn-link reviews-content-sumary-rate-row"
@@ -33,26 +33,28 @@
         </div>
         <div class="reviews-content-sub-title">
             <div class="reviews-content-sub-title-text">
-              <span>Reviews</span>
+              <span>Đánh giá</span>
             </div>
             <div class="reviews-content-sub-title-form-search">
               <form>
-                  <div class="input-group">
-                    <input type="text" name="keyword" class="form-control" placeholder="Search" [(ngModel)]="keyword">
-                    <div class="input-group-btn">
-                      <button type="button" (click)="search()" class="btn btn-sm btn-secondary"><i class="fa fa-search"></i></button>
-                    </div>
+                <div class="input-group">
+                  <input type="text" name="keyword" class="form-control" (keyup.enter)="search()" placeholder="Tìm kiếm" [(ngModel)]="keyword">
+                  <div class="input-group-btn">
+                    <button type="button" (click)="search()" class="btn btn-sm btn-secondary"><i class="fa fa-search"></i></button>
                   </div>
-                </form>
+                </div>
+              </form>
             </div>
         </div>
         <div class="reviews-content-review-list" *ngIf="reviews">
-          <div class="reviews-content-review-item" *ngFor="let review of reviews">
+          <div class="reviews-content-review-item" *ngFor="let review of reviews; let i=index;">
             <div class="reviews-content-review-item-left">
-              <div class="user-avatar"></div>
+              <div class="avatar-circle" [ngStyle]="{'background-color': colors[i%4]}">
+                <span class="initials">{{review.createdBy | avatarText}}</span>
+              </div>
               <div class="reviews-content-review-item-detail">
                 <div class="reviews-content-review-item-detail-username">{{review.createdBy}}</div>
-                <div class="reviews-content-review-item-detail-created">{{review.createdAt}}</div>
+                <div class="reviews-content-review-item-detail-created">{{review.createdAt | date:'dd/MM/yy'}}</div>
               </div>  
             </div>
             <div class="reviews-content-review-item-right">
@@ -68,7 +70,8 @@
         <div>
             <div class="d-flex justify-content-between">
                 <span class="align-self-center flex-grow-1"></span>
-                <pagination [totalItems]="totalItems" [(ngModel)]="page" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"></pagination>
+                <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
+                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
             </div>
         </div>
       </div>

@@ -7,11 +7,12 @@ import { CourseWillLearnComponent } from 'src/app/shared/modules/course-will-lea
 import { CourseReviewsModule } from 'src/app/shared/modules/course-reviews/course-reviews.module';
 import { CourseListModule } from 'src/app/shared/modules/course-list/course-list.module';
 import { CoursePreviewModule } from 'src/app/shared/modules/course-preview/course-preview.module';
+import { MinuteSecondsPipe } from 'src/app/shared/util/minute-second-pipe';
 
 @NgModule({
   declarations: [PageCourseComponent,
       CourseBannerTextComponent
-    , CourseWillLearnComponent],
+    , CourseWillLearnComponent, MinuteSecondsPipe],
   imports: [
     CommonModule,
     CarouselModule,

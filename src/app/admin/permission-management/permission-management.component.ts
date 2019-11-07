@@ -31,19 +31,14 @@ export class PermissionManagementComponent implements OnInit, OnDestroy {
         private router: Router
     ) {
         this.itemsPerPage = 2;
-        this.routeData = this.activatedRoute.data.subscribe(data => {
-            this.page = data.pagingParams.page;
-            this.previousPage = data.pagingParams.page;
-            this.reverse = data.pagingParams.ascending;
-            this.predicate = data.pagingParams.predicate;
+        this.routeData = this.activatedRoute.queryParams.subscribe(params => {
+            this.page = params.page || 1;
+            this.previousPage = params.page || 1;
+            this.keyword = params.keyword || '';
         });
     }
 
     ngOnInit() {
-        // this.accountService.identity().then(account => {
-        //     this.currentAccount = account;
-        //     this.loadAll();
-        // });
         this.loadAll();
     }
 
@@ -56,7 +51,6 @@ export class PermissionManagementComponent implements OnInit, OnDestroy {
             .query({
                 page: this.page - 1,
                 size: this.itemsPerPage,
-                sort: this.sort(),
                 keyword: this.keyword
             })
             .subscribe(
@@ -69,15 +63,8 @@ export class PermissionManagementComponent implements OnInit, OnDestroy {
         return item.id;
     }
 
-    sort() {
-        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
-            result.push('id');
-        }
-        return result;
-    }
-
     loadPage(event: any) {
+        this.page = event.page;
         if (event.page !== this.previousPage) {
             this.transition();
             this.previousPage = event.page;
@@ -87,8 +74,7 @@ export class PermissionManagementComponent implements OnInit, OnDestroy {
     transition() {
         const param = {
             page: this.page,
-            keyword: this.keyword,
-            sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+            keyword: this.keyword
         };
         if (this.keyword === '' || !this.keyword) { delete param.keyword; }
         this.router.navigate(['/admin/permission-management'], {

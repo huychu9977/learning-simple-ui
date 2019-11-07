@@ -61,6 +61,7 @@
 }
 .lecture-container {
     display: flex;
+    position: relative;
     .lecture-container-content {
         width: 75%;
         .lecture-container-content-body {
@@ -106,10 +107,27 @@
                 }
             }
             .description-dashboard-content {
-                width: 100%;
-                border-top: 1px solid #dedfe0;
+                width: 80%;
+                margin: 0 auto;
                 min-height: 400px;
-                position: relative;
+                .loading {
+                    position: absolute;
+                }
+                .open-edit-delete {
+                    position: relative;
+                    height: max-content;
+                    .dropdown-toggle::after {
+                        display: none;
+                    }
+                    .dropdown-menu {
+                        min-width: 80px;
+                        margin: 0;
+                        padding: 0;
+                        a {
+                            margin: 0;
+                        }
+                    }
+                }
                 .description-dashboard-content-body {
                     margin: 32px 0;
                 }
@@ -168,6 +186,14 @@
                 overflow-y: auto;
                 .sidebar-content-section {
                     border-bottom: 1px solid #dedfe0;
+                    .checkbox-custom {
+                        margin: 5px 0 0 0;
+                        .checkmark {
+                            &:hover {
+                                border: 1px solid;
+                            }
+                        }
+                    }
                     .sidebar-content-section-header {
                         position: relative;
                         display: flex;
@@ -419,15 +445,90 @@ video {
     float: right;
     color: #ddd;
     padding: 10px 5px;
-  
-  }
-  
-  .rating-list li:hover,
-  .rating-list li:hover ~ li, .rating-list li.selected {
+}
+.rating-list li:hover,
+.rating-list li:hover ~ li, .rating-list li.selected {
     color: #ffd700;
-  }
-  
-  .rating-list {
+}
+
+.rating-list {
     display: inline-block;
     list-style: none;
-  }
+}
+.open-course-content {
+    position: absolute;
+    background-color: rgba(41,48,59,.7)!important;
+    border: none;
+    border-radius: 0;
+    pointer-events: auto;
+    padding: 8px 16px;
+    margin-top: 16px;
+    height: 50px;
+    max-width: 46px;
+    width: auto;
+    right: 0;
+    top: 0;
+    z-index: 10;
+    transition: all 1s ease-in-out;
+    i {
+        color: white;
+    }
+}
+.question-list {
+    
+    .question-list-item {
+        display: flex;
+        border-top: 1px solid #e8e9eb;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.43em;
+        padding: 16px 24px;
+        &:hover {
+            background-color: #f7f8fa;
+        }
+        .question-list-item-container {
+            flex: 1;
+            min-width: 1px;
+            padding-left: 16px;
+            a {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 16px;
+                cursor: pointer;
+                color: #29303b;
+                .question-text-content {
+                    display: block;
+                    flex: 1;
+                    min-width: 1px;
+                    padding-right: 48px;
+                    .question-content-title {
+                        font-size: 14px;
+                        font-weight: 600;
+                        line-height: 1.43em;
+                        display: block;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                    .question-content-body {
+                        margin-top: 4px;
+                        display: block;
+                        overflow: hidden;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                    }
+                }
+                .question-response-count {
+                    display: flex;
+                    justify-content: space-around;
+                    color: #686f7a;
+                }
+            }
+        }
+    }
+}
+.font-text-xs {
+    font-size: 12px;
+    font-weight: 400;
+    line-height: 1.33em;
+}

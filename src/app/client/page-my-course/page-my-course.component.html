@@ -4,29 +4,50 @@
     </div>
 </div>
 <div class="container">
-    <div>
-        <div class="card card-learning">
-            <a href="">
-                <div class="card__image">
-                    <img width="240" height="135" src="https://i.udemycdn.com/course/240x135/405926_02c8_2.jpg" alt="">
-                </div>
-            </a>
-            <a href="">
-                <div class="card-detail">
-                    <strong class="details__name"> HTML and CSS for Beginners - Build a Website &amp; Launch ONLINE </strong>
-                    <div class="details__instructor">
-                            Edwin Diaz<span >, Web Developer &amp; Premium Udemy Instructor - 400,000 students</span> 
+    <div *ngIf="!courses" class="row justify-content-center my-4">
+        <div class="text-center">
+            <p>Bạn chưa đăng ký khóa học nào!!</p>
+            <img src="assets/images/main/enrollments_empty_state_active.png" alt="Trống">
+            <br>
+            <a [routerLink]="[ '/courses']" class="btn btn-primary">Tiếp tục?</a>
+        </div>
+    </div>
+    <div *ngIf="courses">
+        <div class="d-flex">
+            <div class="card card-learning" *ngFor="let c of courses">
+                <a href="javascript:void(0)" [routerLink]="[ '/course', c?.code ]">
+                    <div class="card__image">
+                        <img width="240" height="135" src="api/image/{{c?.imageId}}" alt="">
                     </div>
-                    <div class="details__bottom">
-                        <span class="details__progress"> 
-                            <span class="progress__bar completed" style="width: 100%;"> </span> 
-                        </span>
-                        <div class="progress__text">
-                            <span>100% hoàn thành</span>
+                </a>
+                <a href="javascript:void(0)" [routerLink]="[ '/course', c?.code ]">
+                    <div class="card-detail">
+                        <strong class="details__name" title="{{c?.name}}"> {{c?.name}} </strong>
+                        <div class="details__instructor">
+                            <strong>{{c?.createdBy}}</strong>, <span >{{c?.sortDescription}}</span> 
+                        </div>
+                        <div class="details__bottom">
+                            <span class="details__progress"> 
+                                <span class="progress__bar completed" style="width: 100%;"> </span> 
+                            </span>
+                            <div class="progress__text">
+                                <span>100% hoàn thành</span>
+                            </div>
+                            <span class="product-rating">
+                                <div class="pro-rating">
+                                    <i class="fa fa-star" *ngFor="let i of [].constructor(c?.rate)"></i><i class="fa fa-star-o" *ngFor="let j of [].constructor(5 - c?.rate)"></i>
+                                </div>
+                            </span>
                         </div>
                     </div>
-                </div>
-            </a>
+                </a>
+            </div>
+        </div>
+        <div *ngIf="courses && courses.length" class="w-100">
+            <div class="d-flex justify-content-end">
+                <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
+                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+            </div>
         </div>
     </div>
 </div>

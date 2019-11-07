@@ -34,11 +34,10 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
         private router: Router
     ) {
         this.itemsPerPage = 2;
-        this.routeData = this.activatedRoute.data.subscribe(data => {
-            this.page = data.pagingParams.page;
-            this.previousPage = data.pagingParams.page;
-            this.reverse = data.pagingParams.ascending;
-            this.predicate = data.pagingParams.predicate;
+        this.routeData = this.activatedRoute.queryParams.subscribe(params => {
+            this.page = params.page || 1;
+            this.previousPage = params.page || 1;
+            this.keyword = params.keyword || '';
         });
     }
 
@@ -59,7 +58,6 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
             .query({
                 page: this.page - 1,
                 size: this.itemsPerPage,
-                sort: this.sort(),
                 keyword: this.keyword
             })
             .subscribe(
@@ -81,6 +79,7 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
     }
 
     loadPage(event: any) {
+        this.page = event.page;
         if (event.page !== this.previousPage) {
             this.transition();
             this.previousPage = event.page;
@@ -90,8 +89,7 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
     transition() {
         const param = {
             page: this.page,
-            keyword: this.keyword,
-            sort: this.predicate + ',' + (this.reverse ? 'asc' : 'desc')
+            keyword: this.keyword
         };
         if (this.keyword === '' || !this.keyword) { delete param.keyword; }
         this.router.navigate(['/admin/role-management'], {

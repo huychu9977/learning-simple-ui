@@ -18,7 +18,7 @@
               </div>
               <div class="row isFilter d-none">
                 <div class="col-md-6">
-                    <button type="button" class="btn btn-md btn-primary" (click)="togglePanelFilter()">Xong</button>
+                    <button type="button" class="btn btn-md btn-primary mr-2" (click)="togglePanelFilter()">Xong</button>
                     <button type="button" class="btn btn-md btn-default" (click)="clear()">Làm mới</button>
                 </div>
               </div>
@@ -107,19 +107,19 @@
       </div>
       <div class="row">
             <lbp-loading-screen></lbp-loading-screen>
-            <div class="w-100">
-                <div class="row course_page_slider" *ngIf="courses?.length > 0">
+            <div class="w-100" *ngIf="courses?.length > 0">
+                <div class="row course_page_slider">
                     <div class="col-md-12" *ngFor="let course of courses">
                         <course-card [course]="course"></course-card>
                     </div>
-                </div>
-                <div class="row course_page_slider" *ngIf="courses?.length === 0">
-                    <h2>Danh sách trống!!</h2>
                 </div>
                 <div class="d-flex justify-content-end" *ngIf="totalItems > 0">
                     <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
                     previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
                 </div>
+            </div>
+            <div class="row course_page_slider" *ngIf="courses?.length === 0">
+                <h2>Danh sách trống!!</h2>
             </div>
       </div>
   </div>

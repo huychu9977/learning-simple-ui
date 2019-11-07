@@ -88,7 +88,8 @@
                                         </table>
                                         <div *ngIf="permissionBOs && permissionBOs.length" class="w-100">
                                             <div class="row justify-content-center">
-                                                <pagination [totalItems]="totalItems" [(ngModel)]="page" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"></pagination>
+                                                    <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
+                                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
                                             </div>
                                         </div>
                                     </div>

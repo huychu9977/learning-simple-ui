@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 import { CourseRegistrationService } from 'src/app/services/course-registration.service';
-import { BsModalService } from 'ngx-bootstrap';
+import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -13,13 +13,15 @@ import { BsModalService } from 'ngx-bootstrap';
   styleUrls: ['./course-preview.component.scss']
 })
 export class CoursePreviewComponent implements OnInit {
-  @Input() course?: CourseBO;
+  @Input() course?: any;
   @Input() userRegistration?: any;
   @Input() totalLectureQuiz?: any;
   @Input() totalLectureExercise?: any;
   @Input() totalLectureVideo?: any;
+  @Input() totalTimeEstimateVideo?: any;
   @Input() lectureCode?: string;
   isSaving = false;
+  bsModalRef: BsModalRef;
   constructor(
     private router: Router,
     private page: PageReloadService,
@@ -28,9 +30,10 @@ export class CoursePreviewComponent implements OnInit {
     private modalService: BsModalService) { }
 
   ngOnInit() {
+    this.totalTimeEstimateVideo = Math.floor(this.totalTimeEstimateVideo);
   }
   openVideoModal(content) {
-    this.modalService.show(content);
+    this.bsModalRef = this.modalService.show(content, {class: 'modal-lg', ignoreBackdropClick: true});
   }
   registrationCourse(courseCode) {
     this.isSaving = true;
