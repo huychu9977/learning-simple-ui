@@ -1,1 +1,64 @@
-<p>course-management-detail works!</p>
+<div class="row">
+    <div class="col-md-4">
+        <img src="api/image/{{course?.courseImageId}}" width="300" height="200" alt="">
+        <p><video width="300" height="200" src="api/video/{{course?.videoId}}" controls></video></p>
+    </div>
+    <div class="col-md-8">
+        <div class="row my-4" *ngIf="isChecking">
+            <div class="form-group">
+                <label for="exampleFormControlSelect1">Kiểm duyệt</label>
+                <select [(ngModel)]="status" class="form-control" id="exampleFormControlSelect1">
+                    <option [ngValue]="9">Chấp thuận</option>
+                    <option [ngValue]="10">Cảnh báo</option>
+                </select>
+            </div>
+            <div class="input-group" *ngIf="status === 10">
+                <div class="input-group-prepend">
+                    <span class="input-group-text">Lời nhắc</span>
+                </div>
+                <textarea [(ngModel)]="message" rows="5" class="form-control" aria-label="With textarea"></textarea>
+            </div>
+            <div class="mt-3 text-center w-100">
+                <button type="button" class="btn btn-sm btn-success" (click)="setStatusCourse(template)">Xong</button>
+            </div>
+        </div>
+            <p>code : {{course?.code}}</p>
+            <p>name : {{course?.name}}</p>
+            <p>activated : {{course?.activated}}</p>
+            <p>image : </p>
+            <p>createdAt : {{course?.createdAt | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+            <p>createdBy : {{course?.createdBy}}</p>
+            description : <div [innerHTML]="course?.description"></div>
+            <p>requiredCompleteRate : {{course?.requiredCompleteRate}}</p>
+            <p>topic : {{course?.topicDTO.name}}</p>
+            <p>category:  {{course?.topicDTO.courseCategoryDTO.name}}</p>
+
+            <button type="button" class="mt-3 btn btn-sm btn-primary" [routerLink]="[ '../lecture']">Danh sách bài học</button>
+            
+    </div>
+    <div class="row justify-content-between w-100 mt-3">
+        <div class="card text-white bg-secondary col-md-5">
+            <div class="card-header text-center">Yêu cầu</div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush" *ngIf="course?.requirementBOs">
+                    <li class="list-group-item" *ngFor="let r of course?.requirementBOs; let i=index">{{i+1}}. {{r?.name}}</li>
+                </ul>
+            </div>
+        </div>
+        <div class="card text-white bg-secondary col-md-5">
+            <div class="card-header text-center">Mục tiêu</div>
+            <div class="card-body">
+                <ul class="list-group list-group-flush" *ngIf="course?.objectiveSummaryBOs">
+                    <li class="list-group-item" *ngFor="let o of course?.objectiveSummaryBOs; let i=index">{{i+1}}. {{o?.name}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<ng-template #template>
+    <div class="modal-body text-center">
+        <p>Xác  nhận ?</p>
+        <button type="button" class="btn btn-default mr-2" (click)="confirm()" >Yes</button>
+        <button type="button" class="btn btn-primary" (click)="decline()" >No</button>
+    </div>
+</ng-template>

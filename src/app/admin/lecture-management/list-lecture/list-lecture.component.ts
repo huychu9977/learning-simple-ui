@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { LectureBO } from 'src/app/models/lectureBO.model';
 import { LectureService } from 'src/app/services/lecture.service';
 import { BsModalRef } from 'ngx-bootstrap';
+import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
 
 @Component({
   selector: 'list-lecture',
@@ -12,12 +13,15 @@ import { BsModalRef } from 'ngx-bootstrap';
 })
 export class ListLectureComponent implements OnInit {
     lecture: LectureBO;
+    courseStatus: any;
+    chapterStatus: any;
     lectures: LectureBO[];
     totalItems: any;
     itemsPerPage: any = 5;
     page: any = 1;
     keyword = '';
     href?: string;
+    statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
     constructor(
         private bsModalRef: BsModalRef,
         private lectureService: LectureService,

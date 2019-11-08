@@ -1,3 +1,4 @@
+import { STATUS_CAN_NOT_EIDT_DELETE, STATUS_NEED_CHECK } from './../../shared/constants/status.constants';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
@@ -27,16 +28,16 @@ export class CourseManagementComponent implements OnInit {
     courseCategoryCode: string = null;
     courseTopicCode: string = null;
     activated: string = null;
-
+    statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
+    statusNeedCheck = STATUS_NEED_CHECK;
     constructor(
         private courseService: CourseService,
         private categoryService: CategoryService,
         private activatedRoute: ActivatedRoute,
         private router: Router,
-        private accountService: AccountService,
         private toastr?: ToastrService,
     ) {
-        this.itemsPerPage = 2;
+        this.itemsPerPage = 5;
         this.courseCategorys = [];
         this.categoryService.getCategories().subscribe(data => {
             this.courseCategorys = data;
@@ -55,7 +56,16 @@ export class CourseManagementComponent implements OnInit {
     ngOnInit() {
         this.loadAll();
     }
-
+    setStatus(courseCode?: string) {
+        this.courseService.setStatus(courseCode).subscribe(res => {
+            if (res) {
+                this.toastr.success('Trong thời gian chờ duyệt!', 'Thành công!');
+                this.loadAll();
+            } else {
+                this.toastr.error('Xét duyệt thất bại!', 'Thất bại!');
+            }
+        });
+    }
     selectCourseTopics() {
         if (this.courseCategoryCode) {
           this.categoryService.getTopics(this.courseCategoryCode).subscribe(data => {

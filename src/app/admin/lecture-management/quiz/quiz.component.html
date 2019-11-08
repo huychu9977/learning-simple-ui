@@ -42,7 +42,7 @@
                             &nbsp;<span
                             [translate]="'entity.action.cancel'">Cancel</span>
                         </button>
-                        <button type="button" (click)="save()" class="ml-3 btn btn-primary">
+                        <button type="button" (click)="save()" class="ml-3 btn btn-primary" *ngIf="statusCanNotEditAndDelete.indexOf(lecture.status) === -1">
                             <i class="fa fa-floppy-o" aria-hidden="true"></i>
                             &nbsp;<span [translate]="'entity.action.save'">Save</span>
                         </button>

@@ -7,6 +7,7 @@ import { LectureBO } from 'src/app/models/lectureBO.model';
 import { QuestionBO } from 'src/app/models/questionBO.model';
 import { BsModalService } from 'ngx-bootstrap';
 import { QuestionService } from 'src/app/services/question.service';
+import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
 
 @Component({
   selector: 'lecture-quiz',
@@ -15,7 +16,7 @@ import { QuestionService } from 'src/app/services/question.service';
 export class QuizComponent implements OnInit {
     lecture: LectureBO;
     questions: QuestionBO[];
-
+    statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
     constructor(
         private modalService: BsModalService,
         private route: ActivatedRoute,

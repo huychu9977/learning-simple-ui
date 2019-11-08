@@ -1,3 +1,4 @@
+import { STATUS_CAN_NOT_EIDT_DELETE } from './../../shared/constants/status.constants';
 import { LectureBO } from './../../models/lectureBO.model';
 import { ListLectureComponent } from './list-lecture/list-lecture.component';
 import { Component, OnInit, OnDestroy } from '@angular/core';
@@ -27,6 +28,7 @@ export class LectureManagementComponent implements OnInit, OnDestroy {
     page: any;
     previousPage: any;
     keyword = '';
+    statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
     constructor(
         private lectureService: LectureService,
         private activatedRoute: ActivatedRoute,
@@ -50,7 +52,9 @@ export class LectureManagementComponent implements OnInit, OnDestroy {
     }
     openModal(lecture?: LectureBO) {
         const initialState = {
-            lecture
+            lecture,
+            courseStatus: this.course.status,
+            chapterStatus: lecture.status
         };
         this.modalService.show(ListLectureComponent, {initialState, class: 'modal-max'});
     }
@@ -148,5 +152,7 @@ export class LectureManagementComponent implements OnInit, OnDestroy {
     private onError(error) {
         console.log(error);
     }
-
+    previousState() {
+        window.history.back();
+    }
 }

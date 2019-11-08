@@ -8,7 +8,7 @@
     <div class="row">
         <div class="col-sm-4">
             <button type="button" (click)="goToLink('null', 'new')"
-                    class="btn btn-primary jh-create-entity" >
+                    class="btn btn-md btn-primary jh-create-entity" *ngIf="statusCanNotEditAndDelete.indexOf(courseStatus) === -1 && statusCanNotEditAndDelete.indexOf(chapterStatus) === -1">
                     <i class="fa fa-plus"></i>
                 <span [translate]="'lectureManagement.home.chapter.createLabel'">
         Tạo mới
@@ -17,7 +17,7 @@
         </div>
         <div class="col-sm-2 col-lg-4"></div>
         <div class="col-sm-6 col-lg-4">
-            <div class="input-group">
+            <div class="input-group" *ngIf="lectures?.length > 0">
                 <input type="text" class="form-control" [(ngModel)]="keyword" (input)="search($event.target.value)"
                         placeholder="..."/>
                 <div class="input-group-prepend">
@@ -26,22 +26,27 @@
             </div>
         </div>
     </div>
-    <table class="mt-4 table table-striped text-center table-bordered">
+    <h1 class="text-center text-danger" *ngIf="lectures?.length === 0">Không có bài học nào</h1>
+    <table class="mt-4 table table-striped text-center table-bordered" *ngIf="lectures?.length > 0">
         <thead>
         <tr jhiSort>
+            <th>Trạng thái</th>
             <th><span [translate]="'lectureManagement.code'">code</span></th>
             <th><span [translate]="'lectureManagement.name'">name</span></th>
             <th><span [translate]="'lectureManagement.type'">type</span></th>
-            <th><span [translate]="'lectureManagement.active'">Active</span></th>
+            <!-- <th><span [translate]="'lectureManagement.active'">Active</span></th> -->
             <th [translate]="'lectureManagement.action'">Action</th>
         </tr>
         </thead>
-        <tbody *ngIf="lectures">
+        <tbody>
         <tr *ngFor="let lecture of lectures">
+            <td>
+                <strong><span class="badge badge-danger">{{lecture.status | statusText}}</span></strong>
+            </td>
             <td>{{lecture.code}}</td>
             <td>{{lecture.name}}</td>
             <td>{{lecture.type.name}}</td>
-            <td>
+            <!-- <td>
                 <button class="btn btn-danger btn-sm" (click)="setActive(lecture, true)"
                         *ngIf="!lecture.activated"
                         [translate]="'lectureManagement.deactivated'">Deactivated
@@ -51,7 +56,7 @@
                         
                         [translate]="'lectureManagement.activated'">Activated
                 </button>
-            </td>
+            </td> -->
             <td class="text-center">
                 <div class="btn-group flex-btn-group-container">
                     <button type="button" (click)="goToLink(lecture.code, 'quiz')" 
@@ -67,12 +72,12 @@
                         <span class="d-none d-md-inline" [translate]="'entity.action.view'">View</span>
                     </button>
                     <button type="button" (click)="goToLink(lecture.code, 'edit')"
-                            class="btn btn-primary btn-sm">
+                            class="btn btn-primary btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(courseStatus) === -1 && statusCanNotEditAndDelete.indexOf(lecture.status) === -1">
                         <i class="fa fa-pencil"></i>
                         <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
                     </button>
                     <button type="button" (click)="deleteLecture(lecture)"
-                            class="btn btn-danger btn-sm">
+                            class="btn btn-danger btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(courseStatus) === -1 && statusCanNotEditAndDelete.indexOf(lecture.status) === -1">
                         <i class="fa fa-times"></i>
                         <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
                     </button>

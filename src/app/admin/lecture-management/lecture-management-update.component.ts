@@ -2,13 +2,14 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { LectureBO } from 'src/app/models/lectureBO.model';
 import { JhiLanguageHelper } from 'src/app/core/language/language.helper';
 import { LectureService } from 'src/app/services/lecture.service';
 import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
+import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
 const swal: SweetAlert = _swal as any;
 @Component({
   selector: 'lecture-management-update',
@@ -33,11 +34,12 @@ export class LectureManagementUpdateComponent implements OnInit {
     sortOrder: [''],
     oldSortOrder: ['']
   });
-
+  statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
   constructor(
     private languageHelper: JhiLanguageHelper,
     private lectureService: LectureService,
     private route: ActivatedRoute,
+    private router: Router,
     private elRef: ElementRef,
     private fb: FormBuilder,
     private slugifyPipe: SlugifyPipe,
@@ -51,6 +53,11 @@ export class LectureManagementUpdateComponent implements OnInit {
     });
     this.route.data.subscribe(({ lecture }) => {
       this.lecture = lecture.body ? lecture.body : lecture;
+      // tslint:disable-next-line:max-line-length
+      if (this.statusCanNotEditAndDelete.indexOf(this.course.status) !== -1 || this.statusCanNotEditAndDelete.indexOf(this.lecture.status) !== -1) {
+        this.router.navigate(['admin/course-management', this.course.code, 'lecture']);
+        return;
+      }
       this.updateForm(this.lecture);
     });
     this.languageHelper.getAll().then(languages => {

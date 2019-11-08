@@ -19,6 +19,10 @@ export class CourseService {
         return this.http.put<CourseBO>(`${this.resourceUrl}/set-active`, course, { observe: 'response' });
     }
 
+    setStatus(courseCode: string): Observable<boolean> {
+        return this.http.put<boolean>(`${this.resourceUrl}/set-status/${courseCode}`, { observe: 'response' });
+    }
+
     update(body: any) {
         return this.http.put(this.resourceUrl, body, {observe: 'response' });
     }

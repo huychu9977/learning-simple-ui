@@ -13,6 +13,7 @@ import { LectureManagementDetailComponent } from './lecture-management-detail.co
 import { QuestionModalComponent } from './quiz/question-modal.component';
 import { PaginationModule } from 'ngx-bootstrap';
 import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
+import { SharedLibsModule } from 'src/app/shared/shared-libs.module';
 
 
 @NgModule({
@@ -24,9 +25,7 @@ import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
     QuizComponent,
     SlugifyPipe],
   imports: [
-    CommonModule,
-    FormsModule,
-    ReactiveFormsModule,
+    SharedLibsModule,
     TranslateModule,
     RouterModule,
     CKEditorModule,

@@ -5,9 +5,10 @@ import { TranslateModule } from '@ngx-translate/core';
 import { HighlightSearch } from './util/highlight-text.pipe';
 import { AvatarTextPipe } from './util/avatar-text.pipe';
 import { ElLoadingDirective } from './util/el-loading.directive';
+import { StatusText } from './util/status-text.pipe';
 
 @NgModule({
-  declarations: [HighlightSearch, AvatarTextPipe, ElLoadingDirective],
+  declarations: [HighlightSearch, AvatarTextPipe, ElLoadingDirective, StatusText],
   exports: [
     FormsModule,
     CommonModule,
@@ -15,7 +16,8 @@ import { ElLoadingDirective } from './util/el-loading.directive';
     TranslateModule,
     HighlightSearch,
     AvatarTextPipe,
-    ElLoadingDirective
+    ElLoadingDirective,
+    StatusText
   ]
 })
 export class SharedLibsModule {}

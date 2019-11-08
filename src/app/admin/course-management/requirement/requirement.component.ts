@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { RequirementService } from 'src/app/services/requirement.service';
+import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
 
 @Component({
   selector: 'requirement',
@@ -10,7 +11,7 @@ import { RequirementService } from 'src/app/services/requirement.service';
   styleUrls: ['./requirement.component.scss']
 })
 export class RequirementComponent implements OnInit {
-
+  statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
   courseRequireds?: any[] = [];
   requiredName?: string;
   course?: CourseBO;

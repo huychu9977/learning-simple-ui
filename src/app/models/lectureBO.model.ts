@@ -10,6 +10,7 @@ export class LectureBO {
         public modifiedBy?: string,
         public modifiedAt?: any,
         public activated?: boolean,
+        public status?: any,
         public parentCode?: string,
         public lectures?: any[],
         public questions?: any[],

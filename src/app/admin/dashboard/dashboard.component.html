@@ -1,0 +1,65 @@
+<div class="row justify-content-between">
+    <div class="card">
+        <h5 class="card-header bg-primary text-white">Chờ kiểm duyệt</h5>
+        <h3 *ngIf="ticketNeedCheck.length === 0"><strong>Không có yêu cầu kiểm duyệt</strong></h3>
+        <ul class="list-group list-group-flush" *ngIf="ticketNeedCheck.length > 0">
+            <li class="list-group-item" *ngFor="let ticket of ticketNeedCheck">
+                <alert type="info">
+                    <strong>{{ticket?.createdBy}} - {{ticket?.createAt | date:'dd/MM/yyyy'}}</strong>
+                    {{ticket?.content}}
+                    <button type="button" class="btn btn-sm btn-danger" (click)="changeTicketStatus(ticket?.id, 2, ticket?.status)">Nhận <i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
+                </alert>
+            </li>
+        </ul>
+      
+    </div>
+    <div class="card">
+        <h5 class="card-header bg-danger text-white">Đang kiểm duyệt</h5>
+        <h3 *ngIf="ticketChecking.length === 0"><strong>Không có yêu cầu đang kiểm duyệt</strong></h3>
+        <ul class="list-group list-group-flush" *ngIf="ticketChecking.length > 0">
+            <li class="list-group-item" *ngFor="let ticket of ticketChecking">
+                <alert type="danger">
+                    <strong>{{ticket?.createdBy}} - {{ticket?.createAt | date:'dd/MM/yyyy'}}</strong>
+                    {{ticket?.content}}
+                    <strong><span class="badge badge-danger">Bởi: {{ticket?.followBy}}</span></strong>
+                    <span *ngIf="currentAccount.username === ticket.followBy">
+                        <button type="button" class="btn btn-sm btn-primary ml-2" (click)="changeTicketStatus(ticket?.id, 6, ticket?.status)"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Trả lại</button>
+                        <button type="button" class="btn btn-sm btn-warning ml-2" (click)="changeTicketStatus(ticket?.id, 3, ticket?.status)"><i style="transform: rotate(-45deg);" class="fa fa-hand-o-left" aria-hidden="true"></i> Cảnh báo</button>
+                        <button type="button" class="btn btn-sm btn-success ml-2" (click)="changeTicketStatus(ticket?.id, 5, ticket?.status)">Kích hoạt <i class="fa fa-hand-o-down" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-sm btn-success ml-2" (click)="goToDetail(ticket)"><i class="fa fa-eye" aria-hidden="true"></i> Xem</button>
+                    </span>
+                </alert>
+            </li>
+        </ul>
+    </div>
+    <div class="card">
+        <h5 class="card-header bg-warning text-dark">Có sự cố</h5>
+        <h3 *ngIf="ticketWarning.length === 0"><strong>Không có yêu cầu gặp sự cố</strong></h3>
+        <ul class="list-group list-group-flush" *ngIf="ticketWarning.length > 0">
+            <li class="list-group-item" *ngFor="let ticket of ticketWarning">
+                <alert type="warning">
+                    <strong>{{ticket?.createdBy}} - {{ticket?.createAt | date:'dd/MM/yyyy'}}</strong>
+                    {{ticket?.content}}
+                    <strong><span class="badge badge-warning">Bởi: {{ticket?.followBy}}</span></strong>
+                    <span *ngIf="currentAccount.username === ticket.followBy">
+                        <button type="button" class="btn btn-sm btn-danger ml-2" (click)="changeTicketStatus(ticket?.id, 2, ticket?.status)">Trả lại <i style="transform: rotate(-45deg);" class="fa fa-hand-o-right" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-sm btn-success ml-2" (click)="changeTicketStatus(ticket?.id, 5, ticket?.status)">Kích hoạt <i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
+                    </span>
+                </alert>
+            </li>
+        </ul>
+    </div>
+    <div class="card">
+        <h5 class="card-header bg-success text-white">Kích hoạt</h5>
+        <h3 *ngIf="ticketSuccess.length === 0"><strong>Không có yêu cầu được kích hoạt</strong></h3>
+        <ul class="list-group list-group-flush" *ngIf="ticketSuccess.length > 0">
+            <li class="list-group-item" *ngFor="let ticket of ticketSuccess">
+                <alert type="success">
+                    <strong>{{ticket?.createdBy}} - {{ticket?.createAt | date:'dd/MM/yyyy'}}</strong>
+                    {{ticket?.content}}
+                    <strong><span class="badge badge-success">Bởi: {{ticket?.followBy}}</span></strong>
+                </alert>
+            </li>
+        </ul>
+    </div>
+</div>

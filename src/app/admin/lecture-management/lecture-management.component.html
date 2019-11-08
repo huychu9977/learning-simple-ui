@@ -10,18 +10,17 @@
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-sm-4">
+                                    <button type="button" class="btn btn-md btn-default" (click)="previousState()">Quay lại</button>
                                     <button id="jh-create-entity"
-                                            class="btn btn-primary jh-create-entity"
-                                            [routerLink]="['new']">
+                                            class="btn btn-md btn-primary ml-2"
+                                            [routerLink]="['new']" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
                                             <i class="fa fa-plus"></i>
-                                        <span [translate]="'lectureManagement.home.chapter.createLabel'">
-                               Tạo mới
-                               </span>
+                                        <span [translate]="'lectureManagement.home.chapter.createLabel'">Tạo mới</span>
                                     </button>
                                 </div>
                                 <div class="col-sm-2 col-lg-4"></div>
                                 <div class="col-sm-6 col-lg-4">
-                                    <div class="input-group">
+                                    <div class="input-group" *ngIf="courseLectures?.length > 0">
                                         <input type="text" class="form-control" [(ngModel)]="keyword" (input)="search($event.target.value)"
                                                placeholder="..."/>
                                         <div class="input-group-prepend">
@@ -31,25 +30,32 @@
                                 </div>
                             </div>
                             <br/>
-                            <table class="table table-striped text-center">
+                            <h1 class="text-center text-danger" *ngIf="courseLectures?.length === 0">Không có chương học nào</h1>
+                            <table class="table table-striped text-center" *ngIf="courseLectures?.length > 0">
                                 <thead>
                                 <tr>
+                                    <th>
+                                        Trạng thái
+                                    </th>
                                     <th >
                                         <span [translate]="'lectureManagement.code'">code</span>
                                     </th>
                                     <th >
                                         <span [translate]="'lectureManagement.name'">name</span>
                                     </th>
-                                    <th><span [translate]="'lectureManagement.active'">Active</span></th>
+                                    <!-- <th><span [translate]="'lectureManagement.active'">Active</span></th> -->
                                     <th [translate]="'lectureManagement.home.lecture.title'">Action</th>
                                     <th [translate]="'lectureManagement.action'">Action</th>
                                 </tr>
                                 </thead>
-                                <tbody *ngIf="courseLectures">
+                                <tbody>
                                 <tr *ngFor="let lecture of courseLectures; trackBy: trackIdentity">
+                                    <td>
+                                       <strong><span class="badge badge-danger">{{lecture.status | statusText}}</span></strong>
+                                    </td>
                                     <td>{{lecture.code}}</td>
                                     <td>{{lecture.name}}</td>
-                                    <td>
+                                    <!-- <td>
                                         <button class="btn btn-danger btn-sm" (click)="setActive(lecture, true)"
                                                 *ngIf="!lecture.activated"
                                                 [translate]="'lectureManagement.deactivated'">Deactivated
@@ -59,7 +65,7 @@
                                                 
                                                 [translate]="'lectureManagement.activated'">Activated
                                         </button>
-                                    </td>
+                                    </td> -->
                                     <td class="text-center">
                                         <div class="btn-group flex-btn-group-container">
                                             <button type="button" (click)="openModal(lecture)"
@@ -81,12 +87,12 @@
                                             <button type="submit"
                                                     [routerLink]="[ lecture.code, 'edit']"
                                                     queryParamsHandling="merge"
-                                                    class="btn btn-primary btn-sm">
+                                                    class="btn btn-primary btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1 && statusCanNotEditAndDelete.indexOf(lecture.status) === -1">
                                                 <i class="fa fa-pencil"></i>
                                                 <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
                                             </button>
                                             <button type="button" (click)="deleteLecture(lecture)"
-                                                    class="btn btn-danger btn-sm">
+                                                    class="btn btn-danger btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1 && statusCanNotEditAndDelete.indexOf(lecture.status) === -1">
                                                 <i class="fa fa-times"></i>
                                                 <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
                                             </button>

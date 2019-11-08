@@ -16,6 +16,7 @@ export class CourseBO {
         public modifiedBy?: string,
         public modifiedAt?: any,
         public activated?: boolean,
+        public status?: any,
         public totalLecture?: any,
         public totalObjective?: any,
         public totalRequirement?: any,

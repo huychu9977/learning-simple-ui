@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { ObjectiveSummaryService } from 'src/app/services/objective-summary.service';
+import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
 
 @Component({
   selector: 'objective-summary',
@@ -10,6 +11,7 @@ import { ObjectiveSummaryService } from 'src/app/services/objective-summary.serv
   styleUrls: ['./objective-summary.component.scss']
 })
 export class ObjectiveSummaryComponent implements OnInit {
+  statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
   objectives?: any[] = [];
   objectiveName?: string;
   course?: CourseBO;

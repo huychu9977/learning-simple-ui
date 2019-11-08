@@ -1,5 +1,4 @@
 import { P404Component } from './page-error/404.component';
-import { PageDashboardComponent } from './page-dashboard/page-dashboard.component';
 import { AdminComponent } from './admin.component';
 import { Routes, CanActivate, Router} from '@angular/router';
 
@@ -12,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { Injectable } from '@angular/core';
 import { AccountService } from '../core/auth/account.service';
 import { UserRouteAccessService } from '../core/auth/user-route-access-service';
+import { DashboardComponent } from './dashboard/dashboard.component';
 
 @Injectable({ providedIn: 'root' })
 export class LoginRouteAccessService implements CanActivate {
@@ -53,7 +53,7 @@ export const adminState: Routes = [
       { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {
           path: 'dashboard',
-          component: PageDashboardComponent,
+          component: DashboardComponent,
           data : {
               pageTitle: 'userManagement.home.title'
           }

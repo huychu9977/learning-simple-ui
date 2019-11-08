@@ -2,7 +2,6 @@ import { LoadingScreenComponent } from './../layouts/loading-screen/loading-scre
 import { FindLanguageFromKeyPipe } from './../shared/language/find-language-from-key.pipe';
 import { UserManagementModule } from './user-management/user-management.module';
 import { P404Component } from './page-error/404.component';
-import { PageDashboardComponent } from './page-dashboard/page-dashboard.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
@@ -20,6 +19,7 @@ import { LectureManagementModule } from './lecture-management/lecture-management
 import { LoginModule } from './login/login.module';
 import { CommonModule } from '@angular/common';
 import { CollapseModule } from 'ngx-bootstrap';
+import { DashboardModule } from './dashboard/dashboard.module';
 
 @NgModule({
   imports: [
@@ -38,11 +38,11 @@ import { CollapseModule } from 'ngx-bootstrap';
     PermissionManagementModule,
     CourseManagementModule,
     LectureManagementModule,
-    LoginModule
+    LoginModule,
+    DashboardModule
   ],
   declarations: [
-    AdminComponent, P404Component, LoadingScreenComponent,
-    PageDashboardComponent, FindLanguageFromKeyPipe,
+    AdminComponent, P404Component, LoadingScreenComponent, FindLanguageFromKeyPipe,
   ]
 })
 export class AdminModule {}

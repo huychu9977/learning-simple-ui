@@ -2,12 +2,13 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import * as _swal from 'sweetalert';
 import { SweetAlert } from 'sweetalert/typings/core';
 import { Validators, FormBuilder } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { JhiLanguageHelper } from 'src/app/core/language/language.helper';
 import { CourseService } from 'src/app/services/course.service';
 import { CategoryService } from 'src/app/services/category.service';
+import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
 const swal: SweetAlert = _swal as any;
 
 @Component({
@@ -41,12 +42,13 @@ export class CourseManagementUpdateComponent implements OnInit {
     courseTopic: ['', [Validators.required]],
     courseCategory: [''],
   });
-
+  statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
   constructor(
     private languageHelper: JhiLanguageHelper,
     private courseService: CourseService,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
+    private router: Router,
     private elRef: ElementRef,
     private fb: FormBuilder,
     private toastr?: ToastrService,
@@ -56,6 +58,10 @@ export class CourseManagementUpdateComponent implements OnInit {
     this.isSaving = false;
     this.route.data.subscribe(({ course }) => {
       this.course = course.body ? course.body : course;
+      if (this.statusCanNotEditAndDelete.indexOf(this.course.status) !== -1) {
+        this.router.navigate(['admin/course-management']);
+        return;
+      }
       this.updateForm(this.course);
     });
     this.courseCategorys = [];
@@ -96,8 +102,8 @@ export class CourseManagementUpdateComponent implements OnInit {
       courseCategory: course.topicDTO ? course.topicDTO.courseCategoryDTO.code : null,
       courseTopic: course.topicDTO ? course.topicDTO.code : null
     });
-    this.imageUrl = this.course.courseImageId ? `api/image/${this.course.courseImageId}` : '../../../assets/images/default.png';
-    this.videoUrl = '../../../assets/images/default-video-image.png';
+    this.imageUrl = this.course.courseImageId ? `api/image/${this.course.courseImageId}` : 'assets/images/default.png';
+    this.videoUrl = 'assets/images/default-video-image.png';
     if (this.course.id) {
       const courseCategoryCode  = this.editForm.get(['courseCategory']).value;
       if (courseCategoryCode) {

@@ -68,13 +68,14 @@
                             <table class="table table-striped text-center">
                                 <thead>
                                 <tr>
+                                    <th>Kiểm duyệt</th>
                                     <th>
                                         <span [translate]="'courseManagement.code'">code</span>
                                     </th>
                                     <th>
                                         <span [translate]="'courseManagement.name'">name</span>
                                     </th>
-                                    <th><span [translate]="'courseManagement.active'">Active</span></th>
+                                    <!-- <th><span [translate]="'courseManagement.active'">Active</span></th> -->
                                     <th><span [translate]="'courseManagement.topic'">Topic</span></th>
                                     <th [translate]="'courseManagement.editMore'">editMore</th>
                                     <th [translate]="'courseManagement.action'">Action</th>
@@ -82,9 +83,15 @@
                                 </thead>
                                 <tbody *ngIf="courses">
                                 <tr *ngFor="let course of courses;">
+                                    <td *ngIf="statusNeedCheck.indexOf(course.status) > -1">
+                                        <button type="button" class="btn btn-sm btn-info" (click)="setStatus(course?.code)">Xét duyệt</button>
+                                    </td>
+                                    <td *ngIf="statusNeedCheck.indexOf(course.status) === -1">
+                                        <strong><span class="badge badge-primary">{{course?.status | statusText}}</span></strong>
+                                    </td>
                                     <td>{{course.code}}</td>
                                     <td>{{course.name}}</td>
-                                    <td>
+                                    <!-- <td>
                                         <button class="btn btn-danger btn-sm" (click)="setActive(course, true)"
                                                 *ngIf="!course.activated"
                                                 [translate]="'courseManagement.deactivated'">Deactivated
@@ -94,7 +101,7 @@
                                                 
                                                 [translate]="'courseManagement.activated'">Activated
                                         </button>
-                                    </td>
+                                    </td> -->
                                     <td>
                                         {{course.topicDTO.name}} - {{course.topicDTO.courseCategoryDTO.name}}
                                     </td>
@@ -134,12 +141,12 @@
                                             <button type="submit"
                                                     [routerLink]="[ course.code, 'edit']"
                                                     queryParamsHandling="merge"
-                                                    class="btn btn-primary btn-sm">
+                                                    class="btn btn-primary btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
                                                 <i class="fa fa-pencil"></i>
                                                 <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
                                             </button>
                                             <button type="button" (click)="deleteCourse(course)"
-                                                    class="btn btn-danger btn-sm">
+                                                    class="btn btn-danger btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
                                                 <i class="fa fa-times"></i>
                                                 <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
                                             </button>
