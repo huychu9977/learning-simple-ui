@@ -1,0 +1,1 @@
+export const ALL_ROLE = ['ROLE_ADMIN', 'ROLE_USER', 'ROLE_TEACHER', 'ROLE_BOSS'];

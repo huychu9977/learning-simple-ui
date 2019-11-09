@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { FindLanguageFromKeyPipe } from './language/find-language-from-key.pipe';
-import { HasAnyAuthorityDirective } from './auth/has-any-authority.directive';
 import { SharedLibsModule } from './shared-libs.module';
+import { HasAnyAuthorityDirective } from './util/has-any-authority.directive';
 
 @NgModule({
   imports: [SharedLibsModule],

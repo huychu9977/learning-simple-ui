@@ -14,27 +14,45 @@
         <div class="loading" *ngIf="load">
             <div class="lds-ripple"><div></div><div></div></div>
         </div>
-        <div class="col-md-8" *ngIf="!isLoginForm">
-            <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
+        <div class="col-md-8" *ngIf="!isLoginForm && !isForgotPasswordForm">
+            <form class="form" role="form" (ngSubmit)="register()" [formGroup]="registerForm">
                 <div class="form-group">
                     <label class="username-label" for="username" [translate]="'global.form.username.label'">Login</label>
                     <input type="text" class="form-control" name="username" id="username" placeholder="{{'global.form.username.placeholder' | translate}}"
                             formControlName="username">
                 </div>
                 <div class="form-group">
+                    <label class="username-label" for="name" [translate]="'global.form.name.label'">name</label>
+                    <input type="text" class="form-control" name="name" id="name" placeholder="{{'global.form.name.placeholder' | translate}}"
+                            formControlName="name">
+                </div>
+                <div class="form-group">
+                    <label class="username-label" for="email" [translate]="'global.form.email.label'">Login</label>
+                    <input type="email" class="form-control" name="email" id="email" placeholder="{{'global.form.email.placeholder' | translate}}"
+                            formControlName="email">
+                </div>
+                <div class="form-group">
                     <label for="password" [translate]="'login.form.password'">Password</label>
                     <input type="password" class="form-control" name="password" id="password" placeholder="{{'login.form.password.placeholder' | translate}}"
                             formControlName="password">
                 </div>
-                <button type="submit" class="btn btn-primary" [translate]="'register.form.button'">Sign in</button>
+                <p class="text-sm text-danger">{{messageRegister}}</p>
+                <button type="submit" class="btn btn-primary my-3" [disabled]="isActiveRegister" [translate]="'register.form.button'">Sign up</button>
+            </form>
+            <form class="form" role="form" (ngSubmit)="registerFinish()" [formGroup]="activeKeyForm" *ngIf="isFormActiveKey">
+                <div class="form-group">
+                    <label for="activeKey" >Mã kích họat</label>
+                    <input type="text" class="form-control" name="activeKey" id="activeKey"  formControlName="key">
+                </div>
+                <button type="submit" class="btn btn-primary my-3">Xác nhận</button>
             </form>
             <p></p>
             <div class="alert alert-warning">
                 <span [translate]="'global.messages.info.register.account'">You have an account ?</span>
-                <a class="alert-link" href="javascript:void(0)" (click)="isLoginForm = !isLoginForm" [translate]="'login.title'">Login</a>
+                <a class="alert-link" href="javascript:void(0)" (click)="isLoginForm = !isLoginForm; isFormActiveKey = false;" [translate]="'login.title'">Login</a>
             </div>
         </div>
-        <div class="col-md-8" *ngIf="isLoginForm">
+        <div class="col-md-8" *ngIf="isLoginForm && !isFormActiveKey && !isForgotPasswordForm">
             <form class="form" role="form" (ngSubmit)="login()" [formGroup]="loginForm">
                 <div class="form-group">
                     <label class="username-label" for="username" [translate]="'global.form.username.label'">Login</label>
@@ -52,15 +70,44 @@
                         <span [translate]="'login.form.rememberme'">Remember me</span>
                     </label>
                 </div>
-                <button type="submit" class="btn btn-primary" [translate]="'login.form.button'">Sign in</button>
+                <p class="text-sm text-danger">{{message}}</p>
+                <button type="submit" class="my-3 btn btn-primary" [translate]="'login.form.button'">Sign in</button>
             </form>
             <p></p>
             <div class="alert alert-warning">
-                <a class="alert-link" (click)="requestResetPassword()" [translate]="'login.password.forgot'">Did you forget your password?</a>
+                <a class="alert-link" href="javascript:void(0)" (click)="requestResetPassword()" [translate]="'login.password.forgot'"
+                (click)="isLoginForm = false; isForgotPasswordForm = true; messageRegister = '';">Did you forget your password?</a>
             </div>
             <div class="alert alert-warning">
                 <span [translate]="'global.messages.info.register.noaccount'">You don't have an account yet?</span>
-                <a class="alert-link" href="javascript:void(0)" (click)="isLoginForm = !isLoginForm" [translate]="'global.messages.info.register.link'">Register a new account</a>
+                <a class="alert-link" href="javascript:void(0)" (click)="isLoginForm = !isLoginForm; isFormActiveKey = false; messageRegister = '';" [translate]="'global.messages.info.register.link'">Register a new account</a>
+            </div>
+        </div>
+        <div class="col-md-8" *ngIf="!isLoginForm && isForgotPasswordForm">
+            <form class="form" role="form" (ngSubmit)="requestResetPassword()" [formGroup]="forgotPasswordForm">
+                <div class="form-group">
+                    <label class="username-label" for="email" [translate]="'global.form.email.label'">Login</label>
+                    <input type="text" class="form-control" name="email" id="email" placeholder="{{'global.form.email.placeholder' | translate}}"
+                            formControlName="email">
+                </div>
+                <p class="text-sm text-danger">{{messageRegister}}</p>
+                <button type="submit" [disabled]="isActiveForgot" class="my-3 btn btn-primary">Gửi</button>
+            </form>
+            <form *ngIf="isConfirmResetPassword" class="form" role="form" (ngSubmit)="confirmResetPassword()" [formGroup]="forgotPasswordConfirmForm">
+                <div class="form-group">
+                    <label for="newPassword" [translate]="'global.form.newpassword'">newPassword</label>
+                    <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="{{'global.form.newpassword.placeholder' | translate}}"
+                            formControlName="newPassword">
+                </div>
+                <div class="form-group">
+                    <label for="key" >Mã khôi phục</label>
+                    <input type="text" class="form-control" name="key" id="key"  formControlName="key">
+                </div>
+                <button type="submit" class="my-3 btn btn-primary">Xác nhận</button>
+            </form>
+            <p></p>
+            <div class="alert alert-warning">
+                <a class="alert-link" href="javascript:void(0)" (click)="isLoginForm = true; isForgotPasswordForm = false;">Đăng nhập</a>
             </div>
         </div>
     </div>

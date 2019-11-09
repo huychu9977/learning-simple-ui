@@ -61,6 +61,9 @@
         "validation":"Validation error on the server."
     },
     "global":{
+        "profile": {
+            "title": "My Profile"
+         },
         "dashboard":{
             "navName":"Dashboard"
         },

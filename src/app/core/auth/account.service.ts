@@ -13,8 +13,35 @@ export class AccountService {
 
   constructor(private http: HttpClient) {}
 
+  registerInit(account?: any) {
+    return this.http.post<boolean>(SERVER_API_URL + 'api/account/register', account, { observe: 'response' });
+  }
+
+  registerFinish(account?: any, activeKey?: string) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.post<boolean>(SERVER_API_URL + 'api/account/register/confirm?activeKey=' + activeKey, account, { observe: 'response' });
+  }
+
+  resetPasswordInit(email?: string) {
+    return this.http.post<boolean>(SERVER_API_URL + 'api/account/reset-password/init?email=' + email, { observe: 'response' });
+  }
+
+  resetPasswordFinish(email?: string, newPassword?: string, key?: string) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.post<boolean>(SERVER_API_URL + 'api/account/reset-password/finish?email=' + email + '&newPassword=' + newPassword + '&key=' + key, { observe: 'response' });
+  }
+
+  changePassword(currentPassword?: string, newPassword?: string) {
+    // tslint:disable-next-line:max-line-length
+    return this.http.post<boolean>(SERVER_API_URL + 'api/account/change-password?currentPassword=' + currentPassword + '&newPassword=' + newPassword, { observe: 'response' });
+  }
+
   fetch(): Observable<HttpResponse<Account>> {
     return this.http.get<Account>(SERVER_API_URL + 'api/account', { observe: 'response' });
+  }
+
+  getCurrentAccount(): Observable<Account> {
+    return this.http.get<Account>(SERVER_API_URL + 'api/user/account');
   }
 
   save(account: any): Observable<HttpResponse<any>> {

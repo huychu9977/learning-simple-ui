@@ -1,3 +1,5 @@
+import { ALL_ROLE } from './../shared/constants/roles.constants';
+import { UserRouteAccessProfileService } from './../core/auth/user-route-access-profile-service';
 import { PageTeacherComponent } from './page-teacher/page-teacher.component';
 import { PageOurTeacherComponent } from './page-our-teacher/page-our-teacher.component';
 import { PageOurCourseComponent } from './page-our-course/page-our-course.component';
@@ -23,11 +25,20 @@ import { LoginModalModule } from './login/login.module';
 import { UserRouteAccessCourseService } from '../core/auth/user-route-access-course-service';
 import { PageMyCourseComponent } from './page-my-course/page-my-course.component';
 import { PageMyCourseModule } from './page-my-course/page-my-course.module';
+import { PageProfileModule } from './page-profile/page-profile.module';
 const clientRoute: Routes = [
     {
       path: '',
       component: ClientComponent,
       children: [
+        {
+          path: 'user',
+          loadChildren: () => import('./page-profile/page-profile.module').then(m => m.PageProfileModule),
+          data: {
+            authorities: ALL_ROLE
+          },
+          canActivate: [UserRouteAccessProfileService],
+        },
         { path: '', redirectTo: 'home', pathMatch: 'full'},
         {
             path: 'home',
@@ -109,7 +120,8 @@ const clientRoute: Routes = [
       PageLectureModule,
       PageOurTeacherModule,
       PageTeacherModule,
-      PageMyCourseModule
+      PageMyCourseModule,
+      PageProfileModule
     ]
   })
   export class ClientModule { }

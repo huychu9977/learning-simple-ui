@@ -14,7 +14,7 @@
                     <li class="menu_link"> <a href="javascript:void(0)" (click)="login()"> <span>Đăng nhập</span> </a> </li>
                 </ul>
                 <ul class="dropdown-menu_list" *ngIf="currentAccount">
-                    <li class="menu_link"> <a href="javascript:void(0)"> <span>Tài khoản</span> </a> </li>
+                    <li class="menu_link"> <a href="javascript:void(0)" [routerLink]="[ '/user/account' ]"> <span>Tài khoản</span> </a> </li>
                     <li class="menu_link"> <a href="javascript:void(0)" [routerLink]="[ '/account/my-courses' ]"> <span>Khóa học của tôi</span> </a> </li>
                     <li class="menu_link"> <a href="javascript:void(0)" (click)="logout()"> <span>Đăng xuất</span> </a> </li>
                 </ul>

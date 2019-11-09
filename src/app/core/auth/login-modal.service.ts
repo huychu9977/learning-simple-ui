@@ -7,7 +7,7 @@ export class LoginModalService {
   constructor(private modalService: BsModalService) {}
 
   open() {
-    const modalRef = this.modalService.show(LoginModalComponent);
+    const modalRef = this.modalService.show(LoginModalComponent, {ignoreBackdropClick: true, keyboard: false});
     return modalRef;
   }
 }

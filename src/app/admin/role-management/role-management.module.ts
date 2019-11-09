@@ -1,4 +1,4 @@
-import { HasAnyAuthorityDirective } from './../../shared/auth/has-any-authority.directive';
+import { HasAnyAuthorityDirective } from '../../shared/util/has-any-authority.directive';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';

@@ -1,0 +1,43 @@
+<banner-image [imageSrc]="'../../../assets/images/main/02_about_us_Banner.png'"></banner-image>
+<div class="container my-5">
+    <div>
+        <div id="main-section" class="row">
+            <div class="col-md-3" style="padding-right: 0;">
+                <div class="side-nav db-sm">
+                    <div id="user-short">
+                        <div class="fx-c">
+                            <div aria-label="Sfsf Asffas" class="user-avatar">
+                                <div class="user-avatar__inner fx-c">
+                                <span class="user-initials">SA</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tooltip-container">
+                            <h2>Sfsf Asffas</h2>
+                        </div>
+                    </div>
+                    <ul>
+                        <li class="">
+                            <a href="/user/sfsf-asffas/" >
+                            View public profile
+                            </a>
+                        </li>
+                        <li class=" on ">
+                            <a href="/user/edit-profile/">
+                            Profile
+                            </a>
+                        </li>
+                        <li class="">
+                             <a href="/user/edit-photo/">
+                            Photo
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-9" style="padding-left: 0;">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+    </div>
+</div>

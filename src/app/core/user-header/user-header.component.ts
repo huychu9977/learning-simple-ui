@@ -24,11 +24,11 @@ export class UserHeaderComponent implements OnInit {
     private page: PageReloadService) { }
 
   ngOnInit() {
-    this.accountService.identity().then(account => {
-        this.currentAccount = account;
-        this.commentService.getNotifications().subscribe(res => {
-          this.notifications = res;
-        });
+    this.accountService.getCurrentAccount().subscribe(account => {
+      this.currentAccount = account;
+      this.commentService.getNotifications().subscribe(res => {
+        this.notifications = res;
+      });
     });
   }
   isShowNotification() {

@@ -60,9 +60,16 @@
        "validation":"Validation error on the server."
     },
     "global":{
+      "profile": {
+         "title": "Thông tin cá nhân"
+      },
       "form": {
          "username.label": "Tên tài khoản",
          "username.placeholder": "Nhập tên tài khoản của bạn",
+         "name.label": "Họ và tên",
+         "name.placeholder": "Nhập họ tên của bạn",
+         "address.label": "Địa chỉ",
+         "address.placeholder": "Nhập địa chỉ của bạn",
          "newpassword.label": "Mật khẩu mới",
          "newpassword.placeholder": "Nhập mật khẩu mới",
          "confirmpassword.label": "Xác nhận mật khẩu mới",
