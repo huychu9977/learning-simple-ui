@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { SERVER_API_URL } from 'src/app/app.constants';
+import { TodosService } from 'src/app/services/todo.service';
 
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +12,11 @@ export class AccountService {
   private authenticated = false;
   private authenticationState = new Subject<any>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private todoService: TodosService) {}
+
+  updateCurrentUser(body?: any) {
+    return this.http.put<boolean>(SERVER_API_URL + 'api/user/account/update', body, { observe: 'response' });
+  }
 
   registerInit(account?: any) {
     return this.http.post<boolean>(SERVER_API_URL + 'api/account/register', account, { observe: 'response' });
@@ -125,5 +130,13 @@ export class AccountService {
 
   getImageUrl(): string {
     return this.isIdentityResolved() ? this.userIdentity.imageUrl : null;
+  }
+
+  getUserAuthenticated() {
+    this.todoService.toggle$.subscribe(data => {
+      this.identity(true);
+      return this.userIdentity;
+    });
+    return this.userIdentity;
   }
 }

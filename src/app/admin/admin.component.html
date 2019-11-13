@@ -1,17 +1,11 @@
 <div class="wrapper">
   <nav id="sidebar">
     <ul class="nav">
-      <li class="nav-item">
-        <a href="" class="nav-link active">
-          <i class="nav-icon fa fa-trash"></i>
-          Dashboard
-        </a>
-      </li>
       <li class="nav-title">Theme</li>
       <li *ngFor="let item of navItems" [ngClass]="item.title ? 'nav-title' : 'nav-item'">
         <a href="javascript:void(0)" class="nav-link" [routerLink]="[ item.url ]" [routerLinkActive]="['active']" *ngIf="!item.title">
           <i class="nav-icon fa {{item.icon}}"></i>
-          {{item.name}}
+          {{item.name | translate}}
         </a>
         <span *ngIf="item.title">{{item.name}}</span>
       </li>

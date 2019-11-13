@@ -6,9 +6,10 @@ import { HighlightSearch } from './util/highlight-text.pipe';
 import { AvatarTextPipe } from './util/avatar-text.pipe';
 import { ElLoadingDirective } from './util/el-loading.directive';
 import { StatusText } from './util/status-text.pipe';
+import { TimeAgoPipe } from 'time-ago-pipe';
 
 @NgModule({
-  declarations: [HighlightSearch, AvatarTextPipe, ElLoadingDirective, StatusText],
+  declarations: [HighlightSearch, AvatarTextPipe, ElLoadingDirective, StatusText, TimeAgoPipe],
   exports: [
     FormsModule,
     CommonModule,
@@ -17,7 +18,8 @@ import { StatusText } from './util/status-text.pipe';
     HighlightSearch,
     AvatarTextPipe,
     ElLoadingDirective,
-    StatusText
+    StatusText,
+    TimeAgoPipe
   ]
 })
 export class SharedLibsModule {}

@@ -28,17 +28,8 @@ export class AdminComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     private principal: AccountService,
     private router: Router,
-    // tslint:disable-next-line:variable-name
-    @Inject(DOCUMENT) _document?: any) {
+    ) {
       this.route = this.router;
-      this.changes = new MutationObserver(() => {
-        this.sidebarMinimized = _document.body.classList.contains('sidebar-minimized');
-      });
-      this.element = _document.body;
-      this.changes.observe(this.element as Element, {
-        attributes: true,
-        attributeFilter: ['class']
-      });
       translateService.onLangChange.subscribe((event: LangChangeEvent) => {
         this.translateMenu();
       });
@@ -59,33 +50,31 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
   translateMenu() {
     // translate menu
-    this.navItems = JSON.parse(JSON.stringify(navItems));
-    // localStorage.removeItem('menu');
-    // if (localStorage.getItem('menu') === null) {
-    //     this.navItems.forEach(nav => {
-    //       if (nav.hasOwnProperty('key')) {
-    //         this.translateIntoVN(nav);
-    //       }
-    //     });
-    //     localStorage.setItem('menu', JSON.stringify(this.navItems));
-    //     const principal = this.principal;
-    //     this.principal.identity().then(account => {
-    //         this.navItems = (this.navItems || []).filter(menu => {
-    //           if (menu.hasOwnProperty('authorities')) {
-    //             const authorities = menu.authorities;
-    //             if (!authorities || authorities.length === 0) {
-    //                 return true;
-    //             }
-    //             if (account) {
-    //                 return principal.hasAnyAuthority(authorities);
-    //             }
-    //           }
-    //           return true;
-    //         });
-    //     });
-    // } else {
-    //     this.navItems = JSON.parse(localStorage.getItem('menu'));
-    // }
+    if (localStorage.getItem('menu') === null) {
+        this.navItems.forEach(nav => {
+          if (nav.hasOwnProperty('key')) {
+            this.translateIntoVN(nav);
+          }
+        });
+        localStorage.setItem('menu', JSON.stringify(this.navItems));
+    } else {
+        this.navItems = JSON.parse(localStorage.getItem('menu'));
+    }
+    const principal = this.principal;
+    this.principal.identity().then(account => {
+        this.navItems = (this.navItems || []).filter(menu => {
+          if (menu.hasOwnProperty('authorities')) {
+            const authorities = menu.authorities;
+            if (!authorities || authorities.length === 0) {
+                return true;
+            }
+            if (account) {
+                return principal.hasAnyAuthority(authorities);
+            }
+          }
+          return true;
+        });
+    });
   }
   translateIntoVN(item: any) {
     item.name = this.translateService.instant(item.key);

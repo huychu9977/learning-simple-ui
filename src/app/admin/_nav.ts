@@ -1,7 +1,8 @@
+import { NOT_USER_AND_TEACHER } from './../shared/constants/roles.constants';
 export const navItems = [
   {
     name: 'Dashboard',
-    url: 'dashboard',
+    url: '/admin/dashboard',
     icon: 'icon-speedometer',
     key: 'global.dashboard.navName'
   },
@@ -13,20 +14,22 @@ export const navItems = [
     name: 'Quản lý người dùng',
     url: '/admin/user-management',
     icon: 'icon-people',
-    key: 'userManagement.navName'
+    key: 'userManagement.navName',
+    authorities: NOT_USER_AND_TEACHER
   },
   {
     name: 'Quản lý vai trò',
     url: '/admin/role-management',
     icon: 'icon-people',
     key: 'roleManagement.navName',
-    authorities: ['ROLE_ADMIN']
+    authorities: ['ROLE_BOSS']
   },
   {
     name: 'Quản lý quyền hạn',
     url: '/admin/permission-management',
     icon: 'icon-people',
-    key: 'permissionManagement.navName'
+    key: 'permissionManagement.navName',
+    authorities: ['ROLE_BOSS']
   },
   {
     name: 'Quản lý khóa học',

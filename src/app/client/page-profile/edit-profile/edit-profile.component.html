@@ -1,31 +1,57 @@
-<div class="form-wrapper">
+<div class="form-wrapper" [el-loading]="isLoad">
     <h2>Thông tin cá nhân</h2>
-    <form action="" class="mt-4">
+    <div class="image-avatar d-flex border-top pt-3 mt-4">
+        <div class="col-md-6 text-center">
+            <img width="200" height="200" [src]="imageUrl" alt="">
+        </div>
+        <div class="col-md-6">
+            <div class="el-upload-dragger">
+                <div class="el-upload el-upload--text">
+                    <i class="fa fa-upload" aria-hidden="true"></i>
+                    <div class="el-upload__text">Thay ảnh đại diện
+                        <em>Click here</em>
+                    </div>
+                    <input class="el-upload__input"name="imageFile" id="fileImage" type="file"  accept="image/x-png,image/jpeg" (change)="onImageChange($event)">
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <form action="" class="mt-4" role="form" (ngSubmit)="editCurrentAccount()" [formGroup]="editForm">
         <div class="manage-fields-wrapper">
             <div class="form-group row my-3 justify-content-center">
-                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                <label for="username" class="col-sm-2 col-form-label">Tài khoản</label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                    <input type="text" class="form-control" id="username" placeholder="Tài khoản" formControlName="username">
+                </div>
+            </div>
+            <div class="form-group row my-4 justify-content-center">
+                <label for="email" class="col-sm-2 col-form-label">Email</label>
+                <div class="col-sm-8">
+                    <input type="email" class="form-control" id="email" placeholder="Email" formControlName="email">
                 </div>
             </div>
             <div class="form-group row my-3 justify-content-center">
-                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                <label for="name" class="col-sm-2 col-form-label">Họ tên</label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                    <input type="text" class="form-control" id="name" placeholder="Họ tên" formControlName="name">
                 </div>
             </div>
-            <div class="form-group row my-3 justify-content-center">
-                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+            <div class="form-group row my-4 justify-content-center">
+                <label for="phone" class="col-sm-2 col-form-label">Số điện thoại</label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                    <input type="phone" class="form-control" id="phone" placeholder="Số điện thoại" formControlName="phone">
                 </div>
             </div>
-            <div class="form-group row my-3 justify-content-center">
-                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+            <div class="form-group row my-4 justify-content-center">
+                <label for="address" class="col-sm-2 col-form-label">Địa chỉ</label>
                 <div class="col-sm-8">
-                    <input type="password" class="form-control" id="inputPassword" placeholder="Password">
+                    <input type="text" class="form-control" id="address" placeholder="Địa chỉ" formControlName="address">
                 </div>
             </div>
+        </div>
+        <div class="col-md-12 my-3 text-center">
+            <button type="submit" class="btn btn-md btn-danger">Lưu</button>
         </div>
     </form>
 </div>

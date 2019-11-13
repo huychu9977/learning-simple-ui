@@ -276,5 +276,37 @@
         "address":"Address",
         "modifiedAt":"Modified at",
         "roles":"Roles"
-    }
+    },
+    "eventManagement":{
+      "navName":"Event Management",
+      "home":{
+         "title":"Event List",
+         "createLabel":"Create Event",
+         "createOrEditLabel":"Create Or Update Event"
+      },
+      "detail":{
+         "title":"Event Detail"
+      },
+      "placeholder":{
+         "code":"Input event code",
+         "title":"Input event tital",
+         "content":"Input event content",
+         "start_date":"Input start date",
+         "end_date":"Input end date",
+         "create_at":"Input location create",
+         "activated":"Activated",
+         "image_url":"Event Logo"
+      },
+      "action":"Action",
+      "active":"Active",
+      "activated":"Activated",
+      "deactivated":"Deactivated",
+      "code":"Code",
+      "title":"Title",
+      "content":"Content",
+      "start_date":"Start Date",
+      "end_date":"End Date",
+      "create_at":"Location Create",
+      "image_url":"Event Logo"
+   }
 }

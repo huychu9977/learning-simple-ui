@@ -329,5 +329,37 @@
        "modifiedBy":"Người sửa",
        "modifiedAt":"Ngày sửa",
        "roles":"Các quyền"
-    }
+    },
+    "eventManagement":{
+      "navName":"Quản lý sự kiện",
+      "home":{
+         "title":"Danh sách sự kiện",
+         "createLabel":"Tạo sự kiện mới",
+         "createOrEditLabel":"Tạo hoặc sửa sự kiện"
+      },
+      "detail":{
+         "title":"Sự kiện"
+      },
+      "placeholder":{
+         "code":"Nhập vào mã sự kiện",
+         "title":"Nhập vào tiêu đề",
+         "content":"Nhập vào nội dung",
+         "start_date":"Nhập vào thời gian bắt đầu",
+         "end_date":"Nhập vào thời gian kết thúc",
+         "create_at":"Nhập vào nơi tổ chức",
+         "activated":"Nhập vào trạng thái",
+         "image_url":"Nhập vào logo sự kiện"
+      },
+      "action":"Hành động",
+      "active":"Hoạt động",
+      "activated":"Kích hoạt",
+      "deactivated":"Khóa",
+      "code":"Mã sự kiện",
+      "title":"Tiêu đề",
+      "content":"Nội dung",
+      "start_date":"Thời gian bắt đầu",
+      "end_date":"Thời gian kết thúc",
+      "create_at":"Nơi tổ chức",
+      "image_url":"Logo sự kiện"
+   }
 }

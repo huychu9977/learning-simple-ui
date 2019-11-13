@@ -7,29 +7,27 @@
                     <div id="user-short">
                         <div class="fx-c">
                             <div aria-label="Sfsf Asffas" class="user-avatar">
-                                <div class="user-avatar__inner fx-c">
-                                <span class="user-initials">SA</span>
+                                <div class="user-avatar__inner fx-c" *ngIf="!currentAccount?.imageDTO">
+                                    <span class="user-initials">{{currentAccount?.name | avatarText}}</span>
+                                </div>
+                                <div class="user-avatar__inner fx-c" *ngIf="currentAccount?.imageDTO">
+                                    <img width="120" height="120" style="border-radius: 50%;" src="api/image/{{currentAccount.imageDTO.id}}" alt="">
                                 </div>
                             </div>
                         </div>
                         <div class="tooltip-container">
-                            <h2>Sfsf Asffas</h2>
+                            <h2>{{currentAccount?.name}}</h2>
                         </div>
                     </div>
                     <ul>
                         <li class="">
                             <a href="/user/sfsf-asffas/" >
-                            View public profile
+                            Hồ sơ công khai
                             </a>
                         </li>
-                        <li class=" on ">
-                            <a href="/user/edit-profile/">
-                            Profile
-                            </a>
-                        </li>
-                        <li class="">
-                             <a href="/user/edit-photo/">
-                            Photo
+                        <li>
+                            <a href="javascript:void(0)" [routerLink]="[ '/user/account/edit-profile' ]" [routerLinkActive]="['on']">
+                            Hồ sơ
                             </a>
                         </li>
                     </ul>

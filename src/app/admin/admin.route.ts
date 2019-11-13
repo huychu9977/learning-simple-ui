@@ -12,6 +12,7 @@ import { Injectable } from '@angular/core';
 import { AccountService } from '../core/auth/account.service';
 import { UserRouteAccessService } from '../core/auth/user-route-access-service';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { NOT_USER } from '../shared/constants/roles.constants';
 
 @Injectable({ providedIn: 'root' })
 export class LoginRouteAccessService implements CanActivate {
@@ -41,7 +42,7 @@ export const adminState: Routes = [
     path: '',
     component: AdminComponent,
     data: {
-      authorities: ['ROLE_ADMIN']
+      authorities: NOT_USER
     },
     canActivate: [UserRouteAccessService],
     children: [

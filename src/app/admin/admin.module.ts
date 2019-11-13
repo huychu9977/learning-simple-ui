@@ -20,6 +20,7 @@ import { LoginModule } from './login/login.module';
 import { CommonModule } from '@angular/common';
 import { CollapseModule } from 'ngx-bootstrap';
 import { DashboardModule } from './dashboard/dashboard.module';
+import { EventManagementModule } from './event-management/event-management.module';
 
 @NgModule({
   imports: [
@@ -39,7 +40,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
     CourseManagementModule,
     LectureManagementModule,
     LoginModule,
-    DashboardModule
+    DashboardModule,
+    EventManagementModule
   ],
   declarations: [
     AdminComponent, P404Component, LoadingScreenComponent, FindLanguageFromKeyPipe,

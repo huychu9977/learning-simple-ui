@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { RatingModule } from 'ngx-bootstrap/rating';
+import { TodosService } from './services/todo.service';
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -40,6 +41,7 @@ export function createTranslateLoader(http: HttpClient) {
   ],
   declarations: [AppComponent],
   providers: [
+    TodosService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

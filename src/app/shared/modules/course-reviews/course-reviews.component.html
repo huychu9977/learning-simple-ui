@@ -53,8 +53,8 @@
                 <span class="initials">{{review.createdBy | avatarText}}</span>
               </div>
               <div class="reviews-content-review-item-detail">
-                <div class="reviews-content-review-item-detail-username">{{review.createdBy}}</div>
-                <div class="reviews-content-review-item-detail-created">{{review.createdAt | date:'dd/MM/yy'}}</div>
+                <div class="reviews-content-review-item-detail-username"><strong>{{review.createdBy}}</strong></div>
+                <div class="reviews-content-review-item-detail-created">{{review.createdAt | timeAgo}}</div>
               </div>  
             </div>
             <div class="reviews-content-review-item-right">

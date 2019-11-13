@@ -29,7 +29,7 @@ export const roleMgmtState: Routes = [
         data: {
             pageTitle: 'roleManagement.home.title',
             defaultSort: 'id,asc',
-            authorities: ['ROLE_ADMIN']
+            authorities: ['ROLE_BOSS']
         },
         canActivate: [UserRouteAccessService]
     },
@@ -37,12 +37,14 @@ export const roleMgmtState: Routes = [
         path: 'role-management/new',
         component: RoleMgmtUpdateComponent,
         resolve: {
-        role: RoleMgmtResolve
+            role: RoleMgmtResolve
         },
         data: {
             pageTitle: 'roleManagement.home.title',
-            defaultSort: 'id,asc'
-        }
+            defaultSort: 'id,asc',
+            authorities: ['ROLE_BOSS']
+        },
+        canActivate: [UserRouteAccessService]
     },
     {
         path: 'role-management/:id/edit',
@@ -52,7 +54,9 @@ export const roleMgmtState: Routes = [
         },
         data: {
             pageTitle: 'roleManagement.home.title',
-            defaultSort: 'id,asc'
-        }
+            defaultSort: 'id,asc',
+            authorities: ['ROLE_BOSS']
+        },
+        canActivate: [UserRouteAccessService]
     }
 ];

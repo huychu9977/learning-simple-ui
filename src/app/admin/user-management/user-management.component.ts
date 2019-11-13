@@ -30,7 +30,7 @@ export class UserManagementComponent implements OnInit {
         private route: ActivatedRoute,
         private router: Router
     ) {
-        this.itemsPerPage = 2;
+        this.itemsPerPage = 5;
         this.route.queryParams.subscribe(params => {
             this.page = params.page || 1;
             this.previousPage = params.page || 1;
@@ -39,10 +39,6 @@ export class UserManagementComponent implements OnInit {
     }
 
     ngOnInit() {
-        // this.accountService.identity().then(account => {
-        //     this.currentAccount = account;
-        //     this.loadAll();
-        // });
         this.loadAll();
     }
 
@@ -115,7 +111,7 @@ export class UserManagementComponent implements OnInit {
                             if (this.users.length === 1) {
                                 this.page = (this.page === 1) ? 1 : ( this.page - 1);
                             }
-                            this.loadPage(this.page);
+                            this.loadAll();
                         }),
                         // tslint:disable-next-line:no-unused-expression
                         () => {

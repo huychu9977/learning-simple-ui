@@ -5,6 +5,7 @@ import { PermissionManagementComponent } from './permission-management.component
 import { PermissionMgmtUpdateComponent } from './permission-management-update.component';
 import { PermissionService } from 'src/app/services/permission.service';
 import { PermissionBO } from 'src/app/models/permissionBO.model';
+import { UserRouteAccessService } from 'src/app/core/auth/user-route-access-service';
 
 
 @Injectable({ providedIn: 'root' })
@@ -27,8 +28,10 @@ export const permissionMgmtState: Routes = [
         component: PermissionManagementComponent,
         data: {
             pageTitle: 'permissionManagement.home.title',
-            defaultSort: 'id,asc'
-        }
+            defaultSort: 'id,asc',
+            authorities: ['ROLE_BOSS']
+        },
+        canActivate: [UserRouteAccessService]
     },
     {
         path: 'permission-management/new',
@@ -38,8 +41,10 @@ export const permissionMgmtState: Routes = [
         },
         data: {
             pageTitle: 'permissionManagement.home.title',
-            defaultSort: 'id,asc'
-        }
+            defaultSort: 'id,asc',
+            authorities: ['ROLE_BOSS']
+        },
+        canActivate: [UserRouteAccessService]
     },
     {
         path: 'permission-management/:id/edit',
@@ -49,7 +54,9 @@ export const permissionMgmtState: Routes = [
         },
         data: {
             pageTitle: 'permissionManagement.home.title',
-            defaultSort: 'id,asc'
-        }
+            defaultSort: 'id,asc',
+            authorities: ['ROLE_BOSS']
+        },
+        canActivate: [UserRouteAccessService]
     }
 ];

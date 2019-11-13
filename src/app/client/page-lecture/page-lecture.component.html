@@ -148,7 +148,7 @@
                                 <div class="question-text-content">
                                   <div class="font-weight-bold">{{currentComment?.title}}</div>
                                   <div class="font-text-xs">
-                                    <span class="text-info">{{currentComment?.createdBy}}</span>
+                                      <a href="javascript:void(0)" class="text-left text-info">{{currentComment?.createdBy}} · <span>{{currentComment?.createdAt | timeAgo}}</span></a>
                                   </div>
                                   <div class="" [innerHTML]="currentComment?.content"></div>
                                 </div>
@@ -186,7 +186,7 @@
                             <div class="question-list-item-container">
                               <a href="javascript:void(0)">
                                 <div class="question-text-content">
-                                  <a href="javascript:void(0)" class="question-content-title text-info mb-0" >{{rep?.createdBy}}</a>
+                                  <a href="javascript:void(0)" class="question-content-title text-info mb-0" >{{rep?.createdBy}} · <span>{{rep?.createdAt | timeAgo}}</span> </a>
                                   <div *ngIf="!rep?.isEdit" [innerHTML]="rep?.content"></div>
                                   <ck-editor *ngIf="rep?.isEdit" [(ngModel)]="comment.content" name="editor1" id="content" skin="moono-lisa" language="en" [fullPage]="false" 
                                                             [config]="config"
@@ -281,7 +281,7 @@
                                 </div>
                               </a>
                               <div class="font-text-xs">
-                                <span class="text-info">{{cmt?.createdBy}}</span>
+                                <a href="javascript:void(0)" class="text-left text-info">{{cmt?.createdBy}} · <span>{{cmt?.createdAt | timeAgo}}</span></a>
                               </div>
                             </div>
                           </div>
@@ -307,7 +307,7 @@
                   <i class="fa fa-times" aria-hidden="true"></i>
               </button>
           </div>
-          <div class="content-sidebar-content" style="width: 361px;" [el-loading]="true">
+          <div class="content-sidebar-content" style="width: 361px;" [el-loading]="isLoadLecture">
             <div *ngIf="course?.lectures && course.lectures.length > 0">
               <div class="sidebar-content-section" *ngFor="let c of chapters; let i=index">
                 <div class="sidebar-content-section-header" [ngClass]="{'active': c.isActive}" (click)="c.isActive = !c.isActive">

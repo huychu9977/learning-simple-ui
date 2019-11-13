@@ -24,6 +24,7 @@ export class UserHeaderComponent implements OnInit {
     private page: PageReloadService) { }
 
   ngOnInit() {
+    // this.currentAccount = this.accountService.getUserAuthenticated();
     this.accountService.getCurrentAccount().subscribe(account => {
       this.currentAccount = account;
       this.commentService.getNotifications().subscribe(res => {
@@ -39,7 +40,7 @@ export class UserHeaderComponent implements OnInit {
   }
   logout() {
     this.loginService.logout();
-    if (this.router.url.indexOf('/lecture/') > -1) {
+    if (this.router.url.indexOf('/lecture/') > -1 || this.router.url.indexOf('/user/account/') > -1) {
       window.location.reload();
     } else {
       this.page.reload(this.router);

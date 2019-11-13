@@ -37,7 +37,9 @@ export class AppComponent implements OnInit {
                 case event instanceof NavigationError: {
                   this.jhiLanguageHelper.updateTitle(this.getPageTitle(this.router.routerState.snapshot.root));
                   window.scrollTo(0, 0);
-                  this.load = false;
+                  setTimeout(() => {
+                    this.load = false;
+                  }, 500);
                   // if (event.error.status === 404) {
                   //   this.router.navigate(['/404']);
                   // }

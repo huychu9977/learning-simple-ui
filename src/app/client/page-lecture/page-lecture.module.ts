@@ -6,7 +6,6 @@ import { NgModule } from '@angular/core';
 import { RatingModule, BsModalRef, ModalModule, ProgressbarModule, TabsModule, PaginationModule, AlertModule, BsDropdownModule } from 'ngx-bootstrap';
 import { SharedLibsModule } from 'src/app/shared/shared-libs.module';
 import { CKEditorModule } from 'ngx-ckeditor';
-
 @NgModule({
   declarations: [PageLectureComponent],
   imports: [

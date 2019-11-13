@@ -64,6 +64,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   isShowDrop = false;
   isAlert = false;
   load = false;
+  isLoadLecture = false;
   colors = ['#f4c150', '#76c5d6', '#686f7a', '#00576b'];
   errorAnswer = false;
   correctAnswer = false;
@@ -330,6 +331,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     }
   }
   loadLecture(courseCode?: string, code?: string) {
+    this.isLoadLecture = true;
     this.lectureService.find(courseCode, code).subscribe(
       (res: HttpResponse<LectureBO>) => {
         this.lecture = res.body;
@@ -340,6 +342,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
             questionId: this.lecture.questions[i - 1].id
           });
         }
+        this.isLoadLecture = false;
       },
       (res: HttpResponse<any>) => console.log(res)
     );
