@@ -30,15 +30,11 @@
               {
                 "input": "./node_modules/bootstrap/dist/css/bootstrap.min.css"
               },
-              {
-                "input": "./node_modules/font-awesome/css/font-awesome.min.css"
-              },
-              {
-                "input": "./node_modules/@ng-select/ng-select/themes/default.theme.css"
-              },
               "src/styles.scss"
             ],
-            "scripts": [],
+            "scripts": [
+              "./node_modules/quill/dist/quill.js"
+            ],
             "es5BrowserSupport": true
           },
           "configurations": {

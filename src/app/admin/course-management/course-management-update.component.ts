@@ -1,29 +1,21 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { JhiLanguageHelper } from 'src/app/core/language/language.helper';
 import { CourseService } from 'src/app/services/course.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
-const swal: SweetAlert = _swal as any;
+import {ConfirmationService, MessageService} from 'primeng/api';
 
 @Component({
   selector: 'course-management-update',
   templateUrl: './course-management-update.component.html'
 })
 export class CourseManagementUpdateComponent implements OnInit {
-  config = {
-    extraPlugins: 'image2,scayt,wsc,youtube,widget,widgetselection,lineutils',
-    height: 300
-  };
   imageUrl;
   videoUrl;
   course: CourseBO;
-  languages: any[];
   levels: any[];
   courseTopics: any[] = [];
   courseCategorys: any[];
@@ -44,14 +36,14 @@ export class CourseManagementUpdateComponent implements OnInit {
   });
   statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
   constructor(
-    private languageHelper: JhiLanguageHelper,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private courseService: CourseService,
     private categoryService: CategoryService,
     private route: ActivatedRoute,
     private router: Router,
     private elRef: ElementRef,
-    private fb: FormBuilder,
-    private toastr?: ToastrService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -71,9 +63,6 @@ export class CourseManagementUpdateComponent implements OnInit {
     });
     this.courseService.getLevels().subscribe(data => {
       this.levels = data;
-    });
-    this.languageHelper.getAll().then(languages => {
-      this.languages = languages;
     });
   }
 
@@ -125,19 +114,18 @@ export class CourseManagementUpdateComponent implements OnInit {
     if (this.editForm.invalid) {
       return;
     }
-    swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-      buttons: ['Từ chối', 'Đồng ý']
-    }).then(confirm => {
-        if (confirm) {
-           this.confirm();
-        }
+    this.confirmationService.confirm({
+      message: 'Đồng ý thực hiện thao tác này?',
+      accept: () => {
+        this.confirm();
+      }
     });
   }
   confirm() {
     if (!this.selectedImages && !this.course.id) {
-      this.toastr.error('Cảnh báo!', 'Vui lòng chọn file image!');
+      this.messageService.add({severity: 'error', summary: 'Cảnh báo!', detail: 'Vui lòng chọn file image!'});
     } else if (!this.selectedVideos && !this.course.id) {
-      this.toastr.error('Cảnh báo!', 'Vui lòng chọn file video!');
+      this.messageService.add({severity: 'error', summary: 'Cảnh báo!', detail: 'Vui lòng chọn file video!'});
     } else {
       const formdata: FormData = new FormData();
       formdata.append('imageFile', this.selectedImages ? this.selectedImages.item(0) : null);
@@ -172,37 +160,28 @@ export class CourseManagementUpdateComponent implements OnInit {
     return courseTmp;
   }
   onVideoChange(event) {
-    let checkList = false;
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < event.target.files.length; i++) {
-        if (
-            event.target.files[i].name.endsWith('.avi') ||
-            event.target.files[i].name.endsWith('.flv') ||
-            event.target.files[i].name.endsWith('.wmv') ||
-            event.target.files[i].name.endsWith('.mov') ||
-            event.target.files[i].name.endsWith('.mp4') ||
-            event.target.files[i].name.endsWith('.AVI') ||
-            event.target.files[i].name.endsWith('.FLV') ||
-            event.target.files[i].name.endsWith('.WMV') ||
-            event.target.files[i].name.endsWith('.MOV') ||
-            event.target.files[i].name.endsWith('.MP4')
-        ) {
-            checkList = true;
-        } else {
-            const element = this.elRef.nativeElement.querySelector('#fileVideo');
-            element.value = '';
-            checkList = false;
-            swal('Lỗi', 'Chỉ tải file với đuôi (avi|mp4|flv|wmv|mov)', 'error').then(() => {
-                this.selectedVideos = null;
-            });
-            break;
-        }
-        if (checkList) {
-            this.selectedVideos = event.target.files;
-            this.videoUrl = event.target.files[0].name;
-        }
+    if (
+        event.target.files[0].name.endsWith('.avi') ||
+        event.target.files[0].name.endsWith('.flv') ||
+        event.target.files[0].name.endsWith('.wmv') ||
+        event.target.files[0].name.endsWith('.mov') ||
+        event.target.files[0].name.endsWith('.mp4') ||
+        event.target.files[0].name.endsWith('.AVI') ||
+        event.target.files[0].name.endsWith('.FLV') ||
+        event.target.files[0].name.endsWith('.WMV') ||
+        event.target.files[0].name.endsWith('.MOV') ||
+        event.target.files[0].name.endsWith('.MP4')
+    ) {
+      this.selectedVideos = event.target.files;
+      this.videoUrl = event.target.files[0].name;
+    } else {
+        const element = this.elRef.nativeElement.querySelector('#fileVideo');
+        element.value = '';
+        this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Chỉ tải file với đuôi (avi|mp4|flv|wmv|mov)'});
+        this.selectedVideos = null;
     }
-}
+  }
+
   onImageChange(event) {
     if (event.target.files && event.target.files[0]) {
       const reader = new FileReader();
@@ -212,41 +191,31 @@ export class CourseManagementUpdateComponent implements OnInit {
           this.imageUrl = _event.target.result;
       };
     }
-    let checkList = false;
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < event.target.files.length; i++) {
-        if (
-            event.target.files[i].name.endsWith('.jpg') ||
-            event.target.files[i].name.endsWith('.png') ||
-            event.target.files[i].name.endsWith('.JPG') ||
-            event.target.files[i].name.endsWith('.PNG') ||
-            event.target.files[i].name.endsWith('.JPEG') ||
-            event.target.files[i].name.endsWith('.jpeg')
-        ) {
-            checkList = true;
-        } else {
-            const element = this.elRef.nativeElement.querySelector('#fileImage');
-            element.value = '';
-            checkList = false;
-            swal('Lỗi', 'Chỉ tải file với đuôi (jpg|png|jpeg)', 'error').then(() => {
-                this.selectedImages = null;
-            });
-            break;
-        }
-        if (checkList) {
-            this.selectedImages = event.target.files;
-        }
+    if (
+        event.target.files[0].name.endsWith('.jpg') ||
+        event.target.files[0].name.endsWith('.png') ||
+        event.target.files[0].name.endsWith('.JPG') ||
+        event.target.files[0].name.endsWith('.PNG') ||
+        event.target.files[0].name.endsWith('.JPEG') ||
+        event.target.files[0].name.endsWith('.jpeg')
+    ) {
+      this.selectedImages = event.target.files;
+    } else {
+        const element = this.elRef.nativeElement.querySelector('#fileImage');
+        element.value = '';
+        this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Chỉ tải file với đuôi (jpg|png|jpeg)'});
+        this.selectedImages = null;
     }
 }
   private onSaveSuccess(result) {
-    this.toastr.success('Thao tác thành công!');
+    this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
     setTimeout(() => {
       this.previousState();
     }, 1700);
   }
 
   private onSaveError(err) {
-    this.toastr.error('Thao tác thất bại!', err.error.message);
+    this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
     this.isSaving = false;
   }
 

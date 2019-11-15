@@ -1,13 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
-import { ToastrService } from 'ngx-toastr';
 import { PermissionBO } from 'src/app/models/permissionBO.model';
 import { JhiLanguageHelper } from 'src/app/core/language/language.helper';
 import { PermissionService } from 'src/app/services/permission.service';
-const swal: SweetAlert = _swal as any;
+
 @Component({
   selector: 'jhi-permission-mgmt-update',
   templateUrl: './permission-management-update.component.html'
@@ -27,8 +24,7 @@ export class PermissionMgmtUpdateComponent implements OnInit {
     private languageHelper: JhiLanguageHelper,
     private permissionService: PermissionService,
     private route: ActivatedRoute,
-    private fb: FormBuilder,
-    private toastr?: ToastrService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -60,13 +56,13 @@ export class PermissionMgmtUpdateComponent implements OnInit {
     if (this.editForm.invalid) {
       return;
     }
-    swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-      buttons: ['Từ chối', 'Đồng ý']
-    }).then(confirm => {
-        if (confirm) {
-          this.confirm();
-        }
-    });
+    // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
+    //   buttons: ['Từ chối', 'Đồng ý']
+    // }).then(confirm => {
+    //     if (confirm) {
+    //       this.confirm();
+    //     }
+    // });
   }
   confirm() {
     this.updatePermission();
@@ -82,7 +78,7 @@ export class PermissionMgmtUpdateComponent implements OnInit {
   }
 
   private onSaveSuccess(result) {
-    this.toastr.success('Thao tác thành công!');
+   // this.toastr.success('Thao tác thành công!');
     setTimeout(() => {
       this.previousState();
       this.isSaving = false;
@@ -90,7 +86,7 @@ export class PermissionMgmtUpdateComponent implements OnInit {
   }
 
   private onSaveError(err) {
-    this.toastr.error('Thao tác thất bại!', err.error.message);
+   // this.toastr.error('Thao tác thất bại!', err.error.message);
     this.isSaving = false;
   }
 }

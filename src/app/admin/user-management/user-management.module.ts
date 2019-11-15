@@ -1,4 +1,3 @@
-import { NgSelectModule } from '@ng-select/ng-select';
 import { UserMgmtUpdateComponent } from './user-management-update.component';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
@@ -7,7 +6,6 @@ import { CommonModule } from '@angular/common';
 import { UserManagementComponent } from './user-management.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserMgmtDetailComponent } from './user-management-detail.component';
-import { PaginationModule, ModalModule } from 'ngx-bootstrap';
 
 
 @NgModule({
@@ -17,10 +15,7 @@ import { PaginationModule, ModalModule } from 'ngx-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    RouterModule,
-    NgSelectModule,
-    ModalModule.forRoot(),
-    PaginationModule.forRoot()
+    RouterModule
   ],
   entryComponents: [UserMgmtDetailComponent],
   exports: [UserManagementComponent]

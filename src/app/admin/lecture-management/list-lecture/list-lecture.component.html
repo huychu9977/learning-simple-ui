@@ -1,14 +1,8 @@
-<div class="modal-header">
-    <h4 class="modal-title" [translate]="'lectureManagement.home.lecture.title'"></h4>
-    <button type="button" class="close" aria-label="Close" (click)="clear()">
-        <span aria-hidden="true">&times;</span>
-    </button>
-</div>
 <div class="modal-body">
     <div class="row">
         <div class="col-sm-4">
             <button type="button" (click)="goToLink('null', 'new')"
-                    class="btn btn-md btn-primary jh-create-entity" *ngIf="statusCanNotEditAndDelete.indexOf(courseStatus) === -1 && statusCanNotEditAndDelete.indexOf(chapterStatus) === -1">
+                    class="btn btn-sm btn-primary" *ngIf="statusCanNotEditAndDelete.indexOf(courseStatus) === -1 && statusCanNotEditAndDelete.indexOf(chapterStatus) === -1">
                     <i class="fa fa-plus"></i>
                 <span [translate]="'lectureManagement.home.chapter.createLabel'">
         Tạo mới
@@ -21,7 +15,7 @@
                 <input type="text" class="form-control" [(ngModel)]="keyword" (input)="search($event.target.value)"
                         placeholder="..."/>
                 <div class="input-group-prepend">
-                    <span class="input-group-text"><i class="fa fa-search"></i></span>
+                    <span class="input-group-text"><i class="pi pi-search"></i></span>
                 </div>
             </div>
         </div>
@@ -86,13 +80,7 @@
         </tr>
         </tbody>
     </table>
-    <div *ngIf="lectures && lectures.length" class="w-100">
-        <div class="row justify-content-center">
-                <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
-                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
-        </div>
+    <div class="row justify-content-center" *ngIf="lectures && lectures.length" class="w-100">
+        <p-paginator [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
     </div>
-</div>
-<div class="modal-footer">
-    <button type="button" class="btn btn-light" (click)="clear()">Close</button>
 </div>

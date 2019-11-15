@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { ObjectiveSummaryService } from 'src/app/services/objective-summary.service';
 import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'objective-summary',
@@ -16,9 +16,9 @@ export class ObjectiveSummaryComponent implements OnInit {
   objectiveName?: string;
   course?: CourseBO;
   constructor(
+    private messageService: MessageService,
     private route: ActivatedRoute,
-    private courseObjectiveService: ObjectiveSummaryService,
-    private toastr?: ToastrService) { }
+    private courseObjectiveService: ObjectiveSummaryService) { }
 
   ngOnInit() {
     this.route.data.subscribe(({ course }) => {
@@ -53,14 +53,14 @@ export class ObjectiveSummaryComponent implements OnInit {
     }
   }
   private onSaveSuccess(result) {
-    this.toastr.success('Thao tác thành công!');
+    this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
     setTimeout(() => {
       this.previousState();
     }, 1200);
   }
 
   private onSaveError() {
-    this.toastr.error('Thao tác thất bại!');
+   this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: 'Thao tác thất bại!'});
   }
   previousState() {
     window.history.back();

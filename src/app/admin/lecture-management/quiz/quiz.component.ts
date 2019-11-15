@@ -1,13 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { QuestionModalComponent } from './question-modal.component';
 import { LectureBO } from 'src/app/models/lectureBO.model';
 import { QuestionBO } from 'src/app/models/questionBO.model';
-import { BsModalService } from 'ngx-bootstrap';
 import { QuestionService } from 'src/app/services/question.service';
 import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
+import { MessageService, DialogService } from 'primeng/api';
 
 @Component({
   selector: 'lecture-quiz',
@@ -18,10 +17,10 @@ export class QuizComponent implements OnInit {
     questions: QuestionBO[];
     statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
     constructor(
-        private modalService: BsModalService,
+        public dialogService: DialogService,
+        private messageService: MessageService,
         private route: ActivatedRoute,
-        private questionService: QuestionService,
-        private toastr: ToastrService) {
+        private questionService: QuestionService) {
         }
 
     ngOnInit(): void {
@@ -70,17 +69,16 @@ export class QuizComponent implements OnInit {
     }
 
     private onSaveSuccess(result) {
-        this.toastr.success('Thao tác thành công!');
+        this.messageService.add({severity: 'success', summary: 'Thao tác thành công!'});
         setTimeout(() => {
             this.previousState();
         }, 1200);
     }
     private onSaveError() {
-        this.toastr.error('Thao tác thất bại!');
+        this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!'});
     }
 
     open(q?: QuestionBO) {
-        const modalRef = this.modalService.show(QuestionModalComponent);
         const qTmp: QuestionBO = {
             content: '',
             answers: []
@@ -94,13 +92,22 @@ export class QuizComponent implements OnInit {
                 isEdit: false
             };
         });
-        modalRef.content.question = q;
-        modalRef.content.action.take(1).subscribe((value) => {
-            if (q.content !== '' && q.answers.length > 0) {
-                value.id = q.id;
-                this.questions[this.questions.indexOf(q)] = value;
-            } else {
-                this.questions.push(value);
+        const ref = this.dialogService.open(QuestionModalComponent, {
+            data: {
+                question: q
+            },
+            header: 'Tạo câu hỏi',
+            closeOnEscape: false,
+            width: '50%'
+        });
+        ref.onClose.subscribe((value: QuestionBO) => {
+            if (value) {
+                if (q.content !== '' && q.answers.length > 0) {
+                    value.id = q.id;
+                    this.questions[this.questions.indexOf(q)] = value;
+                } else {
+                    this.questions.push(value);
+                }
             }
         });
     }

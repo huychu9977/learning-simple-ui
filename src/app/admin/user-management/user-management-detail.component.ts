@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserBO } from 'src/app/models/userBO.model';
-import { BsModalRef } from 'ngx-bootstrap';
-
 
 @Component({
   selector: 'jhi-user-mgmt-detail',
@@ -10,9 +8,9 @@ import { BsModalRef } from 'ngx-bootstrap';
 })
 export class UserMgmtDetailComponent implements OnInit {
   user: UserBO;
-  constructor(public bsModalRef: BsModalRef) {}
+  constructor() {}
   clear() {
-    this.bsModalRef.hide();
+   // this.bsModalRef.hide();
   }
   ngOnInit() {
   }

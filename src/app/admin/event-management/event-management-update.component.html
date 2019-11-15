@@ -1,0 +1,161 @@
+<div class="animated fadeIn">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><span [translate]="'eventManagement.home.createOrEditLabel'">createOrEditLabel</span></h3>
+                    </div>
+                    <div class="card-body">
+                        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+                            <div class="row justify-content-center">
+                                
+                                <div class="col-9">
+                                    <div>
+                                        <div class="form-group" [hidden]="!event.id">
+                                            <input type="hidden" class="form-control" name="id" formControlName="id" readonly>
+                                        </div>
+                        
+                                        <div class="row">
+                                            <fieldset class="form-group col-md-6">
+                                                <label [translate]="'eventManagement.code'">code</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-code"></i>
+                                                        </span>
+                                                    </span>
+                                                    <input class="form-control" id="code" name="code" type="text" formControlName="code" [readOnly]="event.id ? true : false">
+                                                </div>
+                                                <div *ngIf="editForm.get('code').invalid && (editForm.get('code').dirty || editForm.get('code').touched) || isSaving && f['code'].errors">
+                                                    <small class="form-text text-danger"
+                                                    *ngIf="f['code'].errors.required" [translate]="'entity.validation.required'">
+                                                        This field is required.
+                                                    </small>
+                                
+                                                    <small class="form-text text-danger"
+                                                    *ngIf="f['code'].errors.pattern" [translate]="'entity.validation.patternLogin'">
+                                                        This field can only contain letters, digits and e-mail addresses.
+                                                    </small>
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="form-group col-md-6">
+                                                <label [translate]="'eventManagement.title'">title</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-bookmark-o"></i>
+                                                        </span>
+                                                    </span>
+                                                    <input class="form-control" id="title" name="title" type="text" formControlName="title">
+                                                </div>
+                                                <div *ngIf="editForm.get('title').invalid && (editForm.get('title').dirty || editForm.get('title').touched) || isSaving && f['title'].errors">
+                                                    <small class="form-text text-danger"
+                                                    *ngIf="f['title'].errors.required" [translate]="'entity.validation.required'">
+                                                        This field is required.
+                                                    </small>
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="row">
+                                            <fieldset class="form-group col-md-6">
+                                                <label [translate]="'eventManagement.startDate'">startDate</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-percent"></i>
+                                                        </span>
+                                                    </span>
+                                                    <!-- <input class="form-control" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm:ss' }"
+                                                        [bsValue]="bsValue" id="startDate" name="startDate" type="text" formControlName="startDate"> -->
+                                                </div>
+                                            </fieldset>
+                                            <fieldset class="form-group col-md-6">
+                                                <label [translate]="'eventManagement.endDate'">endDate</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-percent"></i>
+                                                        </span>
+                                                    </span>
+                                                    <!-- <input class="form-control" #dp="bsDatepicker" bsDatepicker [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY HH:mm:ss' }"
+                                                    [bsValue]="bsValue" id="endDate" name="endDate" type="text" formControlName="endDate"> -->
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="row">
+                                            <fieldset class="form-group col-md-6">
+                                                <label [translate]="'eventManagement.createdAt'">createdAt</label>
+                                                <div class="input-group">
+                                                    <span class="input-group-prepend">
+                                                        <span class="input-group-text">
+                                                            <i class="fa fa-percent"></i>
+                                                        </span>
+                                                    </span>
+                                                    <input class="form-control" id="createdAt" name="createdAt" type="text" formControlName="createdAt">
+                                                </div>
+                                            </fieldset>
+                                        </div>
+                                        <div class="row py-3"></div>
+                                        <div class="row selectFile">
+                                            <div class="col-md-5">
+                                                <div class="col-md-12 text-center" *ngIf="imageUrl !=null">
+                                                    <img class="img-fluid" width="150" src="{{imageUrl}}" alt="Ảnh đại diện" />
+                                                </div>
+                                                <div class="col-md-12 text-center mt-3">
+                                                    <span class="btn btn-success btn-file">
+                                                        <strong [translate]="'eventManagement.image'"></strong> 
+                                                        <i class="ml-2 fa fa-camera" aria-hidden="true"></i>
+                                                        <input type="file" accept="image/x-png,image/jpeg" class="form-control" name="imageFile" id="fileImage" (change)="onImageChange($event)">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="row justify-content-center" style="position: relative; top: 25%;">
+                                                    <div class="col-md-6">
+                                                        <label style="margin-top: 2px;" [translate]="'eventManagement.activated'">activated</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="switch switch-label switch-success">
+                                                            <input type="checkbox" class="switch-input" checked id="activated" name="activated"  formControlName="activated">
+                                                            <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row py-3"></div>
+                                        <div class="row">
+                                            <div class="form-group ckedit">
+                                                <label [translate]="'eventManagement.content'">content</label>
+                                                <!-- <ck-editor name="editor1" skin="moono-lisa" language="vi" [fullPage]="false" 
+                                                    [config]="config" formControlName='content'
+                                                     class="form-control"
+                                                    required></ck-editor> -->
+                                                <div *ngIf="editForm.get('content').invalid && (editForm.get('content').dirty || editForm.get('content').touched) || isSaving && f['content'].errors">
+                                                    <small class="form-text text-danger"
+                                                    *ngIf="f['content'].errors.required" [translate]="'entity.validation.required'">
+                                                        This field is required.
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <button type="button" class="btn btn-secondary" (click)="previousState()">
+                                            &nbsp;<span
+                                            [translate]="'entity.action.cancel'">Cancel</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary">
+                                            &nbsp;<span [translate]="'entity.action.save'">Save</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+        

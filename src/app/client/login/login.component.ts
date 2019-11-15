@@ -1,10 +1,8 @@
-import { ToastrService } from 'ngx-toastr';
 import { Component, AfterViewInit, Renderer, ElementRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { LoginService } from '../../core/auth/login.service';
 import { PageReloadService } from 'src/app/core/auth/page-reload.service';
-import { BsModalRef } from 'ngx-bootstrap/modal';
 import { AccountService } from 'src/app/core/auth/account.service';
 
 @Component({
@@ -53,9 +51,7 @@ export class LoginModalComponent implements AfterViewInit {
     private elementRef: ElementRef,
     private renderer: Renderer,
     private router: Router,
-    private fb: FormBuilder,
-    private modalRef: BsModalRef,
-    private toastr?: ToastrService
+    private fb: FormBuilder
   ) {}
 
   ngAfterViewInit() {
@@ -65,7 +61,7 @@ export class LoginModalComponent implements AfterViewInit {
   cancel() {
     this.authenticationError = false;
     this.resetAllForm();
-    this.modalRef.hide();
+    // this.modalRef.hide();
   }
   resetAllForm() {
     this.isFormActiveKey = false;
@@ -106,14 +102,14 @@ export class LoginModalComponent implements AfterViewInit {
       res => {
         if (res) {
           this.load = false;
-          this.toastr.success('Kiểm tra mail để nhận mã khôi phục', 'Thành công!');
+         // this.toastr.success('Kiểm tra mail để nhận mã khôi phục', 'Thành công!');
           this.forgotPasswordForm.get(['email']).disable();
           this.isConfirmResetPassword = true;
           this.isActiveForgot = true;
         }
       }, err => {
         this.load = false;
-        this.toastr.error(err.error.message);
+       // this.toastr.error(err.error.message);
       }
     );
   }
@@ -131,7 +127,7 @@ export class LoginModalComponent implements AfterViewInit {
       res => {
         if (res) {
           this.load = false;
-          this.toastr.success('Khôi phục mật khẩu thành công!', 'Thành công!');
+         // this.toastr.success('Khôi phục mật khẩu thành công!', 'Thành công!');
           this.forgotPasswordForm.get(['email']).enable();
           this.isForgotPasswordForm = false;
           this.isConfirmResetPassword = false;
@@ -141,7 +137,7 @@ export class LoginModalComponent implements AfterViewInit {
         }
       }, err => {
         this.load = false;
-        this.toastr.error(err.error.message);
+       // this.toastr.error(err.error.message);
       }
     );
   }
@@ -162,13 +158,13 @@ export class LoginModalComponent implements AfterViewInit {
     this.accountService.registerInit(this.userRegister).subscribe(res => {
       if (res) {
         this.load = false;
-        this.toastr.success('Kiểm tra mail để nhận mã kích hoạt', 'Thành công!');
+       // this.toastr.success('Kiểm tra mail để nhận mã kích hoạt', 'Thành công!');
         this.setDisabledForm();
         this.isFormActiveKey = true;
       }
     }, err => {
       this.load = false;
-      this.toastr.error(err.error.message);
+     // this.toastr.error(err.error.message);
     });
   }
   setDisabledForm() {
@@ -195,7 +191,7 @@ export class LoginModalComponent implements AfterViewInit {
     this.accountService.registerFinish(this.userRegister, this.activeKeyForm.get(['key']).value).subscribe(res => {
       if (res) {
         this.load = false;
-        this.toastr.success('Đăng ký tài khoản thành công!');
+       // this.toastr.success('Đăng ký tài khoản thành công!');
         this.setEnabledForm();
         this.isLoginForm = true;
         this.isFormActiveKey = false;
@@ -203,7 +199,7 @@ export class LoginModalComponent implements AfterViewInit {
       }
     }, err => {
       this.load = false;
-      this.toastr.error(err.error.message);
+     // this.toastr.error(err.error.message);
     });
   }
   login() {
@@ -221,7 +217,7 @@ export class LoginModalComponent implements AfterViewInit {
       })
       .then(() => {
         this.authenticationError = false;
-        this.modalRef.hide();
+      //  this.modalRef.hide();
         this.page.reload(this.router);
       })
       .catch(() => {

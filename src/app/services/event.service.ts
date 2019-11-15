@@ -11,7 +11,7 @@ export class EventService {
 
     constructor(private http: HttpClient) {}
 
-    update(body: EventBO): Observable<HttpResponse<EventBO>> {
+    update(body: any): Observable<HttpResponse<EventBO>> {
         return this.http.post<EventBO>(`${this.resourceUrl}/update`, body, { observe: 'response' });
     }
 

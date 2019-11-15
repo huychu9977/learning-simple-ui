@@ -1,12 +1,9 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
 import { PermissionBO } from 'src/app/models/permissionBO.model';
 import { PermissionService } from 'src/app/services/permission.service';
 
-const swal: SweetAlert = _swal as any;
 @Component({
   selector: 'permission-management',
   templateUrl: './permission-management.component.html'
@@ -88,22 +85,22 @@ export class PermissionManagementComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
     deletePermission(permission: PermissionBO) {
-        swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-            buttons: ['Từ chối', 'Đồng ý']
-        }).then(confirm => {
-            if (confirm) {
-                this.permissionService.delete(permission.code).subscribe(() => {
-                    swal('Cập nhật', 'Xóa thành công', 'success').then(
-                        () => {
-                            this.loadAll();
-                        }),
-                        // tslint:disable-next-line:no-unused-expression
-                        err => {
-                            swal('Lỗi', 'Thất bại, hãy thử lại', 'error');
-                        };
-                });
-            }
-        });
+        // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
+        //     buttons: ['Từ chối', 'Đồng ý']
+        // }).then(confirm => {
+        //     if (confirm) {
+        //         this.permissionService.delete(permission.code).subscribe(() => {
+        //             swal('Cập nhật', 'Xóa thành công', 'success').then(
+        //                 () => {
+        //                     this.loadAll();
+        //                 }),
+        //                 // tslint:disable-next-line:no-unused-expression
+        //                 err => {
+        //                     swal('Lỗi', 'Thất bại, hãy thử lại', 'error');
+        //                 };
+        //         });
+        //     }
+        // });
     }
     private onSuccess(data) {
         this.totalItems = data.totalResult;

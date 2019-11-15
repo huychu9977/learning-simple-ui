@@ -1,7 +1,6 @@
 import { CourseBO } from './../../models/courseBO.model';
 import { CourseService } from '../../services/course.service';
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
+import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
@@ -18,31 +17,7 @@ export class PageOurCourseComponent implements OnInit {
   previousPage;
   itemsPerPage = 1;
   totalItems: any = 100;
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: false,
-    pullDrag: false,
-    dots: false,
-    navSpeed: 700,
-    navText: ['<i class="fa fa-angle-left slick-arrow"></i>',
-    '<i class="fa fa-angle-right slick-arrow"></i>'],
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 2
-      },
-      740: {
-        items: 4
-      },
-      940: {
-        items: 5
-      }
-    },
-    nav: true
-  };
+
   images1?: any[] = [
     {
       id: 1, // id of slide

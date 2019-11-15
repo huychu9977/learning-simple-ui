@@ -1,16 +1,19 @@
 {
     "courseManagement":{
        "navName":"Quản lý khoá học",
+       "create": {
+         "placeholder" : {
+            "code": "Mã khóa học",
+            "name": "Tên khóa học",
+            "requiredCompleteRate": "Yêu cầu hoàn thành",
+            "sortDescription": "Miêu tả ngắn về khóa học",
+            "description": "Miêu tả"
+         }
+       },
        "home":{
           "title":"Danh sách Khóa học",
           "createLabel":"Tạo Khóa học mới",
           "createOrEditLabel":"Tạo hoặc sửa Khóa học"
-       },
-       "created":"Một Khóa học mới đã được tạo với định danh {{ param }}",
-       "updated":"Một Khóa học đã được cập nhật với định danh {{ param }}",
-       "deleted":"Một Khóa học đã bị xóa với định danh {{ param }}",
-       "delete":{
-          "question":"Bạn có chắc chắn muốn xóa Khóa học {{ login }}?"
        },
        "detail":{
           "title":"Khóa học"
@@ -162,6 +165,13 @@
        }
     },
     "lectureManagement":{
+      "create": {
+         "placeholder" : {
+            "code": "Mã khóa học",
+            "name": "Tên khóa học",
+            "sortOrder": "Thứ tự xuất hiện"
+         }
+       },
        "home":{
           "lecture":{
              "title":"Danh sách bài học",
@@ -173,12 +183,6 @@
              "createLabel":"Tạo mới",
              "createOrEditLabel":"Tạo hoặc sửa chương"
           }
-       },
-       "created":"Một bài học mới đã được tạo với định danh {{ param }}",
-       "updated":"Một bài học đã được cập nhật với định danh {{ param }}",
-       "deleted":"Một bài học đã bị xóa với định danh {{ param }}",
-       "delete":{
-          "question":"Bạn có chắc chắn muốn xóa bài học {{ login }}?"
        },
        "detail":{
           "title":"Bài học",
@@ -344,12 +348,13 @@
          "code":"Nhập vào mã sự kiện",
          "title":"Nhập vào tiêu đề",
          "content":"Nhập vào nội dung",
-         "start_date":"Nhập vào thời gian bắt đầu",
-         "end_date":"Nhập vào thời gian kết thúc",
-         "create_at":"Nhập vào nơi tổ chức",
+         "startDate":"Nhập vào thời gian bắt đầu",
+         "endDate":"Nhập vào thời gian kết thúc",
+         "createdAt":"Nhập vào nơi tổ chức",
          "activated":"Nhập vào trạng thái",
-         "image_url":"Nhập vào logo sự kiện"
+         "imageUrl":"Nhập vào logo sự kiện"
       },
+      "image":"Logo sự kiện",
       "action":"Hành động",
       "active":"Hoạt động",
       "activated":"Kích hoạt",
@@ -357,9 +362,9 @@
       "code":"Mã sự kiện",
       "title":"Tiêu đề",
       "content":"Nội dung",
-      "start_date":"Thời gian bắt đầu",
-      "end_date":"Thời gian kết thúc",
-      "create_at":"Nơi tổ chức",
-      "image_url":"Logo sự kiện"
+      "startDate":"Thời gian bắt đầu",
+      "endDate":"Thời gian kết thúc",
+      "createdAt":"Nơi tổ chức",
+      "imageUrl":"Logo sự kiện"
    }
 }

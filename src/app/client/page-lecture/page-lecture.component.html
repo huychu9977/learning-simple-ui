@@ -11,7 +11,7 @@
             </a>
           </div>
           <div>
-              <progressbar max="100" [value]="getPercentCompleted()" type="danger" [striped]="true" [animate]="true"><i>{{getPercentCompleted()}} / 100</i></progressbar>
+              <!-- <progressbar max="100" [value]="getPercentCompleted()" type="danger" [striped]="true" [animate]="true"><i>{{getPercentCompleted()}} / 100</i></progressbar> -->
           </div>
           <div class="lecture-header-user">
             <div class="lecture-header-rate" *ngIf="!currentReview" (click)="openReviewModal(content)">
@@ -99,7 +99,7 @@
         <div class="lecture-container-content-description">
           <div class="lecture-container-content-description-row">
             <div class="my-5">
-                <tabset #staticTabs>
+                <!-- <tabset #staticTabs>
                   <tab heading="Tổng quan" id="tab1">
                       <div class="description-dashboard-content">
                         <div [ngClass]=" descriptionMore ? 'collape-description-more' : 'collape-description'" #more>
@@ -294,7 +294,7 @@
                         </div>
                     </div>
                   </tab>
-                </tabset>
+                </tabset> -->
             </div>
           </div>
         </div>
@@ -356,7 +356,7 @@
       <h4 class="modal-title mb-3">Đánh giá của bạn</h4>
       <p class="mb-2 text-center"><span>{{titleRates[selectedValue-1]}}</span></p>
       <div class="row d-flex justify-content-center mb-2">
-          <rating [max]="5" [(ngModel)]="selectedValue" [customTemplate]="tt" [titles]="titleRates"></rating>
+          <!-- <rating [max]="5" [(ngModel)]="selectedValue" [customTemplate]="tt" [titles]="titleRates"></rating> -->
           <ng-template #tt let-i="index" let-v="value">
             <button class="btn btn-{{i < v ? 'warning' : 'default'}} mr-2">
               {{i < v ? '&#9733;' : '&#9734;'}}

@@ -4,14 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HeaderComponent } from './header.component';
-import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 
 @NgModule({
     declarations: [HeaderComponent],
     imports: [
       CommonModule,
       RouterModule,
-      BsDropdownModule.forRoot(),
       FormsModule,
       UserHeaderModule
     ],

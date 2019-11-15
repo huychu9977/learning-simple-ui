@@ -1,218 +1,192 @@
 <div class="animated fadeIn">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3><span [translate]="'courseManagement.home.createOrEditLabel'">createOrEditLabel</span></h3>
-                </div>
-                <div class="card-body">
-                    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-                        <div class="row justify-content-center">
-                            
-                            <div class="col-9">
-                                <div>
-                                    <div class="form-group" [hidden]="!course.id">
-                                        <!-- <label [translate]="'global.field.id">ID</label> -->
-                                        <input type="hidden" class="form-control" name="id" formControlName="id" readonly>
-                                    </div>
-                    
-                                    <div class="row">
-                                        <fieldset class="form-group col-md-6">
-                                            <label [translate]="'courseManagement.code'">code</label>
-                                            <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-code"></i>
-                                                    </span>
-                                                </span>
-                                                <input class="form-control" id="name" name="code" type="text" formControlName="code" [readOnly]="course.id ? true : false">
-                                            </div>
-                                            <div *ngIf="editForm.get('code').invalid && (editForm.get('code').dirty || editForm.get('code').touched) || isSaving && f['code'].errors">
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['code'].errors.required" [translate]="'entity.validation.required'">
-                                                    This field is required.
-                                                </small>
-                            
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['code'].errors.pattern" [translate]="'entity.validation.patternLogin'">
-                                                    This field can only contain letters, digits and e-mail addresses.
-                                                </small>
-                                            </div>
-                                            <small class="text-muted">ex. java-dev</small>
-                                        </fieldset>
-                                        <fieldset class="form-group col-md-6">
-                                            <label [translate]="'courseManagement.name'">name</label>
-                                            <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-bookmark-o"></i>
-                                                    </span>
-                                                </span>
-                                                <input class="form-control" id="name" name="name" type="text" formControlName="name">
-                                            </div>
-                                            <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched) || isSaving && f['name'].errors">
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['name'].errors.required" [translate]="'entity.validation.required'">
-                                                    This field is required.
-                                                </small>
-                                            </div>
-                                            <small class="text-muted">ex. Java Dev</small>
-                                        </fieldset>
-                                    </div>
-                                    
-                                    <div class="row">
-                                        <fieldset class="form-group col-md-6">
-                                            <label [translate]="'courseManagement.requiredCompleteRate'">requiredCompleteRate</label>
-                                            <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-percent"></i>
-                                                    </span>
-                                                </span>
-                                                <input class="form-control" id="requiredCompleteRate" name="requiredCompleteRate" type="number" formControlName="requiredCompleteRate">
-                                            </div>
-                                            <small class="text-muted">ex. 80</small>
-                                        </fieldset>
-                                        <div class="form-group col-md-6">
-                                            <label [translate]="'courseManagement.level'">level</label>
-                                            <ng-select [items]="levels" bindValue="code" bindLabel="name" [multiple]="false"
-                                                placeholder="Chọn trình độ..."
-                                                [searchable]="false"
-                                                formControlName='level'  class="form-control" required>
-                                                <ng-template ng-option-tmp let-item="item">
-                                                    {{item.name}}
-                                                </ng-template>
-                                            </ng-select>
-                                            <div *ngIf="editForm.get('level').invalid && (editForm.get('level').dirty || editForm.get('level').touched) || isSaving && f['level'].errors">
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['level'].errors.required" [translate]="'entity.validation.required'">
-                                                    This field is required.
-                                                </small>
-                                            </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3><span [translate]="'courseManagement.home.createOrEditLabel'">createOrEditLabel</span></h3>
+                    </div>
+                    <div class="card-body">
+                        <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+                            <div class="row justify-content-center">
+                                
+                                <div class="col-9">
+                                    <div>
+                                        <div class="form-group" [hidden]="!course.id">
+                                            <input type="hidden" class="form-control" name="id" formControlName="id" readonly>
                                         </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="form-group col-md-6">
-                                            <label [translate]="'courseManagement.category'">category</label>
-                                            <ng-select [items]="courseCategorys" bindValue="code" bindLabel="name" [multiple]="false"
-                                                placeholder="Chọn danh mục..."
-                                                [searchable]="false"
-                                                (change)="selectCourseTopics()"
-                                                formControlName='courseCategory'  class="form-control" required>
-                                                <ng-template ng-option-tmp let-item="item">
-                                                    {{item.name}}
-                                                </ng-template>
-                                            </ng-select>
-                                        </div>
-                                        <div class="form-group col-md-6">
-                                            <label [translate]="'courseManagement.topic'">topic</label>
-                                            <ng-select [items]="courseTopics" bindValue="code" bindLabel="name" [multiple]="false"
-                                                placeholder="Chọn đề tài..."
-                                                [searchable]="false"
-                                                formControlName='courseTopic'  class="form-control" required>
-                                                <ng-template ng-option-tmp let-item="item">
-                                                    {{item.name}}
-                                                </ng-template>
-                                            </ng-select>
-                                            <div *ngIf="editForm.get('courseTopic').invalid && (editForm.get('courseTopic').dirty || editForm.get('courseTopic').touched) || isSaving && f['courseTopic'].errors">
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['courseTopic'].errors.required" [translate]="'entity.validation.required'">
-                                                    This field is required.
-                                                </small>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <fieldset class="form-group col-md-12">
-                                            <label [translate]="'courseManagement.sortDescription'">sortDescription</label>
-                                            <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-paragraph"></i>
-                                                    </span>
-                                                </span>
-                                                <input class="form-control" id="sortDescription" name="sortDescription" type="text" formControlName="sortDescription">
-                                            </div>
-                                            <small class="text-muted">ex. This is sort description...</small>
-                                        </fieldset>
-                                    </div>
-                                    <div class="row py-3"></div>
-                                    <div class="row selectFile">
-                                        <div class="col-md-5">
-                                            <div class="col-md-12 text-center" *ngIf="imageUrl !=null">
-                                                <img class="img-fluid" width="150" src="{{imageUrl}}" alt="Ảnh đại diện" />
-                                            </div>
-                                            <div class="col-md-12 text-center mt-3">
-                                                <span class="btn btn-success btn-file">
-                                                    <strong [translate]="'courseManagement.image'"></strong>
-                                                    <i class="fa fa-camera" aria-hidden="true"></i>
-                                                    <input type="file" accept="image/x-png,image/jpeg" class="form-control" name="imageFile" id="fileImage" (change)="onImageChange($event)">
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-5">
-                                            <div class="col-md-12 text-center" *ngIf="imageUrl !=null">
-                                                <img *ngIf="!selectedVideos && !course.id" class="img-fluid" width="150" src="{{videoUrl}}" alt="Ảnh đại diện" />
-                                                <div class="fileName" *ngIf="selectedVideos">{{videoUrl}}</div>
-                                                <video *ngIf="course.id && !selectedVideos" src="api/video/{{course.videoId}}" width="150" height="120" controls></video>
-                                            </div>
-                                            <div class="col-md-12 text-center mt-3">
-                                                <span class="btn btn-success btn-file">
-                                                    <strong [translate]="'courseManagement.video'"></strong>
-                                                    <i class="fa fa-camera" aria-hidden="true"></i>
-                                                    <input type="file" accept="video/*" class="form-control" name="imageFile" id="fileVideo" (change)="onVideoChange($event)">
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <!-- <div class="col-md-4">
-                                            <div class="row justify-content-center" style="position: relative; top: 25%;">
-                                                <div class="col-md-6">
-                                                    <label style="margin-top: 2px;" [translate]="'courseManagement.activated'">activated</label>
+                        
+                                        <div class="row">
+                                            <fieldset class="form-group col-md-6">
+                                                <label [translate]="'courseManagement.code'">code</label>
+                                                <div class="input-group">
+                                                    <input class="form-control" [placeholder]="'courseManagement.create.placeholder.code' | translate" id="name" name="code" type="text" formControlName="code" [readOnly]="course.id ? true : false">
                                                 </div>
-                                                <div class="col-md-6">
-                                                    <label class="switch switch-label switch-success">
-                                                        <input type="checkbox" class="switch-input" checked id="activated" name="activated"  formControlName="activated">
-                                                        <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
-                                                    </label>
+                                                <div *ngIf="editForm.get('code').invalid && (editForm.get('code').dirty || editForm.get('code').touched) || isSaving && f['code'].errors">
+                                                    <small class="form-text text-danger"
+                                                    *ngIf="f['code'].errors.required" [translate]="'entity.validation.required'">
+                                                        This field is required.
+                                                    </small>
+                                
+                                                    <small class="form-text text-danger"
+                                                    *ngIf="f['code'].errors.pattern" [translate]="'entity.validation.patternLogin'">
+                                                        This field can only contain letters, digits and e-mail addresses.
+                                                    </small>
+                                                </div>
+                                                <small class="text-muted">ex. java-dev</small>
+                                            </fieldset>
+                                            <fieldset class="form-group col-md-6">
+                                                <label [translate]="'courseManagement.name'">name</label>
+                                                <div class="input-group">
+                                                    <input class="form-control" [placeholder]="'courseManagement.create.placeholder.name' | translate" id="name" name="name" type="text" formControlName="name">
+                                                </div>
+                                                <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched) || isSaving && f['name'].errors">
+                                                    <small class="form-text text-danger"
+                                                    *ngIf="f['name'].errors.required" [translate]="'entity.validation.required'">
+                                                        This field is required.
+                                                    </small>
+                                                </div>
+                                                <small class="text-muted">ex. Java Dev</small>
+                                            </fieldset>
+                                        </div>
+                                        
+                                        <div class="row">
+                                            <fieldset class="form-group col-md-6">
+                                                <label [translate]="'courseManagement.requiredCompleteRate'">requiredCompleteRate</label>
+                                                <div class="input-group">
+                                                    <input class="form-control" [placeholder]="'courseManagement.create.placeholder.requiredCompleteRate' | translate" id="requiredCompleteRate" name="requiredCompleteRate" type="number" formControlName="requiredCompleteRate">
+                                                </div>
+                                                <small class="text-muted">ex. 80</small>
+                                            </fieldset>
+                                            <div class="form-group col-md-6">
+                                                <label [translate]="'courseManagement.level'">level</label>
+                                                <ng-select [items]="levels" bindValue="code" bindLabel="name" [multiple]="false"
+                                                    placeholder="Chọn trình độ..."
+                                                    [searchable]="false"
+                                                    formControlName='level'  class="form-control" required>
+                                                    <ng-template ng-option-tmp let-item="item">
+                                                        {{item.name}}
+                                                    </ng-template>
+                                                </ng-select>
+                                                <div *ngIf="editForm.get('level').invalid && (editForm.get('level').dirty || editForm.get('level').touched) || isSaving && f['level'].errors">
+                                                    <small class="form-text text-danger"
+                                                    *ngIf="f['level'].errors.required" [translate]="'entity.validation.required'">
+                                                        This field is required.
+                                                    </small>
                                                 </div>
                                             </div>
-                                        </div> -->
-                                    </div>
-                                    
-                                    <div class="row py-3"></div>
-                                    <div class="row">
-                                        <div class="form-group ckedit">
-                                            <label [translate]="'courseManagement.description'">description</label>
-                                            <ck-editor name="editor1" skin="moono-lisa" language="vi" [fullPage]="false" 
-                                                [config]="config" formControlName='description'
-                                                 class="form-control"
-                                                required></ck-editor>
-                                            <div *ngIf="editForm.get('description').invalid && (editForm.get('description').dirty || editForm.get('description').touched) || isSaving && f['description'].errors">
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['description'].errors.required" [translate]="'entity.validation.required'">
-                                                    This field is required.
-                                                </small>
+                                        </div>
+                                        <div class="row">
+                                            <div class="form-group col-md-6">
+                                                <label [translate]="'courseManagement.category'">category</label>
+                                                <ng-select [items]="courseCategorys" bindValue="code" bindLabel="name" [multiple]="false"
+                                                    placeholder="Chọn danh mục..."
+                                                    [searchable]="false"
+                                                    (change)="selectCourseTopics()"
+                                                    formControlName='courseCategory'  class="form-control" required>
+                                                    <ng-template ng-option-tmp let-item="item">
+                                                        {{item.name}}
+                                                    </ng-template>
+                                                </ng-select>
+                                            </div>
+                                            <div class="form-group col-md-6">
+                                                <label [translate]="'courseManagement.topic'">topic</label>
+                                                <ng-select [items]="courseTopics" bindValue="code" bindLabel="name" [multiple]="false"
+                                                    placeholder="Chọn đề tài..."
+                                                    [searchable]="false"
+                                                    formControlName='courseTopic'  class="form-control" required>
+                                                    <ng-template ng-option-tmp let-item="item">
+                                                        {{item.name}}
+                                                    </ng-template>
+                                                </ng-select>
+                                                <div *ngIf="editForm.get('courseTopic').invalid && (editForm.get('courseTopic').dirty || editForm.get('courseTopic').touched) || isSaving && f['courseTopic'].errors">
+                                                    <small class="form-text text-danger"
+                                                    *ngIf="f['courseTopic'].errors.required" [translate]="'entity.validation.required'">
+                                                        This field is required.
+                                                    </small>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <fieldset class="form-group col-md-12">
+                                                <label [translate]="'courseManagement.sortDescription'">sortDescription</label>
+                                                <div class="input-group">
+                                                    <input class="form-control" [placeholder]="'courseManagement.create.placeholder.sortDescription' | translate" id="sortDescription" name="sortDescription" type="text" formControlName="sortDescription">
+                                                </div>
+                                                <small class="text-muted">ex. This is sort description...</small>
+                                            </fieldset>
+                                        </div>
+                                        <div class="row py-3"></div>
+                                        <div class="row selectFile">
+                                            <div class="col-md-4">
+                                                <div class="col-md-12 text-center" *ngIf="imageUrl !=null">
+                                                    <img class="img-fluid" width="150" src="{{imageUrl}}" alt="Ảnh đại diện" />
+                                                </div>
+                                                <div class="col-md-12 text-center mt-3">
+                                                    <span class="btn btn-success btn-file">
+                                                        <strong [translate]="'courseManagement.image'"></strong>
+                                                        <i class="fa fa-camera" aria-hidden="true"></i>
+                                                        <input type="file" accept="image/x-png,image/jpeg" class="form-control" name="imageFile" id="fileImage" (change)="onImageChange($event)">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="col-md-12 text-center" *ngIf="imageUrl !=null">
+                                                    <img *ngIf="!selectedVideos && !course.id" class="img-fluid" width="150" src="{{videoUrl}}" alt="Ảnh đại diện" />
+                                                    <div class="fileName" *ngIf="selectedVideos">{{videoUrl}}</div>
+                                                    <video *ngIf="course.id && !selectedVideos" src="api/video/{{course.videoId}}" width="150" height="120" controls></video>
+                                                </div>
+                                                <div class="col-md-12 text-center mt-3">
+                                                    <span class="btn btn-success btn-file">
+                                                        <strong [translate]="'courseManagement.video'"></strong>
+                                                        <i class="fa fa-camera" aria-hidden="true"></i>
+                                                        <input type="file" accept="video/*" class="form-control" name="imageFile" id="fileVideo" (change)="onVideoChange($event)">
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="row justify-content-center" style="position: relative; top: 25%;">
+                                                    <div class="col-md-6">
+                                                        <label style="margin-top: 2px;" [translate]="'courseManagement.activated'">activated</label>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <label class="switch switch-label switch-success">
+                                                            <input type="checkbox" class="switch-input" checked id="activated" name="activated"  formControlName="activated">
+                                                            <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="row py-3"></div>
+                                        <div class="row">
+                                            <div class="form-group ckedit w-100">
+                                                <label [translate]="'courseManagement.description'">description</label>
+                                                <p-editor formControlName='description' [placeholder]="'courseManagement.create.placeholder.description' | translate" [style]="{'height':'200px'}"></p-editor>
+                                                <div *ngIf="editForm.get('description').invalid && (editForm.get('description').dirty || editForm.get('description').touched) || isSaving && f['description'].errors">
+                                                    <small class="form-text text-danger"
+                                                    *ngIf="f['description'].errors.required" [translate]="'entity.validation.required'">
+                                                        This field is required.
+                                                    </small>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <button type="button" class="btn btn-secondary" (click)="previousState()">
-                                        <!-- <fa-icon [icon]="'ban'"></fa-icon> -->
-                                        &nbsp;<span
-                                        [translate]="'entity.action.cancel'">Cancel</span>
-                                    </button>
-                                    <button type="submit" class="btn btn-primary">
-                                        <!-- <fa-icon [icon]="'save'"></fa-icon> -->
-                                        &nbsp;<span [translate]="'entity.action.save'">Save</span>
-                                    </button>
+                                    <div class="row justify-content-end">
+                                        <button type="button" class="btn btn-secondary" (click)="previousState()">
+                                            <span [translate]="'entity.action.cancel'">Cancel</span>
+                                        </button>
+                                        <button type="submit" class="ml-2 btn btn-primary">
+                                           <span [translate]="'entity.action.save'">Save</span>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
-    
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+    <p-toast></p-toast>

@@ -1,5 +1,4 @@
 import { HasAnyAuthorityDirective } from '../../shared/util/has-any-authority.directive';
-import { NgSelectModule } from '@ng-select/ng-select';
 import { TranslateModule } from '@ngx-translate/core';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
@@ -8,9 +7,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RoleMgmtDetailComponent } from './role-management-detail.component';
 import { RoleMgmtUpdateComponent } from './role-management-update.component';
 import { RoleManagementComponent } from './role-management.component';
-import { PaginationModule } from 'ngx-bootstrap';
-
-
 
 @NgModule({
   declarations: [RoleManagementComponent, RoleMgmtDetailComponent, RoleMgmtUpdateComponent, HasAnyAuthorityDirective],
@@ -19,9 +15,7 @@ import { PaginationModule } from 'ngx-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    RouterModule,
-    NgSelectModule,
-    PaginationModule.forRoot()
+    RouterModule
   ],
   entryComponents: [RoleMgmtDetailComponent],
   exports: [RoleManagementComponent]

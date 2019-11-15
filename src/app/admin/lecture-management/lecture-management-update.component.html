@@ -8,11 +8,9 @@
                 <div class="card-body">
                     <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
                         <div class="row justify-content-center">
-                            
                             <div class="col-9">
                                 <div>
                                     <div class="form-group" [hidden]="!lecture.id">
-                                        <!-- <label [translate]="'global.field.id">ID</label> -->
                                         <input type="hidden" class="form-control" name="id" formControlName="id" readonly>
                                     </div>
                     
@@ -20,12 +18,7 @@
                                         <fieldset class="form-group col-md-6">
                                             <label [translate]="'lectureManagement.code'">code</label>
                                             <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-code"></i>
-                                                    </span>
-                                                </span>
-                                                <input class="form-control" id="name" name="code" type="text" formControlName="code" [readOnly]="lecture.id ? true : false">
+                                                <input class="form-control" [placeholder]="'lectureManagement.create.placeholder.code' | translate" id="code" name="code" type="text" formControlName="code" [readOnly]="lecture.id ? true : false">
                                                 <button (click)="slugify()" type="button">Tạo code</button>
                                             </div>
                                             <div *ngIf="editForm.get('code').invalid && (editForm.get('code').dirty || editForm.get('code').touched) || isSaving && f['code'].errors">
@@ -39,17 +32,11 @@
                                                     This field can only contain letters, digits and e-mail addresses.
                                                 </small>
                                             </div>
-                                            <small class="text-muted">ex. java-dev</small>
                                         </fieldset>
                                         <fieldset class="form-group col-md-6">
                                             <label [translate]="'lectureManagement.name'">name</label>
                                             <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-bookmark-o"></i>
-                                                    </span>
-                                                </span>
-                                                <input class="form-control" id="name" name="name" type="text" formControlName="name">
+                                                <input class="form-control" id="name" [placeholder]="'lectureManagement.create.placeholder.name' | translate" name="name" type="text" formControlName="name">
                                             </div>
                                             <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched) || isSaving && f['name'].errors">
                                                 <small class="form-text text-danger"
@@ -57,7 +44,6 @@
                                                     This field is required.
                                                 </small>
                                             </div>
-                                            <small class="text-muted">ex. Java Dev</small>
                                         </fieldset>
                                     </div>
                                     <div class="row">
@@ -95,12 +81,7 @@
                                             <label *ngIf="editForm.get('type').value && editForm.get('type').value === 'chapter'" [translate]="'lectureManagement.chapterOrder'">sortOrder</label>
                                             <label *ngIf="editForm.get('type').value && editForm.get('type').value !== 'chapter'" [translate]="'lectureManagement.lectureOrder'">sortOrder</label>
                                             <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-bookmark-o"></i>
-                                                    </span>
-                                                </span>
-                                                <input class="form-control" id="sortOrder" name="sortOrder" type="number" formControlName="sortOrder">
+                                                <input class="form-control" id="sortOrder" [placeholder]="'lectureManagement.create.placeholder.sortOrder' | translate" name="sortOrder" type="number" formControlName="sortOrder">
                                             </div>
                                             <div *ngIf="editForm.get('sortOrder').invalid && (editForm.get('sortOrder').dirty || editForm.get('sortOrder').touched) || isSaving && f['sortOrder'].errors">
                                                 <small class="form-text text-danger"
@@ -144,15 +125,12 @@
                                     </div>
                                     <div class="row py-3"></div>
                                 </div>
-                                <div>
+                                <div class="row justify-content-end">
                                     <button type="button" class="btn btn-secondary" (click)="previousState()">
-                                        <!-- <fa-icon [icon]="'ban'"></fa-icon> -->
-                                        &nbsp;<span
-                                        [translate]="'entity.action.cancel'">Cancel</span>
+                                        <span [translate]="'entity.action.cancel'">Cancel</span>
                                     </button>
-                                    <button type="submit" class="btn btn-primary">
-                                        <!-- <fa-icon [icon]="'save'"></fa-icon> -->
-                                        &nbsp;<span [translate]="'entity.action.save'">Save</span>
+                                    <button type="submit" class="ml-2 btn btn-primary">
+                                        <span [translate]="'entity.action.save'">Save</span>
                                     </button>
                                 </div>
                             </div>
@@ -163,4 +141,5 @@
         </div>
     </div>
 </div>
-    
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>

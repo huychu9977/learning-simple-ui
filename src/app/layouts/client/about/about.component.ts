@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -8,32 +7,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   styles: []
 })
 export class AboutComponent implements OnInit {
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: false,
-    pullDrag: false,
-    dots: false,
-    navSpeed: 700,
-    autoplay: true,
-    autoplayTimeout: 4000,
-    autoplaySpeed: 1500,
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 1
-      },
-      740: {
-        items: 1
-      },
-      940: {
-        items: 1
-      }
-    },
-    nav: false
-  };
+
   images?: any[] = [
     {
       id: 1, // id of slide

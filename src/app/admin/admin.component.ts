@@ -1,7 +1,6 @@
 import { JhiLanguageHelper } from './../core/language/language.helper';
 import { navItems } from './_nav';
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { DOCUMENT } from '@angular/common';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { SessionStorageService } from 'ngx-webstorage';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Router } from '@angular/router';

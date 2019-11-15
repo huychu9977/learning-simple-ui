@@ -6,7 +6,7 @@ export class EventBO {
         public content?: string,
         public startDate?: any,
         public endDate?: any,
-        public createAt?: string,
+        public createdAt?: string,
         public imageUrl?: string,
         public activated?: boolean
     ) {}

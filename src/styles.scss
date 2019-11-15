@@ -1,9 +1,10 @@
-@import '~ngx-toastr/toastr.css';
 @import './assets/scss/global.scss';
-// @import '~ngx-toastr/toastr-bs4-alert';
-@import '~ngx-owl-carousel-o/lib/styles/scss/owl.carousel';
-@import '~ngx-owl-carousel-o/lib/styles/scss/owl.theme.default';
-
+@import '@ng-select/ng-select/themes/default.theme.css';
+@import 'primeicons/primeicons.css';
+@import 'primeng/resources/themes/nova-light/theme.css';
+@import 'primeng/resources/primeng.min.css';
+@import 'quill/dist/quill.core.css';
+@import 'quill/dist/quill.snow.css';
 .loading {
       
     position: fixed;

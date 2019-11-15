@@ -5,9 +5,6 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PermissionManagementComponent } from './permission-management.component';
 import { PermissionMgmtUpdateComponent } from './permission-management-update.component';
-import { PaginationModule } from 'ngx-bootstrap';
-
-
 
 @NgModule({
   declarations: [PermissionManagementComponent, PermissionMgmtUpdateComponent],
@@ -16,8 +13,7 @@ import { PaginationModule } from 'ngx-bootstrap';
     FormsModule,
     ReactiveFormsModule,
     TranslateModule,
-    RouterModule,
-    PaginationModule.forRoot()
+    RouterModule
   ],
   entryComponents: [],
   exports: [PermissionManagementComponent]

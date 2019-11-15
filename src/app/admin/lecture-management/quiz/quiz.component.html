@@ -38,13 +38,10 @@
                     </div>
                     <div class="row justify-content-end">
                         <button type="button" class="btn btn-secondary" (click)="previousState()">
-                            <i class="fa fa-arrow-left" aria-hidden="true"></i>
-                            &nbsp;<span
-                            [translate]="'entity.action.cancel'">Cancel</span>
+                            <span [translate]="'entity.action.cancel'">Cancel</span>
                         </button>
-                        <button type="button" (click)="save()" class="ml-3 btn btn-primary" *ngIf="statusCanNotEditAndDelete.indexOf(lecture.status) === -1">
-                            <i class="fa fa-floppy-o" aria-hidden="true"></i>
-                            &nbsp;<span [translate]="'entity.action.save'">Save</span>
+                        <button type="button" (click)="save()" class="ml-2 btn btn-primary" *ngIf="statusCanNotEditAndDelete.indexOf(lecture.status) === -1">
+                            <span [translate]="'entity.action.save'">Save</span>
                         </button>
                     </div>
                 </div>
@@ -52,3 +49,4 @@
         </div>
     </div>
 </div>
+<p-toast></p-toast>

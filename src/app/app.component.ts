@@ -5,8 +5,7 @@ import { JhiLanguageHelper } from './core/language/language.helper';
 
 @Component({
   selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  templateUrl: './app.component.html'
 })
 export class AppComponent implements OnInit {
   title = 'learning-simple-ui';

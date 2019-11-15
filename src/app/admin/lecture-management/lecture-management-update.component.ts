@@ -1,16 +1,13 @@
 import { Component, OnInit, ElementRef } from '@angular/core';
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { LectureBO } from 'src/app/models/lectureBO.model';
-import { JhiLanguageHelper } from 'src/app/core/language/language.helper';
 import { LectureService } from 'src/app/services/lecture.service';
 import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
 import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
-const swal: SweetAlert = _swal as any;
+import { MessageService, ConfirmationService } from 'primeng/api';
+
 @Component({
   selector: 'lecture-management-update',
   templateUrl: './lecture-management-update.component.html'
@@ -20,14 +17,14 @@ export class LectureManagementUpdateComponent implements OnInit {
   videoUrl;
   lecture: LectureBO;
   lectureParents: LectureBO[];
-  languages: any[];
   types: any[];
   isSaving: boolean;
   selectedVideos: FileList;
+  parentCode;
   editForm = this.fb.group({
     id: [null],
     code: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50), Validators.pattern('^[_.@A-Za-z0-9-]*')]],
-    name: ['', [Validators.required, Validators.maxLength(50)]],
+    name: ['', [Validators.required, Validators.maxLength(250)]],
     activated: [true],
     type: ['', [Validators.required]],
     parent: [''],
@@ -36,14 +33,14 @@ export class LectureManagementUpdateComponent implements OnInit {
   });
   statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
   constructor(
-    private languageHelper: JhiLanguageHelper,
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private lectureService: LectureService,
     private route: ActivatedRoute,
     private router: Router,
     private elRef: ElementRef,
     private fb: FormBuilder,
-    private slugifyPipe: SlugifyPipe,
-    private toastr?: ToastrService,
+    private slugifyPipe: SlugifyPipe
   ) {}
 
   ngOnInit() {
@@ -59,9 +56,6 @@ export class LectureManagementUpdateComponent implements OnInit {
         return;
       }
       this.updateForm(this.lecture);
-    });
-    this.languageHelper.getAll().then(languages => {
-      this.languages = languages;
     });
   }
   slugify() {
@@ -80,9 +74,13 @@ export class LectureManagementUpdateComponent implements OnInit {
     if (this.editForm.get(['type']).value === 'chapter') {
       this.editForm.get(['parent']).setValue(null);
     }
-    this.editForm.get(['sortOrder']).setValue(
-      (this.editForm.get(['type']).value !== 'chapter' && this.editForm.get(['parent']).value === null)
-       ? 1 : this.editForm.get(['oldSortOrder']).value);
+    if (this.editForm.get(['type']).value !== 'chapter' && this.editForm.get(['parent']).value === null) {
+      this.editForm.get(['sortOrder']).setValue(1);
+    } else if (this.editForm.get(['type']).value !== 'chapter' && this.editForm.get(['parent']).value !== null) {
+      this.editForm.get(['sortOrder']).setValue(this.editForm.get(['sortOrder']).value);
+    } else {
+      this.editForm.get(['sortOrder']).setValue(this.editForm.get(['oldSortOrder']).value);
+    }
   }
   private updateForm(lecture: LectureBO): void {
     this.editForm.patchValue({
@@ -120,9 +118,18 @@ export class LectureManagementUpdateComponent implements OnInit {
             return t.code !== 'chapter';
           });
         }
+      } else {
+        if (this.editForm.get(['parent']).value) {
+          // tạo mới bài học từ 1 chương
+          this.types = this.types.filter(t => {
+            return t.code !== 'chapter';
+          });
+        }
       }
     });
-    this.updateSortOrder();
+    if (!this.lecture.id) {
+      this.updateSortOrder();
+    }
     this.videoUrl = '../../../assets/images/default-video-image.png';
   }
 
@@ -135,12 +142,11 @@ export class LectureManagementUpdateComponent implements OnInit {
     if (this.editForm.invalid) {
       return;
     }
-    swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-      buttons: ['Từ chối', 'Đồng ý']
-    }).then(confirm => {
-        if (confirm) {
-          this.confirm();
-        }
+    this.confirmationService.confirm({
+      message: 'Đồng ý thực hiện thao tác này?',
+      accept: () => {
+        this.confirm();
+      }
     });
   }
   confirm() {
@@ -173,46 +179,36 @@ export class LectureManagementUpdateComponent implements OnInit {
     return courseTmp;
   }
   onVideoChange(event) {
-    let checkList = false;
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < event.target.files.length; i++) {
-        if (
-            event.target.files[i].name.endsWith('.avi') ||
-            event.target.files[i].name.endsWith('.flv') ||
-            event.target.files[i].name.endsWith('.wmv') ||
-            event.target.files[i].name.endsWith('.mov') ||
-            event.target.files[i].name.endsWith('.mp4') ||
-            event.target.files[i].name.endsWith('.AVI') ||
-            event.target.files[i].name.endsWith('.FLV') ||
-            event.target.files[i].name.endsWith('.WMV') ||
-            event.target.files[i].name.endsWith('.MOV') ||
-            event.target.files[i].name.endsWith('.MP4')
-        ) {
-            checkList = true;
-        } else {
-            const element = this.elRef.nativeElement.querySelector('#fileVideo');
-            element.value = '';
-            checkList = false;
-            swal('Lỗi', 'Chỉ tải file với đuôi (avi|mp4|flv|wmv|mov)', 'error').then(() => {
-                this.selectedVideos = null;
-            });
-            break;
-        }
-        if (checkList) {
-            this.selectedVideos = event.target.files;
-            this.videoUrl = event.target.files[0].name;
-        }
+    if (
+        event.target.files[0].name.endsWith('.avi') ||
+        event.target.files[0].name.endsWith('.flv') ||
+        event.target.files[0].name.endsWith('.wmv') ||
+        event.target.files[0].name.endsWith('.mov') ||
+        event.target.files[0].name.endsWith('.mp4') ||
+        event.target.files[0].name.endsWith('.AVI') ||
+        event.target.files[0].name.endsWith('.FLV') ||
+        event.target.files[0].name.endsWith('.WMV') ||
+        event.target.files[0].name.endsWith('.MOV') ||
+        event.target.files[0].name.endsWith('.MP4')
+    ) {
+      this.selectedVideos = event.target.files;
+      this.videoUrl = event.target.files[0].name;
+    } else {
+        const element = this.elRef.nativeElement.querySelector('#fileVideo');
+        element.value = '';
+        this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Chỉ tải file với đuôi (avi|mp4|flv|wmv|mov)'});
+        this.selectedVideos = null;
     }
   }
   private onSaveSuccess(result) {
-    this.toastr.success('Thao tác thành công!');
+    this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
     setTimeout(() => {
       this.previousState();
     }, 1700);
   }
 
   private onSaveError(err) {
-    this.toastr.error('Thao tác thất bại!', err.error.message);
+    this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
     this.isSaving = false;
   }
 }

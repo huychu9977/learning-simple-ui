@@ -2,13 +2,10 @@ import { map } from 'rxjs/operators';
 import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
 import { UserBO } from 'src/app/models/userBO.model';
 import { JhiLanguageHelper } from 'src/app/core/language/language.helper';
 import { UserService } from 'src/app/services/user.service';
-import { ToastrService } from 'ngx-toastr';
-const swal: SweetAlert = _swal as any;
+
 @Component({
   selector: 'jhi-user-mgmt-update',
   templateUrl: './user-management-update.component.html'
@@ -16,7 +13,6 @@ const swal: SweetAlert = _swal as any;
 export class UserMgmtUpdateComponent implements OnInit {
   imageUrl = null;
   user: UserBO;
-  languages: any[];
   roleBOs: any[];
   isSaving: boolean;
   selectedFiles: FileList;
@@ -34,12 +30,10 @@ export class UserMgmtUpdateComponent implements OnInit {
   });
 
   constructor(
-    private languageHelper: JhiLanguageHelper,
     private userService: UserService,
     private route: ActivatedRoute,
     private elRef: ElementRef,
-    private fb: FormBuilder,
-    private toastr?: ToastrService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
@@ -53,9 +47,6 @@ export class UserMgmtUpdateComponent implements OnInit {
       return {code: v, name: v};
     }))).subscribe(rol => {
       this.roleBOs = rol;
-    });
-    this.languageHelper.getAll().then(languages => {
-      this.languages = languages;
     });
   }
   get f() { return this.editForm.controls; }
@@ -85,13 +76,13 @@ export class UserMgmtUpdateComponent implements OnInit {
     if (this.editForm.invalid) {
       return;
     }
-    swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-      buttons: ['Từ chối', 'Đồng ý']
-    }).then(confirm => {
-        if (confirm) {
-          this.confirm();
-        }
-    });
+    // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
+    //   buttons: ['Từ chối', 'Đồng ý']
+    // }).then(confirm => {
+    //     if (confirm) {
+    //       this.confirm();
+    //     }
+    // });
   }
   confirm() {
     const formdata: FormData = new FormData();
@@ -145,9 +136,9 @@ export class UserMgmtUpdateComponent implements OnInit {
             const element = this.elRef.nativeElement.querySelector('#filevideo');
             element.value = '';
             checkList = false;
-            swal('Lỗi', 'Chỉ tải file với đuôi (jpg|png|jpeg)', 'error').then(() => {
-                this.selectedFiles = null;
-            });
+            // swal('Lỗi', 'Chỉ tải file với đuôi (jpg|png|jpeg)', 'error').then(() => {
+            //     this.selectedFiles = null;
+            // });
             break;
         }
         if (checkList) {
@@ -156,7 +147,7 @@ export class UserMgmtUpdateComponent implements OnInit {
     }
 }
   private onSaveSuccess(result) {
-    this.toastr.success('Thao tác thành công!');
+   // this.toastr.success('Thao tác thành công!');
     setTimeout(() => {
       this.previousState();
       this.isSaving = false;
@@ -164,7 +155,7 @@ export class UserMgmtUpdateComponent implements OnInit {
   }
 
   private onSaveError(err) {
-    this.toastr.error('Thao tác thất bại!', err.error.message);
+   // this.toastr.error('Thao tác thất bại!', err.error.message);
     this.isSaving = false;
   }
 }

@@ -13,6 +13,7 @@ import { AccountService } from '../core/auth/account.service';
 import { UserRouteAccessService } from '../core/auth/user-route-access-service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NOT_USER } from '../shared/constants/roles.constants';
+import { eventMgmtState } from './event-management/event-management-routing.module';
 
 @Injectable({ providedIn: 'root' })
 export class LoginRouteAccessService implements CanActivate {
@@ -51,6 +52,7 @@ export const adminState: Routes = [
       ...userMgmtState,
       ...courseMgmtState,
       ...lectureMgmtState,
+      ...eventMgmtState,
       { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
       {
           path: 'dashboard',

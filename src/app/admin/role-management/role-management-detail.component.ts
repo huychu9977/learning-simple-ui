@@ -1,7 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { RoleBO } from 'src/app/models/roleBO.model';
-import { BsModalRef } from 'ngx-bootstrap';
-
 @Component({
   selector: 'jhi-role-mgmt-detail',
   templateUrl: './role-management-detail.component.html',
@@ -9,10 +7,9 @@ import { BsModalRef } from 'ngx-bootstrap';
 })
 export class RoleMgmtDetailComponent implements OnInit {
   role: RoleBO;
-  bsModalRef: BsModalRef;
   constructor() {}
   clear() {
-    this.bsModalRef.hide();
+   // this.bsModalRef.hide();
   }
   ngOnInit() {
   }

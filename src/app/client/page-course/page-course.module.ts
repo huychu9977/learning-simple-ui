@@ -1,4 +1,3 @@
-import { CarouselModule } from 'ngx-owl-carousel-o';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageCourseComponent } from './page-course.component';
@@ -15,7 +14,6 @@ import { MinuteSecondsPipe } from 'src/app/shared/util/minute-second-pipe';
     , CourseWillLearnComponent, MinuteSecondsPipe],
   imports: [
     CommonModule,
-    CarouselModule,
     CourseReviewsModule,
     CourseListModule,
     CoursePreviewModule

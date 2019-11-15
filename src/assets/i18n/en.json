@@ -6,12 +6,15 @@
             "createLabel":"Create a new course",
             "createOrEditLabel":"Create or edit a course"
         },
-        "created":"A new course is created with identifier {{ param }}",
-        "updated":"A course is updated with identifier {{ param }}",
-        "deleted":"A course is deleted with identifier {{ param }}",
-        "delete":{
-            "question":"Are you sure you want to delete course {{ login }}?"
-        },
+        "create": {
+            "placeholder" : {
+               "code": "Code",
+               "name": "Name",
+               "requiredCompleteRate": "Required Complete Rate",
+               "sortDescription": "Sort Description",
+               "description": "Description"
+            }
+          },
         "detail":{
             "title":"Course"
         },
@@ -131,6 +134,13 @@
         }
     },
     "lectureManagement":{
+        "create": {
+            "placeholder" : {
+               "code": "Code",
+               "name": "Name",
+               "sortOrder": "Sort Order"
+            }
+          },
         "home":{
             "lecture":{
                 "title":"List lecture",
@@ -142,12 +152,6 @@
                 "createLabel":"Create a new chapter",
                 "createOrEditLabel":"Create or edit a chapter"
             }
-        },
-        "created":"A new lecture is created with identifier {{ param }}",
-        "updated":"A lecture is updated with identifier {{ param }}",
-        "deleted":"A lecture is deleted with identifier {{ param }}",
-        "delete":{
-            "question":"Are you sure you want to delete lecture {{ login }}?"
         },
         "detail":{
             "title":"lecture",
@@ -297,6 +301,7 @@
          "activated":"Activated",
          "image_url":"Event Logo"
       },
+      "image":"Image",
       "action":"Action",
       "active":"Active",
       "activated":"Activated",

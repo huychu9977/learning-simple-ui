@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { PageOurTeacherComponent } from './page-our-teacher.component';
 import { TeacherGirdModule } from 'src/app/shared/modules/teacher-gird/teacher-gird.module';
 import { BannerImageModule } from 'src/app/layouts/client/banner-image/banner-image.module';
-import { PaginationModule } from 'ngx-bootstrap';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -12,8 +11,7 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     TeacherGirdModule,
     BannerImageModule,
-    FormsModule,
-    PaginationModule.forRoot()
+    FormsModule
   ],
   exports: [PageOurTeacherComponent]
 })

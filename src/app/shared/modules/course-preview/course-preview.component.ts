@@ -1,10 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
-import { CourseBO } from 'src/app/models/courseBO.model';
 import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 import { CourseRegistrationService } from 'src/app/services/course-registration.service';
-import { BsModalService, BsModalRef } from 'ngx-bootstrap';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -21,31 +18,28 @@ export class CoursePreviewComponent implements OnInit {
   @Input() totalTimeEstimateVideo?: any;
   @Input() lectureCode?: string;
   isSaving = false;
-  bsModalRef: BsModalRef;
   constructor(
     private router: Router,
     private page: PageReloadService,
-    private toastr: ToastrService,
-    private courseRegistrationService: CourseRegistrationService,
-    private modalService: BsModalService) { }
+    private courseRegistrationService: CourseRegistrationService) { }
 
   ngOnInit() {
     this.totalTimeEstimateVideo = Math.floor(this.totalTimeEstimateVideo);
   }
   openVideoModal(content) {
-    this.bsModalRef = this.modalService.show(content, {class: 'modal-lg', ignoreBackdropClick: true});
+   // this.bsModalRef = this.modalService.show(content, {class: 'modal-lg', ignoreBackdropClick: true});
   }
   registrationCourse(courseCode) {
     this.isSaving = true;
     this.courseRegistrationService.registrationCourse(courseCode).subscribe(res => {
       if (res) {
-        this.toastr.success('Thành công!', 'Đăng ký thành công!');
+       // this.toastr.success('Thành công!', 'Đăng ký thành công!');
         setTimeout(() => {
           this.page.reload(this.router);
         }, 1500);
       } else {
         this.isSaving = false;
-        this.toastr.error('Xảy ra lỗi!!', 'Lỗi');
+       // this.toastr.error('Xảy ra lỗi!!', 'Lỗi');
       }
     });
   }

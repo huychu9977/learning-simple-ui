@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -8,31 +7,7 @@ import { OwlOptions } from 'ngx-owl-carousel-o';
   styles: []
 })
 export class TestFaqComponent implements OnInit {
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: false,
-    pullDrag: false,
-    dots: false,
-    navSpeed: 700,
-    navText: ['<i class="fa fa-angle-left test-left_arrow slick-arrow"></i>',
-    '<i class="fa fa-angle-right test-right_arrow slick-arrow"></i>'],
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 1
-      },
-      740: {
-        items: 1
-      },
-      940: {
-        items: 1
-      }
-    },
-    nav: true
-  };
+
   images?: any[] = [
     {
       id: 1, // id of slide

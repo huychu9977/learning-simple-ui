@@ -1,4 +1,3 @@
-import { CONFIG_BASIC } from './../../shared/constants/ckeditor.constants';
 import { ReviewService } from './../../services/review.service';
 import { LectureBO } from './../../models/lectureBO.model';
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit, AfterContentChecked } from '@angular/core';
@@ -8,9 +7,6 @@ import { Title } from '@angular/platform-browser';
 import { LectureService } from 'src/app/services/lecture.service';
 import { CourseService } from 'src/app/services/course.service';
 import { HttpResponse } from '@angular/common/http';
-import { BsModalService, TabsetComponent } from 'ngx-bootstrap';
-import { BsModalRef } from 'ngx-bootstrap/modal';
-import { ToastrService } from 'ngx-toastr';
 import { CommentService } from 'src/app/services/comment.service';
 import { CommentBO } from 'src/app/models/CommentBO.model';
 import { AccountService } from 'src/app/core/auth/account.service';
@@ -22,9 +18,8 @@ import { QuestionService } from 'src/app/services/question.service';
   styleUrls: ['./page-lecture.component.scss']
 })
 export class PageLectureComponent implements OnInit, AfterContentChecked {
-  config = CONFIG_BASIC;
+  config = [];
   @ViewChild('more', {static: true}) elementView: ElementRef;
-  @ViewChild('staticTabs', { static: true }) staticTabs: TabsetComponent;
   descriptionMore = false;
   expand = false;
   course?: any;
@@ -71,17 +66,14 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   listQuestionIncorrect: any[] = [];
   constructor(
     private changeDetector: ChangeDetectorRef,
-    private modalRef: BsModalRef,
     private reviewService: ReviewService,
     private route: ActivatedRoute,
     private titleService: Title,
     private lectureService: LectureService,
     private commentService: CommentService,
-    private modalService: BsModalService,
     private accountService: AccountService,
     private questionService: QuestionService,
-    private courseService?: CourseService,
-    private toastr?: ToastrService
+    private courseService?: CourseService
     ) {
     }
 
@@ -99,7 +91,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     });
     this.route.queryParams.subscribe(data => {
       if (data.commentId) {
-        this.staticTabs.tabs[1].active = true;
+       // this.staticTabs.tabs[1].active = true;
         this.onSelect({id: 'tab2'});
         this.openDetailComment(data.commentId);
         this.commentService.setIsSeenComment(data.commentId).subscribe(res => {});
@@ -219,15 +211,15 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     }
     this.load = false;
     this.loadAllComment();
-    this.modalRef.hide();
+   // this.modalRef.hide();
   }
 
   decline(): void {
-    this.modalRef.hide();
+   // this.modalRef.hide();
   }
   // end
   openDeleteComment(template, id?: any) {
-      this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
+    //  this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
       this.idDelete = id ? id : null;
   }
   search() {
@@ -380,7 +372,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   openReviewModal(content) {
     this.selectedValue = this.currentReview ? this.currentReview.rate : 1;
     this.reviewContent = this.currentReview ? this.currentReview.content : '';
-    this.modalRef = this.modalService.show(content, {class: 'modal-md'});
+   // this.modalRef = this.modalService.show(content, {class: 'modal-md'});
   }
   update() {
     if (this.reviewContent === '') {
@@ -398,11 +390,11 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
           (res) => {
             if (res) {
               this.loadReviewByCourse();
-              this.modalRef.hide();
+             // this.modalRef.hide();
             }
           },
           (err) => {
-            this.toastr.error(err.error.message, 'Thất bại!');
+           // this.toastr.error(err.error.message, 'Thất bại!');
           }
         );
       } else {
@@ -410,17 +402,17 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
           (res) => {
             if (res) {
               this.loadReviewByCourse();
-              this.modalRef.hide();
+             // this.modalRef.hide();
             }
           },
           (err) => {
-            this.toastr.error(err.error.message, 'Thất bại!');
+           // this.toastr.error(err.error.message, 'Thất bại!');
           }
         );
       }
     }
   }
   close() {
-    this.modalRef.hide();
+    // this.modalRef.hide();
   }
 }

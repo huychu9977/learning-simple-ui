@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket.service';
-import { ToastrService } from 'ngx-toastr';
 import { AccountService } from 'src/app/core/auth/account.service';
 import { Router } from '@angular/router';
 @Component({
@@ -17,7 +16,6 @@ export class DashboardComponent implements OnInit {
   currentAccount: any;
 
   constructor(
-    private toastr: ToastrService,
     private router: Router,
     private accountService: AccountService,
     private ticketService: TicketService) { }
@@ -68,9 +66,9 @@ export class DashboardComponent implements OnInit {
         if (statusIdOld === 5 || statusId === 5) {
           this.loadTicketSuccess();
         }
-        this.toastr.success('Chuyển trạng thái thành công!', 'Thành công!');
+       // this.toastr.success('Chuyển trạng thái thành công!', 'Thành công!');
       } else {
-        this.toastr.error('Chuyển trạng thái thất bại!', 'Thất bại!');
+       // this.toastr.error('Chuyển trạng thái thất bại!', 'Thất bại!');
       }
     });
   }

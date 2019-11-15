@@ -1543,3 +1543,15 @@ mark {
   }
 }
 //
+.ui-dropdown {
+  width: 100%;
+}
+.form-group {
+  > p {
+    margin-bottom: 10px;
+  }
+}
+.ui-paginator {
+  width: 97%;
+  margin: 0 auto;
+}

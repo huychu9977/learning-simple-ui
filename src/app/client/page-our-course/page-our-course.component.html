@@ -114,8 +114,8 @@
                     </div>
                 </div>
                 <div class="d-flex justify-content-end" *ngIf="totalItems > 0">
-                    <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
-                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
+                    <!-- <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
+                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination> -->
                 </div>
             </div>
             <div class="row course_page_slider" *ngIf="courses?.length === 0">
@@ -135,7 +135,7 @@
             </div>
         </div>
         <div class="container owl-carousel-nav-custom">
-            <owl-carousel-o [options]="customOptions">
+            <!-- <owl-carousel-o [options]="customOptions">
                 <div *ngFor="let slide of images1">
                     <ng-template carouselSlide [id]="slide.id">
                         <div>
@@ -145,6 +145,6 @@
                         </div>
                     </ng-template>
                 </div>
-            </owl-carousel-o>
+            </owl-carousel-o> -->
         </div>
     </section>

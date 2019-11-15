@@ -130,7 +130,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label [translate]="'userManagement.roles'">roles</label> <small class="text-danger">*</small>
-                                        <ng-select [items]="roleBOs" bindValue="code" bindLabel="name" [multiple]="true"
+                                        <!-- <ng-select [items]="roleBOs" bindValue="code" bindLabel="name" [multiple]="true"
                                             placeholder="{{'userManagement.placeholder.roles' | translate}}"
                                             [(ngModel)]="selectedRoles" 
                                             [closeOnSelect]="false"
@@ -139,7 +139,7 @@
                                             <ng-template ng-option-tmp let-item="item">
                                                 {{item.name}}
                                             </ng-template>
-                                        </ng-select>
+                                        </ng-select> -->
                                         <div *ngIf="editForm.get('roleBOs').invalid && (editForm.get('roleBOs').dirty || editForm.get('roleBOs').touched) || isSaving && f['roleBOs'].errors">
                                             <small class="form-text text-danger"
                                             *ngIf="f['roleBOs'].errors.required" [translate]="'entity.validation.required'">

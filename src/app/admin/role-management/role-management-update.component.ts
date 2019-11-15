@@ -3,15 +3,11 @@ import { PermissionService } from '../../services/permission.service';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
-import { ToastrService } from 'ngx-toastr';
 import { HttpResponse } from '@angular/common/http';
 import { RoleBO } from 'src/app/models/roleBO.model';
-import { JhiLanguageHelper } from 'src/app/core/language/language.helper';
 import { RoleService } from 'src/app/services/role.service';
 import { PermissionBO } from 'src/app/models/permissionBO.model';
-const swal: SweetAlert = _swal as any;
+
 @Component({
   selector: 'jhi-role-mgmt-update',
   templateUrl: './role-management-update.component.html'
@@ -33,12 +29,10 @@ export class RoleMgmtUpdateComponent implements OnInit {
   });
 
   constructor(
-    private languageHelper: JhiLanguageHelper,
     private roleService: RoleService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
     private permissionService: PermissionService,
-    private toastr?: ToastrService,
   ) { }
 
   ngOnInit() {
@@ -47,9 +41,7 @@ export class RoleMgmtUpdateComponent implements OnInit {
       this.role = role.body ? role.body : role;
       this.updateForm(this.role);
     });
-    this.languageHelper.getAll().then(languages => {
-      this.languages = languages;
-    });
+
     this.loadPermissions();
   }
   // permission
@@ -108,13 +100,13 @@ export class RoleMgmtUpdateComponent implements OnInit {
     if (this.editForm.invalid) {
       return;
     }
-    swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-      buttons: ['Từ chối', 'Đồng ý']
-    }).then(confirm => {
-        if (confirm) {
-          this.confirm();
-        }
-    });
+    // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
+    //   buttons: ['Từ chối', 'Đồng ý']
+    // }).then(confirm => {
+    //     if (confirm) {
+    //       this.confirm();
+    //     }
+    // });
   }
   confirm() {
     this.updateRole();
@@ -131,7 +123,7 @@ export class RoleMgmtUpdateComponent implements OnInit {
   }
 
   private onSaveSuccess(result) {
-    this.toastr.success('Thao tác thành công!');
+   // this.toastr.success('Thao tác thành công!');
     setTimeout(() => {
       this.previousState();
       this.isSaving = false;
@@ -139,7 +131,7 @@ export class RoleMgmtUpdateComponent implements OnInit {
   }
 
   private onSaveError(err) {
-    this.toastr.error('Thao tác thất bại!', err.error.message);
+   // this.toastr.error('Thao tác thất bại!', err.error.message);
     this.isSaving = false;
   }
 }

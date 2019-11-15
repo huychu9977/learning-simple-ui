@@ -1,6 +1,4 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { OwlOptions } from 'ngx-owl-carousel-o';
-import { SlideModel } from 'ngx-owl-carousel-o/lib/models/slide.model';
 @Component({
   // tslint:disable-next-line:component-selector
   selector: 'banner-slide',
@@ -10,31 +8,7 @@ import { SlideModel } from 'ngx-owl-carousel-o/lib/models/slide.model';
   ]
 })
 export class BannerSlideComponent implements OnInit {
-  customOptions: OwlOptions = {
-    loop: true,
-    mouseDrag: true,
-    touchDrag: false,
-    pullDrag: false,
-    dots: false,
-    navSpeed: 700,
-    navText: ['<i class="fa fa-angle-left left_arrow slick-arrow"></i>',
-    '<i class="fa fa-angle-right  right_arrow slick-arrow"></i>'],
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 1
-      },
-      740: {
-        items: 1
-      },
-      940: {
-        items: 1
-      }
-    },
-    nav: true
-  };
+
   images?: any[] = [
     {
       id: 1, // id of slide

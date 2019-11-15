@@ -15,12 +15,12 @@
     i {
         transition: all 0.4s;
     }
+    i.pi-chevron-up {
+        margin-top: 5px;
+    }
     .active {
-        i.fa {
+        i.pi {
             transform: rotate(180deg);
         }
-    }
-    .jh-create-entity {
-        margin-top: 11px;
     }
 }

@@ -2,14 +2,10 @@ import { STATUS_CAN_NOT_EIDT_DELETE, STATUS_NEED_CHECK } from './../../shared/co
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
-import { ToastrService } from 'ngx-toastr';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { CourseService } from 'src/app/services/course.service';
 import { CategoryService } from 'src/app/services/category.service';
-import { AccountService } from 'src/app/core/auth/account.service';
-const swal: SweetAlert = _swal as any;
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'course-management',
   templateUrl: './course-management.component.html',
@@ -30,12 +26,13 @@ export class CourseManagementComponent implements OnInit {
     activated: string = null;
     statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
     statusNeedCheck = STATUS_NEED_CHECK;
+    loading = false;
     constructor(
+        private messageService: MessageService,
         private courseService: CourseService,
         private categoryService: CategoryService,
         private activatedRoute: ActivatedRoute,
-        private router: Router,
-        private toastr?: ToastrService,
+        private router: Router
     ) {
         this.itemsPerPage = 5;
         this.courseCategorys = [];
@@ -59,10 +56,10 @@ export class CourseManagementComponent implements OnInit {
     setStatus(courseCode?: string) {
         this.courseService.setStatus(courseCode).subscribe(res => {
             if (res) {
-                this.toastr.success('Trong thời gian chờ duyệt!', 'Thành công!');
+                this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Trong thời gian chờ duyệt!'});
                 this.loadAll();
             } else {
-                this.toastr.error('Xét duyệt thất bại!', 'Thất bại!');
+                this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: 'Xét duyệt thất bại!'});
             }
         });
     }
@@ -92,7 +89,7 @@ export class CourseManagementComponent implements OnInit {
         course.activated = isActivated;
         this.courseService.setActive(course).subscribe(response => {
             if (response.status === 200) {
-                this.toastr.success('Cập nhật trạng thái thành công!', 'Thành công!');
+                this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Cập nhật trạng thái thành công!'});
                 this.loadPage(this.page);
             } else {
                 console.log('ERROR');
@@ -122,10 +119,10 @@ export class CourseManagementComponent implements OnInit {
     }
 
     loadPage(event: any) {
-        this.page = event.page;
-        if (event.page !== this.previousPage) {
+        this.page = event.page + 1;
+        if (this.page !== this.previousPage) {
             this.transition();
-            this.previousPage = event.page;
+            this.previousPage = this.page;
         }
     }
 
@@ -164,25 +161,25 @@ export class CourseManagementComponent implements OnInit {
         this.loadAll();
     }
     deleteCourse(course: CourseBO) {
-        swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-            buttons: ['Từ chối', 'Đồng ý']
-        }).then(confirm => {
-            if (confirm) {
-                this.courseService.delete(course.code).subscribe(() => {
-                    swal('Cập nhật', 'Xóa thành công', 'success').then(
-                        () => {
-                            if (this.courses.length === 1) {
-                                this.page = (this.page === 1) ? 1 : ( this.page - 1);
-                            }
-                            this.loadPage(this.page);
-                        }),
-                        // tslint:disable-next-line:no-unused-expression
-                        err => {
-                            swal('Lỗi', 'Thất bại, hãy thử lại', 'error');
-                        };
-                });
-            }
-        });
+        // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
+        //     buttons: ['Từ chối', 'Đồng ý']
+        // }).then(confirm => {
+        //     if (confirm) {
+        //         this.courseService.delete(course.code).subscribe(() => {
+        //             swal('Cập nhật', 'Xóa thành công', 'success').then(
+        //                 () => {
+        //                     if (this.courses.length === 1) {
+        //                         this.page = (this.page === 1) ? 1 : ( this.page - 1);
+        //                     }
+        //                     this.loadPage(this.page);
+        //                 }),
+        //                 // tslint:disable-next-line:no-unused-expression
+        //                 err => {
+        //                     swal('Lỗi', 'Thất bại, hãy thử lại', 'error');
+        //                 };
+        //         });
+        //     }
+        // });
     }
     private onSuccess(data) {
         this.totalItems = data.totalResult;
@@ -191,5 +188,14 @@ export class CourseManagementComponent implements OnInit {
 
     private onError(error) {
         console.log(error);
+    }
+
+    loadCarsLazy(event: any) {
+        this.loading = true;
+        setTimeout(() => {
+            if (this.courses) {
+                this.loading = false;
+            }
+        }, 1000);
     }
 }

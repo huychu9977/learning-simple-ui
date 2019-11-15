@@ -1,7 +1,6 @@
 
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { OwlOptions } from 'ngx-owl-carousel-o';
 import { HttpResponse } from '@angular/common/http';
 import { CourseBO } from './../../models/courseBO.model';
 import { Title } from '@angular/platform-browser';
@@ -18,28 +17,6 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
   @ViewChild('hh', {static: true}) elementView: ElementRef;
   @ViewChild('script', {static: false}) script: ElementRef;
 
-  customOptions: OwlOptions = {
-    loop: true,
-    dots: false,
-    navSpeed: 700,
-    navText: ['<i class="fa fa-angle-left course-left_arrow slick-arrow"></i>',
-    '<i class="fa fa-angle-right course-right_arrow slick-arrow"></i>'],
-    responsive: {
-      0: {
-        items: 1
-      },
-      400: {
-        items: 2
-      },
-      740: {
-        items: 4
-      },
-      940: {
-        items: 5
-      }
-    },
-    nav: true
-  };
   images1?: any[] = [
     {
       id: 1, // id of slide

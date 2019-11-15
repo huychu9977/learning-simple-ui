@@ -12,16 +12,15 @@
                                 <form id="formSearch" class="mx-3 shadow-sm bg-light rounded" action="">
                                     <div class="row">
                                         <div class="col-sm-4">
-                                            <button class="btn btn-primary jh-create-entity ml-3"
+                                            <button class="btn btn-sm btn-primary my-3 ml-3"
                                                     [routerLink]="['new']">
-                                                    <i class="fa fa-plus"></i>
                                                 <span [translate]="'courseManagement.home.createLabel'">Tạo mới</span>
                                             </button>
                                         </div>
                                         <div class="col-md-8">
                                             <a href="javascript:void(0)" class="accordion" (click)="toggleAccordian($event)">
                                                 <div class="text-right py-3 pr-4">
-                                                    <i class="fa fa-chevron-up" aria-hidden="true"></i>
+                                                    <i class="pi pi-chevron-up" aria-hidden="true"></i>
                                                 </div>
                                             </a>
                                         </div>
@@ -69,12 +68,8 @@
                                 <thead>
                                 <tr>
                                     <th>Kiểm duyệt</th>
-                                    <th>
-                                        <span [translate]="'courseManagement.code'">code</span>
-                                    </th>
-                                    <th>
-                                        <span [translate]="'courseManagement.name'">name</span>
-                                    </th>
+                                    <th [translate]="'courseManagement.code'">code</th>
+                                    <th [translate]="'courseManagement.name'">name</th>
                                     <!-- <th><span [translate]="'courseManagement.active'">Active</span></th> -->
                                     <th><span [translate]="'courseManagement.topic'">Topic</span></th>
                                     <th [translate]="'courseManagement.editMore'">editMore</th>
@@ -110,21 +105,18 @@
                                                 <button type="submit"
                                                         [routerLink]="[ course.code, 'lecture']"
                                                         class="btn btn-success btn-sm">
-                                                    <i class="fa fa-plus"></i>
                                                     <span class="d-none d-md-inline" [translate]="'courseManagement.chapter'">chapter</span>
                                                     <strong>({{course.totalLecture}})</strong>
                                                 </button>
                                                 <button type="submit"
                                                         [routerLink]="[ course.code, 'objectives']"
                                                         class="btn btn-info btn-sm color-white">
-                                                    <i class="fa fa-plus"></i>
                                                     <span class="d-none d-md-inline" [translate]="'courseManagement.objective.name'">name</span>
                                                     <strong>({{course.totalObjective}})</strong>
                                                 </button>
                                                 <button type="submit"
                                                         [routerLink]="[ course.code, 'requireds']"
                                                         class="btn btn-primary btn-sm">
-                                                    <i class="fa fa-plus"></i>
                                                     <span class="d-none d-md-inline" [translate]="'courseManagement.required.name'">requiredName</span>
                                                     <strong>({{course.totalRequirement}})</strong>
                                                 </button>
@@ -135,19 +127,16 @@
                                             <button type="submit"
                                                     [routerLink]="[ course.code, 'view']"
                                                     class="btn btn-info btn-sm color-white">
-                                                <i class="fa fa-eye"></i>
                                                 <span class="d-none d-md-inline" [translate]="'entity.action.view'">View</span>
                                             </button>
                                             <button type="submit"
                                                     [routerLink]="[ course.code, 'edit']"
                                                     queryParamsHandling="merge"
                                                     class="btn btn-primary btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
-                                                <i class="fa fa-pencil"></i>
                                                 <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
                                             </button>
                                             <button type="button" (click)="deleteCourse(course)"
                                                     class="btn btn-danger btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
-                                                <i class="fa fa-times"></i>
                                                 <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
                                             </button>
                                         </div>
@@ -156,13 +145,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div *ngIf="courses && courses.length" class="w-100">
-                            <div class="row justify-content-center">
-                            </div>
-                            <div class="row justify-content-center">
-                                    <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
-                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination>
-                            </div>
+                        <div class="row justify-content-center" *ngIf="courses && courses.length" class="w-100">
+                            <p-paginator [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
                         </div>
                     </div>
                 </div>

@@ -1,26 +1,23 @@
 import { Component, OnInit, EventEmitter, Output } from '@angular/core';
 import { QuestionBO } from 'src/app/models/questionBO.model';
-import { BsModalRef } from 'ngx-bootstrap';
+import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/api';
 
 @Component({
   selector: 'question-modal',
   templateUrl: './question-modal.component.html'
 })
 export class QuestionModalComponent implements OnInit {
-  @Output() action = new EventEmitter();
-    config = {
-        extraPlugins: 'image2',
-        height: 200
-    };
     answerContent = '';
     question: QuestionBO;
     questionTmp: QuestionBO;
     error = '';
-    bsModalRef: BsModalRef;
-    constructor() { }
+    constructor(
+      public ref: DynamicDialogRef,
+      public config: DynamicDialogConfig) { }
 
     ngOnInit(): void {
-        this.questionTmp = this.DeepCopy(this.question);
+      this.question = this.config.data.question;
+      this.questionTmp = this.DeepCopy(this.question);
     }
     DeepCopy(obj: any): any {
         let clonedObject;
@@ -52,9 +49,6 @@ export class QuestionModalComponent implements OnInit {
           return clonedObject;
         }
       }
-    clear() {
-        this.bsModalRef.hide();
-    }
     createAnswer() {
         this.questionTmp.answers.push({
             content: this.answerContent,
@@ -84,7 +78,7 @@ export class QuestionModalComponent implements OnInit {
             }
             return a;
         });
-        this.action.emit(this.questionTmp);
+        this.ref.close(this.questionTmp);
     }
     compare(o1: any, o2: any) {
         for (const attr in o1) {

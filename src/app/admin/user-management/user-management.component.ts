@@ -1,13 +1,10 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UserMgmtDetailComponent } from './user-management-detail.component';
 import { UserBO } from 'src/app/models/userBO.model';
-import { BsModalService } from 'ngx-bootstrap/modal';
 import { UserService } from 'src/app/services/user.service';
-import * as _swal from 'sweetalert';
-import { SweetAlert } from 'sweetalert/typings/core';
-const swal: SweetAlert = _swal as any;
+
 @Component({
   selector: 'user-management',
   templateUrl: './user-management.component.html',
@@ -25,7 +22,6 @@ export class UserManagementComponent implements OnInit {
     reverse: any;
     keyword = '';
     constructor(
-        private modalService: BsModalService,
         private userService: UserService,
         private route: ActivatedRoute,
         private router: Router
@@ -101,29 +97,29 @@ export class UserManagementComponent implements OnInit {
         this.loadAll();
     }
     deleteUser(user: UserBO) {
-        swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-            buttons: ['Từ chối', 'Đồng ý']
-        }).then(confirm => {
-            if (confirm) {
-                this.userService.delete(user.username).subscribe(() => {
-                    swal('Cập nhật', 'Xóa thành công', 'success').then(
-                        () => {
-                            if (this.users.length === 1) {
-                                this.page = (this.page === 1) ? 1 : ( this.page - 1);
-                            }
-                            this.loadAll();
-                        }),
-                        // tslint:disable-next-line:no-unused-expression
-                        () => {
-                            swal('Lỗi', 'Thất bại, hãy thử lại', 'error');
-                        };
-                });
-            }
-        });
+        // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
+        //     buttons: ['Từ chối', 'Đồng ý']
+        // }).then(confirm => {
+        //     if (confirm) {
+        //         this.userService.delete(user.username).subscribe(() => {
+        //             swal('Cập nhật', 'Xóa thành công', 'success').then(
+        //                 () => {
+        //                     if (this.users.length === 1) {
+        //                         this.page = (this.page === 1) ? 1 : ( this.page - 1);
+        //                     }
+        //                     this.loadAll();
+        //                 }),
+        //                 // tslint:disable-next-line:no-unused-expression
+        //                 () => {
+        //                     swal('Lỗi', 'Thất bại, hãy thử lại', 'error');
+        //                 };
+        //         });
+        //     }
+        // });
     }
     openModalDetail(user?: UserBO) {
-        const modalRef = this.modalService.show(UserMgmtDetailComponent, {class: 'modal-lg'});
-        modalRef.content.user = user;
+        // const modalRef = this.modalService.show(UserMgmtDetailComponent, {class: 'modal-lg'});
+        // modalRef.content.user = user;
     }
     private onSuccess(data) {
         this.totalItems = data.totalResult;

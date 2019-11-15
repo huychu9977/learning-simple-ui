@@ -6,7 +6,6 @@ import { PageOurCourseComponent } from './page-our-course/page-our-course.compon
 import { NgModule } from '@angular/core';
 import { FooterComponent } from './page-footer/footer.component';
 import { CommonModule } from '@angular/common';
-import { CarouselModule } from 'ngx-owl-carousel-o';
 import { RouterModule, Routes } from '@angular/router';
 import { PageCourseModule } from './page-course/page-course.module';
 import { PageCourseComponent } from './page-course/page-course.component';
@@ -109,7 +108,6 @@ const clientRoute: Routes = [
       , FooterComponent, PageNotFoundComponent],
     imports: [
       CommonModule,
-      CarouselModule,
       TranslateModule,
       RouterModule.forChild(clientRoute),
       LoginModalModule,

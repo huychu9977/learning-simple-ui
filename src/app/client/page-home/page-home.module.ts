@@ -1,5 +1,4 @@
 import { BannerSlideComponent } from './../../layouts/client/banner-slide/banner-slide.component';
-import { CarouselModule } from 'ngx-owl-carousel-o';
 import { PageHomeComponent } from './page-home.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -16,7 +15,6 @@ import { TeacherModule } from 'src/app/layouts/client/teacher/teacher.module';
     TestFaqComponent],
   imports: [
     CommonModule,
-    CarouselModule,
     OurCourseModule,
     TeacherModule,
     RouterModule

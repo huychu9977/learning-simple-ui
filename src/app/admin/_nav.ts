@@ -11,6 +11,12 @@ export const navItems = [
     name: 'Quản lý',
   },
   {
+    name: 'Quản lý sự kiện',
+    url: '/admin/event-management',
+    icon: 'icon-people',
+    key: 'eventManagement.navName'
+  },
+  {
     name: 'Quản lý người dùng',
     url: '/admin/user-management',
     icon: 'icon-people',

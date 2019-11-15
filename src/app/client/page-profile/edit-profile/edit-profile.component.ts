@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { AccountService } from 'src/app/core/auth/account.service';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ToastrService } from 'ngx-toastr';
 import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 
 @Component({
@@ -24,10 +23,8 @@ export class EditProfileComponent implements OnInit {
   });
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
     private elRef: ElementRef,
     private page: PageReloadService,
-    private toast: ToastrService,
     private accountService: AccountService,
     private fb: FormBuilder, ) { }
 
@@ -50,7 +47,7 @@ export class EditProfileComponent implements OnInit {
   get f() { return this.editForm.controls; }
   editCurrentAccount() {
     if (this.editForm.invalid) {
-      this.toast.error('Vui lòng điền đủ thông tin');
+     // this.toast.error('Vui lòng điền đủ thông tin');
       return;
     }
     this.isLoad = true;
@@ -62,12 +59,12 @@ export class EditProfileComponent implements OnInit {
     this.accountService.updateCurrentUser(formdata).subscribe(res => {
       if (res) {
         this.accountService.identity(true);
-        this.toast.success('Cập nhật thành công!');
+       // this.toast.success('Cập nhật thành công!');
         this.page.reload(this.router);
         this.isLoad = false;
       }
     }, err => {
-      this.toast.error(err.error.message);
+    //  this.toast.error(err.error.message);
     });
   }
   private updateUser() {
@@ -95,7 +92,7 @@ export class EditProfileComponent implements OnInit {
     } else {
       const element = this.elRef.nativeElement.querySelector('#fileImage');
       element.value = '';
-      this.toast.error('Chỉ tải file với đuôi (jpg|png|jpeg)', 'Lỗi');
+     // this.toast.error('Chỉ tải file với đuôi (jpg|png|jpeg)', 'Lỗi');
       this.selectedImages = null;
     }
     if (event.target.files && event.target.files[0]) {

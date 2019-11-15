@@ -1,11 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
-import { ToastrService } from 'ngx-toastr';
 import { Router } from '@angular/router';
 import { LectureBO } from 'src/app/models/lectureBO.model';
 import { LectureService } from 'src/app/services/lecture.service';
-import { BsModalRef } from 'ngx-bootstrap';
 import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
+import { DynamicDialogConfig, DynamicDialogRef, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'list-lecture',
@@ -23,18 +22,20 @@ export class ListLectureComponent implements OnInit {
     href?: string;
     statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
     constructor(
-        private bsModalRef: BsModalRef,
+        private messageService: MessageService,
         private lectureService: LectureService,
-        private toastr: ToastrService,
+        public ref: DynamicDialogRef,
+        public config: DynamicDialogConfig,
         private router: Router) {
             this.href = this.router.url.split('?')[0];
         }
 
     ngOnInit(): void {
+        this.lecture = this.config.data.lecture;
         this.loadAll();
     }
     clear() {
-        this.bsModalRef.hide();
+        this.ref.close();
     }
     goToLink(code?: string, href?: string) {
         this.clear();
@@ -45,16 +46,16 @@ export class ListLectureComponent implements OnInit {
         lecture.activated = isActivated;
         this.lectureService.setActive(lecture).subscribe(response => {
             if (response.status === 200) {
-                this.toastr.success('Cập nhật trạng thái thành công!', 'Thành công!');
+                this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Cập nhật trạng thái thành công!'});
                 this.loadAll();
             } else {
-                this.toastr.error('Lỗi!', 'Cập nhật trạng thái thất bại?');
+                console.log('error');
             }
         });
     }
 
     loadPage(event: any) {
-        this.page = event.page;
+        this.page = event.page + 1;
         this.loadAll();
     }
 
