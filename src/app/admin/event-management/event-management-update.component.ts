@@ -4,32 +4,34 @@ import { Validators, FormBuilder } from '@angular/forms';
 import { EventService } from 'src/app/services/event.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
     selector: 'event-management-update',
     templateUrl: './event-management-update.component.html'
 })
 export class EventManagementUpdateComponent implements OnInit {
-    bsValue = new Date();
+
     event: EventBO;
     isSaving: boolean;
     selectedImage: FileList;
     imageUrl;
     editForm = this.fb.group({
         id: [null],
-        code: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50), Validators.pattern('^[_.@A-Za-z0-9-]*')]],
+        code: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(250)]],
         title: ['', [Validators.required, Validators.maxLength(250)]],
         activated: [true],
         content: ['', [Validators.required]],
-        startDate: [''],
-        endDate: [''],
-        createdAt: [''],
+        startDate: ['', [Validators.required]],
+        endDate: ['', [Validators.required]],
+        createdAt: ['', [Validators.required]],
         imageFile: ['']
     });
     constructor(
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService,
         private eventService: EventService,
         private route: ActivatedRoute,
-        private router: Router,
         private elRef: ElementRef,
         private fb: FormBuilder,
         private slugifyPipe: SlugifyPipe
@@ -42,20 +44,20 @@ export class EventManagementUpdateComponent implements OnInit {
         this.updateForm(this.event);
         });
     }
-    slugify() {
-        this.editForm.get(['code']).setValue(this.slugifyPipe.transform(this.editForm.get(['title']).value));
+    slugify(value) {
+        this.editForm.get(['code']).setValue(this.slugifyPipe.transform(value));
     }
 
     private updateForm(event: EventBO): void {
         this.editForm.patchValue({
-        id: event.id,
-        code: event.code,
-        title: event.title,
-        activated: event.activated === undefined ? true : event.activated,
-        content: event.content,
-        startDate: event.startDate,
-        endDate: event.endDate,
-        createdAt: event.createdAt
+            id: event.id,
+            code: event.code,
+            title: event.title,
+            activated: event.activated === undefined ? true : event.activated,
+            content: event.content,
+            startDate: event.startDate ? new Date(event.startDate) : null,
+            endDate: event.endDate ? new Date(event.endDate) : null,
+            createdAt: event.createdAt
         });
         this.imageUrl = this.event.imageUrl ? this.event.imageUrl : 'assets/images/default.png';
     }
@@ -69,13 +71,12 @@ export class EventManagementUpdateComponent implements OnInit {
         if (this.editForm.invalid) {
         return;
         }
-        // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-        // buttons: ['Từ chối', 'Đồng ý']
-        // }).then(confirm => {
-        //     if (confirm) {
-        //     this.confirm();
-        //     }
-        // });
+        this.confirmationService.confirm({
+            message: 'Đồng ý thực hiện thao tác này?',
+            accept: () => {
+              this.confirm();
+            }
+          });
     }
     confirm() {
         const formdata: FormData = new FormData();
@@ -89,38 +90,38 @@ export class EventManagementUpdateComponent implements OnInit {
 
     private updateEvent() {
         const courseTmp = {
-        id : this.event.id,
-        code : this.editForm.get(['code']).value,
-        title : this.editForm.get(['title']).value,
-        activated : this.editForm.get(['activated']).value,
-        startDate : this.editForm.get(['startDate']).value,
-        content : this.editForm.get(['content']).value,
-        endDate : this.editForm.get(['endDate']).value,
-        createdAt : this.editForm.get(['createdAt']).value,
+            id : this.event.id,
+            code : this.editForm.get(['code']).value,
+            title : this.editForm.get(['title']).value,
+            activated : this.editForm.get(['activated']).value,
+            startDate : this.editForm.get(['startDate']).value,
+            content : this.editForm.get(['content']).value.replace(/[ \t\r]+/g, ' '),
+            endDate : this.editForm.get(['endDate']).value,
+            createdAt : this.editForm.get(['createdAt']).value
         };
         if (!this.event.id) { delete courseTmp.id; }
         return courseTmp;
     }
 
     private onSaveSuccess(result) {
-       // this.toastr.success('Thao tác thành công!');
+        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
         setTimeout(() => {
             this.previousState();
-        }, 1700);
+        }, 1500);
     }
 
     private onSaveError(err) {
-       // this.toastr.error('Thao tác thất bại!', err.error.message);
+        this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
         this.isSaving = false;
     }
-    onImageChange(event) {
+    onFileChange(event) {
         if (event.target.files && event.target.files[0]) {
-        const reader = new FileReader();
-        reader.readAsDataURL(event.target.files[0]);
-        // tslint:disable-next-line:variable-name
-        reader.onload = (_event: any) => {
-            this.imageUrl = _event.target.result;
-        };
+          const reader = new FileReader();
+          reader.readAsDataURL(event.target.files[0]);
+          // tslint:disable-next-line:no-shadowed-variable
+          reader.onload = (event: any) => {
+              this.imageUrl = event.target.result;
+          };
         }
         if (
             event.target.files[0].name.endsWith('.jpg') ||
@@ -130,13 +131,12 @@ export class EventManagementUpdateComponent implements OnInit {
             event.target.files[0].name.endsWith('.JPEG') ||
             event.target.files[0].name.endsWith('.jpeg')
         ) {
-            this.selectedImage = event.target.files;
+          this.selectedImage = event.target.files;
         } else {
-            const element = this.elRef.nativeElement.querySelector('#fileImage');
+            const element = this.elRef.nativeElement.querySelector('#filevideo');
             element.value = '';
-            // swal('Lỗi', 'Chỉ tải file với đuôi (jpg|png|jpeg)', 'error').then(() => {
-            //     this.selectedImage = null;
-            // });
+            this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Chỉ tải file với đuôi (jpg|png|jpeg)'});
+            this.selectedImage = null;
         }
     }
 }

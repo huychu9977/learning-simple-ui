@@ -3,6 +3,7 @@ import { EventBO } from 'src/app/models/eventBO.model';
 import { EventService } from 'src/app/services/event.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-event-management',
@@ -18,6 +19,8 @@ export class EventManagementComponent implements OnInit {
   previousPage: any;
   keyword = '';
     constructor(
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService,
         private eventService: EventService,
         private activatedRoute: ActivatedRoute,
         private router: Router
@@ -60,10 +63,10 @@ export class EventManagementComponent implements OnInit {
             );
     }
     loadPage(event: any) {
-        this.page = event.page;
-        if (event.page !== this.previousPage) {
+        this.page = event.page + 1;
+        if (this.page !== this.previousPage) {
             this.transition();
-            this.previousPage = event.page;
+            this.previousPage = this.page;
         }
     }
 
@@ -83,33 +86,19 @@ export class EventManagementComponent implements OnInit {
         this.page = 1;
         this.loadAll();
     }
-    deleteLecture(lecture: EventBO) {
-        // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-        //     buttons: ['Từ chối', 'Đồng ý']
-        // }).then(confirm => {
-        //     if (confirm) {
-        //         this.lectureService.canDeleted(lecture.code).subscribe(data => {
-        //             if(data) {
-        //                 this.lectureService.delete(lecture.code).subscribe(() => {
-        //                     swal('Cập nhật', 'Xóa thành công', 'success').then(
-        //                         () => {
-        //                             if(this.courseLectures.length === 1) {
-        //                                 this.page = (this.page === 1) ? 1 : ( this.page - 1);
-        //                             }
-        //                             this.loadAll();
-        //                         }),
-        //                         err => {
-        //                             swal('Lỗi', 'Thất bại, hãy thử lại', 'error');
-        //                         }
-        //                 })
-        //             } else {
-        //                 swal('Cảnh báo', 'Bạn phải xóa các bài học con trước !', 'error').then(
-        //                     () => {
-        //                     })
-        //             }
-        //         });
-        //     }
-        // });
+    deleteLecture(event: EventBO) {
+        this.confirmationService.confirm({
+            message: 'Đồng ý thực hiện thao tác này?',
+            accept: () => {
+                this.eventService.delete(event.code).subscribe(() => {
+                    this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
+                    this.loadAll();
+                },
+                (err) => {
+                    this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
+                });
+            }
+          });
     }
     private onSuccess(data) {
         this.totalItems = data.totalResult;
@@ -122,5 +111,4 @@ export class EventManagementComponent implements OnInit {
     previousState() {
         window.history.back();
     }
-
 }

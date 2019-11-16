@@ -10,10 +10,8 @@
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <button id="jh-create-entity" 
-                                            class="btn btn-primary jh-create-entity create-organization"
+                                    <button class="btn btn-primary btn-sm"
                                             [routerLink]="['new']">
-                                            <i class="fa fa-plus"></i>
                                         <span [translate]="'roleManagement.home.createLabel'">
                                Tạo mới
                                </span>
@@ -25,7 +23,7 @@
                                         <input type="text" class="form-control" [(ngModel)]="keyword" (input)="search($event.target.value)"
                                                placeholder="..."/>
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                            <span class="input-group-text"><i class="pi pi-search"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -34,21 +32,15 @@
                             <table class="table table-striped text-center">
                                 <thead>
                                 <tr jhiSort>
-                                    <th jhiSortBy="id">
-                                        <span [translate]="'global.field.id'">ID</span>
-                                    </th>
-                                    <th jhiSortBy="code">
-                                        <span [translate]="'roleManagement.code'">code</span>
-                                    </th>
-                                    <th jhiSortBy="email">
-                                        <span [translate]="'roleManagement.name'">name</span>
-                                    </th>
-                                    <th><span [translate]="'roleManagement.permissions'">permissions</span></th>
+                                    <th [translate]="'global.field.id'">ID</th>
+                                    <th [translate]="'roleManagement.code'">code</th>
+                                    <th [translate]="'roleManagement.name'">name</th>
+                                    <th [translate]="'roleManagement.permissions'">permissions</th>
                                     <th [translate]="'roleManagement.action'">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody *ngIf="roles">
-                                <tr *ngFor="let role of roles; trackBy: trackIdentity">
+                                <tr *ngFor="let role of roles;">
                                     <td>{{role.id}}</td>
                                     <td>{{role.code}}</td>
                                     <td>{{role.name}}</td>
@@ -61,7 +53,6 @@
                                         <div class="btn-group flex-btn-group-container">
                                             <button type="button" (click)="openModalDetail(role)"
                                                     class="btn btn-info btn-sm color-white">
-                                                <i class="fa fa-eye"></i>
                                                 <span class="d-none d-md-inline"
                                                       [translate]="'entity.action.view'">View</span>
                                             </button>
@@ -69,14 +60,11 @@
                                                     [routerLink]="[ role.id, 'edit']"
                                                     queryParamsHandling="merge"
                                                     class="btn btn-primary btn-sm">
-                                                <i class="fa fa-pencil"></i>
                                                 <span class="d-none d-md-inline"
                                                       [translate]="'entity.action.edit'">Edit</span>
                                             </button>
-                                            <!-- [disabled]="currentAccount.id === role.id" -->
                                             <button type="button" (click)="deleteRole(role)"
                                                     class="btn btn-danger btn-sm">
-                                                <i class="fa fa-times"></i>
                                                 <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
                                             </button>
                                         </div>
@@ -85,13 +73,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div *ngIf="roles && roles.length" class="w-100">
-                            <div class="row justify-content-center">
-                            </div>
-                            <div class="row justify-content-center">
-                                    <!-- <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
-                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination> -->
-                            </div>
+                        <div *ngIf="roles && roles.length" class="row justify-content-center w-100">
+                            <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
                         </div>
                     </div>
                 </div>
@@ -99,3 +82,5 @@
         </div>
     </div>
 </div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>

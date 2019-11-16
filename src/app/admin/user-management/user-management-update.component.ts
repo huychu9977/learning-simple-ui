@@ -5,6 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { UserBO } from 'src/app/models/userBO.model';
 import { JhiLanguageHelper } from 'src/app/core/language/language.helper';
 import { UserService } from 'src/app/services/user.service';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'jhi-user-mgmt-update',
@@ -30,6 +31,8 @@ export class UserMgmtUpdateComponent implements OnInit {
   });
 
   constructor(
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private userService: UserService,
     private route: ActivatedRoute,
     private elRef: ElementRef,
@@ -76,13 +79,12 @@ export class UserMgmtUpdateComponent implements OnInit {
     if (this.editForm.invalid) {
       return;
     }
-    // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-    //   buttons: ['Từ chối', 'Đồng ý']
-    // }).then(confirm => {
-    //     if (confirm) {
-    //       this.confirm();
-    //     }
-    // });
+    this.confirmationService.confirm({
+      message: 'Đồng ý thực hiện thao tác này?',
+      accept: () => {
+        this.confirm();
+      }
+    });
   }
   confirm() {
     const formdata: FormData = new FormData();
@@ -120,42 +122,33 @@ export class UserMgmtUpdateComponent implements OnInit {
           this.imageUrl = event.target.result;
       };
     }
-    let checkList = false;
-    // tslint:disable-next-line:prefer-for-of
-    for (let i = 0; i < event.target.files.length; i++) {
-        if (
-            event.target.files[i].name.endsWith('.jpg') ||
-            event.target.files[i].name.endsWith('.png') ||
-            event.target.files[i].name.endsWith('.JPG') ||
-            event.target.files[i].name.endsWith('.PNG') ||
-            event.target.files[i].name.endsWith('.JPEG') ||
-            event.target.files[i].name.endsWith('.jpeg')
-        ) {
-            checkList = true;
-        } else {
-            const element = this.elRef.nativeElement.querySelector('#filevideo');
-            element.value = '';
-            checkList = false;
-            // swal('Lỗi', 'Chỉ tải file với đuôi (jpg|png|jpeg)', 'error').then(() => {
-            //     this.selectedFiles = null;
-            // });
-            break;
-        }
-        if (checkList) {
-            this.selectedFiles = event.target.files;
-        }
+
+    if (
+        event.target.files[0].name.endsWith('.jpg') ||
+        event.target.files[0].name.endsWith('.png') ||
+        event.target.files[0].name.endsWith('.JPG') ||
+        event.target.files[0].name.endsWith('.PNG') ||
+        event.target.files[0].name.endsWith('.JPEG') ||
+        event.target.files[0].name.endsWith('.jpeg')
+    ) {
+      this.selectedFiles = event.target.files;
+    } else {
+        const element = this.elRef.nativeElement.querySelector('#filevideo');
+        element.value = '';
+        this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Chỉ tải file với đuôi (jpg|png|jpeg)'});
+        this.selectedFiles = null;
     }
-}
+  }
   private onSaveSuccess(result) {
-   // this.toastr.success('Thao tác thành công!');
+    this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
     setTimeout(() => {
       this.previousState();
       this.isSaving = false;
-    }, 1700);
+    }, 1500);
   }
 
   private onSaveError(err) {
-   // this.toastr.error('Thao tác thất bại!', err.error.message);
+    this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
     this.isSaving = false;
   }
 }

@@ -8,9 +8,10 @@ import { ElLoadingDirective } from './util/el-loading.directive';
 import { StatusText } from './util/status-text.pipe';
 import { TimeAgoPipe } from 'time-ago-pipe';
 import {ToastModule} from 'primeng/toast';
+import { SlugifyPipe } from './util/string-to-slug.pipe';
 
 @NgModule({
-  declarations: [HighlightSearch, AvatarTextPipe, ElLoadingDirective, StatusText, TimeAgoPipe],
+  declarations: [HighlightSearch, AvatarTextPipe, ElLoadingDirective, StatusText, TimeAgoPipe, SlugifyPipe],
   exports: [
     FormsModule,
     CommonModule,
@@ -21,7 +22,8 @@ import {ToastModule} from 'primeng/toast';
     ElLoadingDirective,
     ToastModule,
     StatusText,
-    TimeAgoPipe
+    TimeAgoPipe,
+    SlugifyPipe
   ]
 })
 export class SharedLibsModule {}

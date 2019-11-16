@@ -1,97 +1,98 @@
 <div class="animated fadeIn">
-        <div class="row">
-            <div class="col-sm-12">
-                <div class="card">
-                    <div class="card-header">
-                        <h3><span [translate]="'eventManagement.home.title'"></span></h3>
-                    </div>
-                    <div class="card-body">
-                        <div class="row">
-                            <div class="col-sm-12">
-                                <div class="row">
-                                    <div class="col-sm-4">
-                                        <button type="button" class="btn btn-sm btn-default" (click)="previousState()">Quay lại</button>
-                                        <button class="btn btn-sm btn-primary ml-2"
-                                                [routerLink]="['new']" >
-                                                <i class="fa fa-plus"></i>
-                                            <span [translate]="'eventManagement.home.createLabel'">Tạo mới</span>
-                                        </button>
-                                    </div>
-                                    <div class="col-sm-2 col-lg-4"></div>
-                                    <div class="col-sm-6 col-lg-4">
-                                        <div class="input-group" *ngIf="events?.length > 0">
-                                            <input type="text" class="form-control" [(ngModel)]="keyword" (input)="search($event.target.value)"
-                                                   placeholder="..."/>
-                                            <div class="input-group-prepend">
-                                                <span class="input-group-text"><i class="fa fa-search"></i></span>
-                                            </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="card">
+                <div class="card-header">
+                    <h3><span [translate]="'eventManagement.home.title'"></span></h3>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <button type="button" class="btn btn-sm btn-default" (click)="previousState()">Quay lại</button>
+                                    <button class="btn btn-sm btn-primary ml-2"
+                                            [routerLink]="['new']" >
+                                        <span [translate]="'eventManagement.home.createLabel'">Tạo mới</span>
+                                    </button>
+                                </div>
+                                <div class="col-sm-2 col-lg-4"></div>
+                                <div class="col-sm-6 col-lg-4">
+                                    <div class="input-group" *ngIf="events?.length > 0">
+                                        <input type="text" class="form-control" [(ngModel)]="keyword" (input)="search($event.target.value)"
+                                                placeholder="..."/>
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="pi pi-search"></i></span>
                                         </div>
                                     </div>
                                 </div>
-                                <br/>
-                                <h1 class="text-center text-danger" *ngIf="events?.length === 0">Không có sự kiện nào</h1>
-                                <table class="table table-striped text-center" *ngIf="events?.length > 0">
-                                    <thead>
-                                    <tr>
-                                        <th [translate]="'eventManagement.code'">code></th>
-                                        <th [translate]="'eventManagement.title'">title</th>
-                                        <th [translate]="'eventManagement.active'">Active</th>
-                                        <th [translate]="'eventManagement.home.event.title'">Action</th>
-                                        <th [translate]="'eventManagement.action'">Action</th>
-                                    </tr>
+                            </div>
+                            <br/>
+                            <h1 class="text-center text-danger" *ngIf="events?.length === 0">Không có sự kiện nào</h1>
+                            <table class="table table-striped text-center" *ngIf="events?.length > 0">
+                                <thead>
+                                <tr>
+                                    <th [translate]="'eventManagement.code'">code></th>
+                                    <th [translate]="'eventManagement.title'">title</th>
+                                    <th [translate]="'eventManagement.active'">Active</th>
+                                    <th [translate]="'eventManagement.date'">date</th>
+                                    <th [translate]="'eventManagement.totalUserJoin'">totalUserJoin</th>
+                                    <th [translate]="'eventManagement.action'">Action</th>
+                                </tr>
 
-                                    </thead>
-                                    <tbody>
-                                    <tr *ngFor="let event of events;">
-                                        <td>{{event.code}}</td>
-                                        <td>{{event.title}}</td>
-                                        <td>
-                                            <button class="btn btn-danger btn-sm" (click)="setActive(event, true)"
-                                                    *ngIf="!event.activated"
-                                                    [translate]="'eventManagement.deactivated'">Deactivated
+                                </thead>
+                                <tbody>
+                                <tr *ngFor="let event of events;">
+                                    <td>{{event.code}}</td>
+                                    <td>{{event.title}}</td>
+                                    <td>
+                                        <button class="btn btn-danger btn-sm" (click)="setActive(event, true)"
+                                                *ngIf="!event.activated"
+                                                [translate]="'eventManagement.deactivated'">Deactivated
+                                        </button>
+                                        <button class="btn btn-success btn-sm" (click)="setActive(event, false)"
+                                                *ngIf="event.activated"
+                                                [translate]="'eventManagement.activated'">Activated
+                                        </button>
+                                    </td>
+                                    <td>
+                                            {{event?.startDate | date:'dd/MM/yyyy HH:mm' }}
+                                        <br/> - {{event?.endDate | date:'dd/MM/yyyy HH:mm' }}
+                                    </td>
+                                    <td>
+                                        {{event.totalUserJoin}}
+                                    </td>
+                                    <td class="text-center">
+                                        <div class="btn-group flex-btn-group-container">
+                                            <button type="submit"
+                                                    [routerLink]="[ event.code, 'view']"
+                                                    class="btn btn-info btn-sm color-white">
+                                                <span class="d-none d-md-inline" [translate]="'entity.action.view'">View</span>
                                             </button>
-                                            <button class="btn btn-success btn-sm" (click)="setActive(event, false)"
-                                                    *ngIf="event.activated"
-                                                    
-                                                    [translate]="'eventManagement.activated'">Activated
+                                            <button type="submit"
+                                                    [routerLink]="[ event.code, 'edit']"
+                                                    queryParamsHandling="merge"
+                                                    class="btn btn-primary btn-sm" >
+                                                <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
                                             </button>
-                                        </td>
-                                        <td class="text-center">
-                                            <div class="btn-group flex-btn-group-container">
-                                                <button type="submit"
-                                                        [routerLink]="[ event.code, 'view']"
-                                                        class="btn btn-info btn-sm color-white">
-                                                    <i class="fa fa-eye"></i>
-                                                    <span class="d-none d-md-inline" [translate]="'entity.action.view'">View</span>
-                                                </button>
-                                                <button type="submit"
-                                                        [routerLink]="[ event.code, 'edit']"
-                                                        queryParamsHandling="merge"
-                                                        class="btn btn-primary btn-sm" >
-                                                    <i class="fa fa-pencil"></i>
-                                                    <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
-                                                </button>
-                                                <button type="button" (click)="deleteLecture(event)"
-                                                        class="btn btn-danger btn-sm" >
-                                                    <i class="fa fa-times"></i>
-                                                    <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                            <div *ngIf="events && events.length" class="w-100">
-                                <div class="row justify-content-center">
-                                    <!-- <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
-                                        previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination> -->
-                                </div>
-                            </div>
+                                            <button type="button" (click)="deleteLecture(event)"
+                                                    class="btn btn-danger btn-sm" >
+                                                <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row justify-content-center w-100" *ngIf="events && events.length">
+                            <p-paginator  [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    
+</div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>

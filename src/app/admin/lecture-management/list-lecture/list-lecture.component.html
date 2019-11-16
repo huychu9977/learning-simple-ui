@@ -81,6 +81,6 @@
         </tbody>
     </table>
     <div class="row justify-content-center" *ngIf="lectures && lectures.length" class="w-100">
-        <p-paginator [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
+        <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
     </div>
 </div>

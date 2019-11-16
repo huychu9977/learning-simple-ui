@@ -7,6 +7,7 @@ import { HttpResponse } from '@angular/common/http';
 import { RoleBO } from 'src/app/models/roleBO.model';
 import { RoleService } from 'src/app/services/role.service';
 import { PermissionBO } from 'src/app/models/permissionBO.model';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'jhi-role-mgmt-update',
@@ -18,7 +19,6 @@ export class RoleMgmtUpdateComponent implements OnInit {
   page: any = 1;
   keyword = '';
   role: RoleBO;
-  languages: any[];
   permissionBOs: any[];
   isSaving: boolean;
   selectedPermissions;
@@ -29,6 +29,8 @@ export class RoleMgmtUpdateComponent implements OnInit {
   });
 
   constructor(
+    private messageService: MessageService,
+    private confirmationService: ConfirmationService,
     private roleService: RoleService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -58,7 +60,7 @@ export class RoleMgmtUpdateComponent implements OnInit {
     this.loadPermissions();
   }
   loadPage(event: any) {
-    this.page = event.page;
+    this.page = event.page + 1;
     this.loadPermissions();
   }
   loadPermissions() {
@@ -100,13 +102,12 @@ export class RoleMgmtUpdateComponent implements OnInit {
     if (this.editForm.invalid) {
       return;
     }
-    // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-    //   buttons: ['Từ chối', 'Đồng ý']
-    // }).then(confirm => {
-    //     if (confirm) {
-    //       this.confirm();
-    //     }
-    // });
+    this.confirmationService.confirm({
+      message: 'Đồng ý thực hiện thao tác này?',
+      accept: () => {
+        this.confirm();
+      }
+    });
   }
   confirm() {
     this.updateRole();
@@ -123,7 +124,7 @@ export class RoleMgmtUpdateComponent implements OnInit {
   }
 
   private onSaveSuccess(result) {
-   // this.toastr.success('Thao tác thành công!');
+    this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
     setTimeout(() => {
       this.previousState();
       this.isSaving = false;
@@ -131,7 +132,7 @@ export class RoleMgmtUpdateComponent implements OnInit {
   }
 
   private onSaveError(err) {
-   // this.toastr.error('Thao tác thất bại!', err.error.message);
+    this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
     this.isSaving = false;
   }
 }

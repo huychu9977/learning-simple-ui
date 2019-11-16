@@ -15,7 +15,6 @@
                                 <div class="col-md-12 text-center mt-3">
                                     <span class="btn btn-success btn-file">
                                         <strong [translate]="'userManagement.imageUrl'"></strong>
-                                        <i class="fa fa-camera" aria-hidden="true"></i>
                                         <input type="file" class="form-control" name="imageFile" id="filevideo" (change)="onFileChange($event)" formControlName="imageUrl">
                                     </span>
                                     <p *ngIf="user.imageDTO">{{user.imageDTO.name}}</p>
@@ -31,11 +30,6 @@
                                         <fieldset class="form-group col-md-6">
                                             <label [translate]="'userManagement.username'">username</label> <small class="text-danger">*</small>
                                             <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-user"></i>
-                                                    </span>
-                                                </span>
                                                 <input class="form-control" id="username" name="username" type="text"
                                                  formControlName="username" placeholder="{{'userManagement.placeholder.username' | translate}}" [readOnly]="user.id ? true : false">
                                             </div>
@@ -54,11 +48,6 @@
                                         <fieldset class="form-group col-md-6">
                                             <label [translate]="'userManagement.phone'">Phone input</label>
                                             <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-phone"></i>
-                                                    </span>
-                                                </span>
                                                 <input class="form-control" placeholder="{{'userManagement.placeholder.phone' | translate}}" id="phone" name="phone" type="text" formControlName="phone">
                                             </div>
                                         </fieldset>
@@ -67,11 +56,6 @@
                                         <fieldset class="form-group col-md-6">
                                             <label [translate]="'userManagement.name'">name</label> <small class="text-danger">*</small>
                                             <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-id-badge"></i>
-                                                    </span>
-                                                </span>
                                                 <input class="form-control" placeholder="{{'userManagement.placeholder.name' | translate}}" id="name" name="name" type="text" formControlName="name">
                                             </div>
                                             <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched) || isSaving && f['name'].errors">
@@ -84,11 +68,6 @@
                                         <fieldset class="form-group col-md-6">
                                             <label [translate]="'userManagement.email'">email</label> <small class="text-danger">*</small>
                                             <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-envelope-o"></i>
-                                                    </span>
-                                                </span>
                                                 <input class="form-control" placeholder="{{'userManagement.placeholder.email' | translate}}" id="email" name="email" type="email" formControlName="email">
                                             </div>
                                             <div *ngIf="editForm.get('email').invalid && (editForm.get('email').dirty || editForm.get('email').touched) || isSaving && f['email'].errors">
@@ -107,11 +86,6 @@
                                     <fieldset class="form-group">
                                         <label [translate]="'userManagement.address'">address</label>
                                         <div class="input-group">
-                                            <span class="input-group-prepend">
-                                                <span class="input-group-text">
-                                                    <i class="fa fa-address-card-o"></i>
-                                                </span>
-                                            </span>
                                             <input class="form-control" placeholder="{{'userManagement.placeholder.address' | translate}}" id="phone" name="address" type="text" formControlName="address">
                                         </div>
                                     </fieldset>
@@ -130,7 +104,7 @@
                                     </div>
                                     <div class="form-group">
                                         <label [translate]="'userManagement.roles'">roles</label> <small class="text-danger">*</small>
-                                        <!-- <ng-select [items]="roleBOs" bindValue="code" bindLabel="name" [multiple]="true"
+                                        <ng-select [items]="roleBOs" bindValue="code" bindLabel="name" [multiple]="true"
                                             placeholder="{{'userManagement.placeholder.roles' | translate}}"
                                             [(ngModel)]="selectedRoles" 
                                             [closeOnSelect]="false"
@@ -139,7 +113,7 @@
                                             <ng-template ng-option-tmp let-item="item">
                                                 {{item.name}}
                                             </ng-template>
-                                        </ng-select> -->
+                                        </ng-select>
                                         <div *ngIf="editForm.get('roleBOs').invalid && (editForm.get('roleBOs').dirty || editForm.get('roleBOs').touched) || isSaving && f['roleBOs'].errors">
                                             <small class="form-text text-danger"
                                             *ngIf="f['roleBOs'].errors.required" [translate]="'entity.validation.required'">
@@ -150,13 +124,10 @@
                                 </div>
                                 <div class="d-flex justify-content-end">
                                     <button type="button" class="btn btn-secondary" (click)="previousState()">
-                                        <!-- <fa-icon [icon]="'ban'"></fa-icon> -->
-                                        &nbsp;<span
-                                        [translate]="'entity.action.cancel'">Cancel</span>
+                                        <span [translate]="'entity.action.cancel'">Cancel</span>
                                     </button>
                                     <button type="submit" class="btn btn-primary ml-2">
-                                        <!-- <fa-icon [icon]="'save'"></fa-icon> -->
-                                        &nbsp;<span [translate]="'entity.action.save'">Save</span>
+                                        <span [translate]="'entity.action.save'">Save</span>
                                     </button>
                                 </div>
                             </div>
@@ -167,4 +138,5 @@
         </div>
     </div>
 </div>
-    
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>

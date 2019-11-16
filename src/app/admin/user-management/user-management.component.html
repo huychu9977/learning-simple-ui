@@ -10,10 +10,8 @@
                         <div class="col-sm-12">
                             <div class="row">
                                 <div class="col-sm-4">
-                                    <button id="jh-create-entity"
-                                            class="btn btn-primary jh-create-entity create-organization"
+                                    <button class="btn btn-primary btn-sm"
                                             [routerLink]="['new']">
-                                            <i class="fa fa-plus"></i>
                                         <span [translate]="'userManagement.home.createLabel'">
                                Tạo mới
                                </span>
@@ -25,7 +23,7 @@
                                         <input type="text" class="form-control" [(ngModel)]="keyword" (input)="search($event.target.value)"
                                                placeholder="..."/>
                                         <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                            <span class="input-group-text"><i class="pi pi-search"></i></span>
                                         </div>
                                     </div>
                                 </div>
@@ -34,26 +32,17 @@
                             <table class="table table-striped text-center">
                                 <thead>
                                 <tr jhiSort>
-                                    <th jhiSortBy="id">
-                                        <span [translate]="'global.field.id'">ID</span>
-                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
-                                    </th>
-                                    <th jhiSortBy="username">
-                                        <span [translate]="'userManagement.username'">username</span>
-                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
-                                    </th>
-                                    <th jhiSortBy="email">
-                                        <span [translate]="'userManagement.email'">Email</span>
-                                        <!-- <fa-icon [icon]="'sort'"></fa-icon> -->
-                                    </th>
-                                    <th><span [translate]="'userManagement.active'">Active</span></th>
-                                    <th><span [translate]="'userManagement.roles'">Roles</span></th>
-                                    <th><span [translate]="'userManagement.createdAt'">createdAt</span></th>
+                                    <th [translate]="'global.field.id'">ID</th>
+                                    <th [translate]="'userManagement.username'">username</th>
+                                    <th [translate]="'userManagement.email'">Email</th>
+                                    <th [translate]="'userManagement.active'">Active</th>
+                                    <th [translate]="'userManagement.roles'">Roles</th>
+                                    <th [translate]="'userManagement.createdAt'">createdAt</th>
                                     <th [translate]="'userManagement.action'">Action</th>
                                 </tr>
                                 </thead>
                                 <tbody *ngIf="users">
-                                <tr *ngFor="let user of users; trackBy: trackIdentity">
+                                <tr *ngFor="let user of users;">
                                     <td>{{user.id}}</td>
                                     <td>{{user.username}}</td>
                                     <td>{{user.email}}</td>
@@ -62,7 +51,6 @@
                                                 *ngIf="!user.activated"
                                                 [translate]="'userManagement.deactivated'">Deactivated
                                         </button>
-                                        <!-- [disabled]="currentAccount.login === user.username" -->
                                         <button class="btn btn-success btn-sm" (click)="setActive(user, false)"
                                                 *ngIf="user.activated"
                                                 
@@ -79,7 +67,6 @@
                                         <div class="btn-group flex-btn-group-container">
                                             <button type="button" (click)="openModalDetail(user)"
                                                     class="btn btn-info btn-sm color-white">
-                                                <i class="fa fa-eye"></i>
                                                 <span class="d-none d-md-inline"
                                                       [translate]="'entity.action.view'">View</span>
                                             </button>
@@ -87,14 +74,11 @@
                                                     [routerLink]="[ user.username, 'edit']"
                                                     queryParamsHandling="merge"
                                                     class="btn btn-primary btn-sm">
-                                                <i class="fa fa-pencil"></i>
                                                 <span class="d-none d-md-inline"
                                                       [translate]="'entity.action.edit'">Edit</span>
                                             </button>
-                                            <!-- [disabled]="currentAccount.id === user.id" -->
                                             <button type="button" (click)="deleteUser(user)"
                                                     class="btn btn-danger btn-sm">
-                                                <i class="fa fa-times"></i>
                                                 <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
                                             </button>
                                         </div>
@@ -103,11 +87,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div *ngIf="users && users.length" class="w-100">
-                            <div class="d-flex justify-content-end">
-                                <!-- <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
-                                previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination> -->
-                            </div>
+                        <div *ngIf="users && users.length" class="row justify-content-center w-100">
+                            <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
                         </div>
                     </div>
                 </div>
@@ -115,3 +96,5 @@
         </div>
     </div>
 </div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>

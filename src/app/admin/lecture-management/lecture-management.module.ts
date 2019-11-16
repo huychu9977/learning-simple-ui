@@ -5,10 +5,10 @@ import { LectureManagementComponent } from './lecture-management.component';
 import { LectureManagementUpdateComponent } from './lecture-management-update.component';
 import { LectureManagementDetailComponent } from './lecture-management-detail.component';
 import { QuestionModalComponent } from './quiz/question-modal.component';
-import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
 import { SharedLibsModule } from 'src/app/shared/shared-libs.module';
 import { AdminSharedLibsModule } from 'src/app/shared/admin-shared-lib.module';
 import { DialogService } from 'primeng/api';
+import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
 
 
 @NgModule({
@@ -17,8 +17,8 @@ import { DialogService } from 'primeng/api';
     LectureManagementDetailComponent,
     ListLectureComponent,
     QuestionModalComponent,
-    QuizComponent,
-    SlugifyPipe],
+    QuizComponent
+    ],
   imports: [
     SharedLibsModule,
     AdminSharedLibsModule

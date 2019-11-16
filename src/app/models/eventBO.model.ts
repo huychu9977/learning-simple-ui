@@ -8,6 +8,7 @@ export class EventBO {
         public endDate?: any,
         public createdAt?: string,
         public imageUrl?: string,
-        public activated?: boolean
+        public activated?: boolean,
+        public totalUserJoin?: any
     ) {}
 }

@@ -4,26 +4,23 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { RoleMgmtDetailComponent } from './role-management-detail.component';
 import { RoleBO } from 'src/app/models/roleBO.model';
 import { RoleService } from 'src/app/services/role.service';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'role-management',
   templateUrl: './role-management.component.html'
 })
 export class RoleManagementComponent implements OnInit, OnDestroy {
-
-  currentAccount: any;
     roles?: RoleBO[];
-    error: any;
-    success: any;
     routeData: any;
     totalItems: any;
     itemsPerPage: any;
     page: any;
-    predicate: any;
     previousPage: any;
-    reverse: any;
     keyword = '';
     constructor(
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService,
         private roleService: RoleService,
         private activatedRoute: ActivatedRoute,
         private router: Router
@@ -37,10 +34,6 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit() {
-        // this.accountService.identity().then(account => {
-        //     this.currentAccount = account;
-        //     this.loadAll();
-        // });
         this.loadAll();
     }
 
@@ -61,23 +54,11 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
             );
     }
 
-    trackIdentity(index, item: RoleBO) {
-        return item.id;
-    }
-
-    sort() {
-        const result = [this.predicate + ',' + (this.reverse ? 'asc' : 'desc')];
-        if (this.predicate !== 'id') {
-            result.push('id');
-        }
-        return result;
-    }
-
     loadPage(event: any) {
-        this.page = event.page;
-        if (event.page !== this.previousPage) {
+        this.page = event.page + 1;
+        if (this.page !== this.previousPage) {
             this.transition();
-            this.previousPage = event.page;
+            this.previousPage = this.page;
         }
     }
 
@@ -98,22 +79,18 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
         this.loadAll();
     }
     deleteRole(role: RoleBO) {
-        // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-        //     buttons: ['Từ chối', 'Đồng ý']
-        // }).then(confirm => {
-        //     if (confirm) {
-        //         this.roleService.delete(role.code).subscribe(() => {
-        //             swal('Cập nhật', 'Xóa thành công', 'success').then(
-        //                 () => {
-        //                     this.loadAll();
-        //                 }),
-        //                 // tslint:disable-next-line:no-unused-expression
-        //                 err => {
-        //                     swal('Lỗi', 'Thất bại, hãy thử lại', 'error');
-        //                 };
-        //         });
-        //     }
-        // });
+        this.confirmationService.confirm({
+            message: 'Đồng ý thực hiện thao tác này?',
+            accept: () => {
+                this.roleService.delete(role.code).subscribe(() => {
+                    this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
+                    this.loadAll();
+                },
+                (err) => {
+                    this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
+                });
+            }
+          });
     }
     openModalDetail(role?: RoleBO) {
       //  const modalRef = this.modalService.show(RoleMgmtDetailComponent);

@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserMgmtDetailComponent } from './user-management-detail.component';
 import { UserBO } from 'src/app/models/userBO.model';
 import { UserService } from 'src/app/services/user.service';
+import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'user-management',
@@ -11,17 +12,15 @@ import { UserService } from 'src/app/services/user.service';
   styleUrls: ['./user-management.component.scss']
 })
 export class UserManagementComponent implements OnInit {
-
-    currentAccount: any;
     users?: UserBO[];
     totalItems: any;
     itemsPerPage: any;
     page: any;
-    predicate: any;
     previousPage: any;
-    reverse: any;
     keyword = '';
     constructor(
+        private messageService: MessageService,
+        private confirmationService: ConfirmationService,
         private userService: UserService,
         private route: ActivatedRoute,
         private router: Router
@@ -68,15 +67,11 @@ export class UserManagementComponent implements OnInit {
             );
     }
 
-    trackIdentity(index, item: UserBO) {
-        return item.id;
-    }
-
     loadPage(event: any) {
-        this.page = event.page;
-        if (event.page !== this.previousPage) {
+        this.page = event.page + 1;
+        if (this.page !== this.previousPage) {
             this.transition();
-            this.previousPage = event.page;
+            this.previousPage = this.page;
         }
     }
 
@@ -97,25 +92,18 @@ export class UserManagementComponent implements OnInit {
         this.loadAll();
     }
     deleteUser(user: UserBO) {
-        // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-        //     buttons: ['Từ chối', 'Đồng ý']
-        // }).then(confirm => {
-        //     if (confirm) {
-        //         this.userService.delete(user.username).subscribe(() => {
-        //             swal('Cập nhật', 'Xóa thành công', 'success').then(
-        //                 () => {
-        //                     if (this.users.length === 1) {
-        //                         this.page = (this.page === 1) ? 1 : ( this.page - 1);
-        //                     }
-        //                     this.loadAll();
-        //                 }),
-        //                 // tslint:disable-next-line:no-unused-expression
-        //                 () => {
-        //                     swal('Lỗi', 'Thất bại, hãy thử lại', 'error');
-        //                 };
-        //         });
-        //     }
-        // });
+        this.confirmationService.confirm({
+            message: 'Đồng ý thực hiện thao tác này?',
+            accept: () => {
+                this.userService.delete(user.username).subscribe(() => {
+                    this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
+                    this.loadAll();
+                },
+                (err) => {
+                    this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
+                });
+            }
+          });
     }
     openModalDetail(user?: UserBO) {
         // const modalRef = this.modalService.show(UserMgmtDetailComponent, {class: 'modal-lg'});

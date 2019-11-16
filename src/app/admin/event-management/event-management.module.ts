@@ -2,15 +2,16 @@ import { NgModule } from '@angular/core';
 import { EventManagementComponent } from './event-management.component';
 import { SharedLibsModule } from 'src/app/shared/shared-libs.module';
 import { EventManagementUpdateComponent } from './event-management-update.component';
-import { RouterModule } from '@angular/router';
-import { TranslateModule } from '@ngx-translate/core';
-
+import { AdminSharedLibsModule } from 'src/app/shared/admin-shared-lib.module';
+import {CalendarModule} from 'primeng/calendar';
+import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
 @NgModule({
   declarations: [EventManagementComponent, EventManagementUpdateComponent],
   imports: [
-    TranslateModule,
     SharedLibsModule,
-    RouterModule
-  ]
+    AdminSharedLibsModule,
+    CalendarModule
+  ],
+  providers: [SlugifyPipe]
 })
 export class EventManagementModule { }

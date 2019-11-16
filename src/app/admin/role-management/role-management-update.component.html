@@ -18,11 +18,6 @@
                                         <fieldset class="form-group col-md-7">
                                             <label [translate]="'roleManagement.code'">code</label>
                                             <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-user"></i>
-                                                    </span>
-                                                </span>
                                                 <input class="form-control" id="code" name="code" type="text" formControlName="code" [readOnly]="role.id ? true : false">
                                             </div>
                                             <div *ngIf="editForm.get('code').invalid && (editForm.get('code').dirty || editForm.get('code').touched) || isSaving && f['code'].errors">
@@ -36,21 +31,14 @@
                                                     This field can only contain letters, digits and e-mail addresses.
                                                 </small>
                                             </div>
-                                            <small class="text-muted">ex. ROLE_BOSS</small>
                                         </fieldset>
                                     </div>
                                     <div class="row">
                                         <fieldset class="form-group col-md-7">
                                             <label [translate]="'roleManagement.name'">name</label>
                                             <div class="input-group">
-                                                <span class="input-group-prepend">
-                                                    <span class="input-group-text">
-                                                        <i class="fa fa-id-badge"></i>
-                                                    </span>
-                                                </span>
                                                 <input class="form-control" id="phone" name="name" type="text" formControlName="name">
                                             </div>
-                                            <small class="text-muted">ex. Vai trò boss</small>
                                         </fieldset>
                                     </div>
                                     <div class="row">
@@ -59,7 +47,7 @@
                                                 <input type="text" class="form-control" name="keyword" (input)="search($event.target.value)"
                                                         placeholder="..."/>
                                                 <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                                    <span class="input-group-text"><i class="pi pi-search"></i></span>
                                                 </div>
                                             </div>
                                         </div>
@@ -86,23 +74,17 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <div *ngIf="permissionBOs && permissionBOs.length" class="w-100">
-                                            <div class="row justify-content-center">
-                                                    <!-- <pagination [totalItems]="totalItems" [(ngModel)]="+page" [itemsPerPage]="itemsPerPage" (pageChanged)="loadPage($event)" [maxSize]="5" [boundaryLinks]="true"
-                                                    previousText="&lsaquo;" nextText="&rsaquo;" firstText="&laquo;" lastText="&raquo;"></pagination> -->
-                                            </div>
+                                        <div *ngIf="permissionBOs && permissionBOs.length" class="row justify-content-center w-100">
+                                            <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
                                         </div>
                                     </div>
                                 </div>
                                 <div>
                                     <button type="button" class="btn btn-secondary" (click)="previousState()">
-                                        <!-- <fa-icon [icon]="'ban'"></fa-icon> -->
-                                        &nbsp;<span
-                                        [translate]="'entity.action.cancel'">Cancel</span>
+                                        <span [translate]="'entity.action.cancel'">Cancel</span>
                                     </button>
                                     <button type="submit" class="btn btn-primary">
-                                        <!-- <fa-icon [icon]="'save'"></fa-icon> -->
-                                        &nbsp;<span [translate]="'entity.action.save'">Save</span>
+                                        <span [translate]="'entity.action.save'">Save</span>
                                     </button>
                                 </div>
                             </div>
@@ -113,4 +95,5 @@
         </div>
     </div>
 </div>
-    
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>

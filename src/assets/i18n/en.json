@@ -301,6 +301,8 @@
          "activated":"Activated",
          "image_url":"Event Logo"
       },
+      "totalUserJoin": "Total User Enroll",
+      "date": "Date",
       "image":"Image",
       "action":"Action",
       "active":"Active",

@@ -354,6 +354,8 @@
          "activated":"Nhập vào trạng thái",
          "imageUrl":"Nhập vào logo sự kiện"
       },
+      "totalUserJoin": "Số người đã tham gia",
+      "date": "Thời gian",
       "image":"Logo sự kiện",
       "action":"Hành động",
       "active":"Hoạt động",
