@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { LoginModalComponent } from 'src/app/client/login/login.component';
+import { DialogService } from 'primeng/api';
 
 @Injectable({ providedIn: 'root' })
 export class LoginModalService {
-  constructor() {}
+  constructor(public dialogService: DialogService) {}
 
   open() {
-    // const modalRef = this.modalService.show(LoginModalComponent, {ignoreBackdropClick: true, keyboard: false});
-    // return modalRef;
+    this.dialogService.open(LoginModalComponent, {
+      showHeader: false,
+      closeOnEscape: false,
+      width: '30%'
+    });
   }
 }

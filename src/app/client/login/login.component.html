@@ -1,7 +1,8 @@
 <div class="modal-header">
     <h4 class="modal-title" [translate]="'login.title'" *ngIf="isLoginForm">Sign in</h4>
     <h4 class="modal-title" [translate]="'register.title'" *ngIf="!isLoginForm">Register</h4>
-    <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="cancel();"><span aria-hidden="true">x</span>
+    <button aria-label="Close" data-dismiss="modal" class="close" type="button" (click)="cancel();">
+        <i class="fa fa-times"></i>
     </button>
 </div>
 <div class="modal-body">
@@ -112,3 +113,4 @@
         </div>
     </div>
 </div>
+<p-toast></p-toast>

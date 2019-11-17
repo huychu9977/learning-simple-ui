@@ -4,7 +4,6 @@ import { PageTeacherComponent } from './page-teacher/page-teacher.component';
 import { PageOurTeacherComponent } from './page-our-teacher/page-our-teacher.component';
 import { PageOurCourseComponent } from './page-our-course/page-our-course.component';
 import { NgModule } from '@angular/core';
-import { FooterComponent } from './page-footer/footer.component';
 import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { PageCourseModule } from './page-course/page-course.module';
@@ -25,6 +24,7 @@ import { UserRouteAccessCourseService } from '../core/auth/user-route-access-cou
 import { PageMyCourseComponent } from './page-my-course/page-my-course.component';
 import { PageMyCourseModule } from './page-my-course/page-my-course.module';
 import { PageProfileModule } from './page-profile/page-profile.module';
+import { FooterModule } from './page-footer/footer.module';
 const clientRoute: Routes = [
     {
       path: '',
@@ -104,8 +104,7 @@ const clientRoute: Routes = [
     }
   ];
 @NgModule({
-    declarations: [ClientComponent
-      , FooterComponent, PageNotFoundComponent],
+    declarations: [ClientComponent, PageNotFoundComponent],
     imports: [
       CommonModule,
       TranslateModule,
@@ -119,7 +118,8 @@ const clientRoute: Routes = [
       PageOurTeacherModule,
       PageTeacherModule,
       PageMyCourseModule,
-      PageProfileModule
+      PageProfileModule,
+      FooterModule
     ]
   })
   export class ClientModule { }

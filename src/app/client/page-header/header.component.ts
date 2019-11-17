@@ -1,3 +1,4 @@
+import { map } from 'rxjs/operators';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from 'src/app/services/category.service';
@@ -13,6 +14,7 @@ export class HeaderComponent implements OnInit {
   categories: any[];
   parents: any[];
   keyword: '';
+  items = [];
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -36,12 +38,24 @@ export class HeaderComponent implements OnInit {
       this.router.navigate([this.router.url.split('?')[0]]);
     }
   }
-  loadCategory() {
-    this.categoryService.getCategoriesForEmployer().subscribe(res => {
-      this.categories = res;
-      this.parents = this.categories.filter(c => {
-        return !c.parentCode;
-      });
+  async loadCategory() {
+    this.categories = await this.categoryService.getCategoriesForEmployer().toPromise();
+    this.parents = this.categories.filter(c => {
+      return !c.parentCode;
+    });
+    this.items = this.parents.map(parent => {
+        const subs = this.loadSubs(parent.code).map(sub => {
+          const topics = this.loadTopics(sub.code).map(topic => {
+            return {
+              label: topic.name,
+              routerLink: [`/courses/${parent.code}/${sub.code}/${topic.code}`]
+            };
+          });
+          return topics.length > 0 ? { label: sub.name, items: topics, routerLink: [`/courses/${parent.code}/${sub.code}`] }
+           : { label: sub.name, routerLink: [`/courses/${parent.code}/${sub.code}`] };
+        });
+        return subs.length > 0 ? { label: parent.name, items: subs, routerLink: [`/courses/${parent.code}`] }
+               : { label: parent.name, routerLink: [`/courses/${parent.code}`] };
     });
   }
   loadSubs(parentCode) {

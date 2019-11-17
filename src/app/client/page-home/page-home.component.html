@@ -1,7 +1,417 @@
-<banner-slide></banner-slide>
-<support></support>
-<about></about>
-<counter-part></counter-part>
-<our-course></our-course>
-<test-faq></test-faq>
-<teacher></teacher>
+<!--********************
+    banner part Start
+********************-->
+<section id="banner">
+    <div class="full_slider">
+        <p-carousel [value]="images" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="7000">
+            <ng-template let-slide pTemplate="item">
+                <div class="slider" [ngStyle]="{'background-image': 'url(' + slide.src + ')'}">
+                        <div class="container ">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="bnr_text">
+                                        <h1><span>Let’s Learn</span> {{slide.title}}</h1>
+                                        <p>{{slide.content}}</p>
+                                        <a class="start_course" href="our_course.html">Start a Course</a>
+                                        <a class="take_tour" href="index.html">Take a Tour</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </ng-template>
+        </p-carousel>                    
+    </div>
+</section>
+<!--********************
+banner part end
+********************-->
+<!--********************
+    Support part Start
+**********************-->
+<section id="support">
+    <div class="container support">
+        <div class="row">
+            <div class="col-lg-4 col-md-4  px-0">
+                <div class="online">
+                    <img src="../../../../assets/images/main/online_class_icon.png" alt="online_class_icon">
+                    <div class="text-center">
+                        <h4>Online Classes</h4>
+                        <a href="#">Learn More<i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4  px-0">
+                <div class="online ">
+                    <img src="../../../../assets/images/main/online_support_icon.png" alt="online_support_icon">
+                    <div class="text-center">
+                        <h4>Online &amp; Offline Support</h4>
+                        <a href="#">Learn More<i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4  col-md-4 px-0">
+                <div class="online ">
+                    <img src="../../../../assets/images/main/lifetime_support_icon.png" alt="lifetime_support_icon">
+                    <div class="text-center">
+                        <h4>Online Classes</h4>
+                        <a href="#">Learn More<i class="fa fa-long-arrow-right"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--********************
+    Support part end
+**********************-->
+    <!--********************
+     About part Start
+  **********************-->
+  <section id="about">
+    <div class="about_part">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section_title">
+                        <h1>About us</h1>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidiunt ut labore et dolore magna aliqua. </p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="slider_about">
+                        <p-carousel [value]="images1" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="4000">
+                            <ng-template let-slide pTemplate="item">
+                                <div class="about_slider">
+                                    <div class="">
+                                        <img [src]="slide.src" class="img-fluid" alt="aboutSlider3">
+                                    </div>
+                                </div>
+                            </ng-template>
+                        </p-carousel>     
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <div class="about_text">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidunt ut labore et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus coodo vivera maecenas accumsan lacus vel facilisis. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore.</p>
+                        <p>et dolore magna aliqua. Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.</p>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="button">
+                                    <a class="active" href="about_us.html">Know More</a>
+                                    <a href="our_course.html">Enroll Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--********************
+    About part end
+**********************-->
+<!--********************
+    Counter  part Start
+**********************-->
+<section id="counter_part">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3 col-md-3 col-sm-3 col-6">
+                <div class="counter_item">
+                    <h3 class="counter">567</h3>
+                    <h5>Teachers</h5>
+                    <img src="../../../../assets/images/main/counterPartBorderBottom.png" alt="border Bottom">
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-6">
+                <div class="counter_item">
+                    <h3 class="counter">1758</h3>
+                    <h5>Students</h5>
+                    <img src="../../../../assets/images/main/counterPartBorderBottom.png" alt="border Bottom">
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-6">
+                <div class="counter_item">
+                    <h3 class="counter">102</h3>
+                    <h5>Offline Courses</h5>
+                    <img src="../../../../assets/images/main/counterPartBorderBottom.png" alt="border Bottom">
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-6">
+                <div class="counter_item">
+                    <h3 class="counter">57</h3>
+                    <h5>Online Classes</h5>
+                    <img src="../../../../assets/images/main/counterPartBorderBottom.png" alt="border Bottom">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--********************
+    Counter  part end
+**********************-->
+<!--********************
+    Our Courses part start
+**********************-->
+<section id="our_course">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section_title">
+                    <h1>Our Courses</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidiunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+        </div>
+        <p-carousel [value]="images3" [numVisible]="3" [numScroll]="1" [circular]="true" [autoplayInterval]="5000">
+            <ng-template let-data pTemplate="item">
+                <div class="col-lg-12 ">
+                    <div class="course-one">
+                        <div class="course-banner">
+                            <img [src]="data?.src" alt="1">
+                            <div class="course-banner-overlay">
+                                <a href="#"> <i class="fa fa-link"></i></a>
+                            </div>
+                        </div>
+                        <div class="trainer_pro_details">
+                            <div class="row">
+                                <div class="col-lg-2">
+                                    <div class="Pro_img">
+                                        <img [src]="data?.srcT" alt="profile pic">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6 ">
+                                    <div class="profile">
+                                        <p>Conduct by:</p><br>
+                                        <h5>Sujon Shaha</h5>
+                                    </div>
+                                </div>
+                                <div class="col-lg-4 pl-0">
+                                    <div class="pro-rating">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star-half"></i>
+                                        <p>4.8 Ratings</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="crs-details">
+                                    <h4>Advance Graphic Design</h4>
+                                    <p>{{data.description}}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row b-top">
+                            <div class="col-lg-4  col-4  p-0">
+                                <div class="crs_footer">
+                                    <p><span>Course</span> Duration</p>
+                                    <p class="m_name">5 Months</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4  col-4 p-0">
+                                <div class="crs_footer">
+                                    <p>Course Fee</p>
+                                    <p class="m_name">375 USD</p>
+                                </div>
+                            </div>
+                            <div class="col-lg-4  col-4 p-0">
+                                <div class="crs_footer">
+                                    <p>Total Classes</p>
+                                    <p class="m_name">40 Classes</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="enroll">
+                            <a href="our_course.html">Enroll Now</a>
+                        </div>
+                    </div>                          
+                </div>
+            </ng-template>
+        </p-carousel>       
+    </div>
+</section>
+<!--********************
+    Our Courses part end
+**********************-->
+<!--*****************************
+    Our Event part start
+**********************-->
+<section id="event">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section_title">
+                    <h1>Our Events</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidiunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+                <div class="col-lg-6 col-md-12">
+                    <div class="event_bg">
+                        <div class="row event-details-top">
+                            <div class="col-lg-5  col-sm-5 ">
+                                <div class="event-img">
+                                    <img src="../../../../assets/images/main/event2.png" class="w-100" alt="ux">
+                                    <div class="event-img-text">
+                                        <p>15 <span>Nov</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-sm-7">
+                                <div class="event-text">
+                                    <h3>UI/UX Bootcamp Meetup 2019</h3>
+                                    <p>Lorem ipsum dolor sit amet, consecteturng elit sed do eiusmod temor</p>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <P class="sem_title"> Seminar Room</P>
+                                    <i class="far fa-clock  icon"></i>
+                                    <P class="sem_title"> 9:00 AM - 1:00 PM</P>
+                                    <div class="">
+                                        <a href="event_details.html">Join Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="event_bg">
+                        <div class="row event-details-top">
+                            <div class="col-lg-5  col-sm-5">
+                                <div class="event-img1">
+                                    <img src="../../../../assets/images/main/event2.png" class="w-100" alt="ux">
+                                    <div class="event-img1-text">
+                                        <p>25 <span>Nov</span></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-7 col-sm-7">
+                                <div class="event-text">
+                                    <h3>UI/UX Bootcamp Meetup 2019</h3>
+                                    <p>Lorem ipsum dolor sit amet, consecteturng elit sed do eiusmod temor</p>
+                                    <i class="fas fa-map-marker-alt"></i>
+                                    <P class="sem_title"> Seminar Room</P>
+                                    <i class="far fa-clock  icon"></i>
+                                    <P class="sem_title"> 9:00 AM - 1:00 PM</P>
+                                    <div class="">
+                                        <a href="event_details.html">Join Now</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+            <div class="col-lg-6 col-md-12">
+                <div class="event_bg">
+                    <div class="row event-details-top">
+                        <div class="col-lg-5  col-sm-5 ">
+                            <div class="event-img">
+                                <img src="../../../../assets/images/main/event2.png" class="w-100" alt="ux">
+                                <div class="event-img-text">
+                                    <p>15 <span>Nov</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-sm-7">
+                            <div class="event-text">
+                                <h3>UI/UX Bootcamp Meetup 2019</h3>
+                                <p>Lorem ipsum dolor sit amet, consecteturng elit sed do eiusmod temor</p>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <P class="sem_title"> Seminar Room</P>
+                                <i class="far fa-clock  icon"></i>
+                                <P class="sem_title"> 9:00 AM - 1:00 PM</P>
+                                <div class="">
+                                    <a href="event_details.html">Join Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="event_bg">
+                    <div class="row event-details-top">
+                        <div class="col-lg-5  col-sm-5">
+                            <div class="event-img1">
+                                <img src="../../../../assets/images/main/event2.png" class="w-100" alt="ux">
+                                <div class="event-img1-text">
+                                    <p>25 <span>Nov</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-7 col-sm-7">
+                            <div class="event-text">
+                                <h3>UI/UX Bootcamp Meetup 2019</h3>
+                                <p>Lorem ipsum dolor sit amet, consecteturng elit sed do eiusmod temor</p>
+                                <i class="fas fa-map-marker-alt"></i>
+                                <P class="sem_title"> Seminar Room</P>
+                                <i class="far fa-clock  icon"></i>
+                                <P class="sem_title"> 9:00 AM - 1:00 PM</P>
+                                <div class="">
+                                    <a href="event_details.html">Join Now</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--*****************************
+    Our Event part end
+**********************-->
+ <!--*********************************
+        Our Teacher part start
+*******************************-->
+<section id="teacher">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section_title">
+                    <h1>Our Teacher’s</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidiunt ut labore et dolore magna aliqua.</p>
+                </div>
+            </div>
+        </div>
+        <div class="teacher-slide">
+            <p-carousel [value]="images2" [numVisible]="3" [numScroll]="1" [circular]="true">
+                <ng-template let-slideT pTemplate="item">
+                    <div class="col-lg-12 ">
+                        <div class="teacher-prof">
+                            <div class="techer-img">
+                                <img [src]="slideT?.src" alt="teacher1" class="img-fluid  w-100">
+                            </div>
+                            <div class="teacher-text">
+                                <h3>Shamima Sultana</h3>
+                                <p>Sr. Faculty Member</p>
+                                <img src="../../../../assets/images/main/counterPartBorderBottom.png" height="3" alt="border" class="img-fluid ">
+                            </div>
+                            <div class="teacher-text-hover">
+                                <ul>
+                                    <li><a href="#"><i class="fa fa-facebook"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-twitter"></i></a></li>
+                                    <li><a href="#"><i class="fa fa-pinterest-p"></i></a></li>
+                                </ul>
+                                <h3 [routerLink]="[ slideT.srcT ]">Shamima Sultana</h3>
+                                <p>Sr. Faculty Member</p>
+                                <img src="../../../../assets/images/main/aboutSliderBorderBottom.png" alt="border" class="img-fluid ">
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+            </p-carousel> 
+        </div>
+    </div>
+</section>
+<!--*********************************
+        Our Teacher part end
+*******************************-->

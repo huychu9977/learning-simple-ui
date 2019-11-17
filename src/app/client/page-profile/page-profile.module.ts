@@ -3,8 +3,7 @@ import { PageProfileComponent } from './page-profile.component';
 import { NgModule } from '@angular/core';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
 import { SharedLibsModule } from 'src/app/shared/shared-libs.module';
-import { BannerImageModule } from 'src/app/layouts/client/banner-image/banner-image.module';
-
+import { BannerImageModule } from 'src/app/shared/modules/banner-image/banner-image.module';
 
 @NgModule({
   declarations: [PageProfileComponent, EditProfileComponent],

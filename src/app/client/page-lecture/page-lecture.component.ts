@@ -11,6 +11,7 @@ import { CommentService } from 'src/app/services/comment.service';
 import { CommentBO } from 'src/app/models/CommentBO.model';
 import { AccountService } from 'src/app/core/auth/account.service';
 import { QuestionService } from 'src/app/services/question.service';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'page-lecture',
@@ -18,8 +19,9 @@ import { QuestionService } from 'src/app/services/question.service';
   styleUrls: ['./page-lecture.component.scss']
 })
 export class PageLectureComponent implements OnInit, AfterContentChecked {
-  config = [];
+
   @ViewChild('more', {static: true}) elementView: ElementRef;
+  indexTab = 0;
   descriptionMore = false;
   expand = false;
   course?: any;
@@ -42,7 +44,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   //
   currentPage = 1;
   previousPage = 1;
-  itemsPerPage = 1;
+  itemsPerPage = 5;
   totalItems;
   comments: CommentBO[] = [];
   currentType = null;
@@ -55,8 +57,6 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   };
   reply;
   currentComment: any;
-  idDelete;
-  isShowDrop = false;
   isAlert = false;
   load = false;
   isLoadLecture = false;
@@ -64,6 +64,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   errorAnswer = false;
   correctAnswer = false;
   listQuestionIncorrect: any[] = [];
+  display = false;
   constructor(
     private changeDetector: ChangeDetectorRef,
     private reviewService: ReviewService,
@@ -73,7 +74,8 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     private commentService: CommentService,
     private accountService: AccountService,
     private questionService: QuestionService,
-    private courseService?: CourseService
+    private courseService: CourseService,
+    private confirmationService: ConfirmationService
     ) {
     }
 
@@ -86,13 +88,13 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     this.loadCourse(this.courseCode);
     this.loadReviewByCourse();
     this.loadLectureCompleted();
+    this.loadAllComment();
     this.accountService.identity().then(account => {
         this.currentAccount = account;
     });
     this.route.queryParams.subscribe(data => {
       if (data.commentId) {
-       // this.staticTabs.tabs[1].active = true;
-        this.onSelect({id: 'tab2'});
+        this.indexTab = 1;
         this.openDetailComment(data.commentId);
         this.commentService.setIsSeenComment(data.commentId).subscribe(res => {});
       }
@@ -103,12 +105,12 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();
   }
-  onSelect(event) {
-    if (event.id === 'tab2') {
+  onTabChange(event) {
+    if (event.index === 1) {
       this.isAddComment = false;
-      this.loadAllComment();
     }
   }
+
   openTabAddComment() {
     this.isAddComment = true;
     this.comment = {};
@@ -135,12 +137,10 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   }
   openEditComment(comment?: any) {
     this.currentComment.replies.forEach(repCmt => {
-      repCmt.isOpenDropDown = false;
       repCmt.isEdit = false;
     });
     this.isEditComment = false;
     this.comment = {};
-    this.isShowDrop = false;
     if (comment) {
       this.comment.id = comment.id;
       this.comment.parentId = comment.parentId;
@@ -189,7 +189,6 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
       this.currentComment = res.body;
       if (this.currentComment.replies.length > 0) {
         this.currentComment.replies.forEach(repCmt => {
-          repCmt.isOpenDropDown = false;
           repCmt.isEdit = false;
         });
       }
@@ -197,30 +196,25 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     });
   }
   // confirm delete comment
-  confirm(): void {
-    this.load = true;
-    this.isShowDrop = false;
-    if (this.idDelete) {
-      this.commentService.delete(this.idDelete).subscribe(res => {
-        this.openDetailComment(this.currentComment.id);
-      });
-    } else {
-      this.commentService.delete(this.currentComment.id).subscribe(res => {
-        this.isDetailComment = false;
-      });
-    }
-    this.load = false;
-    this.loadAllComment();
-   // this.modalRef.hide();
-  }
-
-  decline(): void {
-   // this.modalRef.hide();
-  }
   // end
-  openDeleteComment(template, id?: any) {
-    //  this.modalRef = this.modalService.show(template, {class: 'modal-sm'});
-      this.idDelete = id ? id : null;
+  openDeleteComment(id?: any) {
+    this.confirmationService.confirm({
+      message: 'Xóa bình luận?',
+      accept: () => {
+        this.load = true;
+        if (id) {
+          this.commentService.delete(id).subscribe(res => {
+            this.openDetailComment(this.currentComment.id);
+          });
+        } else {
+          this.commentService.delete(this.currentComment.id).subscribe(res => {
+            this.loadAllComment();
+            this.isDetailComment = false;
+          });
+        }
+        this.load = false;
+      }
+    });
   }
   search() {
     this.currentPage = 1;
@@ -251,10 +245,10 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     );
   }
   loadPage(event: any) {
-    this.currentPage = event.page;
-    if (event.page !== this.previousPage) {
+    this.currentPage = event.page + 1;
+    if (this.currentPage !== this.previousPage) {
         this.loadAllComment();
-        this.previousPage = event.page;
+        this.previousPage = this.currentPage;
     }
   }
   changeSelect(event) {
@@ -369,10 +363,10 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
       return (l.parentCode && l.parentCode === code);
     });
   }
-  openReviewModal(content) {
+  openReviewModal() {
     this.selectedValue = this.currentReview ? this.currentReview.rate : 1;
     this.reviewContent = this.currentReview ? this.currentReview.content : '';
-   // this.modalRef = this.modalService.show(content, {class: 'modal-md'});
+    this.display = true;
   }
   update() {
     if (this.reviewContent === '') {
@@ -390,11 +384,11 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
           (res) => {
             if (res) {
               this.loadReviewByCourse();
-             // this.modalRef.hide();
+              this.display = false;
             }
           },
           (err) => {
-           // this.toastr.error(err.error.message, 'Thất bại!');
+            console.log('error update rating');
           }
         );
       } else {
@@ -402,17 +396,17 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
           (res) => {
             if (res) {
               this.loadReviewByCourse();
-             // this.modalRef.hide();
+              this.display = false;
             }
           },
           (err) => {
-           // this.toastr.error(err.error.message, 'Thất bại!');
+            console.log('error create rating');
           }
         );
       }
     }
   }
   close() {
-    // this.modalRef.hide();
+    this.display = false;
   }
 }

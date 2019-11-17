@@ -254,7 +254,315 @@
   /* ========================== 
      banner/hero area css end 
   =========================== */
-  
+  /* ========================== 
+    Our Event part start
+=========================== */
+
+#event {
+	padding-bottom: 100px;
+}
+
+#event .section_title {
+	padding-top: 0px;
+	padding-bottom: 62px;
+}
+
+#event .col {
+	position: relative;
+	border: 1px solid #ddd;
+	padding: 0;
+	width: 66px;
+	height: 60px;
+	font-weight: 400;
+	font-family: 'Arimo';
+	font-size: 14px;
+	text-align: center;
+	line-height: 60px;
+	color: #2d3e50;
+	z-index: 333;
+}
+
+#event .col .schedule-dot-item.red {
+	width: 66px !important;
+	height: 60px !important;
+	border-radius: 0;
+	display: block;
+	margin-top: 0px;	
+	z-index: 333;
+}
+#event .col .schedule-dot-item.green {
+	width: 66px !important;
+	height: 60px !important;
+	border-radius: 0;
+	margin-top: 4px;
+	z-index: 333;
+}
+#event .col .schedule-dot-item.red:after,#event .col .schedule-dot-item.green:after{
+	position: absolute;
+	content: '';
+	width: 100%;
+	height: 100%;
+	background: #f52222;
+	left: 0;
+	top: 0;
+	z-index: -1;
+}
+#event .col .schedule-dot-item.green:after{
+	background: green;
+}
+#event .pb-calendar {
+	background: #fff;
+	border: 30px solid #f5f5f5;
+	box-sizing: border-box;
+	min-height: 502px;
+	max-height: 502px;
+	overflow-y: scroll;
+    transition: all linear .4s; 
+}
+
+#event .pb-calendar:hover{
+    box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
+	-webkit-box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
+	-ms-box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
+	-o-box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
+}
+
+.pb-calendar .top-frame {
+	background: #f5f5f5;
+	margin-bottom: 0;
+	padding-bottom: 15px;
+}
+
+#event .pb-calendar > .calendar-head-frame > .row > .col > .schedule-dot-list,
+.pb-calendar > .calendar-body-frame > .row > .col > .schedule-dot-list {
+	height: 0;
+	margin-top: 0;
+}
+
+#event .pb-calendar .top-frame > .year-month-frame {
+	font-size: 30px;
+	padding-left: 232px;
+}
+
+#event .col-lg-6 {
+	position: relative;
+}
+
+#event h2 {
+	position: absolute;
+	font-family: 'Arimo';
+	font-size: 20px;
+	left:0;
+	top: 10px;
+	z-index: 99;
+}
+
+.pb-calendar .top-frame > .year-month-frame .year,
+.pb-calendar .top-frame > .year-month-frame > .month {
+	color: #2d3e50;
+	font-family: 'Arimo';
+	font-weight: 400px;
+	font-size: 20px;
+	margin-top: 0px;
+    margin-right: 4px;
+}
+.pb-calendar .top-frame > .year-month-frame .year{
+	float: right;
+}
+.pb-calendar .top-frame > .year-month-frame > .month{
+	float: left;
+}
+pb-calendar .top-frame {
+	padding-top: 20px;
+	margin-bottom: 20px;
+}
+
+.pb-calendar .top-frame > .control-frame {
+	padding-right: 19px;
+	padding-top: 9px;
+}
+
+/*
+#event .prev-btn img, #event .next-btn img{
+    display: none;
+}
+*/
+
+#event .prev-btn:before {}
+
+#event {}
+
+#event {}
+
+#event {}
+
+#event {}
+
+
+/* ==========calender  css ========= */
+
+.calendar-title {
+	padding-right: 15px;
+	position: relative;
+	color: #f5f5f5;
+}
+
+.pb-calendar {
+	box-sizing: border-box;
+}
+
+
+/* ====== calender css end here=======*/
+
+.event_bg {
+	background: #f5f5f5;
+	border: 1px solid transparent;
+	margin-bottom: 30px;
+}
+
+.event-details-top {
+	padding: 20px;
+	position: relative;
+	transition: all linear 0.5s;
+	-webkit-transition: all linear 0.5s;
+	-mos-transition: all linear 0.5s;
+	-ms-transition: all linear 0.5s;
+	-o-transition: all linear 0.5s;
+}
+
+.event-img {
+	position: relative;
+}
+
+.event-img .event-img-text {
+	position: absolute;
+	width: 55px;
+	height: 55px;
+	background: #ff0000;
+	right: 0;
+	bottom: 0;
+}
+
+.event-img .event-img-text p {
+	position: absolute;
+	color: #f1f1f1;
+	font-size: 16px;
+	font-weight: 700;
+	font-family: 'Arimo';
+	text-align: center;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.event-img1 {
+	position: relative;
+}
+
+.event-img1 .event-img1-text {
+	position: absolute;
+	width: 55px;
+	height: 55px;
+	background: green;
+	right: 0;
+	bottom: 0;
+}
+
+.event-img1 .event-img1-text p {
+	position: absolute;
+	color: #f1f1f1;
+	font-size: 16px;
+	font-weight: 700;
+	font-family: 'Arimo';
+	text-align: center;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.event-text h3 {
+	font-family: 'Arimo';
+	font-weight: 700;
+	font-size: 22px;
+	color: #2d3e50;
+	margin-bottom: 10px;
+	transition: all linear 0.5s;
+	-webkit-transition: all linear 0.5s;
+	-mos-transition: all linear 0.5s;
+	-ms-transition: all linear 0.5s;
+	-o-transition: all linear 0.5s;
+}
+
+.event-text p {
+	font-family: 'Arimo';
+	font-weight: 400;
+	font-size: 13px;
+	color: #4f4f4f;
+	padding-bottom: 12px;
+}
+
+.event-text .sem_title {
+	font-family: 'Arimo';
+	font-weight: 400;
+	font-size: 13px;
+	color: #979797;
+	display: inline-block;
+	padding-right: 5px;
+}
+
+.event-text {
+	position: relative;
+}
+
+.event-text a {
+	text-decoration: none;
+	color: #fff;
+	font-size: 16px;
+	font-weight: 400;
+	display: inline-block;
+	padding: 10px 20px;
+	border-radius: 5px;
+	background: #2d3e50;
+	transition: all linear .5s;
+	-webkit-transition: .5s;
+	-moz-transition: .5s;
+	-o-transition: .5s;
+	-ms-transition: .5s;
+}
+
+.event-text i {
+	color: #2d3e50;
+	transition: all linear 0.5s;
+	-webkit-transition: all linear 0.5s;
+	-mos-transition: all linear 0.5s;
+	-ms-transition: all linear 0.5s;
+	-o-transition: all linear 0.5s;
+}
+
+.event-details-top:hover a {
+	background: #fbaa33;
+}
+
+.event_bg:hover {
+	border: 1px solid #dddddd;
+	box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
+	-webkit-box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
+	-moz-box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
+	-ms-box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
+	-o-box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
+	transition: all linear .5s;
+}
+
+.event-details-top:hover h3,
+.event-details-top:hover i {
+	color: #fbaa33;
+}
+
+
+/* ========================== 
+    Our Event part end
+=========================== */
   /* ========================== 
      about us area css start 
   =========================== */

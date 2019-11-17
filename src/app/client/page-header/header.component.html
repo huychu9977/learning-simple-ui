@@ -9,34 +9,11 @@
             </a>
         </div>
         <div class="header-left">
-            <div  class="dropdown" dropdown>
-                <a dropdownToggle class="text-center btn btn-md btn-primary dropdown-toggle"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <p-tieredMenu  #menu [popup]="true" [model]="items"></p-tieredMenu>
+            <div  class="dropdown">
+                <a class="text-center btn btn-md btn-primary dropdown-toggle"  (click)="menu.toggle($event)">
                     Explore
                 </a>
-                <ul *dropdownMenu class="dropdown-menu" role="menu" aria-labelledby="menu1">
-                    <li >
-                        <ul class="dropdown-menu_list">
-                            <li class="menu_link" *ngFor="let p of parents"> 
-                                <a href="javascript:void(0)" [routerLink]="[ '/courses', p.code ]"> <span>{{p.name}}</span> <i *ngIf="loadSubs(p.code).length > 0" class="fa fa-angle-right" aria-hidden="true"></i></a> 
-                                <div class="dropdown-menu dropdown-menu-sub" *ngIf="loadSubs(p.code).length > 0">
-                                    <ul class="dropdown-menu_list">
-                                        <li class="menu_link" *ngFor="let cat of loadSubs(p.code)"> 
-                                            <a href="javascript:void(0)" [routerLink]="[ '/courses', p.code, cat.code ]"> <span>{{cat.name}}</span> <i *ngIf="loadTopics(cat.code).length > 0" class="fa fa-angle-right" aria-hidden="true"></i></a> 
-                                            <div class="dropdown-menu dropdown-menu-sub" *ngIf="loadTopics(cat.code).length > 0">
-                                                <ul class="dropdown-menu_list">
-                                                    <li class="menu_link" *ngFor="let t of loadTopics(cat.code)"> 
-                                                        <a href="javascript:void(0)" [routerLink]="[ '/courses', p.code, cat.code, t.code ]"> <span>{{t.name}}</span> </a> 
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </li>
-                                    </ul>
-                                </div>
-                                
-                            </li>
-                        </ul>
-                    </li>
-                </ul>
             </div>
             <div class="header-search">
                 <form>

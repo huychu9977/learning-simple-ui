@@ -66,7 +66,7 @@ export class CourseReviewsComponent implements OnInit {
     this.reviews = data.results;
   }
   loadPage(event: any) {
-    this.page = event.page;
+    this.page = event.page + 1;
     this.loadAll();
   }
 }

@@ -29,146 +29,154 @@
         
     }
 }
-  #our_course1 {
-    h1.courses-title {
-      font-size: 34px;
-      font-weight: 600;
-      line-height: 1.3em;
-      margin-top: 32px;
-      margin-bottom: 16px;
+#our_course1 {
+  h1.courses-title {
+    font-size: 34px;
+    font-weight: 600;
+    line-height: 1.3em;
+    margin-top: 32px;
+    margin-bottom: 16px;
+  }
+  .course_page_slider {
+    padding-top: 30px;
+  }
+  .course-one {
+    margin-bottom: 25px;
+    padding: 13px 17px;
+    .b-top {
+      border-top: 1px dotted #ccc;
     }
-    .course_page_slider {
-      padding-top: 30px;
+    .Pro_img img {
+      height: 50px;
     }
-    .course-one {
-      margin-bottom: 25px;
-      padding: 13px 17px;
-      .b-top {
-        border-top: 1px dotted #ccc;
+    .crs-details {
+      h4 {
+        font-size: 18px;
+        padding-bottom: 10px;
+        padding-top: 13px;
       }
-      .Pro_img img {
-        height: 50px;
-      }
-      .crs-details {
-        h4 {
-          font-size: 18px;
-          padding-bottom: 10px;
-          padding-top: 13px;
-        }
-        p {
-          display: none;
-        }
-      }
-      .profile {
-        margin-left: 5px;
-        p {
-          margin-top: 6px;
-        }
-      }
-      .pro-rating i {
-        font-size: 11px;
+      p {
+        display: none;
       }
     }
-    .crs_footer {
-      padding-bottom: 5px;
+    .profile {
+      margin-left: 5px;
+      p {
+        margin-top: 6px;
+      }
     }
-    .enroll {
-      display: none;
+    .pro-rating i {
+      font-size: 11px;
     }
   }
-  .product-filter {
-    width: 100%;
-    margin-top: 10px;
-    background-color: #f7f8fa;
-    padding: 16px;
-    select {
-      width: auto;
-    }
-    label {
-      font-size: 13px;
-    }
-    .button-filter {
-        border: 1px solid #cacbcc;
-        padding-top: 8px;
-        margin-bottom: 1px;
-        color: #686f7a;
-        background-color: #fff;
-    }
-    #panelFilter {
-        max-height: 0;
-        overflow: hidden;
-        transition: 0.4s;
-        width: 100%;
-    }
-    .panel {
-        display: block;
-        .panel-body {
-            padding: 15px;
-            .filter-container {
-                display: flex;
-                flex-wrap: wrap;
-                justify-content: flex-start;
-                padding: 16px;
-                * {
-                    width: 100%;
-                    max-width: 300px;
-                }
-                .filter-item {
-                    padding-bottom: 30px;
-                    .filter-title {
-                        border: none;
-                        color: #505763;
-                        font-size: 15px;
-                        font-weight: 600;
-                        margin-bottom: 8px;
-                    }
-                    .filter-option-checkbox {
-                        font-size: 15px;
-                        margin: 0 0 0 2px;
-                        padding-bottom: 8px;
-                        white-space: nowrap;
-                        .checkbox-custom {
-                            width: auto;
-                            padding-left: 25px;
-                            input:checked  ~ .checkmark {
-                                background: #2196F3;
-                            }
-                            .checkmark {
-                                background-color: #fff;
-                                border: 1px solid #cacbcc;
-                                border-radius: 2px;
-                                transition: all .2s;
-                                height: 18px;
-                                width: 18px;
-                                &::after {
-                                    left: 5px;
-                                    top: 2px;
-                                }
-                            }
-                        }
-                        .filter-option--checkbox-content {
-                            font-size: 13px;
-                            color: #505763;
-                            white-space: normal;
-                            .pro-rating {
-                              i {
-                                display: inherit;
-                                margin-right: 5px;
-                              }
-                            }
-                        }
-                        .filter-option--checkbox-content__item-count {
-                            color: #a1a7b3;
-                            margin-left: 4px;
-                        }
-                        &:hover {
-                          .checkmark {
-                            border-color: #2196F3 !important;
+  .crs_footer {
+    padding-bottom: 5px;
+  }
+  .enroll {
+    display: none;
+  }
+}
+.product-filter {
+  width: 100%;
+  margin-top: 10px;
+  background-color: #f7f8fa;
+  padding: 16px;
+  select {
+    width: auto;
+  }
+  label {
+    font-size: 13px;
+  }
+  .button-filter {
+      border: 1px solid #cacbcc;
+      padding-top: 8px;
+      margin-bottom: 1px;
+      color: #686f7a;
+      background-color: #fff;
+  }
+  #panelFilter {
+      max-height: 0;
+      overflow: hidden;
+      transition: 0.4s;
+      width: 100%;
+  }
+  .panel {
+      display: block;
+      .panel-body {
+          padding: 15px;
+          .filter-container {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: flex-start;
+              padding: 16px;
+              * {
+                  width: 100%;
+                  max-width: 300px;
+              }
+              .filter-item {
+                  padding-bottom: 30px;
+                  .filter-title {
+                      border: none;
+                      color: #505763;
+                      font-size: 15px;
+                      font-weight: 600;
+                      margin-bottom: 8px;
+                  }
+                  .filter-option-checkbox {
+                      font-size: 15px;
+                      margin: 0 0 0 2px;
+                      padding-bottom: 8px;
+                      white-space: nowrap;
+                      .checkbox-custom {
+                          width: auto;
+                          padding-left: 25px;
+                          input:checked  ~ .checkmark {
+                              background: #2196F3;
                           }
+                          .checkmark {
+                              background-color: #fff;
+                              border: 1px solid #cacbcc;
+                              border-radius: 2px;
+                              transition: all .2s;
+                              height: 18px;
+                              width: 18px;
+                              &::after {
+                                  left: 5px;
+                                  top: 2px;
+                              }
+                          }
+                      }
+                      .filter-option--checkbox-content {
+                          font-size: 13px;
+                          color: #505763;
+                          white-space: normal;
+                          .pro-rating {
+                            i {
+                              display: inherit;
+                              margin-right: 5px;
+                            }
+                          }
+                      }
+                      .filter-option--checkbox-content__item-count {
+                          color: #a1a7b3;
+                          margin-left: 4px;
+                      }
+                      &:hover {
+                        .checkmark {
+                          border-color: #2196F3 !important;
                         }
-                    }
-                }
-            }
-        }
-    }
+                      }
+                  }
+              }
+          }
+      }
   }
+}
+::ng-deep .owl-carousel-nav-custom {
+  .ui-carousel-dots-container {
+      display: none;
+  }
+  // .ui-carousel-container {
+    
+  // }
+}

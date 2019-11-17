@@ -52,20 +52,18 @@
             </div>
         </section>
     <div>
-        <!-- <owl-carousel-o [options]="customOptions">
-            <div *ngFor="let slide of images">
-                <ng-template carouselSlide [id]="slide.id">
-                    <div class="item-img">
-                        <div class="footer_img">
-                            <img [src]="slide.src" alt="blogsmall1" class="img-fluid">
-                            <div class="overlay_social">
-                                <a href="#">Instagram Photos </a>
-                            </div>
+        <p-carousel [value]="images" [numVisible]="6" [numScroll]="1" [circular]="true" [autoplayInterval]="5000">
+            <ng-template let-slide pTemplate="item">
+                <div class="item-img">
+                    <div class="footer_img">
+                        <img [src]="slide.src" alt="blogsmall1" class="img-fluid">
+                        <div class="overlay_social">
+                            <a href="#">Instagram Photos </a>
                         </div>
                     </div>
-                </ng-template>
-            </div>
-        </owl-carousel-o>  -->
+                </div>
+            </ng-template>
+        </p-carousel>
     </div>
     <p class="copyright">Copyright © <span>Learning Simple</span> 2019-2019</p>
     <hr class="hr-primary">

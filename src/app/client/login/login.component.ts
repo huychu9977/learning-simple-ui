@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { LoginService } from '../../core/auth/login.service';
 import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 import { AccountService } from 'src/app/core/auth/account.service';
+import { DynamicDialogRef, MessageService } from 'primeng/api';
 
 @Component({
   selector: 'login-modal',
@@ -45,13 +46,15 @@ export class LoginModalComponent implements AfterViewInit {
   userRegister: any;
   btnSend = 'Gửi';
   constructor(
+    private messageService: MessageService,
     private loginService: LoginService,
     private accountService: AccountService,
     private page: PageReloadService,
     private elementRef: ElementRef,
     private renderer: Renderer,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    public ref: DynamicDialogRef
   ) {}
 
   ngAfterViewInit() {
@@ -61,7 +64,7 @@ export class LoginModalComponent implements AfterViewInit {
   cancel() {
     this.authenticationError = false;
     this.resetAllForm();
-    // this.modalRef.hide();
+    this.ref.close();
   }
   resetAllForm() {
     this.isFormActiveKey = false;
@@ -102,14 +105,14 @@ export class LoginModalComponent implements AfterViewInit {
       res => {
         if (res) {
           this.load = false;
-         // this.toastr.success('Kiểm tra mail để nhận mã khôi phục', 'Thành công!');
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Kiểm tra mail để nhận mã khôi phục'});
           this.forgotPasswordForm.get(['email']).disable();
           this.isConfirmResetPassword = true;
           this.isActiveForgot = true;
         }
       }, err => {
         this.load = false;
-       // this.toastr.error(err.error.message);
+        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
       }
     );
   }
@@ -127,7 +130,7 @@ export class LoginModalComponent implements AfterViewInit {
       res => {
         if (res) {
           this.load = false;
-         // this.toastr.success('Khôi phục mật khẩu thành công!', 'Thành công!');
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Khôi phục mật khẩu thành công!'});
           this.forgotPasswordForm.get(['email']).enable();
           this.isForgotPasswordForm = false;
           this.isConfirmResetPassword = false;
@@ -137,7 +140,7 @@ export class LoginModalComponent implements AfterViewInit {
         }
       }, err => {
         this.load = false;
-       // this.toastr.error(err.error.message);
+        this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
       }
     );
   }
@@ -158,13 +161,13 @@ export class LoginModalComponent implements AfterViewInit {
     this.accountService.registerInit(this.userRegister).subscribe(res => {
       if (res) {
         this.load = false;
-       // this.toastr.success('Kiểm tra mail để nhận mã kích hoạt', 'Thành công!');
+        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Kiểm tra mail để nhận mã kích hoạt'});
         this.setDisabledForm();
         this.isFormActiveKey = true;
       }
     }, err => {
       this.load = false;
-     // this.toastr.error(err.error.message);
+      this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
     });
   }
   setDisabledForm() {
@@ -191,7 +194,7 @@ export class LoginModalComponent implements AfterViewInit {
     this.accountService.registerFinish(this.userRegister, this.activeKeyForm.get(['key']).value).subscribe(res => {
       if (res) {
         this.load = false;
-       // this.toastr.success('Đăng ký tài khoản thành công!');
+        this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Đăng ký tài khoản thành công!'});
         this.setEnabledForm();
         this.isLoginForm = true;
         this.isFormActiveKey = false;
@@ -199,7 +202,7 @@ export class LoginModalComponent implements AfterViewInit {
       }
     }, err => {
       this.load = false;
-     // this.toastr.error(err.error.message);
+      this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: err.error.message});
     });
   }
   login() {
@@ -217,7 +220,7 @@ export class LoginModalComponent implements AfterViewInit {
       })
       .then(() => {
         this.authenticationError = false;
-      //  this.modalRef.hide();
+        this.ref.close();
         this.page.reload(this.router);
       })
       .catch(() => {

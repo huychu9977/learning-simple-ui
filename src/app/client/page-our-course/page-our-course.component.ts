@@ -15,7 +15,7 @@ import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 export class PageOurCourseComponent implements OnInit {
   page = 1;
   previousPage;
-  itemsPerPage = 1;
+  itemsPerPage = 10;
   totalItems: any = 100;
 
   images1?: any[] = [
@@ -128,15 +128,15 @@ export class PageOurCourseComponent implements OnInit {
   }
 
   loadPage(event: any) {
-    this.page = event.page;
-    if (event.page !== this.previousPage) {
+    this.page = event.page + 1;
+    if (this.page !== this.previousPage) {
       const route = this.transition();
       const url = this.router
           .createUrlTree([route.link], { queryParams: route.param, relativeTo: this.route})
           .toString();
       this.location.replaceState(url);
       this.loadAll();
-      this.previousPage = event.page;
+      this.previousPage = this.page;
     }
   }
   loadLevels() {

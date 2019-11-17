@@ -35,7 +35,7 @@
                             </div>
                             <span class="product-rating">
                                 <div class="pro-rating">
-                                    <i class="fa fa-star" *ngFor="let i of [].constructor(c?.rate)"></i><i class="fa fa-star-o" *ngFor="let j of [].constructor(5 - c?.rate)"></i>
+                                    <i class="fa fa-star" *ngFor="let i of [].constructor(c?.rate)"></i><i class="fa fa-star-o" *ngFor="let j of [].constructor(5 - (c?.rate ? c?.rate : 1))"></i>
                                 </div>
                             </span>
                         </div>

@@ -1,15 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageOurTeacherComponent } from './page-our-teacher.component';
-import { TeacherGirdModule } from 'src/app/shared/modules/teacher-gird/teacher-gird.module';
-import { BannerImageModule } from 'src/app/layouts/client/banner-image/banner-image.module';
 import { FormsModule } from '@angular/forms';
+import { BannerImageModule } from 'src/app/shared/modules/banner-image/banner-image.module';
 
 @NgModule({
   declarations: [PageOurTeacherComponent],
   imports: [
     CommonModule,
-    TeacherGirdModule,
     BannerImageModule,
     FormsModule
   ],

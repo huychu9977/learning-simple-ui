@@ -13,8 +13,9 @@ import { CommentService } from 'src/app/services/comment.service';
   styleUrls: ['./user-header.component.scss']
 })
 export class UserHeaderComponent implements OnInit {
-  currentAccount: any;
+  currentAccount: any = null;
   notifications: any[] = [];
+  items = [];
   constructor(
     private loginService: LoginService,
     private accountService: AccountService,
@@ -24,26 +25,39 @@ export class UserHeaderComponent implements OnInit {
     private page: PageReloadService) { }
 
   ngOnInit() {
-    // this.currentAccount = this.accountService.getUserAuthenticated();
-    this.accountService.getCurrentAccount().subscribe(account => {
-      this.currentAccount = account;
-      this.commentService.getNotifications().subscribe(res => {
-        this.notifications = res;
-      });
+    this.init();
+  }
+  async init() {
+    this.currentAccount = await this.accountService.getCurrentAccount().toPromise();
+    this.commentService.getNotifications().subscribe(res => {
+      this.notifications = res;
     });
+    this.items = [
+      {
+        label: 'Đăng nhập', icon: 'fa fa-sign-in', visible: this.currentAccount === null, command: () => {
+          this.loginModalService.open();
+        }
+      },
+      {
+        label: 'Tài khoản', icon: 'fa fa-cog', routerLink: ['/user/account'], visible: this.currentAccount !== null
+      },
+      {
+        label: 'Khóa học của tôi', icon: 'fa fa-graduation-cap', routerLink: ['/account/my-courses'],
+         visible: this.currentAccount !== null
+      },
+      {
+        label: 'Đăng xuất', icon: 'fa fa-sign-out', visible: this.currentAccount !== null, command: () => {
+          this.loginService.logout();
+          if (this.router.url.indexOf('/lecture/') > -1 || this.router.url.indexOf('/user/account/') > -1) {
+            window.location.reload();
+          } else {
+            this.page.reload(this.router);
+          }
+        }
+      }
+    ];
   }
   isShowNotification() {
     return this.currentAccount && this.notifications.length > 0 && !this.router.url.includes('/lecture/');
-  }
-  login() {
-    this.loginModalService.open();
-  }
-  logout() {
-    this.loginService.logout();
-    if (this.router.url.indexOf('/lecture/') > -1 || this.router.url.indexOf('/user/account/') > -1) {
-      window.location.reload();
-    } else {
-      this.page.reload(this.router);
-    }
   }
 }

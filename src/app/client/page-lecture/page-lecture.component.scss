@@ -107,7 +107,7 @@
                 }
             }
             .description-dashboard-content {
-                width: 80%;
+                width: 85%;
                 margin: 0 auto;
                 min-height: 400px;
                 .loading {
@@ -133,6 +133,7 @@
                 }
                 .collape-description {
                     max-height: 500px;
+                    position: relative;
                 }
             }
             .lecture-overview-header {
@@ -441,20 +442,7 @@ video {
         background: white;
     }
 }
-.rating-list li {
-    float: right;
-    color: #ddd;
-    padding: 10px 5px;
-}
-.rating-list li:hover,
-.rating-list li:hover ~ li, .rating-list li.selected {
-    color: #ffd700;
-}
 
-.rating-list {
-    display: inline-block;
-    list-style: none;
-}
 .open-course-content {
     position: absolute;
     background-color: rgba(41,48,59,.7)!important;
@@ -535,4 +523,50 @@ video {
     font-size: 12px;
     font-weight: 400;
     line-height: 1.33em;
+}
+::ng-deep .rating1 {
+    .ui-rating-icon {
+        font-size: 30px !important;
+        margin-right: 15px;
+        color: #d1d10d;
+    }
+}
+::ng-deep .ui-tabview-panels {
+    border: none !important;
+    border-top: 1px solid #c8c8c8 !important;
+}
+.copyright {
+    padding: 11px 0;
+    background: #2d3e50;
+    color: white;
+    text-align: center;
+    span {
+        color: #fbaa33;
+        text-transform: uppercase;
+    }
+}
+.hr-primary {
+    margin: 0;
+    border-top: 6px solid #ec5252;
+}
+:host ::ng-deep .open-edit-delete {
+    .ui-overlaypanel {
+        top: 15px !important;
+        left: 0 !important;
+        &::before, &::after {
+            right: auto;
+        } 
+        &::after {
+            border-width: 9px;
+        }
+        .ui-overlaypanel-content {
+            padding: 0 !important;
+            ul {
+                margin-bottom: 0 !important;
+                a {
+                    margin-bottom: 0 !important;
+                }
+            }
+        }
+    }
 }

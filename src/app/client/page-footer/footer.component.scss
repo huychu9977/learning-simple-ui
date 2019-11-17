@@ -168,3 +168,19 @@
         }
     }
 }
+::ng-deep .footer {
+    .ui-carousel-dots-container {
+        display: none;
+    }
+    .ui-carousel-content {
+        display: block;
+        padding: 0;
+        .ui-carousel-container {
+            display: block;
+            padding: 0;
+            > button {
+                display: none;
+            }
+        }
+    }
+}
