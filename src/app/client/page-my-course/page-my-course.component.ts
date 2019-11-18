@@ -36,10 +36,10 @@ export class PageMyCourseComponent implements OnInit {
     this.courses = data.results;
   }
   loadPage(event: any) {
-    this.page = event.page;
-    if (event.page !== this.previousPage) {
+    this.page = event.page + 1;
+    if (this.page !== this.previousPage) {
         this.loadAll();
-        this.previousPage = event.page;
+        this.previousPage = this.page;
     }
   }
 }

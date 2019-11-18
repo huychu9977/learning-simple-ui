@@ -372,70 +372,7 @@ video {
             margin-top: 10px;
         }
     }
-    .quiz-answer {
-        margin-top: 20px;
-        margin-bottom: 20px;
-        border-radius: 4px;
-        position: relative;
-        label {
-            cursor: pointer;
-            &:hover {
-                background: #f2f3f5;
-                .radio-label:before {
-                    border: 1px solid #007791!important;
-                }
-            }
-            padding: 15px;
-            border: 1px solid #cacbcc;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            width: 100%;
-            .pos-r {
-                position: relative;
-            }
-            input[type=radio] {
-                position: absolute;
-                width: 1px;
-                height: 1px;
-                margin: -1px;
-                padding: 0;
-                overflow: hidden;
-                clip: rect(0,0,0,0);
-                border: 0;
-            }
-            input[type=radio]:not(:checked)+.radio-label {
-                &::before, &::after{
-                    background-color: #fff;
-                    border-color: #cacbcc;
-                    transition: all .2s;
-                }
-            }
-            input[type=radio]:checked+.radio-label:after {
-                opacity: 1;
-                transform: scale(.6);
-            }
-            .radio-label {
-                display: inline-block;
-                line-height: 1.43;
-                position: relative;
-                padding-left: 1.67em;
-                padding-top: .07em;
-                &::before{
-                    content: '';
-                    position: absolute;
-                    left: 0;
-                    top: .2em;
-                    width: 1.14em;
-                    height: 1.14em;
-                    border: 1px solid;
-                    background-color: #007791;
-                    border-color: #007791;
-                    border-radius: 1.13em;
-                }
-            }
-        }
-    }
+    
 }
 .btn-tertiary {
     &:hover{

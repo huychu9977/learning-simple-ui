@@ -1,0 +1,56 @@
+<section>
+    <div id="banner" *ngIf="step === 0">
+        <div class="full_slider">
+            <div class="slider" [ngStyle]="{'background-image': '../../../../assets/images/main/header-image.jpg'}">
+                <div class="container ">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="bnr_text">
+                                <h1>Make a global impact</h1>
+                                <p>Create an online video course and earn money by teaching people around the world.</p>
+                                <a class="start_course" href="javascript:void(0)" [routerLink]="['step/1']">Become an instructor</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>              
+        </div>
+    </div>
+    <div *ngIf="step !== 0" class="container">
+        <p-steps [model]="items"></p-steps>
+        <div class="col-md-8">
+            <h1 class="my-5">{{quickQuestion[step-1].title}}</h1>
+            <p>{{quickQuestion[step-1].content}}</p>
+        </div>
+        <div class="ml-2 row mb-5">
+            <div class="col-md-12 mt-4">
+                <strong>{{quickQuestion[step-1].question}}</strong>
+            </div>
+            <div class="col-md-6">
+                <ul>
+                    <li *ngFor="let ans of quickQuestion[step-1].answers">
+                        <div class="quiz-answer">
+                        <label>
+                            <div class="pos-r">
+                                <input name="answer" data-index="0" type="radio">
+                                <span class="radio-label">&#8203;</span>
+                            </div>
+                            <div class="quiz-answer-content">
+                            <div> {{ans.content}}</div>
+                            </div>
+                        </label>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <img src="{{quickQuestion[step-1].imageUrl}}" alt="">
+            </div>  
+            <div class="col-md-12 mt-3">
+                <button *ngIf="step === 3" type="button" class="ml-2 btn btn-danger pull-right" >Xác nhận</button>
+                <button *ngIf="step < 3" type="button" class="ml-2 btn btn-danger pull-right" [routerLink]="['../', step + 1]">Tiếp tục</button>
+                <button *ngIf="step > 1" type="button" class="btn btn-default pull-right" [routerLink]="['../', step - 1]">Quay lại</button>
+            </div>
+        </div>  
+    </div>
+</section>
