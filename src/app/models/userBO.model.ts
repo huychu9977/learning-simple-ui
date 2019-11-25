@@ -12,7 +12,6 @@ export class UserBO {
         public createdBy?: string,
         public createdAt?: any,
         public modifiedBy?: string,
-        public modifiedAt?: any,
-        public imageDTO?: any
+        public modifiedAt?: any
     ) {}
 }

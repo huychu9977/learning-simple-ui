@@ -1489,17 +1489,14 @@ pb-calendar .top-frame {
     }
   }
   //=============== page phân trang ================//
-  .page-client{
-    .page-link {
-      color: black;
-      &:hover {
-        background-color: #ffb85036;
-        border-color: #ffb85036;
+  .page-client, .page-instructor {
+    .ui-paginator {
+      border: none;
+      .ui-paginator-pages {
+        .ui-paginator-page.ui-state-active {
+          background-color: #2d3e50;
+        }
       }
-    }
-    .page-item.active .page-link {
-      background-color: #fbaa33;
-      border-color: #fbaa33;
     }
   }
   // =================== end page ====================//
@@ -1922,4 +1919,7 @@ mark {
           }
       }
   }
+}
+.ui-dynamicdialog {
+  top: 40%;
 }

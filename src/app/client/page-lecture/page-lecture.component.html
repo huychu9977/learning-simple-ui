@@ -16,11 +16,11 @@
           <div class="lecture-header-user">
             <div class="lecture-header-rate" *ngIf="!currentReview" (click)="openReviewModal()">
               <span><i class="fa fa-star-o"></i></span>
-              <span class="ml-1">Để lại đánh giá</span>
+              <span class="ml-1 font-weight-normal">Để lại đánh giá</span>
             </div>
             <div class="lecture-header-rate" *ngIf="currentReview" (click)="openReviewModal()">
               <span><i class="fa fa-star"></i></span>
-              <span class="ml-1">Chỉnh sửa đánh giá</span>
+              <span class="ml-1 font-weight-normal">Chỉnh sửa đánh giá</span>
             </div>
             <div class="lecture-header-user-label">
                 <user-header></user-header>
@@ -37,7 +37,7 @@
       <div class="lecture-container-content" [ngStyle]="{'width': expand ? '100%' : '75%'}">
         <div class="lecture-container-content-body">
           <div class="video-play" *ngIf="lecture?.type.code === 'lecture'">
-            <video *ngIf="lecture?.videoId" src="api/video/{{lecture?.videoId}}" controls></video>
+            <video *ngIf="lecture?.videoUrl" src="{{lecture?.videoUrl}}" controls></video>
           </div>
           <div class="quiz" *ngIf="lecture?.type.code === 'quiz'">
             <div *ngIf="lectureCompleted.indexOf(lecture.id) > -1" style="position: absolute; top: 50%; text-align: center;">
@@ -112,12 +112,12 @@
                                 <div>Thông số</div>
                                 <div>
                                   <div>Mức độ: {{course?.levelName}}</div>
-                                  <div>Học viên: 129779</div>
+                                  <div>Học viên: {{course?.totalUserEnroll}}</div>
                                   <div>Languages: English</div>
                                 </div>
                                 <div>
                                   <div>Lectures: {{course?.lectures.length - chapters?.length}}</div>
-                                  <div>Video: 3.5 hours</div>
+                                  <div *ngIf="course?.lectures">Video: {{totalTimeEstimate()}} phút</div>
                                 </div>
                               </div>
                               <div class="lecture-overview-row">
@@ -208,7 +208,7 @@
                             </div>
                             <div class="ml-5 add-replies">
                                 <p-editor [(ngModel)]="reply" [placeholder]="'Nhập nội dung...'" [style]="{'height':'200px'}"></p-editor>
-                                <button class="pull-right btn-sm mt-2 btn btn-primary" (click)="createReplies()">Đăng bình luận</button>
+                                <button class="pull-right btn-sm mt-2 btn btn-primary" (click)="createReplies()">Phản hồi</button>
                             </div>
                           </div>
                         </div>
@@ -230,7 +230,7 @@
                               <div class="input-group mw-90">
                                 <input type="text" name="keyword" class="form-control" (keyup.enter)="search()" placeholder="Tìm kiếm" [(ngModel)]="keyword">
                                 <div class="input-group-btn">
-                                  <button type="button" (click)="search()" class="btn btn-sm btn-secondary w-100 h-100"><i class="fa fa-search"></i></button>
+                                  <button type="button" (click)="search()" class="btn btn-sm btn-secondary w-100 h-100 rounded-0 px-3"><i class="fa fa-search"></i></button>
                                 </div>
                               </div>
                             </form>
@@ -317,8 +317,8 @@
                             <input type="checkbox" (change)="toggleCompletedLecture(l.id)" [checked]="lectureCompleted.indexOf(l.id) > -1">
                             <span class="checkmark"></span>
                         </label>
-                      <div class="section-item-container" [routerLink]="[ '../', l.code ]" (click)="this.lectureSelected = l;">
-                        <div class="section-item-container-title">
+                      <div class="section-item-container">
+                        <div class="section-item-container-title" [routerLink]="[ '../', l.code ]" (click)="this.lectureSelected = l;">
                           <span>{{l.sortOrder}}. {{l.name}}</span>
                         </div>
                         <div class="section-item-container-duration">
@@ -329,6 +329,13 @@
                             </span>
                             <span *ngIf="l.type.code === 'quiz'">
                               <span><i class="fa fa-question-circle-o" aria-hidden="true"></i></span>
+                            </span>
+                          </div>
+                          <div class="attach-file-download" *ngIf="l?.fileAttachments?.length > 0">
+                            <span class="py-1 px-2 border" (click)="openDialogAttachment($event, op, l?.fileAttachments)">
+                              <i class="fa fa-folder-open"></i>
+                              Tài liệu 
+                              <i class="fa fa-angle-down" aria-hidden="true"></i>
                             </span>
                           </div>
                         </div>
@@ -362,3 +369,10 @@
       </div>
 </p-dialog>
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-overlayPanel #op>
+    <ul class="panelFileAttachment">
+      <li *ngFor="let file of fileAttachments" (click)="downloadAttachment(file)">
+        <i class="fa fa-file"></i>
+        {{file?.fileName}}</li>
+    </ul>
+</p-overlayPanel>

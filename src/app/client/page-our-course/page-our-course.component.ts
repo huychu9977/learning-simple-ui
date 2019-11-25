@@ -15,7 +15,7 @@ import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 export class PageOurCourseComponent implements OnInit {
   page = 1;
   previousPage;
-  itemsPerPage = 10;
+  itemsPerPage = 2;
   totalItems: any = 100;
 
   images1?: any[] = [
@@ -86,7 +86,7 @@ export class PageOurCourseComponent implements OnInit {
   parents: any[];
   levels: any[];
   rates: any[] = [];
-  title;
+
   constructor(
     private location: Location,
     private pageReloadService: PageReloadService,

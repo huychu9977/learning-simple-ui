@@ -19,7 +19,7 @@
                                             <label [translate]="'lectureManagement.code'">code</label>
                                             <div class="input-group">
                                                 <input class="form-control" [placeholder]="'lectureManagement.create.placeholder.code' | translate" id="code" name="code" type="text" formControlName="code" [readOnly]="lecture.id ? true : false">
-                                                <button (click)="slugify()" type="button">Tạo code</button>
+                                                <button *ngIf="!lecture.id" (click)="slugify()" type="button">Tạo code</button>
                                             </div>
                                             <div *ngIf="editForm.get('code').invalid && (editForm.get('code').dirty || editForm.get('code').touched) || isSaving && f['code'].errors">
                                                 <small class="form-text text-danger"
@@ -93,13 +93,12 @@
                                         </fieldset>
                                     </div>
                                     <div class="row py-3"></div>
-                                    <div class="row selectFile">
-                                        <div class="col-md-2"></div>
-                                        <div class="col-md-6" *ngIf="editForm.get('type').value === 'lecture'">
+                                    <div class="row selectFile" *ngIf="editForm.get('type').value === 'lecture'">
+                                        <div class="col-md-6">
                                             <div class="col-md-12 text-center">
                                                 <img *ngIf="!selectedVideos && !lecture?.id" class="img-fluid" width="150" src="{{videoUrl}}" alt="Ảnh đại diện" />
                                                 <div class="fileName" *ngIf="selectedVideos">{{videoUrl}}</div>
-                                                <video *ngIf="lecture.id && !selectedVideos && lecture.videoId" src="api/video/{{lecture.videoId}}" width="150" height="120" controls></video>
+                                                <video *ngIf="lecture.id && !selectedVideos && lecture.videoUrl" src="{{lecture.videoUrl}}" width="150" height="120" controls></video>
                                             </div>
                                             <div class="col-md-12 text-center mt-3">
                                                 <span class="btn btn-success btn-file">
@@ -107,6 +106,18 @@
                                                     <i class="fa fa-camera" aria-hidden="true"></i>
                                                     <input type="file" accept="video/*" class="form-control" name="imageFile" id="fileVideo" (change)="onVideoChange($event)">
                                                 </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <button type="button" (click)='uploadFile.click()' class="btn btn-sm btn-success">Đính kèm
+                                                    tập tin</button>
+                                            <input type="file" (change)="onFileChange($event)" multiple #uploadFile hidden='true'>
+                                            <div *ngIf="selectedFiles">
+                                                <span class="mt-1" *ngFor="let file of selectedFiles; let i=index;">
+                                                    {{file?.name}}
+                                                    <i class="fa fa-times" (click)="removeFileAttach(file?.id, i)"></i>
+                                                    <br/>
+                                                </span> 
                                             </div>
                                         </div>
                                         <!-- <div class="col-md-4">

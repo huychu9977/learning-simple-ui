@@ -53,7 +53,7 @@ export class LectureManagementComponent implements OnInit {
             },
             header: 'Danh sách bài học',
             closeOnEscape: false,
-            width: '70%'
+            width: '80%'
         });
     }
 

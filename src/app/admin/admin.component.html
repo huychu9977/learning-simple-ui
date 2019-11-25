@@ -12,12 +12,18 @@
     </ul>
   </nav>
   <div class="app-body w-100">
-  <!-- Main content -->
-  <main class="main">
-    <div class="container-fluid" style="position: relative;min-height: 605px;padding: 30px;">
-      <lbp-loading-screen></lbp-loading-screen>
-      <router-outlet></router-outlet>
+    <div id="admin-header" class="py-3 bg-secondary text-right overflow-hidden">
+      <a href="javascript:void(0)" class="mr-3 text-white" (click)="logout()">Logout</a>
     </div>
-  </main>
+    <!-- Main content -->
+    <main class="main">
+      <div class="container-fluid" style="position: relative;min-height: 605px;padding: 30px;">
+        <lbp-loading-screen></lbp-loading-screen>
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+    <div>
+        <p class="copyright bg-secondary text-center py-1 text-white">Copyright © <span>Learning Simple</span> 2019-2019</p>
+    </div>
   </div>
 </div>

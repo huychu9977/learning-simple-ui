@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserBO } from 'src/app/models/userBO.model';
+import { DynamicDialogConfig } from 'primeng/api';
 
 @Component({
   selector: 'jhi-user-mgmt-detail',
@@ -8,10 +9,9 @@ import { UserBO } from 'src/app/models/userBO.model';
 })
 export class UserMgmtDetailComponent implements OnInit {
   user: UserBO;
-  constructor() {}
-  clear() {
-   // this.bsModalRef.hide();
-  }
+  constructor(public config: DynamicDialogConfig, ) {}
+
   ngOnInit() {
+    this.user = this.config.data.user;
   }
 }

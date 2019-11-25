@@ -4,7 +4,7 @@
           Đánh giá của học sinh
       </div>
       <div class="reviews-content">
-        <div class="reviews-content-rating">
+        <div class="reviews-content-rating" *ngIf="reviews.length > 0">
           <div class="reviews-content-sumary">
             <div class="reviews-content-sumary-avg">
                 <div class="reviews-content-sumary-avg-number">{{rateAvg}}</div>
@@ -15,18 +15,18 @@
             </div>
             <div class="reviews-content-sumary-rate">
               <button class="btn-link reviews-content-sumary-rate-row"
-               *ngFor="let rate of rates; let i=index"
+               *ngFor="let rate of ratesTmp; let i=index"
                 [ngClass]="{'deactive': starSelected.indexOf(i+1) > -1}"
                 (click)="setDeactive(i)">
                 <div class="reviews-content-sumary-rate-gauge">
                   <div class="reviews-content-sumary-rate-gauge-bg">
-                    <div class="reviews-content-sumary-rate-gauge-fill" [ngStyle]="{'width': rates[4-i]?.percent + '%'}"></div>
+                    <div class="reviews-content-sumary-rate-gauge-fill" [ngStyle]="{'width': rate.percent + '%'}"></div>
                   </div>
                 </div>
                 <div class="reviews-content-sumary-rate-star">
                     <i class="fa fa-star" *ngFor="let j of [].constructor(5-i)"></i><i class="fa fa-star-o" *ngFor="let j of [].constructor(i)"></i>
                 </div>
-                <div class="reviews-content-sumary-rate-rating"><span>{{rates[4-i]?.percent}}%</span></div>
+                <div class="reviews-content-sumary-rate-rating"><span>{{rate.percent}}%</span></div>
               </button>
             </div>
           </div>
@@ -35,7 +35,7 @@
             <div class="reviews-content-sub-title-text">
               <span>Đánh giá</span>
             </div>
-            <div class="reviews-content-sub-title-form-search">
+            <div class="reviews-content-sub-title-form-search" *ngIf="reviews.length > 0">
               <form>
                 <div class="input-group">
                   <input type="text" name="keyword" class="form-control" (keyup.enter)="search()" placeholder="Tìm kiếm" [(ngModel)]="keyword">
@@ -46,7 +46,8 @@
               </form>
             </div>
         </div>
-        <div class="reviews-content-review-list" *ngIf="reviews">
+        <h5 class="text-danger text-center w-100" *ngIf="reviews.length === 0">Chưa có đánh giá cho khóa học này!</h5>
+        <div class="reviews-content-review-list" *ngIf="reviews.length > 0">
           <div class="reviews-content-review-item" *ngFor="let review of reviews; let i=index;">
             <div class="reviews-content-review-item-left">
               <div class="avatar-circle" [ngStyle]="{'background-color': colors[i%4]}">
@@ -67,11 +68,11 @@
             </div>
           </div>
         </div>
-        <div>
-            <div class="d-flex justify-content-between">
-                <span class="align-self-center flex-grow-1"></span>
-                <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
-            </div>
+        <div *ngIf="reviews.length > 0">
+          <div class="d-flex justify-content-between">
+              <span class="align-self-center flex-grow-1"></span>
+              <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
+          </div>
         </div>
       </div>
     </div>

@@ -32,4 +32,5 @@ export class TicketService {
     changeTicketStatus(ticketId?: any, statusId?: any): Observable<boolean> {
         return this.http.put<boolean>(`${this.resourceUrl}?ticketId=${ticketId}&newStatusId=${statusId}`, {observe: 'response' });
     }
+
 }

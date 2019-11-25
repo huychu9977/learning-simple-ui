@@ -2,9 +2,9 @@
 
 <section id="our_course1">
   <div class="container">
-    <h1 class="courses-title">Danh sách khóa học {{title}}
+    <h1 class="courses-title">Danh sách khóa học
     </h1>
-      <div class="row">
+      <div class="row" *ngIf="courses?.length > 0">
           <div class="product-filter">
               <div class="row isFilter">
                 <div class="col-md-2">
@@ -117,8 +117,8 @@
                     <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
                 </div>
             </div>
-            <div class="row course_page_slider" *ngIf="courses?.length === 0">
-                <h2>Danh sách trống!!</h2>
+            <div class="row course_page_slider w-100" *ngIf="courses?.length === 0">
+                <h2 class="text-center w-100 text-danger">Danh sách trống!!</h2>
             </div>
       </div>
   </div>
@@ -126,11 +126,11 @@
 <section id="course_trend">
     <div class="container">
         <div class="course-started">
-            <h2>Courses to get you started</h2>
+            <h2>Một số khóa học nổi bật</h2>
         </div>
         <div class="course-button-select">
-            <button type="button" class="btn btn-link btn-block btn-link-active">Most popular</button>
-            <button type="button" class="btn btn-link btn-block">Trending</button>
+            <button type="button" class="btn btn-link btn-block btn-link-active">Phổ biến</button>
+            <!-- <button type="button" class="btn btn-link btn-block">Trending</button> -->
         </div>
     </div>
     <div class="container owl-carousel-nav-custom">

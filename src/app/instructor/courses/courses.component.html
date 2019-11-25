@@ -1,0 +1,22 @@
+<div style="margin-top: 70px;">
+    <banner-image [imageSrc]="'../../../assets/images/main/02_about_us_Banner.png'"></banner-image>
+</div>
+<section class="d-flex pt-5">
+    <nav class="d-flex menu-left">
+        <ul>
+            <li [routerLink]="['/instructor/courses']" routerLinkActive="active">Danh sách khóa học</li>
+            <li [routerLink]="['/instructor/courses/create']" routerLinkActive="active">Tạo mới khoá học</li>
+            <li>1</li>
+            <li>1</li>
+        </ul>
+
+    </nav>
+    <main class="w-100 mr-3">
+      <div *ngIf="!action">
+        <course-management></course-management>
+      </div>
+      <div *ngIf="action === 'create' || action === 'edit'">
+        <course-management-update></course-management-update>
+      </div>
+    </main>
+</section>

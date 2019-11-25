@@ -28,6 +28,7 @@
             "name":"Name",
             "createLabel":"Create a new required"
         },
+        "enrolled": "Student",
         "editMore":"Edit More",
         "chapter":"Chapter",
         "action":"Action",
@@ -155,7 +156,8 @@
         },
         "detail":{
             "title":"lecture",
-            "quiz":"Quiz TEST"
+            "quiz":"Quiz TEST",
+            "fileAttach": "File Attachment"
         },
         "quiz":{
             "list":"List Quiz",

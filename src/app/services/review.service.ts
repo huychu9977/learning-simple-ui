@@ -32,8 +32,8 @@ export class ReviewService {
         return this.http.delete(`${this.resourceUrl}/${login}`, { observe: 'response' });
     }
 
-    getRating(req?: any): Observable<HttpResponse<any[]>> {
+    getRating(req?: any): Observable<any[]> {
         const options = createRequestOption(req);
-        return this.http.get<any[]>(`${this.resourceUrl}/rating`, { params: options, observe: 'response' });
+        return this.http.get<any[]>(`${this.resourceUrl}/rating`, { params: options});
     }
 }

@@ -1,7 +1,6 @@
 import { JhiLanguageHelper } from './../core/language/language.helper';
 import { navItems } from './_nav';
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { SessionStorageService } from 'ngx-webstorage';
+import { Component, OnInit } from '@angular/core';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../core/auth/login.service';
@@ -12,17 +11,12 @@ import { AccountService } from '../core/auth/account.service';
     templateUrl: './admin.component.html',
     styleUrls: ['./admin.component.scss']
 })
-export class AdminComponent implements OnInit, OnDestroy {
+export class AdminComponent implements OnInit {
   languages: any[];
   public navItems = navItems;
-  public sidebarMinimized = true;
-  private changes: MutationObserver;
-  public element: HTMLElement;
   public route;
-  public isCollapsed = true;
   constructor(
     private languageHelper: JhiLanguageHelper,
-    private sessionStorage: SessionStorageService,
     private translateService: TranslateService,
     private loginService: LoginService,
     private principal: AccountService,
@@ -34,18 +28,14 @@ export class AdminComponent implements OnInit, OnDestroy {
       });
   }
   ngOnInit(): void {
-    this.languageHelper.getAll().then(languages => {
-      this.languages = languages;
-    });
+    // this.languageHelper.getAll().then(languages => {
+    //   this.languages = languages;
+    // });
     this.translateMenu();
-  }
-  changeLanguage(languageKey: string) {
-    this.sessionStorage.store('locale', languageKey);
-    // this.languageService.changeLanguage(languageKey);
   }
   logout() {
     this.loginService.logout();
-    this.router.navigate(['admin/login']);
+    this.router.navigate(['admin']);
   }
   translateMenu() {
     // translate menu
@@ -82,8 +72,5 @@ export class AdminComponent implements OnInit, OnDestroy {
             this.translateIntoVN(child);
         });
     }
-  }
-  ngOnDestroy(): void {
-    this.changes.disconnect();
   }
 }

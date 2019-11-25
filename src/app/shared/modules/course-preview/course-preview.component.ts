@@ -1,7 +1,10 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 import { CourseRegistrationService } from 'src/app/services/course-registration.service';
+import { AccountService } from 'src/app/core/auth/account.service';
+import { LoginModalService } from 'src/app/core/auth/login-modal.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -17,30 +20,38 @@ export class CoursePreviewComponent implements OnInit {
   @Input() totalLectureVideo?: any;
   @Input() totalTimeEstimateVideo?: any;
   @Input() lectureCode?: string;
+  // tslint:disable-next-line:no-output-rename
+  @Output('registerSuccess') change = new EventEmitter<boolean>();
   isSaving = false;
+  display = false;
   constructor(
-    private router: Router,
-    private page: PageReloadService,
+    private messageService: MessageService,
+    private loginModalService: LoginModalService,
+    private accountService: AccountService,
     private courseRegistrationService: CourseRegistrationService) { }
 
   ngOnInit() {
     this.totalTimeEstimateVideo = Math.floor(this.totalTimeEstimateVideo);
   }
-  openVideoModal(content) {
-   // this.bsModalRef = this.modalService.show(content, {class: 'modal-lg', ignoreBackdropClick: true});
-  }
+
   registrationCourse(courseCode) {
-    this.isSaving = true;
-    this.courseRegistrationService.registrationCourse(courseCode).subscribe(res => {
-      if (res) {
-       // this.toastr.success('Thành công!', 'Đăng ký thành công!');
-        setTimeout(() => {
-          this.page.reload(this.router);
-        }, 1500);
+    this.accountService.getCurrentAccount().subscribe(account => {
+      if (account) {
+        this.isSaving = true;
+        this.courseRegistrationService.registrationCourse(courseCode).subscribe(res => {
+          if (res) {
+            this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Đăng ký thành công!'});
+            this.change.emit(true);
+          } else {
+            this.isSaving = false;
+            this.messageService.add({severity: 'error', detail: 'Có lỗi xảy ra!'});
+          }
+        });
       } else {
-        this.isSaving = false;
-       // this.toastr.error('Xảy ra lỗi!!', 'Lỗi');
+        this.loginModalService.open();
       }
+    }, (err) => {
+      console.log(err.error.message);
     });
   }
 }

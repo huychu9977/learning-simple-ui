@@ -7,6 +7,6 @@ export class Account {
         public username: string,
         public phone: string,
         public address: string,
-        public imageDTO: any
+        public imageUrl: string
     ) {}
 }

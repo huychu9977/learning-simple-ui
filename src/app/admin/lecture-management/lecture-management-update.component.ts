@@ -20,6 +20,8 @@ export class LectureManagementUpdateComponent implements OnInit {
   types: any[];
   isSaving: boolean;
   selectedVideos: FileList;
+  selectedFiles: any = [];
+  idDeletedFile: any = [];
   parentCode;
   editForm = this.fb.group({
     id: [null],
@@ -92,6 +94,10 @@ export class LectureManagementUpdateComponent implements OnInit {
       parent: lecture.parentCode ? lecture.parentCode : null,
       sortOrder: lecture.id ? lecture.sortOrder : 0
     });
+    this.selectedFiles = lecture.fileAttachments.map(file => {
+      return {id: file.id, name: file.fileName};
+    });
+    this.idDeletedFile = [];
     this.route
       .queryParams
       .subscribe(params => {
@@ -152,10 +158,23 @@ export class LectureManagementUpdateComponent implements OnInit {
   confirm() {
     const formdata: FormData = new FormData();
     formdata.append('videoFile', this.selectedVideos ? this.selectedVideos.item(0) : null);
+    if (this.selectedFiles.length === 0) {
+      formdata.append('files', null);
+    } else {
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.selectedFiles.length; i++) {
+        if (!this.selectedFiles[i].id) {
+          formdata.append('files', this.selectedFiles[i]);
+        }
+      }
+    }
     formdata.append('lectureDTO', new Blob([JSON.stringify(this.updateCourseLecture())], {
       type: 'application/json'
     }));
     if (this.lecture.id !== null) {
+      formdata.append('idDeleteds', new Blob([JSON.stringify(this.idDeletedFile)], {
+        type: 'application/json'
+      }));
       this.lectureService.update(formdata).subscribe(response => this.onSaveSuccess(response), (error) => this.onSaveError(error));
     } else {
       this.lectureService.create(formdata).subscribe(response => this.onSaveSuccess(response), (error) => this.onSaveError(error));
@@ -200,11 +219,42 @@ export class LectureManagementUpdateComponent implements OnInit {
         this.selectedVideos = null;
     }
   }
+  onFileChange(event) {
+    let checkList = false;
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < event.target.files.length; i++) {
+        if (
+            ( event.target.files[i].name.endsWith('.doc') ||
+            event.target.files[i].name.endsWith('.docx') ||
+            event.target.files[i].name.endsWith('.pdf') ||
+            event.target.files[i].name.endsWith('.txt') ||
+            event.target.files[i].name.endsWith('.zip') ||
+            event.target.files[i].name.endsWith('.rar') ) &&
+            Math.ceil(event.target.files[i].size / 1024) <= (3 * 1024)
+        ) {
+            checkList = true;
+        } else {
+            checkList = false;
+            // tslint:disable-next-line:max-line-length
+            this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Chỉ tải file với đuôi (doc|docx|pdf|txt|zip|rar) và nhỏ hơn 3MB'});
+            break;
+        }
+        if (checkList) {
+            this.selectedFiles = [...this.selectedFiles, event.target.files[i]];
+        }
+    }
+  }
+  removeFileAttach(id, index) {
+    if (id) {
+      this.idDeletedFile.push(id);
+    }
+    this.selectedFiles.splice(index, 1);
+  }
   private onSaveSuccess(result) {
     this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
     setTimeout(() => {
       this.previousState();
-    }, 1700);
+    }, 1200);
   }
 
   private onSaveError(err) {

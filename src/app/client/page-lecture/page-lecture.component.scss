@@ -507,3 +507,25 @@ video {
         }
     }
 }
+.attach-file-download {
+    opacity: 1 !important;
+    padding-top: 0 !important;
+    span {
+        color: #007791 !important;
+        background: #fff;
+        font-size: 12px !important;
+        &:hover {
+            color: black !important;
+        }
+    }
+}
+.panelFileAttachment {
+    li {
+        &:hover {
+            background: #f2f3f5;
+            color: #454b55;
+            cursor: pointer;
+        }
+    }
+    margin-bottom: 5px;
+}

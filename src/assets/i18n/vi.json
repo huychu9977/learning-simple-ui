@@ -28,6 +28,7 @@
           "name":"Yêu cầu",
           "createLabel":"Thêm yêu cầu"
        },
+       "enrolled": "Học viên",
        "editMore":"Nội dung",
        "chapter":"Chương",
        "image":"Image",
@@ -186,7 +187,8 @@
        },
        "detail":{
           "title":"Bài học",
-          "quiz":"Bài quiz"
+          "quiz":"Bài quiz",
+          "fileAttach": "Tài liệu"
        },
        "quiz":{
           "list":"Danh sách câu hỏi",

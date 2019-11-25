@@ -1,0 +1,23 @@
+section {
+    margin-bottom: 70px;
+    min-height: 500px;
+    nav.menu-left {
+        min-width: 56px;
+        margin-right: 50px;
+        background-color: #2d3e50;
+        ul {
+            list-style: none;
+            li {
+                padding: 10px 0;
+                color: #fff;
+                cursor: pointer;
+                &:hover {
+                    background: #ccc;
+                }
+            }
+        }
+    }
+    .active {
+        background: #ccc;
+    }
+}

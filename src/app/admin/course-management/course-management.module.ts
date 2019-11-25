@@ -7,6 +7,7 @@ import { CourseManagementComponent } from './course-management.component';
 import { SharedLibsModule } from 'src/app/shared/shared-libs.module';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { AdminSharedLibsModule } from 'src/app/shared/admin-shared-lib.module';
+import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
 
 
 @NgModule({
@@ -16,7 +17,7 @@ import { AdminSharedLibsModule } from 'src/app/shared/admin-shared-lib.module';
     SharedLibsModule,
     AdminSharedLibsModule
   ],
-  providers: [MessageService, ConfirmationService],
-  exports: [CourseManagementComponent]
+  providers: [MessageService, ConfirmationService, SlugifyPipe],
+  exports: [CourseManagementComponent, CourseManagementUpdateComponent]
 })
 export class CourseManagementModule { }

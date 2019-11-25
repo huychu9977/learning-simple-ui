@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserMgmtDetailComponent } from './user-management-detail.component';
 import { UserBO } from 'src/app/models/userBO.model';
 import { UserService } from 'src/app/services/user.service';
-import { MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService, DialogService } from 'primeng/api';
 
 @Component({
   selector: 'user-management',
@@ -19,6 +19,7 @@ export class UserManagementComponent implements OnInit {
     previousPage: any;
     keyword = '';
     constructor(
+        public dialogService: DialogService,
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private userService: UserService,
@@ -39,7 +40,7 @@ export class UserManagementComponent implements OnInit {
 
     setActive(user?: UserBO, isActivated?: boolean) {
         user.activated = isActivated;
-        delete user.imageDTO;
+        delete user.imageUrl;
         delete user.modifiedAt;
         delete user.createdAt;
         const formdata: FormData = new FormData();
@@ -106,8 +107,14 @@ export class UserManagementComponent implements OnInit {
           });
     }
     openModalDetail(user?: UserBO) {
-        // const modalRef = this.modalService.show(UserMgmtDetailComponent, {class: 'modal-lg'});
-        // modalRef.content.user = user;
+        this.dialogService.open(UserMgmtDetailComponent, {
+            data: {
+                user
+            },
+            header: 'Chi tiết người dùng',
+            closeOnEscape: false,
+            width: '70%'
+        });
     }
     private onSuccess(data) {
         this.totalItems = data.totalResult;

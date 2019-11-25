@@ -42,7 +42,7 @@ export class EditProfileComponent implements OnInit {
       name: this.currentAccount.name,
       address: this.currentAccount.address
     });
-    this.imageUrl = this.currentAccount.imageDTO ? `api/image/${this.currentAccount.imageDTO.id}` : 'assets/images/default.png';
+    this.imageUrl = this.currentAccount.imageUrl ? this.currentAccount.imageUrl : 'assets/images/default.png';
   }
   get f() { return this.editForm.controls; }
   editCurrentAccount() {

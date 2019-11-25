@@ -1,9 +1,9 @@
 <div class="course-card-list">
   <div class="course-card-container">
-    <a href="">
+    <a href="javascript:void(0)">
       <div class="course-card-content">
         <div class="course-card-image">
-          <img *ngIf="course.imageId" alt="Free Website Builder" width="240" height="135" srcset="api/image/{{course.imageId}}" >
+          <img *ngIf="course.imageUrl" alt="Free Website Builder" width="240" height="135" srcset="{{course.imageUrl}}" >
         </div>
         <div class="course-card-body">
           <div class="course-card-body-title">

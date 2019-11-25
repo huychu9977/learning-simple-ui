@@ -4,13 +4,13 @@
       <div class="introduction-asset">
           <div class="introduction-asset-child">
               <div class="introduction-asset-gradient"></div>
-              <a (click)="openVideoModal(content)" role="button" class="introduction-asset-link">
+              <a (click)="display = true" role="button" class="introduction-asset-link">
                 <div class="play-button-trigger introduction-asset-placeholder">
                   <div class="play-button styles-play-button"></div>
                   <span class="introduction-asset-text">Preview this course</span>
                 </div>
               </a>
-              <img *ngIf="course?.imageId" class="introduction-asset-img" alt="" srcset="api/image/{{course?.imageId}}" width="240" height="135">
+              <img *ngIf="course?.imageUrl" class="introduction-asset-img" alt="" srcset="{{course?.imageUrl}}" width="240" height="135">
           </div>  
       </div>  
     </div>
@@ -57,17 +57,7 @@
     </div>
   </div>
 </div>
-<ng-template #content let-modal>
-    <div class="modal-header">
-      <h4 class="modal-title">Bản giới thiệu khóa học</h4>
-      <!-- <button type="button" class="close" aria-label="Close" (click)="bsModalRef.hide()">
-        <span aria-hidden="true">&times;</span>
-      </button> -->
-    </div>
-    <div class="modal-body">
-      <video class="w-100" src="api/video/{{course?.videoId}}" controls></video>
-    </div>
-    <div class="modal-footer">
-      <!-- <button type="button" class="btn btn-light" (click)="bsModalRef.hide()">Đóng</button> -->
-    </div>
-  </ng-template>
+  <p-dialog [positionTop]="100" [style]="{width: '800px', height: '500px'}" header="Bản giới thiệu khóa học" [(visible)]="display">
+      <video class="w-100" src="{{course?.videoUrl}}" controls></video>
+  </p-dialog>
+<p-toast></p-toast>

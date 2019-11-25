@@ -7,6 +7,7 @@ import { CourseService } from 'src/app/services/course.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
 import {ConfirmationService, MessageService} from 'primeng/api';
+import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
 
 @Component({
   selector: 'course-management-update',
@@ -22,9 +23,10 @@ export class CourseManagementUpdateComponent implements OnInit {
   isSaving: boolean;
   selectedImages: FileList;
   selectedVideos: FileList;
+  loading = false;
   editForm = this.fb.group({
     id: [null],
-    code: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(100), Validators.pattern('^[_.@A-Za-z0-9-]*')]],
+    code: [''],
     name: ['', [Validators.required, Validators.maxLength(200)]],
     sortDescription: [''],
     description: ['', [Validators.required]],
@@ -43,17 +45,18 @@ export class CourseManagementUpdateComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private elRef: ElementRef,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private slugifyPipe: SlugifyPipe
   ) {}
 
   ngOnInit() {
     this.isSaving = false;
     this.route.data.subscribe(({ course }) => {
       this.course = course.body ? course.body : course;
-      if (this.statusCanNotEditAndDelete.indexOf(this.course.status) !== -1) {
-        this.router.navigate(['admin/course-management']);
-        return;
-      }
+      // if (this.statusCanNotEditAndDelete.indexOf(this.course.status) !== -1) {
+      //   this.router.navigate(['admin/course-management']);
+      //   return;
+      // }
       this.updateForm(this.course);
     });
     this.courseCategorys = [];
@@ -67,14 +70,17 @@ export class CourseManagementUpdateComponent implements OnInit {
   }
 
   selectCourseTopics() {
+    this.loading = true;
     this.editForm.get('courseTopic').setValue(null);
     const courseCategoryCode  = this.editForm.get(['courseCategory']).value;
     if (courseCategoryCode) {
       this.categoryService.getTopics(courseCategoryCode).subscribe(data => {
         this.courseTopics = data;
+        this.loading = false;
       });
     } else {
       this.courseTopics = [];
+      this.loading = false;
     }
   }
 
@@ -91,7 +97,7 @@ export class CourseManagementUpdateComponent implements OnInit {
       courseCategory: course.topicDTO ? course.topicDTO.courseCategoryDTO.code : null,
       courseTopic: course.topicDTO ? course.topicDTO.code : null
     });
-    this.imageUrl = this.course.courseImageId ? `api/image/${this.course.courseImageId}` : 'assets/images/default.png';
+    this.imageUrl = this.course.imageUrl ? this.course.imageUrl : 'assets/images/default.png';
     this.videoUrl = 'assets/images/default-video-image.png';
     if (this.course.id) {
       const courseCategoryCode  = this.editForm.get(['courseCategory']).value;
@@ -127,6 +133,7 @@ export class CourseManagementUpdateComponent implements OnInit {
     } else if (!this.selectedVideos && !this.course.id) {
       this.messageService.add({severity: 'error', summary: 'Cảnh báo!', detail: 'Vui lòng chọn file video!'});
     } else {
+      this.loading = true;
       const formdata: FormData = new FormData();
       formdata.append('imageFile', this.selectedImages ? this.selectedImages.item(0) : null);
       formdata.append('videoFile', this.selectedVideos ? this.selectedVideos.item(0) : null);
@@ -156,7 +163,10 @@ export class CourseManagementUpdateComponent implements OnInit {
       },
       requiredCompleteRate : this.editForm.get(['requiredCompleteRate']).value
     };
-    if (!this.course.id) { delete courseTmp.id; }
+    if (!this.course.id) {
+      courseTmp.code = this.slugifyPipe.transform(this.editForm.get(['name']).value);
+      delete courseTmp.id;
+    }
     return courseTmp;
   }
   onVideoChange(event) {
@@ -209,13 +219,15 @@ export class CourseManagementUpdateComponent implements OnInit {
 }
   private onSaveSuccess(result) {
     this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
+    this.loading = false;
     setTimeout(() => {
       this.previousState();
-    }, 1700);
+    }, 1200);
   }
 
   private onSaveError(err) {
     this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
+    this.loading = false;
     this.isSaving = false;
   }
 

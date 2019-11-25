@@ -20,6 +20,7 @@ export class ListLectureComponent implements OnInit {
     page: any = 1;
     keyword = '';
     href?: string;
+
     statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
     constructor(
         private messageService: MessageService,
@@ -34,6 +35,7 @@ export class ListLectureComponent implements OnInit {
         this.lecture = this.config.data.lecture;
         this.loadAll();
     }
+
     clear() {
         this.ref.close();
     }

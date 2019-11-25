@@ -66,7 +66,7 @@ export class UserMgmtUpdateComponent implements OnInit {
       roleBOs: user.roleBOs
     });
     // tslint:disable-next-line:max-line-length
-    this.imageUrl = this.user.imageDTO ? `api/image/${this.user.imageDTO.id}` : 'https://icon-library.net/images/default-user-icon/default-user-icon-4.jpg';
+    this.imageUrl = this.user.imageUrl ? this.user.imageUrl : 'https://icon-library.net/images/default-user-icon/default-user-icon-4.jpg';
     this.selectedRoles = user.roleBOs ? user.roleBOs : [];
   }
 

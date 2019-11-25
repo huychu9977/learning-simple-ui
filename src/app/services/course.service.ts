@@ -65,4 +65,9 @@ export class CourseService {
     toggleCompletedLecture(lectureId?: any) {
         return this.http.post(`${this.resourceUrl}/employer/lecture-completed/${lectureId}`, { observe: 'response' });
     }
+    // instructor
+    queryForInstructor(req?: any): Observable<HttpResponse<CourseBO[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<CourseBO[]>(`${SERVER_API_URL}api/instructor/courses`, { params: options, observe: 'response' });
+    }
 }

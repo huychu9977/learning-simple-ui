@@ -33,6 +33,7 @@
                             <table class="table table-striped text-center" *ngIf="courseLectures?.length > 0">
                                 <thead>
                                 <tr>
+                                    <th>STT</th>
                                     <th>Trạng thái</th>
                                     <th [translate]="'lectureManagement.code'">code</th>
                                     <th [translate]="'lectureManagement.name'">name</th>
@@ -43,6 +44,7 @@
                                 </thead>
                                 <tbody>
                                 <tr *ngFor="let lecture of courseLectures;">
+                                    <td>{{lecture.sortOrder}}</td>
                                     <td>
                                        <strong><span class="badge badge-danger">{{lecture.status | statusText}}</span></strong>
                                     </td>

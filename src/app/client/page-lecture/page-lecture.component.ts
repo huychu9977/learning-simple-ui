@@ -65,6 +65,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   correctAnswer = false;
   listQuestionIncorrect: any[] = [];
   display = false;
+  fileAttachments: any = [];
   constructor(
     private changeDetector: ChangeDetectorRef,
     private reviewService: ReviewService,
@@ -100,7 +101,28 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
       }
     });
   }
-
+  totalTimeEstimate() {
+    let time = 0;
+    this.course.lectures.forEach(l => {
+      if (l.parentCode && l.type.code === 'lecture') {
+        time += l.videoTimeEstimation === null ? 0 : l.videoTimeEstimation;
+      }
+    });
+    return Math.floor(time / 60);
+  }
+  // attachment
+  openDialogAttachment(event, op, fileAttachments) {
+    this.fileAttachments = fileAttachments;
+    op.toggle(event);
+  }
+  downloadAttachment(file) {
+    const link = document.createElement('a');
+    link.href = file.fileUrl;
+    link.download = file.fileName;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+  }
   // comment start
   ngAfterContentChecked(): void {
     this.changeDetector.detectChanges();

@@ -1,6 +1,6 @@
 
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef, AfterContentChecked } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { CourseBO } from './../../models/courseBO.model';
 import { Title } from '@angular/platform-browser';
@@ -89,6 +89,7 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
   constructor(
     private courseRegistrationService: CourseRegistrationService,
     private route: ActivatedRoute,
+    private router: Router,
     private titleService: Title,
     private changeDetector: ChangeDetectorRef,
     private reviewService: ReviewService,
@@ -100,19 +101,30 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
       this.courseCode = params['course-code'];
       this.loadOne(this.courseCode);
     });
+  }
+
+  checkIsRegistration() {
     this.courseRegistrationService.findOne(this.courseCode).subscribe(res => {
       this.userRegistration = res;
     });
-    this.loadRating();
   }
+
+  registerSuccess(data) {
+    if (data === true) {
+      this.checkIsRegistration();
+    }
+  }
+
   loadRating() {
     this.reviewService.getRating({
       courseCode: this.courseCode
       }).subscribe(
-        (res: HttpResponse<any[]>) => {
-          this.rates = res.body;
-          this.rates[0].rateAvg = Math.round(this.rates[0].rateAvg * 10) / 10;
-          this.rateAvg = Math.floor(this.rates[0].rateAvg);
+        res => {
+          this.rates = res;
+          if (this.rates.length > 0) {
+            this.rates[0].rateAvg = this.rates[0] ? Math.round(this.rates[0].rateAvg * 10) / 10 : 1;
+            this.rateAvg = Math.floor(this.rates[0].rateAvg);
+          }
         },
         (res: HttpResponse<any>) => console.log(res)
     );
@@ -120,7 +132,7 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
   loadOne(code?: string) {
     this.courseService.findForEmpoyer(code).subscribe(
       (res: HttpResponse<CourseBO>) => this.onSuccess(res.body),
-      (res: HttpResponse<any>) => console.log(res)
+      (res: HttpResponse<any>) => this.router.navigate(['/courses'])
     );
   }
   private onSuccess(data) {
@@ -139,6 +151,8 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
       if (l.type.code === 'lecture') { this.totalLectureVideo++; }
     });
     this.titleService.setTitle(this.course.name);
+    this.checkIsRegistration();
+    this.loadRating();
   }
   convertToScript() {
     const element = this.script.nativeElement;
@@ -184,7 +198,7 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
     if (panel.style.maxHeight) {
       panel.style.maxHeight = null;
     } else {
-      panel.style.maxHeight = panel.scrollHeight + 'px';
+      panel.style.maxHeight = panel.scrollHeight + 1 + 'px';
     }
   }
 // end-course-content

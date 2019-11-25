@@ -7,11 +7,11 @@
                     <div id="user-short">
                         <div class="fx-c">
                             <div aria-label="Sfsf Asffas" class="user-avatar">
-                                <div class="user-avatar__inner fx-c" *ngIf="!currentAccount?.imageDTO">
+                                <div class="user-avatar__inner fx-c" *ngIf="!currentAccount?.imageUrl">
                                     <span class="user-initials">{{currentAccount?.name | avatarText}}</span>
                                 </div>
-                                <div class="user-avatar__inner fx-c" *ngIf="currentAccount?.imageDTO">
-                                    <img width="120" height="120" style="border-radius: 50%;" src="api/image/{{currentAccount.imageDTO.id}}" alt="">
+                                <div class="user-avatar__inner fx-c" *ngIf="currentAccount?.imageUrl">
+                                    <img width="120" height="120" style="border-radius: 50%;" src="{{currentAccount?.imageUrl}}" alt="">
                                 </div>
                             </div>
                         </div>

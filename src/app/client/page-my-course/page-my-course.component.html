@@ -17,7 +17,7 @@
             <div class="card card-learning" *ngFor="let c of courses">
                 <a href="javascript:void(0)" [routerLink]="[ '/course', c?.code ]">
                     <div class="card__image">
-                        <img width="240" height="135" src="api/image/{{c?.imageId}}" alt="">
+                        <img width="240" height="135" src="{{c?.imageUrl}}" alt="">
                     </div>
                 </a>
                 <a href="javascript:void(0)" [routerLink]="[ '/course', c?.code ]">

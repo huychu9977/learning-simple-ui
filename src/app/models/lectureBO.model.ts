@@ -3,7 +3,7 @@ export class LectureBO {
         public id?: any,
         public code?: string,
         public name?: string,
-        public videoId?: any,
+        public videoUrl?: string,
         public type?: any,
         public createdBy?: string,
         public createdAt?: any,
@@ -14,6 +14,7 @@ export class LectureBO {
         public parentCode?: string,
         public lectures?: any[],
         public questions?: any[],
-        public sortOrder?: any
+        public sortOrder?: any,
+        public fileAttachments?: any[]
     ) {}
 }

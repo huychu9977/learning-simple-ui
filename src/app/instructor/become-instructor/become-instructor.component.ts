@@ -11,6 +11,7 @@ export class BecomeInstructorComponent implements OnInit {
   step = 0;
   items = [];
   quickQuestion = QUESTION_BECOME_INSTRUCTOR;
+  activeIndex = 1;
   constructor(private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -19,6 +20,7 @@ export class BecomeInstructorComponent implements OnInit {
       if (this.step !== 0 && this.step !== 1 && this.step !== 2 && this.step !== 3 ) {
         this.router.navigate(['/not-found']);
       }
+      this.activeIndex = this.step - 1;
     });
     this.items = [
       {label: 'Step 1'},

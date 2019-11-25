@@ -1,156 +1,90 @@
 <div class="animated fadeIn">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3><span [translate]="'courseManagement.home.title'">Users</span></h3>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="row">
-                                <form id="formSearch" class="mx-3 shadow-sm bg-light rounded" action="">
-                                    <div class="row">
-                                        <div class="col-sm-4">
-                                            <button class="btn btn-sm btn-primary my-3 ml-3"
-                                                    [routerLink]="['new']">
-                                                <span [translate]="'courseManagement.home.createLabel'">Tạo mới</span>
-                                            </button>
-                                        </div>
-                                        <div class="col-md-8">
-                                            <a href="javascript:void(0)" class="accordion" (click)="toggleAccordian($event)">
-                                                <div class="text-right py-3 pr-4">
-                                                    <i class="pi pi-chevron-up" aria-hidden="true"></i>
-                                                </div>
-                                            </a>
-                                        </div>
-                                    </div> 
-                                    <div class="panel" [ngClass]="{'border-top border-secondary': isActive}" hide="!isActive">
-                                        <div class="row justify-content-center pt-2">
-                                            <fieldset class="form-group col-md-5">
-                                                <div class="input-group">
-                                                    <input [(ngModel)]="keyword" name="keyword" placeholder="Mã / Tên khóa học" class="form-control" type="text">
-                                                </div>
-                                            </fieldset>
-                                            <div class="form-group col-md-5">
-                                                <select [(ngModel)]="activated" name="activated" class="form-control">
-                                                    <option value="null">Trạng thái</option>
-                                                    <option value="true">Kích hoạt</option>
-                                                    <option value="false">Khóa</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-5">
-                                                <select [(ngModel)]="courseCategoryCode" name="courseCategoryCode" class="form-control" (change)="this.courseTopicCode = null;selectCourseTopics()">
-                                                    <option value="null" selected>Danh mục</option>
-                                                    <option *ngFor="let c of courseCategorys" [value]="c.code">{{c.name}}</option>
-                                                </select>
-                                            </div>
-                                            <div class="form-group col-md-5">
-                                                <select [(ngModel)]="courseTopicCode" name="courseTopicCode" class="form-control">
-                                                    <option value="null" selected>Đề tài</option>
-                                                    <option *ngFor="let t of courseTopics" [value]="t.code">{{t.name}}</option>
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="offset-md-4 col-sm-4 text-center">
-                                                <button (click)="search()" class="btn btn-primary mb-2">
-                                                        <i class="fa fa-search"></i>
-                                                    <span>Tìm kiếm</span>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
-                            <br/>
-                            <table class="table table-striped text-center">
-                                <thead>
-                                <tr>
-                                    <th>Kiểm duyệt</th>
-                                    <th [translate]="'courseManagement.code'">code</th>
-                                    <th [translate]="'courseManagement.name'">name</th>
-                                    <!-- <th><span [translate]="'courseManagement.active'">Active</span></th> -->
-                                    <th><span [translate]="'courseManagement.topic'">Topic</span></th>
-                                    <th [translate]="'courseManagement.editMore'">editMore</th>
-                                    <th [translate]="'courseManagement.action'">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody *ngIf="courses">
-                                <tr *ngFor="let course of courses;">
-                                    <td *ngIf="statusNeedCheck.indexOf(course.status) > -1">
-                                        <button type="button" class="btn btn-sm btn-info" (click)="setStatus(course?.code)">Xét duyệt</button>
-                                    </td>
-                                    <td *ngIf="statusNeedCheck.indexOf(course.status) === -1">
-                                        <strong><span class="badge badge-primary">{{course?.status | statusText}}</span></strong>
-                                    </td>
-                                    <td>{{course.code}}</td>
-                                    <td>{{course.name}}</td>
-                                    <!-- <td>
-                                        <button class="btn btn-danger btn-sm" (click)="setActive(course, true)"
-                                                *ngIf="!course.activated"
-                                                [translate]="'courseManagement.deactivated'">Deactivated
-                                        </button>
-                                        <button class="btn btn-success btn-sm" (click)="setActive(course, false)"
-                                                *ngIf="course.activated"
-                                                
-                                                [translate]="'courseManagement.activated'">Activated
-                                        </button>
-                                    </td> -->
-                                    <td>
-                                        {{course.topicDTO.name}} - {{course.topicDTO.courseCategoryDTO.name}}
-                                    </td>
-                                    <td class="text-center">
-                                            <div class="btn-group flex-btn-group-container">
-                                                <button type="submit"
-                                                        [routerLink]="[ course.code, 'lecture']"
-                                                        class="btn btn-success btn-sm">
-                                                    <span class="d-none d-md-inline" [translate]="'courseManagement.chapter'">chapter</span>
-                                                    <strong>({{course.totalLecture}})</strong>
-                                                </button>
-                                                <button type="submit"
-                                                        [routerLink]="[ course.code, 'objectives']"
-                                                        class="btn btn-info btn-sm color-white">
-                                                    <span class="d-none d-md-inline" [translate]="'courseManagement.objective.name'">name</span>
-                                                    <strong>({{course.totalObjective}})</strong>
-                                                </button>
-                                                <button type="submit"
-                                                        [routerLink]="[ course.code, 'requireds']"
-                                                        class="btn btn-primary btn-sm">
-                                                    <span class="d-none d-md-inline" [translate]="'courseManagement.required.name'">requiredName</span>
-                                                    <strong>({{course.totalRequirement}})</strong>
-                                                </button>
-                                            </div>
-                                        </td>
-                                    <td class="text-center">
-                                        <div class="btn-group flex-btn-group-container">
-                                            <button type="submit"
-                                                    [routerLink]="[ course.code, 'view']"
-                                                    class="btn btn-info btn-sm color-white">
-                                                <span class="d-none d-md-inline" [translate]="'entity.action.view'">View</span>
-                                            </button>
-                                            <button type="submit"
-                                                    [routerLink]="[ course.code, 'edit']"
-                                                    queryParamsHandling="merge"
-                                                    class="btn btn-primary btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
-                                                <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
-                                            </button>
-                                            <button type="button" (click)="deleteCourse(course)"
-                                                    class="btn btn-danger btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
-                                                <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row justify-content-center w-100" *ngIf="courses && courses.length">
-                            <p-paginator  [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
+        <div>
+            <div class="">
+                <div class="row m-0">
+                    <div class="input-group mb-4 col-md-6 pl-0">
+                        <input [(ngModel)]="keyword" name="keyword" placeholder="Mã / Tên khóa học" class="form-control rounded-0" type="text">
+                        <div class="input-group-append">
+                            <button class="btn btn-dark" type="button" (click)="search()">
+                                <i class="fa fa-search"></i>
+                            </button>
                         </div>
                     </div>
+    
                 </div>
+                <br/>
+                <div>
+                    <table class="table table-bordered" style="position: relative;" [el-loading]="loading">
+                        <thead class="thead-dark text-center">
+                            <tr>
+                                <th>Kiểm duyệt</th>
+                                <th [translate]="'courseManagement.code'">code</th>
+                                <th [translate]="'courseManagement.name'">name</th>
+                                <th [translate]="'courseManagement.enrolled'">enrolled</th>
+                                <th [translate]="'courseManagement.active'">Active</th>
+                                <th [translate]="'courseManagement.editMore'">editMore</th>
+                                <th [translate]="'courseManagement.action'">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody *ngIf="courses.length === 0">
+                            <tr>
+                                <td colspan="6" class="text-center">Bạn chưa tạo khóa học.</td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="courses.length > 0" class="text-center">
+                            <tr *ngFor="let course of courses;">
+                                <td *ngIf="statusNeedCheck.indexOf(course.status) > -1">
+                                    <button type="button" class="btn btn-sm btn-info" (click)="setStatus(course?.code)">Xét duyệt</button>
+                                </td>
+                                <td *ngIf="statusNeedCheck.indexOf(course.status) === -1">
+                                    <strong><span class="badge badge-primary">{{course?.status | statusText}}</span></strong>
+                                </td>
+                                <td>{{course.code}}</td>
+                                <td>{{course.name}}</td>
+                                <td>{{course.totalUserEnroll}}</td>
+                                <td>
+                                    <label class="switch switch-label switch-success">
+                                        <input type="checkbox" class="switch-input" name="activated" [(ngModel)]="course.activated" (change)="setActive(course)">
+                                        <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                                    </label>
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <button type="submit" [routerLink]="[ course.code, 'lecture']" class="btn btn-success btn-sm">
+                                            <span class="d-none d-md-inline" [translate]="'courseManagement.chapter'">chapter</span>
+                                            <strong>({{course.totalLecture}})</strong>
+                                        </button>
+                                        <button type="submit" [routerLink]="[ course.code, 'objectives']" class="btn btn-info btn-sm color-white">
+                                            <span class="d-none d-md-inline" [translate]="'courseManagement.objective.name'">name</span>
+                                            <strong>({{course.totalObjective}})</strong>
+                                        </button>
+                                        <button type="submit" [routerLink]="[ course.code, 'requireds']" class="btn btn-primary btn-sm">
+                                            <span class="d-none d-md-inline" [translate]="'courseManagement.required.name'">requiredName</span>
+                                            <strong>({{course.totalRequirement}})</strong>
+                                        </button>
+                                    </div>
+                                </td>
+                                <td class="text-center">
+                                    <div class="btn-group flex-btn-group-container">
+                                        <!-- <button type="submit" [routerLink]="[ course.code, 'view']" class="btn btn-info btn-sm color-white">
+                                            <span class="d-none d-md-inline" [translate]="'entity.action.view'">View</span>
+                                        </button> -->
+                                        <button type="submit" [routerLink]="[ 'edit', course.code]" queryParamsHandling="merge" class="btn btn-primary btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
+                                            <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
+                                        </button>
+                                        <button type="button" (click)="deleteCourse(course)" class="btn btn-danger btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
+                                            <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="row justify-content-end w-100" *ngIf="courses && courses.length > 0">
+                <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
             </div>
         </div>
     </div>
-</div>
+    <p-toast></p-toast>

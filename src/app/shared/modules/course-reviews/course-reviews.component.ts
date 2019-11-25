@@ -16,10 +16,11 @@ export class CourseReviewsComponent implements OnInit {
   page = 1;
   itemsPerPage = 5;
   totalItems: any;
-  reviews: ReviewBO[];
+  reviews: ReviewBO[] = [];
   starSelected = [];
   starNumber = 0;
   colors = ['#f4c150', '#76c5d6', '#686f7a', '#00576b'];
+  ratesTmp: any[] = [];
   @Input() rates: any[] = [];
   @Input() rateAvg: any;
   @Input() rateAvgRound?: any = 0;
@@ -33,6 +34,18 @@ export class CourseReviewsComponent implements OnInit {
       this.courseCode = params['course-code'];
       this.loadAll();
     });
+    for (const star of [5, 4, 3, 2, 1]) {
+      const rate = this.getRate(star);
+      if (rate) {
+        this.ratesTmp = [...this.ratesTmp, {starNumber: rate.starNumber, percent: rate.percent}];
+      } else {
+        this.ratesTmp = [...this.ratesTmp, {starNumber: star, percent: 0}];
+      }
+    }
+    console.log(this.ratesTmp);
+  }
+  getRate(star): any {
+    return this.rates.filter(rate => rate.starNumber === star)[0];
   }
   setDeactive(i) {
     if (5 - i === this.starNumber) {
