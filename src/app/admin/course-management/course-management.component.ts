@@ -3,7 +3,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { CourseService } from 'src/app/services/course.service';
-import { MessageService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 @Component({
   selector: 'course-management',
   templateUrl: './course-management.component.html',
@@ -21,6 +21,7 @@ export class CourseManagementComponent implements OnInit {
 
     constructor(
         private messageService: MessageService,
+        private confirmationService: ConfirmationService,
         private courseService: CourseService
     ) {}
 
@@ -76,25 +77,17 @@ export class CourseManagementComponent implements OnInit {
         this.loadAll();
     }
     deleteCourse(course: CourseBO) {
-        // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-        //     buttons: ['Từ chối', 'Đồng ý']
-        // }).then(confirm => {
-        //     if (confirm) {
-        //         this.courseService.delete(course.code).subscribe(() => {
-        //             swal('Cập nhật', 'Xóa thành công', 'success').then(
-        //                 () => {
-        //                     if (this.courses.length === 1) {
-        //                         this.page = (this.page === 1) ? 1 : ( this.page - 1);
-        //                     }
-        //                     this.loadPage(this.page);
-        //                 }),
-        //                 // tslint:disable-next-line:no-unused-expression
-        //                 err => {
-        //                     swal('Lỗi', 'Thất bại, hãy thử lại', 'error');
-        //                 };
-        //         });
-        //     }
-        // });
+        this.confirmationService.confirm({
+            message: 'Đồng ý thực hiện thao tác này?',
+            accept: () => {
+                this.courseService.delete(course.code).subscribe(res => {
+                    this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Xoá khóa học thành công!'});
+                },
+                err => {
+                    this.messageService.add({severity: 'error', detail: err.error.message});
+                });
+            }
+        });
     }
     private onSuccess(data) {
         this.totalItems = data.totalElements;

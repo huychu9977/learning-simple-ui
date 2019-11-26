@@ -1,0 +1,17 @@
+.hr-primary {
+    margin: 0;
+    border-top: 6px solid #ec5252;
+}
+.copyright {
+    border-top: 1px solid #e8e9eb;
+    padding: 11px 0;
+    background: white;
+    color: black;
+    span {
+        color: #2d3e50;
+        text-transform: uppercase;
+    }
+}
+:host ::ng-deep .table .thead-dark th {
+    background-color: #2d3e50;
+}

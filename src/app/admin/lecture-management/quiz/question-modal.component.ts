@@ -50,11 +50,13 @@ export class QuestionModalComponent implements OnInit {
         }
       }
     createAnswer() {
+      if (this.answerContent) {
         this.questionTmp.answers.push({
-            content: this.answerContent,
-            isCorrect: false
+          content: this.answerContent,
+          isCorrect: false
         });
         this.answerContent = '';
+      }
     }
     deleteAnswer(i) {
         this.questionTmp.answers.splice(i, 1);

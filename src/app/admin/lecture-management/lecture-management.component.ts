@@ -5,7 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { LectureService } from 'src/app/services/lecture.service';
-import { MessageService, DialogService } from 'primeng/api';
+import { MessageService, DialogService, ConfirmationService } from 'primeng/api';
 import { ListLectureComponent } from './list-lecture/list-lecture.component';
 
 @Component({
@@ -15,28 +15,20 @@ import { ListLectureComponent } from './list-lecture/list-lecture.component';
 })
 export class LectureManagementComponent implements OnInit {
     course: CourseBO;
-    currentAccount: any;
-    courseLectures?: LectureBO[];
+    lectures?: LectureBO[];
     totalItems: any;
-    itemsPerPage: any;
-    page: any;
-    previousPage: any;
+    itemsPerPage: any = 2;
+    page: any = 1;
     keyword = '';
+    loading = false;
     statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
     constructor(
+        private confirmationService: ConfirmationService,
         public dialogService: DialogService,
         private messageService: MessageService,
         private lectureService: LectureService,
-        private activatedRoute: ActivatedRoute,
-        private router: Router
-    ) {
-        this.itemsPerPage = 2;
-        this.activatedRoute.queryParams.subscribe(params => {
-            this.page = params.page || 1;
-            this.previousPage = params.page || 1;
-            this.keyword = params.keyword || '';
-        });
-    }
+        private activatedRoute: ActivatedRoute
+    ) {}
 
     ngOnInit() {
         this.activatedRoute.data.subscribe(({ course }) => {
@@ -57,19 +49,21 @@ export class LectureManagementComponent implements OnInit {
         });
     }
 
-    setActive(lecture?: LectureBO, isActivated?: boolean) {
-        lecture.activated = isActivated;
+    setActive(lecture?: LectureBO) {
+        this.loading = true;
         this.lectureService.setActive(lecture).subscribe(response => {
             if (response.status === 200) {
                 this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Cập nhật trạng thái thành công!'});
                 this.loadAll();
             } else {
                 console.log('error');
+                this.loading = false;
             }
         });
     }
 
     loadAll() {
+        this.loading = true;
         this.lectureService
             .query({
                 courseCode: this.course.code,
@@ -85,64 +79,40 @@ export class LectureManagementComponent implements OnInit {
 
     loadPage(event: any) {
         this.page = event.page + 1;
-        if (this.page !== this.previousPage) {
-            this.transition();
-            this.previousPage = this.page;
-        }
-    }
-
-    transition() {
-        const param = {
-            page: this.page,
-            keyword: this.keyword
-        };
-        if (this.keyword === '' || !this.keyword) { delete param.keyword; }
-        this.router.navigate(['/admin/course-management', this.course.code, 'lecture'], {
-            queryParams: param
-        });
         this.loadAll();
     }
+
     search(value?: string) {
         this.keyword = value;
         this.page = 1;
         this.loadAll();
     }
+
     deleteLecture(lecture: LectureBO) {
-        // swal('Thông báo', 'Đồng ý thực hiện thao tác này?', 'warning', {
-        //     buttons: ['Từ chối', 'Đồng ý']
-        // }).then(confirm => {
-        //     if (confirm) {
-        //         this.lectureService.canDeleted(lecture.code).subscribe(data => {
-        //             if(data) {
-        //                 this.lectureService.delete(lecture.code).subscribe(() => {
-        //                     swal('Cập nhật', 'Xóa thành công', 'success').then(
-        //                         () => {
-        //                             if(this.courseLectures.length === 1) {
-        //                                 this.page = (this.page === 1) ? 1 : ( this.page - 1);
-        //                             }
-        //                             this.loadAll();
-        //                         }),
-        //                         err => {
-        //                             swal('Lỗi', 'Thất bại, hãy thử lại', 'error');
-        //                         }
-        //                 })
-        //             } else {
-        //                 swal('Cảnh báo', 'Bạn phải xóa các bài học con trước !', 'error').then(
-        //                     () => {
-        //                     })
-        //             }
-        //         });
-        //     }
-        // });
+        this.confirmationService.confirm({
+            message: 'Đồng ý thực hiện thao tác này?',
+            accept: () => {
+                this.lectureService.delete(lecture.code).subscribe(res => {
+                    this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Xoá khóa học thành công!'});
+                },
+                err => {
+                    this.messageService.add({severity: 'error', detail: err.error.message});
+                });
+            }
+        });
     }
+
     private onSuccess(data) {
         this.totalItems = data.totalResult;
-        this.courseLectures = data.results;
+        this.lectures = data.results;
+        this.loading = false;
     }
 
     private onError(error) {
         console.log(error);
+        this.loading = false;
     }
+
     previousState() {
         window.history.back();
     }

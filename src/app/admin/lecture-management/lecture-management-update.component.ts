@@ -14,7 +14,6 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 })
 export class LectureManagementUpdateComponent implements OnInit {
   course: CourseBO;
-  videoUrl;
   lecture: LectureBO;
   lectureParents: LectureBO[];
   types: any[];
@@ -23,9 +22,12 @@ export class LectureManagementUpdateComponent implements OnInit {
   selectedFiles: any = [];
   idDeletedFile: any = [];
   parentCode;
+  videoUrl;
+  loading = false;
+
   editForm = this.fb.group({
     id: [null],
-    code: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(50), Validators.pattern('^[_.@A-Za-z0-9-]*')]],
+    code: [''],
     name: ['', [Validators.required, Validators.maxLength(250)]],
     activated: [true],
     type: ['', [Validators.required]],
@@ -34,6 +36,7 @@ export class LectureManagementUpdateComponent implements OnInit {
     oldSortOrder: ['']
   });
   statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
+
   constructor(
     private messageService: MessageService,
     private confirmationService: ConfirmationService,
@@ -53,16 +56,14 @@ export class LectureManagementUpdateComponent implements OnInit {
     this.route.data.subscribe(({ lecture }) => {
       this.lecture = lecture.body ? lecture.body : lecture;
       // tslint:disable-next-line:max-line-length
-      if (this.statusCanNotEditAndDelete.indexOf(this.course.status) !== -1 || this.statusCanNotEditAndDelete.indexOf(this.lecture.status) !== -1) {
-        this.router.navigate(['admin/course-management', this.course.code, 'lecture']);
-        return;
-      }
+      // if (this.statusCanNotEditAndDelete.indexOf(this.course.status) !== -1 || this.statusCanNotEditAndDelete.indexOf(this.lecture.status) !== -1) {
+      //   this.router.navigate(['admin/course-management', this.course.code, 'lecture']);
+      //   return;
+      // }
       this.updateForm(this.lecture);
     });
   }
-  slugify() {
-    this.editForm.get(['code']).setValue(this.slugifyPipe.transform(this.editForm.get(['name']).value));
-  }
+
   updateSortOrder() {
     if (this.editForm.get(['type']).value === 'chapter') {
       this.editForm.get(['sortOrder']).setValue(this.editForm.get(['oldSortOrder']).value);
@@ -72,6 +73,7 @@ export class LectureManagementUpdateComponent implements OnInit {
       .subscribe(data => this.editForm.get(['sortOrder']).setValue(parseInt(data) + 1));
     }
   }
+
   updateType() {
     if (this.editForm.get(['type']).value === 'chapter') {
       this.editForm.get(['parent']).setValue(null);
@@ -84,6 +86,7 @@ export class LectureManagementUpdateComponent implements OnInit {
       this.editForm.get(['sortOrder']).setValue(this.editForm.get(['oldSortOrder']).value);
     }
   }
+
   private updateForm(lecture: LectureBO): void {
     this.editForm.patchValue({
       id: lecture.id,
@@ -94,9 +97,9 @@ export class LectureManagementUpdateComponent implements OnInit {
       parent: lecture.parentCode ? lecture.parentCode : null,
       sortOrder: lecture.id ? lecture.sortOrder : 0
     });
-    this.selectedFiles = lecture.fileAttachments.map(file => {
+    this.selectedFiles = lecture.fileAttachments ? lecture.fileAttachments.map(file => {
       return {id: file.id, name: file.fileName};
-    });
+    }) : [];
     this.idDeletedFile = [];
     this.route
       .queryParams
@@ -142,7 +145,9 @@ export class LectureManagementUpdateComponent implements OnInit {
   previousState() {
     window.history.back();
   }
+
   get f() { return this.editForm.controls; }
+
   save() {
     this.isSaving = true;
     if (this.editForm.invalid) {
@@ -155,7 +160,9 @@ export class LectureManagementUpdateComponent implements OnInit {
       }
     });
   }
+
   confirm() {
+    this.loading = true;
     const formdata: FormData = new FormData();
     formdata.append('videoFile', this.selectedVideos ? this.selectedVideos.item(0) : null);
     if (this.selectedFiles.length === 0) {
@@ -168,7 +175,7 @@ export class LectureManagementUpdateComponent implements OnInit {
         }
       }
     }
-    formdata.append('lectureDTO', new Blob([JSON.stringify(this.updateCourseLecture())], {
+    formdata.append('lectureDTO', new Blob([JSON.stringify(this.updateLecture())], {
       type: 'application/json'
     }));
     if (this.lecture.id !== null) {
@@ -180,8 +187,9 @@ export class LectureManagementUpdateComponent implements OnInit {
       this.lectureService.create(formdata).subscribe(response => this.onSaveSuccess(response), (error) => this.onSaveError(error));
     }
   }
-  private updateCourseLecture() {
-    const courseTmp = {
+
+  private updateLecture() {
+    const lectureTmp = {
       id : this.lecture.id,
       code : this.editForm.get(['code']).value,
       name : this.editForm.get(['name']).value,
@@ -193,10 +201,14 @@ export class LectureManagementUpdateComponent implements OnInit {
       parentCode : this.editForm.get(['parent']).value,
       sortOrder : this.editForm.get(['sortOrder']).value,
     };
-    if (!this.lecture.id) { delete courseTmp.id; }
-    if (!courseTmp.parentCode) { delete courseTmp.parentCode; }
-    return courseTmp;
+    if (!this.lecture.id) {
+      delete lectureTmp.id;
+      lectureTmp.code = this.slugifyPipe.transform(this.editForm.get(['name']).value);
+    }
+    if (!lectureTmp.parentCode) { delete lectureTmp.parentCode; }
+    return lectureTmp;
   }
+
   onVideoChange(event) {
     if (
         event.target.files[0].name.endsWith('.avi') ||
@@ -252,6 +264,7 @@ export class LectureManagementUpdateComponent implements OnInit {
   }
   private onSaveSuccess(result) {
     this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
+    this.loading = false;
     setTimeout(() => {
       this.previousState();
     }, 1200);
@@ -259,6 +272,7 @@ export class LectureManagementUpdateComponent implements OnInit {
 
   private onSaveError(err) {
     this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
+    this.loading = false;
     this.isSaving = false;
   }
 }

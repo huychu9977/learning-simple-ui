@@ -25,6 +25,6 @@ import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
   ],
   providers: [SlugifyPipe, DialogService],
   entryComponents: [ListLectureComponent, QuestionModalComponent],
-  exports: [LectureManagementComponent]
+  exports: [LectureManagementComponent, LectureManagementUpdateComponent, QuizComponent]
 })
 export class LectureManagementModule { }

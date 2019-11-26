@@ -15,6 +15,7 @@ import { MessageService, DialogService } from 'primeng/api';
 export class QuizComponent implements OnInit {
     lecture: LectureBO;
     questions: QuestionBO[];
+    loading = false;
     statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
     constructor(
         public dialogService: DialogService,
@@ -34,6 +35,7 @@ export class QuizComponent implements OnInit {
     }
 
     loadAll() {
+        this.loading = true;
         this.questionService.findAll(this.lecture.code)
         .subscribe(
             (res: HttpResponse<QuestionBO[]>) => this.onSuccess(res.body),
@@ -43,6 +45,7 @@ export class QuizComponent implements OnInit {
 
     private onSuccess(data) {
         this.questions = data;
+        this.loading = false;
     }
 
     handleChange(evt, answer: any, question?: QuestionBO) {
@@ -59,6 +62,7 @@ export class QuizComponent implements OnInit {
     }
 
     save() {
+        this.loading = true;
         if (this.questions.length > 0) {
             this.questionService.update(this.lecture.code, this.questions)
             .subscribe(
@@ -70,12 +74,14 @@ export class QuizComponent implements OnInit {
 
     private onSaveSuccess(result) {
         this.messageService.add({severity: 'success', summary: 'Thao tác thành công!'});
+        this.loading = false;
         setTimeout(() => {
             this.previousState();
         }, 1200);
     }
     private onSaveError() {
         this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!'});
+        this.loading = false;
     }
 
     open(q?: QuestionBO) {

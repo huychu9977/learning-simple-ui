@@ -2,7 +2,7 @@
         <div>
             <div class="">
                 <div class="row m-0">
-                    <div class="input-group mb-4 col-md-6 pl-0">
+                    <div class="input-group offset-md-6 col-md-6 pr-0">
                         <input [(ngModel)]="keyword" name="keyword" placeholder="Mã / Tên khóa học" class="form-control rounded-0" type="text">
                         <div class="input-group-append">
                             <button class="btn btn-dark" type="button" (click)="search()">
@@ -28,7 +28,7 @@
                         </thead>
                         <tbody *ngIf="courses.length === 0">
                             <tr>
-                                <td colspan="6" class="text-center">Bạn chưa tạo khóa học.</td>
+                                <td colspan="7" class="text-center">Bạn chưa tạo khóa học.</td>
                             </tr>
                         </tbody>
                         <tbody *ngIf="courses.length > 0" class="text-center">
@@ -50,7 +50,7 @@
                                 </td>
                                 <td class="text-center">
                                     <div class="btn-group flex-btn-group-container">
-                                        <button type="submit" [routerLink]="[ course.code, 'lecture']" class="btn btn-success btn-sm">
+                                        <button type="submit" [routerLink]="[ course.code, 'lectures']" class="btn btn-success btn-sm">
                                             <span class="d-none d-md-inline" [translate]="'courseManagement.chapter'">chapter</span>
                                             <strong>({{course.totalLecture}})</strong>
                                         </button>
@@ -88,3 +88,4 @@
         </div>
     </div>
     <p-toast></p-toast>
+    <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

@@ -1,104 +1,93 @@
 <div class="animated fadeIn">
-    <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3><span [translate]="'lectureManagement.home.chapter.title'"></span></h3>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <button type="button" class="btn btn-sm btn-default" (click)="previousState()">Quay lại</button>
-                                    <button id="jh-create-entity"
-                                            class="btn btn-sm btn-primary ml-2"
-                                            [routerLink]="['new']" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
-                                        <span [translate]="'lectureManagement.home.chapter.createLabel'">Tạo mới</span>
-                                    </button>
-                                </div>
-                                <div class="col-sm-2 col-lg-4"></div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="input-group" *ngIf="courseLectures?.length > 0">
-                                        <input type="text" class="form-control" [(ngModel)]="keyword" (input)="search($event.target.value)"
-                                               placeholder="..."/>
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="pi pi-search"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
+    <div class="card-body">
+        <div class="row">
+            <div class="col-sm-12">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <button type="button" class="btn btn-sm btn-default" (click)="previousState()">Quay lại</button>
+                        <button id="jh-create-entity"
+                                class="btn btn-sm btn-primary ml-2"
+                                [routerLink]="['create']" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
+                            <span [translate]="'lectureManagement.home.chapter.createLabel'">Tạo mới</span>
+                        </button>
+                    </div>
+                    <div class="col-sm-2 col-lg-4"></div>
+                    <div class="col-sm-6 col-lg-4">
+                        <div class="input-group">
+                            <input type="text" class="form-control" [(ngModel)]="keyword" class="form-control rounded-0" (input)="search($event.target.value)"
+                                   placeholder="Mã / Tên chuơng học..."/>
+                            <div class="input-group-append">
+                                <button class="btn btn-dark" type="button" (click)="search()">
+                                    <i class="fa fa-search"></i>
+                                </button>
                             </div>
-                            <br/>
-                            <h1 class="text-center text-danger" *ngIf="courseLectures?.length === 0">Không có chương học nào</h1>
-                            <table class="table table-striped text-center" *ngIf="courseLectures?.length > 0">
-                                <thead>
-                                <tr>
-                                    <th>STT</th>
-                                    <th>Trạng thái</th>
-                                    <th [translate]="'lectureManagement.code'">code</th>
-                                    <th [translate]="'lectureManagement.name'">name</th>
-                                    <!-- <th><span [translate]="'lectureManagement.active'">Active</span></th> -->
-                                    <th [translate]="'lectureManagement.home.lecture.title'">Action</th>
-                                    <th [translate]="'lectureManagement.action'">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr *ngFor="let lecture of courseLectures;">
-                                    <td>{{lecture.sortOrder}}</td>
-                                    <td>
-                                       <strong><span class="badge badge-danger">{{lecture.status | statusText}}</span></strong>
-                                    </td>
-                                    <td>{{lecture.code}}</td>
-                                    <td>{{lecture.name}}</td>
-                                    <!-- <td>
-                                        <button class="btn btn-danger btn-sm" (click)="setActive(lecture, true)"
-                                                *ngIf="!lecture.activated"
-                                                [translate]="'lectureManagement.deactivated'">Deactivated
-                                        </button>
-                                        <button class="btn btn-success btn-sm" (click)="setActive(lecture, false)"
-                                                *ngIf="lecture.activated"
-                                                
-                                                [translate]="'lectureManagement.activated'">Activated
-                                        </button>
-                                    </td> -->
-                                    <td class="text-center">
-                                        <div class="btn-group flex-btn-group-container">
-                                            <button type="button" (click)="openModal(lecture)"
-                                                    class="btn btn-info btn-sm color-white">
-                                                <span class="d-none d-md-inline" [translate]="'lectureManagement.detail.title'">detail</span>
-                                                <strong>({{lecture.lectures?.length}})</strong>
-                                            </button>
-                                        </div>
-                                    </td>
-                                    <td class="text-center">
-                                        <div class="btn-group flex-btn-group-container">
-                                            <button type="submit"
-                                                    [routerLink]="[ lecture.code, 'view']"
-                                                    class="btn btn-info btn-sm color-white">
-                                                <span class="d-none d-md-inline" [translate]="'entity.action.view'">View</span>
-                                            </button>
-                                            <button type="submit"
-                                                    [routerLink]="[ lecture.code, 'edit']"
-                                                    queryParamsHandling="merge"
-                                                    class="btn btn-primary btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1 && statusCanNotEditAndDelete.indexOf(lecture.status) === -1">
-                                                <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
-                                            </button>
-                                            <button type="button" (click)="deleteLecture(lecture)"
-                                                    class="btn btn-danger btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1 && statusCanNotEditAndDelete.indexOf(lecture.status) === -1">
-                                                <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="row justify-content-center w-100" *ngIf="courseLectures && courseLectures.length">
-                            <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
                         </div>
                     </div>
                 </div>
+                <br/>
+                <table class="table table-bordered" style="position: relative;" [el-loading]="loading">
+                    <thead class="thead-dark text-center">
+                    <tr>
+                        <th>STT</th>
+                        <th>Trạng thái</th>
+                        <th [translate]="'lectureManagement.code'">code</th>
+                        <th [translate]="'lectureManagement.name'">name</th>
+                        <th [translate]="'lectureManagement.active'">Active</th>
+                        <th [translate]="'lectureManagement.home.lecture.title'">Action</th>
+                        <th [translate]="'lectureManagement.action'">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody *ngIf="lectures?.length === 0">
+                        <tr>
+                            <td colspan="7" class="text-center">Bạn chưa tạo chuơng học.</td>
+                        </tr>
+                    </tbody>
+                    <tbody *ngIf="lectures?.length > 0">
+                    <tr *ngFor="let lecture of lectures;">
+                        <td>{{lecture.sortOrder}}</td>
+                        <td>
+                           <strong><span class="badge badge-danger">{{lecture.status | statusText}}</span></strong>
+                        </td>
+                        <td>{{lecture.code}}</td>
+                        <td>{{lecture.name}}</td>
+                        <td>
+                            <label class="switch switch-label switch-success">
+                                <input type="checkbox" class="switch-input" name="activated" [(ngModel)]="lecture.activated" (change)="setActive(lecture)">
+                                <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                            </label>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group flex-btn-group-container">
+                                <button type="button" (click)="openModal(lecture)"
+                                        class="btn btn-info btn-sm color-white">
+                                    <span class="d-none d-md-inline" [translate]="'lectureManagement.detail.title'">detail</span>
+                                    <strong>({{lecture.lectures?.length}})</strong>
+                                </button>
+                            </div>
+                        </td>
+                        <td class="text-center">
+                            <div class="btn-group flex-btn-group-container">
+                                <button type="submit"
+                                        [routerLink]="[ lecture.code, 'edit']"
+                                        queryParamsHandling="merge"
+                                        class="btn btn-primary btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1 && statusCanNotEditAndDelete.indexOf(lecture.status) === -1">
+                                    <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
+                                </button>
+                                <button type="button" (click)="deleteLecture(lecture)"
+                                        class="btn btn-danger btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1 && statusCanNotEditAndDelete.indexOf(lecture.status) === -1">
+                                    <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="row justify-content-end w-100" *ngIf="lectures && lectures.length > 0">
+                <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
             </div>
         </div>
     </div>
 </div>
+<p-toast></p-toast>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { LectureBO } from 'src/app/models/lectureBO.model';
 import { LectureService } from 'src/app/services/lecture.service';
 import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
-import { DynamicDialogConfig, DynamicDialogRef, MessageService } from 'primeng/api';
+import { DynamicDialogConfig, DynamicDialogRef, MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'list-lecture',
@@ -20,9 +20,10 @@ export class ListLectureComponent implements OnInit {
     page: any = 1;
     keyword = '';
     href?: string;
-
     statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
+
     constructor(
+        private confirmationService: ConfirmationService,
         private messageService: MessageService,
         private lectureService: LectureService,
         public ref: DynamicDialogRef,
@@ -39,13 +40,14 @@ export class ListLectureComponent implements OnInit {
     clear() {
         this.ref.close();
     }
+
     goToLink(code?: string, href?: string) {
         this.clear();
         const link = (code !== 'null') ? `${this.href}/${code}/${href}` : `${this.href}/${href}`;
         this.router.navigate([link], { queryParams: { parentCode: this.lecture.code } });
     }
-    setActive(lecture?: LectureBO, isActivated?: boolean) {
-        lecture.activated = isActivated;
+
+    setActive(lecture?: LectureBO) {
         this.lectureService.setActive(lecture).subscribe(response => {
             if (response.status === 200) {
                 this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Cập nhật trạng thái thành công!'});
@@ -67,8 +69,18 @@ export class ListLectureComponent implements OnInit {
         this.loadAll();
     }
 
-    deleteLecture() {
-
+    deleteLecture(lecture?: LectureBO) {
+        this.confirmationService.confirm({
+            message: 'Đồng ý thực hiện thao tác này?',
+            accept: () => {
+                this.lectureService.delete(lecture.code).subscribe(res => {
+                    this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Xoá khóa học thành công!'});
+                },
+                err => {
+                    this.messageService.add({severity: 'error', detail: err.error.message});
+                });
+            }
+        });
     }
 
     loadAll() {

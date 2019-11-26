@@ -1,22 +1,37 @@
 <div style="margin-top: 70px;">
     <banner-image [imageSrc]="'../../../assets/images/main/02_about_us_Banner.png'"></banner-image>
 </div>
-<section class="d-flex pt-5">
+<section class="d-flex">
     <nav class="d-flex menu-left">
         <ul>
-            <li [routerLink]="['/instructor/courses']" routerLinkActive="active">Danh sách khóa học</li>
-            <li [routerLink]="['/instructor/courses/create']" routerLinkActive="active">Tạo mới khoá học</li>
+            <li [routerLink]="['/instructor/courses']" routerLinkActive="active">
+              <i class="fa fa-address-book"></i>
+              <span>Danh sách khóa học</span>
+            </li>
+            <li [routerLink]="['/instructor/courses/create']" routerLinkActive="active">
+              <i class="fa fa-trash"></i>
+              <span>Tajo moi khóa học</span>
+            </li>
             <li>1</li>
             <li>1</li>
         </ul>
 
     </nav>
-    <main class="w-100 mr-3">
-      <div *ngIf="!action">
+    <main class="w-100 mr-3 pt-5 pl-3" style="margin-left: 60px;">
+      <div *ngIf="currentPage === 'courses'">
         <course-management></course-management>
       </div>
-      <div *ngIf="action === 'create' || action === 'edit'">
+      <div *ngIf="currentPage === 'courses_update'">
         <course-management-update></course-management-update>
+      </div>
+      <div *ngIf="currentPage === 'lectures'">
+        <lecture-management></lecture-management>
+      </div>
+      <div *ngIf="currentPage === 'lectures_update'">
+        <lecture-management-update></lecture-management-update>
+      </div>
+      <div *ngIf="currentPage === 'lectures_quiz'">
+        <lecture-quiz></lecture-quiz>
       </div>
     </main>
 </section>
