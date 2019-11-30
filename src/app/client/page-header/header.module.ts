@@ -1,18 +1,19 @@
 import { UserHeaderModule } from './../../core/user-header/user-header.module';
 import { RouterModule } from '@angular/router';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { HeaderComponent } from './header.component';
 import {TieredMenuModule} from 'primeng/tieredmenu';
+import {AutoCompleteModule} from 'primeng/autocomplete';
+import { SharedLibsModule } from 'src/app/shared/shared-libs.module';
+
 @NgModule({
     declarations: [HeaderComponent],
     imports: [
-      CommonModule,
       RouterModule,
-      FormsModule,
       TieredMenuModule,
-      UserHeaderModule
+      AutoCompleteModule,
+      UserHeaderModule,
+      SharedLibsModule
     ],
     exports: [HeaderComponent]
   })

@@ -45,7 +45,7 @@ export const courseMgmtState: Routes = [
         }
     },
     {
-        path: 'course-management/:code/edit',
+        path: 'course-management/edit/:code',
         component: CourseManagementUpdateComponent,
         resolve: {
             course: CourseMgmtResolve

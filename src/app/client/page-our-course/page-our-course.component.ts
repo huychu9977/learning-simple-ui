@@ -86,6 +86,10 @@ export class PageOurCourseComponent implements OnInit {
   parents: any[];
   levels: any[];
   rates: any[] = [];
+  data: any[] = [
+    {name: 'Trang chủ', url: 'home', active: false},
+    {name: 'Khóa học', url: 'courses', active: true}
+  ];
 
   constructor(
     private location: Location,

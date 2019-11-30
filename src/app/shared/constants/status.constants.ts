@@ -1,3 +1,9 @@
-export const STATUS_CAN_NOT_EIDT_DELETE = [2, 8];
-export const STATUS_CAN_EIDT_DELETE = [0, 1, 4, 3, 5];
-export const STATUS_NEED_CHECK = [1, 4];
+export const CREATE = 'CREATE';
+export const UPDATE = 'UPDATE';
+export const CHECKING = 'CHECKING';
+export const WAIT_CHECK = 'WAIT_CHECK';
+export const SUCCESS = 'SUCCESS';
+export const ERROR = 'ERROR';
+export const STATUS_CAN_NOT_EIDT_DELETE = [WAIT_CHECK, CHECKING];
+export const STATUS_CAN_EIDT_DELETE = [CREATE, UPDATE, SUCCESS, ERROR];
+export const STATUS_NEED_CHECK = [CREATE, UPDATE];

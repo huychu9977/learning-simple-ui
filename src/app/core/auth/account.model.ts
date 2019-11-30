@@ -7,6 +7,7 @@ export class Account {
         public username: string,
         public phone: string,
         public address: string,
-        public imageUrl: string
+        public imageUrl: string,
+        public status: boolean
     ) {}
 }

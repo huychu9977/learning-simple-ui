@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import { CREATE, CHECKING, ERROR, UPDATE, SUCCESS, WAIT_CHECK } from '../constants/status.constants';
 
 @Pipe({
     name: 'statusText'
@@ -6,35 +7,26 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 export class StatusText implements PipeTransform {
 
-    transform(value: any): string {
-        if (value === null) { return ''; }
-        // tslint:disable-next-line:radix
-        value = parseInt(value);
+    transform(value: string): string {
+        if (!value) { return ''; }
         switch (value) {
-            case 1 : {
+            case CREATE : {
                 return 'Mới tạo';
             }
-            case 2 : {
+            case CHECKING : {
                 return 'Đang duyệt';
             }
-            case 3 : {
-                return 'Cảnh báo';
+            case ERROR : {
+                return 'Lỗi';
             }
-            case 4 : {
+            case UPDATE : {
                 return 'Mới cập nhật';
             }
-            case 5 : {
+            case SUCCESS : {
                 return 'Kích hoạt';
             }
-            case 8 : {
+            case WAIT_CHECK : {
                 return 'Chờ duyệt';
-            }
-            case 9 :
-                case 10: {
-                    return 'Chờ kích hoạt';
-            }
-            case 0 : {
-                return 'CHƯA ĐC KIỂM TRA';
             }
         }
         return '';

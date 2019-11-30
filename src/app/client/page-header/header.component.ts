@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CategoryService } from 'src/app/services/category.service';
 import { PageReloadService } from 'src/app/core/auth/page-reload.service';
+import { CourseService } from 'src/app/services/course.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -13,12 +14,14 @@ import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 export class HeaderComponent implements OnInit {
   categories: any[];
   parents: any[];
-  keyword: '';
+  keyword: any = '';
   items = [];
+  results = [];
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private page: PageReloadService,
+    private courseService: CourseService,
     private categoryService: CategoryService) { }
 
   ngOnInit() {
@@ -27,11 +30,29 @@ export class HeaderComponent implements OnInit {
       this.keyword = params.keyword || '';
     });
   }
-  search() {
-    if (this.keyword !== '') {
+  suggestSearch(event) {
+    this.courseService.queryCourseSuggest(event.query).subscribe(res => {
+      this.results = [event.query, ...res];
+    });
+  }
+  goToLink(code) {
+    if (code) {
+      this.router.navigate(['/course', code]);
+    } else {
       this.router.navigate(['/courses'], {
         queryParams: {keyword: this.keyword}
       });
+    }
+  }
+  search() {
+    if (this.keyword !== '') {
+      if (!this.keyword.hasOwnProperty('code')) {
+        this.router.navigate(['/courses'], {
+          queryParams: {keyword: this.keyword}
+        });
+      } else {
+        this.router.navigate(['/course', this.keyword.code]);
+      }
     } else {
       this.router.routeReuseStrategy.shouldReuseRoute = () => false;
       this.router.onSameUrlNavigation = 'reload';

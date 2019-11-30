@@ -28,6 +28,8 @@
             "name":"Name",
             "createLabel":"Create a new required"
         },
+        "isShowOnTop": "Is shown on top",
+        "accessType": "Access Type",
         "enrolled": "Student",
         "editMore":"Edit More",
         "chapter":"Chapter",
@@ -304,7 +306,8 @@
          "image_url":"Event Logo"
       },
       "totalUserJoin": "Total User Enroll",
-      "date": "Date",
+      "start": "Start",
+      "end": "End",
       "image":"Image",
       "action":"Action",
       "active":"Active",

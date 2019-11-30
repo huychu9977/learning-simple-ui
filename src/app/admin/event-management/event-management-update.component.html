@@ -15,12 +15,30 @@
                                         <input type="hidden" class="form-control" name="id" formControlName="id" readonly>
                                     </div>
                     
+                                    <div class="row selectFile">
+                                        <div class="col-md-12 text-center" *ngIf="imageUrl !=null">
+                                            <img class="img-fluid" style="width: 250px ; height: 200px;" src="{{imageUrl}}" alt="Ảnh đại diện" />
+                                        </div>
+                                        <div class="col-md-12 text-center mt-3">
+                                            <span class="btn btn-success btn-file">
+                                                <strong [translate]="'eventManagement.image'"></strong> 
+                                                <i class="ml-2 fa fa-camera" aria-hidden="true"></i>
+                                                <input type="file" accept="image/x-png,image/jpeg" class="form-control" name="imageFile" id="fileImage" (change)="onFileChange($event)">
+                                            </span>
+                                        </div>
+                                    </div>
                                     <div class="row">
-                                        <fieldset class="form-group col-md-6">
+                                        <fieldset class="form-group col-md-12" *ngIf="event.id">
+                                            <label [translate]="'eventManagement.code'">code</label>
+                                            <div class="input-group">
+                                                <input readonly="true" class="form-control" id="code" name="code" [placeholder]="'eventManagement.placeholder.code' | translate" type="text" formControlName="code">
+                                                
+                                            </div>
+                                        </fieldset>
+                                        <fieldset class="form-group col-md-12">
                                             <label [translate]="'eventManagement.title'">title</label>
                                             <div class="input-group">
-                                                <input *ngIf="event.id" class="form-control" id="title" name="title" type="text" [placeholder]="'eventManagement.placeholder.title' | translate" formControlName="title">
-                                                <input *ngIf="!event.id" (input)="slugify($event.target.value)" class="form-control" id="title" name="title" type="text" [placeholder]="'eventManagement.placeholder.title' | translate" formControlName="title">
+                                                <input class="form-control" id="title" name="title" type="text" [placeholder]="'eventManagement.placeholder.title' | translate" formControlName="title">
                                             </div>
                                             <div *ngIf="editForm.get('title').invalid && (editForm.get('title').dirty || editForm.get('title').touched) || isSaving && f['title'].errors">
                                                 <small class="form-text text-danger"
@@ -29,19 +47,17 @@
                                                 </small>
                                             </div>
                                         </fieldset>
-                                        <fieldset class="form-group col-md-6">
-                                            <label [translate]="'eventManagement.code'">code</label>
-                                            <div class="input-group">
-                                                <input readonly="true" class="form-control" id="code" name="code" [placeholder]="'eventManagement.placeholder.code' | translate" type="text" formControlName="code">
-                                                
-                                            </div>
-                                        </fieldset>
                                     </div>
                                     <div class="row">
                                         <fieldset class="form-group col-md-6">
                                             <label [translate]="'eventManagement.startDate'">startDate</label>
                                             <div class="input-group">
-                                                <p-calendar class="w-100" styleClass="w-100" inputStyleClass="w-100" [placeholder]="'eventManagement.placeholder.startDate' | translate" formControlName="startDate" [showTime]="true"></p-calendar>
+                                                <p-calendar class="w-100" styleClass="w-100" inputStyleClass="w-100" dateFormat="dd/mm/yy" [placeholder]="'eventManagement.placeholder.startDate' | translate" formControlName="startDate" [showTime]="true"></p-calendar>
+                                            </div>
+                                            <div *ngIf="editForm.get('startDate').invalid && (editForm.get('startDate').dirty || editForm.get('startDate').touched) || isSaving && f['startDate'].errors">
+                                               <small class="form-text text-danger" *ngIf="f['startDate'].errors.required" [translate]="'entity.validation.required'">
+                                                    Yêu cầu nhập.
+                                               </small>
                                             </div>
                                         </fieldset>
                                         <fieldset class="form-group col-md-6">
@@ -52,6 +68,28 @@
                                         </fieldset>
                                     </div>
                                     <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label [translate]="'courseManagement.isShowOnTop'">isShowOnTop</label>
+                                            <ng-select [items]="showOnTops" placeholder="Chọn ..." bindValue="id" bindLabel="title" [multiple]="false" [searchable]="false" formControlName='isShowOnTop' class="form-control" required>
+                                            </ng-select>
+                                            <div *ngIf="editForm.get('isShowOnTop').invalid && (editForm.get('isShowOnTop').dirty || editForm.get('isShowOnTop').touched) || isSaving && f['isShowOnTop'].errors">
+                                               <small class="form-text text-danger" *ngIf="f['isShowOnTop'].errors.required" [translate]="'entity.validation.required'">
+                                               Yêu cầu nhập.
+                                               </small>
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label [translate]="'courseManagement.accessType'">accessType</label>
+                                            <ng-select [items]="accessTypes" placeholder="Chọn ..." bindValue="code" bindLabel="title" [multiple]="false" [searchable]="false" formControlName='accessType' class="form-control" required>
+                                            </ng-select>
+                                            <div *ngIf="editForm.get('accessType').invalid && (editForm.get('accessType').dirty || editForm.get('accessType').touched) || isSaving && f['accessType'].errors">
+                                               <small class="form-text text-danger" *ngIf="f['accessType'].errors.required" [translate]="'entity.validation.required'">
+                                                    Yêu cầu nhập.
+                                               </small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
                                         <fieldset class="form-group col-md-12">
                                             <label [translate]="'eventManagement.createdAt'">createdAt</label>
                                             <div class="input-group">
@@ -60,33 +98,6 @@
                                         </fieldset>
                                     </div>
                                     <div class="row py-3"></div>
-                                    <div class="row selectFile">
-                                        <div class="col-md-5">
-                                            <div class="col-md-12 text-center" *ngIf="imageUrl !=null">
-                                                <img class="img-fluid" width="150" src="{{imageUrl}}" alt="Ảnh đại diện" />
-                                            </div>
-                                            <div class="col-md-12 text-center mt-3">
-                                                <span class="btn btn-success btn-file">
-                                                    <strong [translate]="'eventManagement.image'"></strong> 
-                                                    <i class="ml-2 fa fa-camera" aria-hidden="true"></i>
-                                                    <input type="file" accept="image/x-png,image/jpeg" class="form-control" name="imageFile" id="fileImage" (change)="onFileChange($event)">
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-4">
-                                            <div class="row justify-content-center" style="position: relative; top: 25%;">
-                                                <div class="col-md-6">
-                                                    <label style="margin-top: 2px;" [translate]="'eventManagement.activated'">activated</label>
-                                                </div>
-                                                <div class="col-md-6">
-                                                    <label class="switch switch-label switch-success">
-                                                        <input type="checkbox" class="switch-input" checked id="activated" name="activated"  formControlName="activated">
-                                                        <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
-                                                    </label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
                                     
                                     <div class="row py-3"></div>
                                     <div class="row">
@@ -102,7 +113,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div>
+                                <div class="d-flex justify-content-end">
                                     <button type="button" class="btn btn-secondary" (click)="previousState()">
                                         <span [translate]="'entity.action.cancel'">Cancel</span>
                                     </button>

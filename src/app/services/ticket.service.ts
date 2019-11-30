@@ -9,8 +9,8 @@ export class TicketService {
 
     constructor(private http: HttpClient) {}
 
-    findAllByStatus(statusId?: any): Observable<any[]> {
-        return this.http.get<any[]>(`${this.resourceUrl}/${statusId}`);
+    findAllByStatus(statusCode?: string): Observable<any[]> {
+        return this.http.get<any[]>(`${this.resourceUrl}/${statusCode}`);
     }
 
     findByFollowByAndLectureId(lectureId?: any): Observable<any> {
@@ -29,8 +29,8 @@ export class TicketService {
         return this.http.put<any>(`${this.resourceUrl}/course`, body, { observe: 'response' });
     }
 
-    changeTicketStatus(ticketId?: any, statusId?: any): Observable<boolean> {
-        return this.http.put<boolean>(`${this.resourceUrl}?ticketId=${ticketId}&newStatusId=${statusId}`, {observe: 'response' });
+    changeTicketStatus(ticketId?: any, statusCode?: string): Observable<boolean> {
+        return this.http.put<boolean>(`${this.resourceUrl}?ticketId=${ticketId}&newStatusCode=${statusCode}`, {observe: 'response' });
     }
 
 }

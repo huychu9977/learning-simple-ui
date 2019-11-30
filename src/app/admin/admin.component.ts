@@ -1,4 +1,3 @@
-import { JhiLanguageHelper } from './../core/language/language.helper';
 import { navItems } from './_nav';
 import { Component, OnInit } from '@angular/core';
 import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
@@ -16,7 +15,6 @@ export class AdminComponent implements OnInit {
   public navItems = navItems;
   public route;
   constructor(
-    private languageHelper: JhiLanguageHelper,
     private translateService: TranslateService,
     private loginService: LoginService,
     private principal: AccountService,
@@ -28,9 +26,6 @@ export class AdminComponent implements OnInit {
       });
   }
   ngOnInit(): void {
-    // this.languageHelper.getAll().then(languages => {
-    //   this.languages = languages;
-    // });
     this.translateMenu();
   }
   logout() {

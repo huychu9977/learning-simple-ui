@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, HostListener, AfterContentInit, AfterContentChecked } from '@angular/core';
+
 
 @Component({
     // tslint:disable-next-line:component-selector
@@ -7,7 +8,6 @@ import { Component } from '@angular/core';
     styleUrls: ['footer.component.scss']
 })
 export class FooterComponent {
-
   images?: any[] = [
     {
       id: 1, // id of slide
@@ -52,4 +52,27 @@ export class FooterComponent {
       content: 'content 3'
     }
   ];
+
+  constructor() { }
+
+  @HostListener('window:scroll', []) onWindowScroll() {
+    this.scrollFunction();
+  }
+  // When the user scrolls down 20px from the top of the document, show the button
+  scrollFunction() {
+    if (window.pageYOffset < document.body.scrollHeight * 0.6) {
+        document.getElementById('myBtn').style.visibility = 'hidden';
+        document.getElementById('myBtn').style.opacity = '0';
+    } else {
+      document.getElementById('myBtn').style.visibility = 'visible';
+      document.getElementById('myBtn').style.opacity = '1';
+    }
+  }
+
+  goToTop() {
+    window.scrollTo({
+      top: 100,
+      behavior: 'smooth',
+    });
+  }
 }

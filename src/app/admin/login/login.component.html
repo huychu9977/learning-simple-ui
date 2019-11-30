@@ -6,8 +6,8 @@
             <div class="card-group">
               <div class="card p-4">
                 <div class="card-body">
-                  <div class="alert alert-danger" *ngIf="authenticationError" [translate]="'login.messages.error.authentication'">
-                      <strong>Failed to sign in!</strong> Please check your credentials and try again.
+                  <div class="alert alert-danger" *ngIf="authenticationError" [innerHTML]="'login.messages.error.authentication' | translate">
+                      
                   </div>
                   <form role="form" (ngSubmit)="login()" [formGroup]="loginForm">
                     <h1 [translate]="'login.title'">Login</h1>

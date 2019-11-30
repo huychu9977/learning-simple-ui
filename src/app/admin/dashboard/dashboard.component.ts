@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { TicketService } from 'src/app/services/ticket.service';
 import { AccountService } from 'src/app/core/auth/account.service';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user.service';
+import { QUESTION_BECOME_INSTRUCTOR } from 'src/app/shared/constants/instructor-question-become.constants';
+import { MessageService } from 'primeng/api';
+import { CHECKING, WAIT_CHECK, ERROR, SUCCESS } from 'src/app/shared/constants/status.constants';
 @Component({
   selector: 'dashboard',
   templateUrl: './dashboard.component.html',
@@ -14,9 +18,14 @@ export class DashboardComponent implements OnInit {
   ticketSuccess = [];
   ticketError = [];
   currentAccount: any;
+  userDetail: any;
+  userPreview = false;
+  quickQuestion = QUESTION_BECOME_INSTRUCTOR;
 
   constructor(
     private router: Router,
+    private userService: UserService,
+    private messageService: MessageService,
     private accountService: AccountService,
     private ticketService: TicketService) { }
   ngOnInit() {
@@ -26,44 +35,44 @@ export class DashboardComponent implements OnInit {
     });
   }
   loadAll() {
-    this.loadTicketNeedCheck();
+    this.loadTicketWaitCheck();
     this.loadTicketCheking();
-    this.loadTicketWarning();
+    this.loadTicketError();
     this.loadTicketSuccess();
   }
   loadTicketSuccess() {
-    this.ticketService.findAllByStatus(5).subscribe(res => {
+    this.ticketService.findAllByStatus(SUCCESS).subscribe(res => {
       this.ticketSuccess = res;
     });
   }
-  loadTicketWarning() {
-    this.ticketService.findAllByStatus(3).subscribe(res => {
+  loadTicketError() {
+    this.ticketService.findAllByStatus(ERROR).subscribe(res => {
       this.ticketWarning = res;
     });
   }
-  loadTicketNeedCheck() {
-    this.ticketService.findAllByStatus(6).subscribe(res1 => {
+  loadTicketWaitCheck() {
+    this.ticketService.findAllByStatus(WAIT_CHECK).subscribe(res1 => {
       this.ticketNeedCheck = res1;
     });
   }
   loadTicketCheking() {
-    this.ticketService.findAllByStatus(2).subscribe(res1 => {
+    this.ticketService.findAllByStatus(CHECKING).subscribe(res1 => {
       this.ticketChecking = res1;
     });
   }
-  changeTicketStatus(ticketId?: any, statusId?: any, statusIdOld?: any) {
-    this.ticketService.changeTicketStatus(ticketId, statusId).subscribe(res => {
+  changeTicketStatus(ticketId?: any, statusCode?: string, statusIdOld?: string) {
+    this.ticketService.changeTicketStatus(ticketId, statusCode).subscribe(res => {
       if (res) {
-        if (statusId === 2 || statusIdOld === 2) {
+        if (statusCode === CHECKING || statusIdOld === CHECKING) {
           this.loadTicketCheking();
         }
-        if (statusIdOld === 6 || statusId === 6) {
-          this.loadTicketNeedCheck();
+        if (statusIdOld === WAIT_CHECK || statusCode === WAIT_CHECK) {
+          this.loadTicketWaitCheck();
         }
-        if (statusIdOld === 3 || statusId === 3) {
-          this.loadTicketWarning();
+        if (statusIdOld === ERROR || statusCode === ERROR) {
+          this.loadTicketError();
         }
-        if (statusIdOld === 5 || statusId === 5) {
+        if (statusIdOld === SUCCESS || statusCode === SUCCESS) {
           this.loadTicketSuccess();
         }
        // this.toastr.success('Chuyển trạng thái thành công!', 'Thành công!');
@@ -73,10 +82,26 @@ export class DashboardComponent implements OnInit {
     });
   }
   goToDetail(ticket?: any) {
+    this.userPreview = false;
+    if (!ticket.courseCode && !ticket.lectureCode && ticket.teacherUsername) {
+      this.userService.find(ticket.teacherUsername).subscribe(res => {
+        this.userDetail = res.body;
+        this.userPreview = true;
+      });
+      return;
+    }
     if (ticket.courseCode && !ticket.lectureCode) {
       this.router.navigate(['admin/course-management', ticket.courseCode, 'view']);
     } else if (ticket.courseCode && ticket.lectureCode) {
       this.router.navigate(['admin/course-management', ticket.courseCode, 'lecture', ticket.lectureCode, 'view']);
     }
+  }
+  acceptUserToTeacher(isAccept: boolean, username: string) {
+    this.userService.updateRoleTeacher(isAccept, username).subscribe(res => {
+      if (res) {
+        this.userPreview = false;
+        this.messageService.add({severity: 'success', detail: 'Thành công!'});
+      }
+    });
   }
 }

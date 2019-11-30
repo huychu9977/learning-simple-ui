@@ -9,6 +9,8 @@ export class EventBO {
         public createdAt?: string,
         public imageUrl?: string,
         public activated?: boolean,
+        public accessType?: string,
+        public isShowOnTop?: boolean,
         public totalUserJoin?: any
     ) {}
 }

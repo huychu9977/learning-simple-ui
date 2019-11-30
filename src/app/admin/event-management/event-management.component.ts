@@ -37,17 +37,15 @@ export class EventManagementComponent implements OnInit {
         this.loadAll();
     }
 
-    setActive(event?: EventBO, isActivated?: boolean) {
-      event.activated = isActivated;
-        // this.eventService.setActive(event).subscribe(response => {
-        //     if (response.status === 200) {
-        //         this.toastr.success('Cập nhật trạng thái thành công!', 'Thành công!');
-        //         this.loadAll();
-        //     } else {
-        //         this.toastr.error('Lỗi!', 'Cập nhật trạng thái thất bại?');
-        //         this.error = 'ERROR';
-        //     }
-        // });
+    setActive(event?: EventBO) {
+        this.eventService.setActive(event).subscribe(response => {
+            if (response.status === 200 && response) {
+                this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Cập nhật trạng thái thành công!'});
+                this.loadAll();
+            } else {
+                console.log('ERROR');
+            }
+        });
     }
 
     loadAll() {

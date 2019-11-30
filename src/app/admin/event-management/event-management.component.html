@@ -32,10 +32,12 @@
                             <table class="table table-striped text-center" *ngIf="events?.length > 0">
                                 <thead>
                                 <tr>
-                                    <th [translate]="'eventManagement.code'">code></th>
+                                    <th [translate]="'eventManagement.image'">image</th>
+                                    <th [translate]="'eventManagement.code'">code</th>
                                     <th [translate]="'eventManagement.title'">title</th>
                                     <th [translate]="'eventManagement.active'">Active</th>
-                                    <th [translate]="'eventManagement.date'">date</th>
+                                    <th [translate]="'eventManagement.start'">start</th>
+                                    <th [translate]="'eventManagement.end'">end</th>
                                     <th [translate]="'eventManagement.totalUserJoin'">totalUserJoin</th>
                                     <th [translate]="'eventManagement.action'">Action</th>
                                 </tr>
@@ -43,32 +45,28 @@
                                 </thead>
                                 <tbody>
                                 <tr *ngFor="let event of events;">
+                                    <td>
+                                        <img [src]="event.imageUrl" width="100" height="50" alt="">
+                                    </td>
                                     <td>{{event.code}}</td>
                                     <td>{{event.title}}</td>
                                     <td>
-                                        <button class="btn btn-danger btn-sm" (click)="setActive(event, true)"
-                                                *ngIf="!event.activated"
-                                                [translate]="'eventManagement.deactivated'">Deactivated
-                                        </button>
-                                        <button class="btn btn-success btn-sm" (click)="setActive(event, false)"
-                                                *ngIf="event.activated"
-                                                [translate]="'eventManagement.activated'">Activated
-                                        </button>
+                                        <label class="switch switch-label switch-success">
+                                            <input type="checkbox" class="switch-input" name="activated" [(ngModel)]="event.activated" (change)="setActive(event)">
+                                            <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                                        </label>
                                     </td>
                                     <td>
                                             {{event?.startDate | date:'dd/MM/yyyy HH:mm' }}
-                                        <br/> - {{event?.endDate | date:'dd/MM/yyyy HH:mm' }}
+                                    </td>
+                                    <td>
+                                            {{event?.endDate | date:'dd/MM/yyyy HH:mm' }}
                                     </td>
                                     <td>
                                         {{event.totalUserJoin}}
                                     </td>
                                     <td class="text-center">
                                         <div class="btn-group flex-btn-group-container">
-                                            <button type="submit"
-                                                    [routerLink]="[ event.code, 'view']"
-                                                    class="btn btn-info btn-sm color-white">
-                                                <span class="d-none d-md-inline" [translate]="'entity.action.view'">View</span>
-                                            </button>
                                             <button type="submit"
                                                     [routerLink]="[ event.code, 'edit']"
                                                     queryParamsHandling="merge"

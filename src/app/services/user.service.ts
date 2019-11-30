@@ -43,4 +43,12 @@ export class UserService {
     roleBOs(): Observable<string[]> {
         return this.http.get<string[]>(SERVER_API_URL + 'api/users/roleBOs');
     }
+
+    requestUpdateRoleTeacher(body): Observable<HttpResponse<boolean>> {
+        return this.http.post<boolean>(this.resourceUrl + '/request-update-role-teacher', body, { observe: 'response' });
+    }
+
+    updateRoleTeacher(isAccept?: boolean, username?: string): Observable<boolean> {
+        return this.http.put<boolean>(this.resourceUrl + '/update-role-teacher/' + username + '/' + isAccept, { observe: 'response' });
+    }
 }

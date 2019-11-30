@@ -7,11 +7,10 @@
                 <div class="alert alert-info" role="alert">
                     <strong>{{ticket?.createdBy}} - {{ticket?.createAt | date:'dd/MM/yyyy'}}</strong>
                     {{ticket?.content}}
-                    <button type="button" class="btn btn-sm btn-danger" (click)="changeTicketStatus(ticket?.id, 2, ticket?.status)">Nhận <i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
+                    <button type="button" class="btn btn-sm btn-danger" (click)="changeTicketStatus(ticket?.id, 'CHECKING', ticket?.status)">Nhận <i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
                 </div>
             </li>
         </ul>
-      
     </div>
     <div class="card">
         <h5 class="card-header bg-danger text-white">Đang kiểm duyệt</h5>
@@ -23,9 +22,9 @@
                     {{ticket?.content}}
                     <strong><span class="badge badge-danger">Bởi: {{ticket?.followBy}}</span></strong>
                     <span *ngIf="currentAccount.username === ticket.followBy">
-                        <button type="button" class="btn btn-sm btn-primary ml-2" (click)="changeTicketStatus(ticket?.id, 6, ticket?.status)"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Trả lại</button>
-                        <button type="button" class="btn btn-sm btn-warning ml-2" (click)="changeTicketStatus(ticket?.id, 3, ticket?.status)"><i style="transform: rotate(-45deg);" class="fa fa-hand-o-left" aria-hidden="true"></i> Cảnh báo</button>
-                        <button type="button" class="btn btn-sm btn-success ml-2" (click)="changeTicketStatus(ticket?.id, 5, ticket?.status)">Kích hoạt <i class="fa fa-hand-o-down" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-sm btn-primary ml-2" (click)="changeTicketStatus(ticket?.id, 'WAIT_CHECK', ticket?.status)"><i class="fa fa-hand-o-left" aria-hidden="true"></i> Trả lại</button>
+                        <button type="button" class="btn btn-sm btn-warning ml-2" (click)="changeTicketStatus(ticket?.id, 'ERROR', ticket?.status)"><i style="transform: rotate(-45deg);" class="fa fa-hand-o-left" aria-hidden="true"></i> Cảnh báo</button>
+                        <button type="button" class="btn btn-sm btn-success ml-2" (click)="changeTicketStatus(ticket?.id, 'SUCCESS', ticket?.status)">Kích hoạt <i class="fa fa-hand-o-down" aria-hidden="true"></i></button>
                         <button type="button" class="btn btn-sm btn-success ml-2" (click)="goToDetail(ticket)"><i class="fa fa-eye" aria-hidden="true"></i> Xem</button>
                     </span>
                 </div>
@@ -42,8 +41,8 @@
                     {{ticket?.content}}
                     <strong><span class="badge badge-warning">Bởi: {{ticket?.followBy}}</span></strong>
                     <span *ngIf="currentAccount.username === ticket.followBy">
-                        <button type="button" class="btn btn-sm btn-danger ml-2" (click)="changeTicketStatus(ticket?.id, 2, ticket?.status)">Trả lại <i style="transform: rotate(-45deg);" class="fa fa-hand-o-right" aria-hidden="true"></i></button>
-                        <button type="button" class="btn btn-sm btn-success ml-2" (click)="changeTicketStatus(ticket?.id, 5, ticket?.status)">Kích hoạt <i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-sm btn-danger ml-2" (click)="changeTicketStatus(ticket?.id, 'CHECKING', ticket?.status)">Trả lại <i style="transform: rotate(-45deg);" class="fa fa-hand-o-right" aria-hidden="true"></i></button>
+                        <button type="button" class="btn btn-sm btn-success ml-2" (click)="changeTicketStatus(ticket?.id, 'SUCCESS', ticket?.status)">Kích hoạt <i class="fa fa-hand-o-right" aria-hidden="true"></i></button>
                     </span>
                 </div>
             </li>
@@ -63,3 +62,52 @@
         </ul>
     </div>
 </div>
+<p-sidebar [(visible)]="userPreview" [fullScreen]="true" [baseZIndex]="10000">
+    <div class="row p-0">
+        <div class="col-md-5 user-preview">
+            <div>
+                <img [src]="userDetail?.imageUrl" alt="Avatar">
+                <span *ngIf="userDetail?.status === true" class="ml-3 badge badge-success"><i class="fa fa-check mr-1"></i>Đã xác nhận</span>
+                <span *ngIf="userDetail?.status === null" class="ml-3 badge badge-danger"><i class="fa fa-check mr-1"></i>Đã từ chối</span>
+            </div>
+            <table class="table mt-3">
+                <tr>
+                    <td><i class="fa fa-user-o" aria-hidden="true"></i></td>
+                    <td>Họ tên:</td>
+                    <td><strong>{{userDetail?.name}}</strong></td>
+                </tr>
+                <tr>
+                    <td><i class="fa fa-mobile" aria-hidden="true"></i></td>
+                    <td>Số điện thoại:</td>
+                    <td><strong>{{userDetail?.phone}}</strong></td>
+                </tr>
+                <tr>
+                    <td><i class="fa fa-envelope-o" aria-hidden="true"></i></td>
+                    <td>Email:</td>
+                    <td><strong>{{userDetail?.email}}</strong></td>
+                </tr>
+                <tr>
+                    <td><i class="fa fa-map-marker" aria-hidden="true"></i></td>
+                    <td>Địa chỉ:</td>
+                    <td><strong>{{userDetail?.address}}</strong></td>
+                </tr>
+                <tr *ngFor="let q of quickQuestion; let i=index">
+                    <td colspan="2">{{q.question}}</td>
+                    <td><strong>{{q.answers[userDetail?.infoAnswers[i] - 1]?.content}}</strong></td>
+                </tr>
+                <tr>
+                    <td colspan="3">
+                        <button type="button" class="btn btn-success mr-1" (click)="acceptUserToTeacher(true, userDetail?.username)"><i class="fa fa-check mr-1"></i>Xác nhận</button>
+                        <button type="button" class="btn btn-danger mr-1" (click)="acceptUserToTeacher(false, userDetail?.username)"><i class="fa fa-times mr-1"></i>Từ chối</button>
+                        <button type="button" (click)="userPreview = false" class="btn btn-secondary">Đóng</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="col-md-7">
+            <pdf-viewer [src]="userDetail?.cvUrl" [render-text]="true" style="display: block;"></pdf-viewer>
+            <button type="button" (click)="userPreview = false" class="btn btn-secondary pull-right">Đóng</button>
+        </div>
+    </div>
+</p-sidebar>
+<p-toast></p-toast>

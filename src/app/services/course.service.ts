@@ -65,6 +65,11 @@ export class CourseService {
     toggleCompletedLecture(lectureId?: any) {
         return this.http.post(`${this.resourceUrl}/employer/lecture-completed/${lectureId}`, { observe: 'response' });
     }
+
+    queryCourseSuggest(keyword?: string): Observable<any[]> {
+        return this.http.get<any[]>(`${this.resourceUrl}/suggest?keyword=${keyword}`);
+    }
+
     // instructor
     queryForInstructor(req?: any): Observable<HttpResponse<CourseBO[]>> {
         const options = createRequestOption(req);

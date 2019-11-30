@@ -1,3 +1,6 @@
+<div class="event-top" *ngIf="events.length > 0">
+
+</div>
 <!--********************
     banner part Start
 ********************-->
@@ -247,97 +250,48 @@ banner part end
 <!--*****************************
     Our Event part start
 **********************-->
-<section id="event">
+<section id="event" *ngIf="events.length > 0">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="section_title">
-                    <h1>Our Events</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidiunt ut labore et dolore magna aliqua.</p>
+                    <h1>Sự kiện đang diễn ra</h1>
+                    <p>Hãy tham gia sự kiện của chúng tôi để có cơ hội gặp các giảng viên nổi tiếng và nhận các phần quà có giá trị. Tham gia ngay nào.</p>
                 </div>
             </div>
         </div>
         <div class="row">
-                <div class="col-lg-6 col-md-12">
-                    <div class="event_bg">
-                        <div class="row event-details-top">
-                            <div class="col-lg-5  col-sm-5 ">
-                                <div class="event-img">
-                                    <img src="../../../../assets/images/main/event2.png" class="w-100" alt="ux">
-                                    <div class="event-img-text">
-                                        <p>15 <span>Nov</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-7 col-sm-7">
-                                <div class="event-text">
-                                    <h3>UI/UX Bootcamp Meetup 2019</h3>
-                                    <p>Lorem ipsum dolor sit amet, consecteturng elit sed do eiusmod temor</p>
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <P class="sem_title"> Seminar Room</P>
-                                    <i class="far fa-clock  icon"></i>
-                                    <P class="sem_title"> 9:00 AM - 1:00 PM</P>
-                                    <div class="">
-                                        <a href="event_details.html">Join Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="event_bg">
-                        <div class="row event-details-top">
-                            <div class="col-lg-5  col-sm-5">
-                                <div class="event-img1">
-                                    <img src="../../../../assets/images/main/event2.png" class="w-100" alt="ux">
-                                    <div class="event-img1-text">
-                                        <p>25 <span>Nov</span></p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-7 col-sm-7">
-                                <div class="event-text">
-                                    <h3>UI/UX Bootcamp Meetup 2019</h3>
-                                    <p>Lorem ipsum dolor sit amet, consecteturng elit sed do eiusmod temor</p>
-                                    <i class="fas fa-map-marker-alt"></i>
-                                    <P class="sem_title"> Seminar Room</P>
-                                    <i class="far fa-clock  icon"></i>
-                                    <P class="sem_title"> 9:00 AM - 1:00 PM</P>
-                                    <div class="">
-                                        <a href="event_details.html">Join Now</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            
-            <div class="col-lg-6 col-md-12">
+            <div class="col-md-6" *ngFor="let event of events">
                 <div class="event_bg">
                     <div class="row event-details-top">
                         <div class="col-lg-5  col-sm-5 ">
                             <div class="event-img">
-                                <img src="../../../../assets/images/main/event2.png" class="w-100" alt="ux">
+                                <img [src]="event?.imageUrl" class="w-100" alt="ux">
                                 <div class="event-img-text">
-                                    <p>15 <span>Nov</span></p>
+                                    <p>{{event.date.day}} <span>{{event.date.month}}</span></p>
                                 </div>
                             </div>
                         </div>
                         <div class="col-lg-7 col-sm-7">
                             <div class="event-text">
-                                <h3>UI/UX Bootcamp Meetup 2019</h3>
-                                <p>Lorem ipsum dolor sit amet, consecteturng elit sed do eiusmod temor</p>
+                                <h3>{{event?.title}}</h3>
+                                <p>{{event?.createdAt}}</p>
                                 <i class="fas fa-map-marker-alt"></i>
-                                <P class="sem_title"> Seminar Room</P>
+                                <P class="sem_title"> Thời gian:</P>
                                 <i class="far fa-clock  icon"></i>
-                                <P class="sem_title"> 9:00 AM - 1:00 PM</P>
-                                <div class="">
-                                    <a href="event_details.html">Join Now</a>
+                                <P class="sem_title">
+                                    {{event?.startDate}}
+                                    - 
+                                    {{event?.endDate}}
+                                </P>
+                                <div class="detail">
+                                    <a href="jascript:void(0)" [routerLink]="[ '/events', event?.code ]">Chi tiết</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="event_bg">
+                <!-- <div class="event_bg">
                     <div class="row event-details-top">
                         <div class="col-lg-5  col-sm-5">
                             <div class="event-img1">
@@ -361,7 +315,7 @@ banner part end
                             </div>
                         </div>
                     </div>
-                </div>
+                </div> -->
             </div>
         </div>
     </div>

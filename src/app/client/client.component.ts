@@ -10,6 +10,6 @@ export class ClientComponent implements OnInit {
     route;
     constructor(
         private router: Router) {this.route = this.router; }
-        ngOnInit(): void {
-        }
+    ngOnInit(): void {
+    }
 }

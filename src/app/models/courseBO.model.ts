@@ -16,7 +16,7 @@ export class CourseBO {
         public modifiedBy?: string,
         public modifiedAt?: any,
         public activated?: boolean,
-        public status?: any,
+        public status?: string,
         public totalLecture?: any,
         public totalObjective?: any,
         public totalRequirement?: any,
@@ -24,5 +24,7 @@ export class CourseBO {
         public objectiveSummaryBOs?: any[],
         public requirementBOs?: any[],
         public lectures?: any[],
+        public ticketFollowBy?: string,
+        public ticketStatus?: string,
     ) {}
 }

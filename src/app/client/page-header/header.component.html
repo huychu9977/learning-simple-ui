@@ -18,7 +18,16 @@
             <div class="header-search">
                 <form>
                     <div class="input-group">
-                        <input [(ngModel)]="keyword" (keyup.enter)="search()" name="keyword" type="text" class="form-control" placeholder="What do you want to learn?"/>
+                        <!-- <input [(ngModel)]="keyword" (keyup.enter)="search()" name="keyword" type="text" class="form-control" placeholder="What do you want to learn?"/> -->
+                        <p-autoComplete placeholder="Tìm kiếm..." [delay]="500" [minLength]="2" [styleClass]="'w-100'" [(ngModel)]="keyword" name="keyword" (keyup.enter)="search()" [suggestions]="results" (completeMethod)="suggestSearch($event)" field="name">
+                            <ng-template let-value pTemplate="item">
+                                <p class="mb-1 px-2 pl-2" (click)="goToLink(value.code)">
+                                    <i [hidden]="!value.code" class="fa fa-file-text-o mr-2" aria-hidden="true"></i>
+                                    <i [hidden]="value.code" class="fa fa-search mr-2" aria-hidden="true"></i>
+                                    <span  innerHTML="{{ (value.name || value) | highlight : keyword}}" style="font-size:16px"></span>
+                                </p>
+                            </ng-template>
+                        </p-autoComplete>
                         <div class="input-group-prepend">
                             <span (click)="search()" class="input-group-text"><i class="fa fa-search"></i></span>
                         </div>

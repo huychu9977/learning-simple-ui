@@ -28,6 +28,8 @@
           "name":"Yêu cầu",
           "createLabel":"Thêm yêu cầu"
        },
+       "isShowOnTop": "Hiển thị đầu trang",
+       "accessType": "Đối tượng",
        "enrolled": "Học viên",
        "editMore":"Nội dung",
        "chapter":"Chương",
@@ -356,8 +358,9 @@
          "activated":"Nhập vào trạng thái",
          "imageUrl":"Nhập vào logo sự kiện"
       },
-      "totalUserJoin": "Số người đã tham gia",
-      "date": "Thời gian",
+      "totalUserJoin": "Đã tham gia",
+      "start": "Bắt đầu",
+      "end": "Kết thúc",
       "image":"Logo sự kiện",
       "action":"Hành động",
       "active":"Hoạt động",

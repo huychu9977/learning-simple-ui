@@ -1,9 +1,10 @@
-import { STATUS_CAN_NOT_EIDT_DELETE, STATUS_NEED_CHECK } from './../../shared/constants/status.constants';
-import { Component, OnInit, OnDestroy, Input } from '@angular/core';
+import { STATUS_CAN_NOT_EIDT_DELETE, CHECKING, STATUS_NEED_CHECK } from './../../shared/constants/status.constants';
+import { Component, OnInit } from '@angular/core';
 import { HttpResponse } from '@angular/common/http';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { CourseService } from 'src/app/services/course.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { AccountService } from 'src/app/core/auth/account.service';
 @Component({
   selector: 'course-management',
   templateUrl: './course-management.component.html',
@@ -17,16 +18,22 @@ export class CourseManagementComponent implements OnInit {
     keyword = '';
     statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
     statusNeedCheck = STATUS_NEED_CHECK;
+    CHECKING = CHECKING;
     loading = false;
+    currentAccount = null;
 
     constructor(
         private messageService: MessageService,
+        private accountService: AccountService,
         private confirmationService: ConfirmationService,
         private courseService: CourseService
     ) {}
 
     ngOnInit() {
-        this.loadAll();
+        this.accountService.identity().then(account => {
+            this.currentAccount = account;
+            this.loadAll();
+        });
     }
     setStatus(courseCode?: string) {
         this.courseService.setStatus(courseCode).subscribe(res => {
@@ -59,12 +66,21 @@ export class CourseManagementComponent implements OnInit {
             size: this.itemsPerPage,
             keyword: this.keyword
         };
-        this.courseService
+        if (this.accountService.hasAuthority('ROLE_ADMIN')) {
+            this.courseService
+            .query(param)
+            .subscribe(
+                (res: HttpResponse<CourseBO[]>) => this.onSuccess(res.body),
+                (res: HttpResponse<any>) => console.log(res.body)
+            );
+        } else {
+            this.courseService
             .queryForInstructor(param)
             .subscribe(
                 (res: HttpResponse<CourseBO[]>) => this.onSuccess(res.body),
                 (res: HttpResponse<any>) => console.log(res.body)
             );
+        }
     }
 
     loadPage(event: any) {

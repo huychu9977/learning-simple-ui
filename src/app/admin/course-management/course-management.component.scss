@@ -24,3 +24,20 @@
         }
     }
 }
+:host .btn {
+    border-radius: unset;
+
+}
+.btn-action > .btn {
+    width: 90px;
+}
+table {
+    font-family: "Arimo";
+    td {
+        text-align: center;
+        vertical-align: middle;
+    }
+    label {
+        margin-bottom: 0;
+    }
+}

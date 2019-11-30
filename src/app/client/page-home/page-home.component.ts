@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { EventService } from 'src/app/services/event.service';
+import { EventBO } from 'src/app/models/eventBO.model';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -147,9 +149,41 @@ export class PageHomeComponent implements OnInit {
       content: 'content 3'
     }
   ];
-  constructor() { }
+  events: any[] = [];
+  constructor(private eventService: EventService) { }
 
   ngOnInit() {
+    this.loadEvents();
   }
 
+  loadEvents() {
+    this.eventService.queryForEmployer({
+      page: 0,
+      size: 4,
+    }).subscribe(res => {
+      const data: any = res.body;
+      this.events = data.results.map(event => {
+        if (new Date(event.startDate).toLocaleString().split(', ')[0] === new Date(event.endDate).toLocaleString().split(', ')[0]) {
+          const date = new Date(event.startDate).toLocaleString('default', { month: 'long' });
+          event.date = {
+            month : date.length > 3 ? date.substring(0, 3) : date,
+            day: new Date(event.startDate).getDate()
+          };
+          event.startDate = new Date(event.startDate).toLocaleTimeString().replace(/:\d+ /, ' ');
+          event.endDate = new Date(event.endDate).toLocaleTimeString().replace(/:\d+ /, ' ');
+        } else {
+          event.startDate = new Date(event.startDate).toLocaleDateString('en-GB');
+          event.endDate = new Date(event.endDate).toLocaleDateString('en-GB');
+        }
+        return event;
+      });
+    }, err => {
+      console.log(err.error.message);
+    });
+  }
+
+  formatEventDate(startDate, endDate) {
+    console.log(startDate);
+    return;
+  }
 }

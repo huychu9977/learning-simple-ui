@@ -1,25 +1,27 @@
+
 <!--*********************************
-        banner part Start
-    *******************************-->
-    <section id="course_banner_part">
-        <div class="about_banner" [ngStyle]="{'background-image': imageSrc}">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="about_banner_text">
-                            <h3>Our Courses </h3>
-                            <nav aria-label="breadcrumb">
-                                <ol class="breadcrumb">
-                                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                                    <li class="breadcrumb-item active" aria-current="page"> <a href="our_course.html"></a>Our Courses </li>
-                                </ol>
-                            </nav>
-                        </div>
+    banner part Start
+*******************************-->
+<section id="course_banner_part">
+    <div class="about_banner" [ngStyle]="{'background-image': imageSrc}">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="about_banner_text">
+                        <h3>{{title}} </h3>
+                        <nav aria-label="breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item" *ngFor="let d of data" [ngClass]="{'active': d?.active}">
+                                    <a [routerLink]="[ '/', d?.url ]" href="javascript:void(0)">{{d?.name}}</a>
+                                </li>
+                            </ol>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <!--*********************************
-        banner part end
-    *******************************-->
+    </div>
+</section>
+<!--*********************************
+    banner part end
+*******************************-->

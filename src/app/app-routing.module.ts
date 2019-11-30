@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { UserRouteAccessProfileService } from './core/auth/user-route-access-profile-service';
 
 @NgModule({
   imports: [
@@ -11,7 +12,11 @@ import { RouterModule } from '@angular/router';
         },
         {
           path: 'instructor',
-          loadChildren: () => import('./instructor/instructor.module').then(m => m.InstructorModule)
+          loadChildren: () => import('./instructor/instructor.module').then(m => m.InstructorModule),
+          data: {
+            authorities: ['ROLE_USER']
+        },
+          canActivate: [UserRouteAccessProfileService]
         },
         {
           path: '',

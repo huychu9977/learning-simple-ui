@@ -27,4 +27,15 @@ export class EventService {
     delete(code: string): Observable<HttpResponse<any>> {
         return this.http.delete(`${this.resourceUrl}/${code}`, { observe: 'response' });
     }
+
+    setActive(event: EventBO): Observable<HttpResponse<EventBO>> {
+        return this.http.put<EventBO>(`${this.resourceUrl}/set-active`, event, { observe: 'response' });
+    }
+
+    // for employer
+
+    queryForEmployer(req?: any): Observable<HttpResponse<EventBO[]>> {
+        const options = createRequestOption(req);
+        return this.http.get<EventBO[]>(`${this.resourceUrl}/employer/list`, { params: options, observe: 'response' });
+    }
 }

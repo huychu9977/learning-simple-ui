@@ -35,14 +35,14 @@
         flex-direction: row;
         align-items: center;
         .header-search {
-            margin: 0 25px;
+            margin: 0 25px 0 50px;
             max-width: 630px;
             width: 100%;
         }
-        .dropdown-toggle {
-            font-weight: 700;
-            font-size: 14px;
-            color: #fff;
+        .dropdown > a {
+            background: #51a1f6;
+            border-radius: unset;
+            color: white;
         }
     }
     .header-right {
@@ -66,4 +66,18 @@
     .ui-tieredmenu {
         top: 52.7619px !important;
     }
+}
+:host ::ng-deep .ui-autocomplete-input {
+    border-radius: unset;
+    width: 100%;
+    border-right: 0;
+    padding-left: 10px;
+}
+:host p-autocomplete {
+    flex-grow: 1;
+}
+:host ::ng-deep mark {
+    background: none;
+    font-weight: bold;
+    padding: 0;
 }

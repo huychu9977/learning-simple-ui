@@ -16,15 +16,18 @@ export class EventManagementUpdateComponent implements OnInit {
     isSaving: boolean;
     selectedImage: FileList;
     imageUrl;
+    showOnTops: any[];
+    accessTypes: any[];
     editForm = this.fb.group({
         id: [null],
-        code: ['', [Validators.required, Validators.minLength(1), Validators.maxLength(250)]],
+        code: [''],
         title: ['', [Validators.required, Validators.maxLength(250)]],
-        activated: [true],
         content: ['', [Validators.required]],
         startDate: ['', [Validators.required]],
-        endDate: ['', [Validators.required]],
+        endDate: [''],
         createdAt: ['', [Validators.required]],
+        isShowOnTop: ['', [Validators.required]],
+        accessType: ['', [Validators.required]],
         imageFile: ['']
     });
     constructor(
@@ -39,13 +42,18 @@ export class EventManagementUpdateComponent implements OnInit {
 
     ngOnInit() {
         this.isSaving = false;
+        this.showOnTops = [
+            {id: true, title: 'Hiển thị'},
+            {id: false, title: 'Không hiển thị'}
+        ];
+        this.accessTypes = [
+            {code: 'PRIVATE', title: 'Chỉ người dùng đã đăng ký'},
+            {code: 'PUBLIC', title: 'Tất cả người dùng'}
+        ];
         this.route.data.subscribe(({ event }) => {
-        this.event = event.body ? event.body : event;
-        this.updateForm(this.event);
+            this.event = event.body ? event.body : event;
+            this.updateForm(this.event);
         });
-    }
-    slugify(value) {
-        this.editForm.get(['code']).setValue(this.slugifyPipe.transform(value));
     }
 
     private updateForm(event: EventBO): void {
@@ -53,11 +61,12 @@ export class EventManagementUpdateComponent implements OnInit {
             id: event.id,
             code: event.code,
             title: event.title,
-            activated: event.activated === undefined ? true : event.activated,
             content: event.content,
             startDate: event.startDate ? new Date(event.startDate) : null,
             endDate: event.endDate ? new Date(event.endDate) : null,
-            createdAt: event.createdAt
+            createdAt: event.createdAt,
+            isShowOnTop: event.isShowOnTop || false,
+            accessType: event.accessType || 'PUBLIC'
         });
         this.imageUrl = this.event.imageUrl ? this.event.imageUrl : 'assets/images/default.png';
     }
@@ -93,13 +102,17 @@ export class EventManagementUpdateComponent implements OnInit {
             id : this.event.id,
             code : this.editForm.get(['code']).value,
             title : this.editForm.get(['title']).value,
-            activated : this.editForm.get(['activated']).value,
             startDate : this.editForm.get(['startDate']).value,
             content : this.editForm.get(['content']).value.replace(/[ \t\r]+/g, ' '),
             endDate : this.editForm.get(['endDate']).value,
-            createdAt : this.editForm.get(['createdAt']).value
+            createdAt : this.editForm.get(['createdAt']).value,
+            accessType : this.editForm.get(['accessType']).value,
+            isShowOnTop : this.editForm.get(['isShowOnTop']).value
         };
-        if (!this.event.id) { delete courseTmp.id; }
+        if (!this.event.id) {
+            delete courseTmp.id;
+            courseTmp.code = this.slugifyPipe.transform(this.editForm.get(['title']).value);
+        }
         return courseTmp;
     }
 

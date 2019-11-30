@@ -11,3 +11,15 @@ h3 {
     text-align: center;
     margin: 15px 0;
 }
+:host ::ng-deep p-sidebar {
+    .ui-sidebar-full {
+        overflow-y: auto;
+    }
+}
+.user-preview {
+    img {
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+    }
+}

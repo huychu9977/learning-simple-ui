@@ -512,24 +512,26 @@ pb-calendar .top-frame {
 }
 
 .event-text {
-	position: relative;
-}
-
-.event-text a {
-	text-decoration: none;
-	color: #fff;
-	font-size: 16px;
-	font-weight: 400;
-	display: inline-block;
-	padding: 10px 20px;
-	border-radius: 5px;
-	background: #2d3e50;
-	transition: all linear .5s;
-	-webkit-transition: .5s;
-	-moz-transition: .5s;
-	-o-transition: .5s;
-	-ms-transition: .5s;
-}
+  .detail {
+    position: absolute;
+    bottom: 0;
+  }
+  a {
+    text-decoration: none;
+    color: #fff;
+    font-size: 16px;
+    font-weight: 400;
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 5px;
+    background: #2d3e50;
+    transition: all linear .5s;
+    -webkit-transition: .5s;
+    -moz-transition: .5s;
+    -o-transition: .5s;
+    -ms-transition: .5s;
+  }
+} 
 
 .event-text i {
 	color: #2d3e50;
@@ -1489,7 +1491,7 @@ pb-calendar .top-frame {
     }
   }
   //=============== page phân trang ================//
-  .page-client, .page-instructor {
+  .page-admin, .page-client, .page-instructor {
     .ui-paginator {
       border: none;
       .ui-paginator-pages {
@@ -1927,4 +1929,55 @@ mark {
   border: 1px solid #428bca;
   border-top-right-radius: 3px;
   border-top-left-radius: 3px;
+}
+#myBtn {
+  position: fixed;
+  right: 50px;
+  bottom: 180px;
+  z-index: 2;
+  background: #fbaa33;
+  border: none;
+  color: white;
+  outline: none;
+  transition: background-color .3s, 
+    opacity .5s, visibility .5s;
+  opacity: 0;
+  visibility: hidden;  
+}
+.el-upload-dragger {
+  background-color: #fff;
+  border: 1px dashed #d9d9d9;
+  border-radius: 6px;
+  box-sizing: border-box;
+  width: 360px;
+  height: 180px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  .el-upload {
+      display: inline-block;
+      text-align: center;
+      outline: 0;
+      i {
+          font-size: 67px;
+          color: #b4bccc;
+          margin: 40px 0 16px;
+          line-height: 50px;
+      }
+      .el-upload__text {
+          color: #5a5e66;
+          font-size: 14px;
+          text-align: center;
+      }
+      .el-upload__input {
+          opacity: 0;
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          cursor: pointer;
+      }
+  }
 }
