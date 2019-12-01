@@ -7,7 +7,7 @@
               <a (click)="display = true" role="button" class="introduction-asset-link">
                 <div class="play-button-trigger introduction-asset-placeholder">
                   <div class="play-button styles-play-button"></div>
-                  <span class="introduction-asset-text">Preview this course</span>
+                  <span class="introduction-asset-text">Giới thiệu khóa học</span>
                 </div>
               </a>
               <img *ngIf="course?.imageUrl" class="introduction-asset-img" alt="" srcset="{{course?.imageUrl}}" width="240" height="135">
@@ -26,8 +26,8 @@
           
         </h1>
         <div>
-            <button *ngIf="userRegistration" [routerLink]="[ 'lecture', lectureCode ]" type="button" class="course-cta btn btn-lg btn-secondary btn-block">Vào học</button>
-            <button *ngIf="!userRegistration" [disabled]="isSaving" (click)="registrationCourse(course?.code)" type="button" class="mt-3 course-cta btn btn-lg btn-register btn-block">Đăng ký</button>
+            <button *ngIf="userRegistration || course?.createdByUsername === currentAccount?.username" [routerLink]="[ 'lecture', lectureCode ]" type="button" class="course-cta btn btn-lg btn-secondary btn-block">Vào học</button>
+            <button *ngIf="!userRegistration && course?.createdByUsername !== currentAccount?.username" [disabled]="isSaving" (click)="registrationCourse(course?.code)" type="button" class="mt-3 course-cta btn btn-lg btn-register btn-block">Đăng ký</button>
         </div>
       </div>
       <div>

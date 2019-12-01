@@ -15,7 +15,7 @@
     text-decoration: none;
   }
   
-  ul, ol {
+  ul {
     list-style-type: none;
   }
   
@@ -78,58 +78,6 @@
     left: 0;
     top: 0;
     z-index: -1;
-  }
-  
-  .left_arrow {
-    color: #f1f1f1;
-    position: absolute;
-    font-size: 28px;
-    top: 50%;
-    left: 50px;
-    z-index: 99;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 1px solid #f1f1f1;
-    cursor: pointer;
-    line-height: 60px;
-    text-align: center;
-    transform: translateY(-50%);
-    transition: all linear .5s;
-    -ms-transition: all linear .5s;
-    -mos-transition: all linear .5s;
-    -o-transition: all linear .5s;
-    &:hover {
-      background: #fbaa33;
-      color: white;
-      border-color: #fbaa33;
-    }
-  }
-  
-  .right_arrow {
-    color: #f1f1f1;
-    position: absolute;
-    font-size: 28px;
-    top: 50%;
-    right: 50px;
-    z-index: 99;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 1px solid #f1f1f1;
-    cursor: pointer;
-    line-height: 60px;
-    text-align: center;
-    transform: translateY(-50%);
-    transition: all linear .5s;
-    -ms-transition: all linear .5s;
-    -mos-transition: all linear .5s;
-    -o-transition: all linear .5s;
-    &:hover {
-      background: #fbaa33;
-      color: white;
-      border-color: #fbaa33;
-    }
   }
   
   .bnr_text {
@@ -282,68 +230,6 @@
 	z-index: 333;
 }
 
-#event .col .schedule-dot-item.red {
-	width: 66px !important;
-	height: 60px !important;
-	border-radius: 0;
-	display: block;
-	margin-top: 0px;	
-	z-index: 333;
-}
-#event .col .schedule-dot-item.green {
-	width: 66px !important;
-	height: 60px !important;
-	border-radius: 0;
-	margin-top: 4px;
-	z-index: 333;
-}
-#event .col .schedule-dot-item.red:after,#event .col .schedule-dot-item.green:after{
-	position: absolute;
-	content: '';
-	width: 100%;
-	height: 100%;
-	background: #f52222;
-	left: 0;
-	top: 0;
-	z-index: -1;
-}
-#event .col .schedule-dot-item.green:after{
-	background: green;
-}
-#event .pb-calendar {
-	background: #fff;
-	border: 30px solid #f5f5f5;
-	box-sizing: border-box;
-	min-height: 502px;
-	max-height: 502px;
-	overflow-y: scroll;
-    transition: all linear .4s; 
-}
-
-#event .pb-calendar:hover{
-    box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
-	-webkit-box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
-	-moz-box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
-	-ms-box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
-	-o-box-shadow: 0 7px 50px rgba(0, 0, 0, 0.15);
-}
-
-.pb-calendar .top-frame {
-	background: #f5f5f5;
-	margin-bottom: 0;
-	padding-bottom: 15px;
-}
-
-#event .pb-calendar > .calendar-head-frame > .row > .col > .schedule-dot-list,
-.pb-calendar > .calendar-body-frame > .row > .col > .schedule-dot-list {
-	height: 0;
-	margin-top: 0;
-}
-
-#event .pb-calendar .top-frame > .year-month-frame {
-	font-size: 30px;
-	padding-left: 232px;
-}
 
 #event .col-lg-6 {
 	position: relative;
@@ -357,63 +243,6 @@
 	top: 10px;
 	z-index: 99;
 }
-
-.pb-calendar .top-frame > .year-month-frame .year,
-.pb-calendar .top-frame > .year-month-frame > .month {
-	color: #2d3e50;
-	font-family: 'Arimo';
-	font-weight: 400px;
-	font-size: 20px;
-	margin-top: 0px;
-    margin-right: 4px;
-}
-.pb-calendar .top-frame > .year-month-frame .year{
-	float: right;
-}
-.pb-calendar .top-frame > .year-month-frame > .month{
-	float: left;
-}
-pb-calendar .top-frame {
-	padding-top: 20px;
-	margin-bottom: 20px;
-}
-
-.pb-calendar .top-frame > .control-frame {
-	padding-right: 19px;
-	padding-top: 9px;
-}
-
-/*
-#event .prev-btn img, #event .next-btn img{
-    display: none;
-}
-*/
-
-#event .prev-btn:before {}
-
-#event {}
-
-#event {}
-
-#event {}
-
-#event {}
-
-
-/* ==========calender  css ========= */
-
-.calendar-title {
-	padding-right: 15px;
-	position: relative;
-	color: #f5f5f5;
-}
-
-.pb-calendar {
-	box-sizing: border-box;
-}
-
-
-/* ====== calender css end here=======*/
 
 .event_bg {
 	background: #f5f5f5;
@@ -785,58 +614,6 @@ pb-calendar .top-frame {
     }
   }
   
-  .course-left_arrow {
-    color: #2d3e50;
-    position: absolute;
-    font-size: 28px;
-    top: 50%;
-    left: -100px;
-    z-index: 99;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 1px solid #2d3e50;
-    cursor: pointer;
-    line-height: 60px;
-    text-align: center;
-    transform: translateY(-50%);
-    transition: all linear .5s;
-    -ms-transition: all linear .5s;
-    -mos-transition: all linear .5s;
-    -o-transition: all linear .5s;
-    &:hover {
-      background: #fbaa33;
-      color: white;
-      border-color: #fbaa33;
-    }
-  }
-  
-  .course-right_arrow {
-    color: #2d3e50;
-    position: absolute;
-    font-size: 28px;
-    top: 50%;
-    right: -100px;
-    z-index: 99;
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    border: 1px solid #2d3e50;
-    cursor: pointer;
-    line-height: 60px;
-    text-align: center;
-    transform: translateY(-50%);
-    transition: all linear .5s;
-    -ms-transition: all linear .5s;
-    -mos-transition: all linear .5s;
-    -o-transition: all linear .5s;
-    &:hover {
-      background: #fbaa33;
-      color: white;
-      border-color: #fbaa33;
-    }
-  }
-  
   .course-one {
     .profile {
       margin-left: 12px;
@@ -964,132 +741,6 @@ pb-calendar .top-frame {
       Our Courses part end
   =========================== */
   
-  /* ================================= 
-    Our Testimonial & FAQ part start
-  ================================= */
-  
-  #test-faq {
-    padding-top: 100px;
-    background: #f5f5f5;
-    padding-bottom: 60px;
-    .section_title {
-      padding-bottom: 56px;
-    }
-  }
-  
-  .test-image {
-    position: relative;
-    padding-top: 10px;
-    &:after {
-      position: absolute;
-      content: "";
-      top: 0px;
-      left: 0;
-      background: url('assets/images/main/eventslidertopBorder.png');
-      width: 220px;
-      height: 3px;
-      z-index: 1;
-    }
-    &:before {
-      position: absolute;
-      content: "";
-      bottom: -10px;
-      right: 0;
-      background: url('assets/images/main/eventsliderfooterBorder.png');
-      width: 220px;
-      height: 3px;
-      z-index: 1;
-    }
-    .faq-img img {
-      -webkit-clip-path: polygon(17% 0, 100% 0%, 83% 100%, 0% 100%);
-      clip-path: polygon(17% 0, 100% 0%, 83% 100%, 0% 100%);
-    }
-  }
-  
-  .test-left_arrow {
-    color: #ffff;
-    position: absolute;
-    font-size: 28px;
-    top: 160px;
-    left: -80px;
-    z-index: 99;
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-    background: #2d3e50;
-    border: 1px solid #2d3e50;
-    cursor: pointer;
-    line-height: 50px;
-    text-align: center;
-    transform: translateY(-50%);
-    transition: all linear .5s;
-    -ms-transition: all linear .5s;
-    -mos-transition: all linear .5s;
-    -o-transition: all linear .5s;
-    &:hover {
-      background: #fbaa33;
-      color: white;
-      border-color: #fbaa33;
-    }
-  }
-  
-  .test-right_arrow {
-    color: #ffff;
-    position: absolute;
-    font-size: 28px;
-    top: 100px;
-    left: -80px;
-    z-index: 99;
-    width: 50px;
-    height: 50px;
-    background: #2d3e50;
-    border-radius: 50%;
-    border: 1px solid #2d3e50;
-    cursor: pointer;
-    line-height: 50px;
-    text-align: center;
-    transform: translateY(-50%);
-    transition: all linear .5s;
-    -ms-transition: all linear .5s;
-    -mos-transition: all linear .5s;
-    -o-transition: all linear .5s;
-    &:hover {
-      background: #fbaa33;
-      color: white;
-      border-color: #fbaa33;
-    }
-  }
-  
-  .test-text {
-    padding-top: 40px;
-    padding-bottom: 82px;
-    p {
-      font-family: 'Arimo';
-      font-weight: 400;
-      font-size: 13px;
-      color: #444444;
-      line-height: 25px;
-      padding-bottom: 20px;
-    }
-    h3 {
-      font-family: 'Arimo';
-      font-weight: 700;
-      font-size: 20px;
-      color: #444444;
-      padding-bottom: 10px;
-      span {
-        font-family: 'Arimo';
-        font-weight: 400;
-        font-size: 16px;
-        color: #444444;
-      }
-    }
-    i {
-      color: #fbaa33;
-      font-size: 14px;
-    }
-  }
-  
   .accordion .card:not(:first-of-type) .card-header:first-child {
     border-radius: 5px;
   }
@@ -1176,10 +827,6 @@ pb-calendar .top-frame {
     i {
       transform: rotate(90deg);
     }
-  }
-  
-  .collapsed i {
-    transform: rotate(0deg);
   }
   
   /* ==================================
@@ -1330,22 +977,6 @@ pb-calendar .top-frame {
   /* ==================================
      Our Teacher part end
   =================================== */
-  
-  .back_to_top i {
-    position: fixed;
-    width: 40px;
-    height: 40px;
-    line-height: 40px;
-    color: white;
-    font-size: 20px;
-    background: #fbaa33;
-    right: 30px;
-    bottom: 20px;
-    z-index: 999;
-    text-align: center;
-    border-radius: 5px;
-    cursor: pointer;
-  }
   
   /* ============================================
          Out Course page css start here
@@ -1660,9 +1291,7 @@ pb-calendar .top-frame {
       margin: 3px;
     }
 }
-.course-recommend .owl-item {
-  padding-bottom: 5px;
-}
+
 .btn-file {
   position: relative;
   overflow: hidden;
@@ -1752,20 +1381,7 @@ pb-calendar .top-frame {
   }
 }
 //
-.owl-carousel-nav-custom {
-  .owl-loaded {
-    max-width: 99%;
-    margin-left: 7px;
-  }
-  .owl-nav {
-    > div {
-      border-radius: 50% !important;
-      padding: 5px 15px !important;
-      background: #fbaa33 !important;
-      font-size: 19px !important;
-    }
-  }
-}
+
 .mw-90 {
   max-width: 90%;
 }
@@ -1781,16 +1397,7 @@ pb-calendar .top-frame {
     }
 }
 ///
-.toast-success {
-  background-color: #51A351;
-  border: none;
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cpath fill='rgb(255,255,255)' d='M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z'/%3E%3C/svg%3E");
-}
-.toast-error {
-  background-color: #BD362F;
-  border: none;
-  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512' width='512' height='512'%3E%3Cpath fill='rgb(255,255,255)' d='M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z'/%3E%3C/svg%3E");
-}
+
 .ng-select{
   padding: 0;
   border: none;

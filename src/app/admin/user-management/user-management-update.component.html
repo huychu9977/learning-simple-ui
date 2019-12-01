@@ -1,140 +1,131 @@
 <div class="animated fadeIn">
     <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3><span [translate]="'courseManagement.home.createOrEditLabel'">createOrEditLabel</span></h3>
+        <form class="col-md-12" name="editForm" enctype="multipart/form-data" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <div class="row justify-content-center">
+                <div class="col-md-3">
+                    <div id="avatar" class="col-md-12 text-center" *ngIf="imageUrl !=null">
+                        <img class="img-fluid" width="150" height="150" src="{{imageUrl}}" alt="Ảnh đại diện" />
+                    </div>
+                    <div class="col-md-12 text-center mt-3">
+                        <span class="btn btn-success btn-file">
+                            <strong [translate]="'userManagement.imageUrl'"></strong>
+                            <input type="file" class="form-control" name="imageFile" id="filevideo" (change)="onFileChange($event)" formControlName="imageUrl">
+                        </span>
+                    </div>
                 </div>
-                <div class="card-body">
-                    <form name="editForm" enctype="multipart/form-data" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-                        <div class="row justify-content-center">
-                            <div class="col-md-3">
-                                <div id="avatar" class="col-md-12 text-center" *ngIf="imageUrl !=null">
-                                    <img class="img-fluid" width="150" height="150" src="{{imageUrl}}" alt="Ảnh đại diện" />
+                <div class="col-8 mt-4">
+                    <div>
+                        <div class="form-group" [hidden]="!user.id">
+                            <input type="hidden" class="form-control" name="id" formControlName="id" readonly>
+                        </div>
+        
+                        <div class="row">
+                            <fieldset class="form-group col-md-6">
+                                <label [translate]="'userManagement.username'">username</label> <small class="text-danger">*</small>
+                                <div class="input-group">
+                                    <input class="form-control" id="username" name="username" type="text"
+                                        formControlName="username" placeholder="{{'userManagement.placeholder.username' | translate}}" [readOnly]="user.id ? true : false">
                                 </div>
-                                <div class="col-md-12 text-center mt-3">
-                                    <span class="btn btn-success btn-file">
-                                        <strong [translate]="'userManagement.imageUrl'"></strong>
-                                        <input type="file" class="form-control" name="imageFile" id="filevideo" (change)="onFileChange($event)" formControlName="imageUrl">
-                                    </span>
+                                <div *ngIf="editForm.get('username').invalid && (editForm.get('username').dirty || editForm.get('username').touched) || isSaving && f['username'].errors">
+                                    <small class="form-text text-danger"
+                                    *ngIf="f['username'].errors.required" [translate]="'entity.validation.required'">
+                                        This field is required.
+                                    </small>
+                
+                                    <small class="form-text text-danger"
+                                    *ngIf="f['username'].errors.pattern" [translate]="'entity.validation.patternLogin'">
+                                        This field can only contain letters, digits and e-mail addresses.
+                                    </small>
                                 </div>
+                            </fieldset>
+                            <fieldset class="form-group col-md-6">
+                                <label [translate]="'userManagement.phone'">Phone input</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="{{'userManagement.placeholder.phone' | translate}}" id="phone" name="phone" type="text" formControlName="phone">
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <fieldset class="form-group col-md-6">
+                                <label [translate]="'userManagement.name'">name</label> <small class="text-danger">*</small>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="{{'userManagement.placeholder.name' | translate}}" id="name" name="name" type="text" formControlName="name">
+                                </div>
+                                <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched) || isSaving && f['name'].errors">
+                                    <small class="form-text text-danger"
+                                    *ngIf="f['name'].errors.required" [translate]="'entity.validation.required'">
+                                        This field is required.
+                                    </small>
+                                </div>
+                            </fieldset>
+                            <fieldset class="form-group col-md-6">
+                                <label [translate]="'userManagement.email'">email</label> <small class="text-danger">*</small>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="{{'userManagement.placeholder.email' | translate}}" id="email" name="email" type="email" formControlName="email">
+                                </div>
+                                <div *ngIf="editForm.get('email').invalid && (editForm.get('email').dirty || editForm.get('email').touched) || isSaving && f['email'].errors">
+                                    <small class="form-text text-danger"
+                                    *ngIf="f['email'].errors.required" [translate]="'entity.validation.required'">
+                                        This field is required.
+                                    </small>
+                                    <small class="form-text text-danger"
+                                    *ngIf="f['email'].errors.email" [translate]="'global.messages.validate.email.invalid'">
+                                        This field is email.
+                                    </small>
+                                </div>
+                            </fieldset>
+                        </div>
+        
+                        <fieldset class="form-group">
+                            <label [translate]="'userManagement.address'">address</label>
+                            <div class="input-group">
+                                <input class="form-control" placeholder="{{'userManagement.placeholder.address' | translate}}" id="phone" name="address" type="text" formControlName="address">
                             </div>
-                            <div class="col-8">
-                                <div>
-                                    <div class="form-group" [hidden]="!user.id">
-                                        <input type="hidden" class="form-control" name="id" formControlName="id" readonly>
-                                    </div>
-                    
-                                    <div class="row">
-                                        <fieldset class="form-group col-md-6">
-                                            <label [translate]="'userManagement.username'">username</label> <small class="text-danger">*</small>
-                                            <div class="input-group">
-                                                <input class="form-control" id="username" name="username" type="text"
-                                                 formControlName="username" placeholder="{{'userManagement.placeholder.username' | translate}}" [readOnly]="user.id ? true : false">
-                                            </div>
-                                            <div *ngIf="editForm.get('username').invalid && (editForm.get('username').dirty || editForm.get('username').touched) || isSaving && f['username'].errors">
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['username'].errors.required" [translate]="'entity.validation.required'">
-                                                    This field is required.
-                                                </small>
-                            
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['username'].errors.pattern" [translate]="'entity.validation.patternLogin'">
-                                                    This field can only contain letters, digits and e-mail addresses.
-                                                </small>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset class="form-group col-md-6">
-                                            <label [translate]="'userManagement.phone'">Phone input</label>
-                                            <div class="input-group">
-                                                <input class="form-control" placeholder="{{'userManagement.placeholder.phone' | translate}}" id="phone" name="phone" type="text" formControlName="phone">
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                    <div class="row">
-                                        <fieldset class="form-group col-md-6">
-                                            <label [translate]="'userManagement.name'">name</label> <small class="text-danger">*</small>
-                                            <div class="input-group">
-                                                <input class="form-control" placeholder="{{'userManagement.placeholder.name' | translate}}" id="name" name="name" type="text" formControlName="name">
-                                            </div>
-                                            <div *ngIf="editForm.get('name').invalid && (editForm.get('name').dirty || editForm.get('name').touched) || isSaving && f['name'].errors">
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['name'].errors.required" [translate]="'entity.validation.required'">
-                                                    This field is required.
-                                                </small>
-                                            </div>
-                                        </fieldset>
-                                        <fieldset class="form-group col-md-6">
-                                            <label [translate]="'userManagement.email'">email</label> <small class="text-danger">*</small>
-                                            <div class="input-group">
-                                                <input class="form-control" placeholder="{{'userManagement.placeholder.email' | translate}}" id="email" name="email" type="email" formControlName="email">
-                                            </div>
-                                            <div *ngIf="editForm.get('email').invalid && (editForm.get('email').dirty || editForm.get('email').touched) || isSaving && f['email'].errors">
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['email'].errors.required" [translate]="'entity.validation.required'">
-                                                    This field is required.
-                                                </small>
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['email'].errors.email" [translate]="'global.messages.validate.email.invalid'">
-                                                    This field is email.
-                                                </small>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                    
-                                    <fieldset class="form-group">
-                                        <label [translate]="'userManagement.address'">address</label>
-                                        <div class="input-group">
-                                            <input class="form-control" placeholder="{{'userManagement.placeholder.address' | translate}}" id="phone" name="address" type="text" formControlName="address">
-                                        </div>
-                                    </fieldset>
-                                    <div class="form-group">
-                                        <div class="row justify-content-center">
-                                            <div class="col-md-2">
-                                                <label style="margin-top: 2px;" [translate]="'userManagement.activated'">activated</label>
-                                            </div>
-                                            <div class="col-md-3">
-                                                <label class="switch switch-label switch-success">
-                                                    <input type="checkbox" class="switch-input" checked id="activated" name="activated"  formControlName="activated">
-                                                    <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
-                                                </label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <label [translate]="'userManagement.roles'">roles</label> <small class="text-danger">*</small>
-                                        <ng-select [items]="roleBOs" bindValue="code" bindLabel="name" [multiple]="true"
-                                            placeholder="{{'userManagement.placeholder.roles' | translate}}"
-                                            [(ngModel)]="selectedRoles" 
-                                            [closeOnSelect]="false"
-                                            [searchable]="false"
-                                            formControlName='roleBOs'  class="form-control" required>
-                                            <ng-template ng-option-tmp let-item="item">
-                                                {{item.name}}
-                                            </ng-template>
-                                        </ng-select>
-                                        <div *ngIf="editForm.get('roleBOs').invalid && (editForm.get('roleBOs').dirty || editForm.get('roleBOs').touched) || isSaving && f['roleBOs'].errors">
-                                            <small class="form-text text-danger"
-                                            *ngIf="f['roleBOs'].errors.required" [translate]="'entity.validation.required'">
-                                                This field is required.
-                                            </small>
-                                        </div>
-                                    </div>
+                        </fieldset>
+                        <div class="form-group">
+                            <div class="row justify-content-center">
+                                <div class="col-md-2">
+                                    <label style="margin-top: 2px;" [translate]="'userManagement.activated'">activated</label>
                                 </div>
-                                <div class="d-flex justify-content-end">
-                                    <button type="button" class="btn btn-secondary" (click)="previousState()">
-                                        <span [translate]="'entity.action.cancel'">Cancel</span>
-                                    </button>
-                                    <button type="submit" class="btn btn-primary ml-2">
-                                        <span [translate]="'entity.action.save'">Save</span>
-                                    </button>
+                                <div class="col-md-3">
+                                    <label class="switch switch-label switch-success">
+                                        <input type="checkbox" class="switch-input" checked id="activated" name="activated"  formControlName="activated">
+                                        <span class="switch-slider" data-checked="&#x2713;" data-unchecked="&#x2715;"></span>
+                                    </label>
                                 </div>
                             </div>
                         </div>
-                    </form>
+                        <div class="form-group">
+                            <label [translate]="'userManagement.roles'">roles</label> <small class="text-danger">*</small>
+                            <ng-select [items]="roleBOs" bindValue="code" bindLabel="name" [multiple]="true"
+                                placeholder="{{'userManagement.placeholder.roles' | translate}}"
+                                [(ngModel)]="selectedRoles" 
+                                [closeOnSelect]="false"
+                                [searchable]="false"
+                                formControlName='roleBOs'  class="form-control" required>
+                                <ng-template ng-option-tmp let-item="item">
+                                    {{item.name}}
+                                </ng-template>
+                            </ng-select>
+                            <div *ngIf="editForm.get('roleBOs').invalid && (editForm.get('roleBOs').dirty || editForm.get('roleBOs').touched) || isSaving && f['roleBOs'].errors">
+                                <small class="form-text text-danger"
+                                *ngIf="f['roleBOs'].errors.required" [translate]="'entity.validation.required'">
+                                    This field is required.
+                                </small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-end">
+                        <button type="button" class="btn btn-secondary" (click)="previousState()">
+                            <span [translate]="'entity.action.cancel'">Cancel</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary ml-2">
+                            <span [translate]="'entity.action.save'">Save</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

@@ -1,7 +1,6 @@
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { RoleMgmtDetailComponent } from './role-management-detail.component';
 import { RoleBO } from 'src/app/models/roleBO.model';
 import { RoleService } from 'src/app/services/role.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
@@ -11,7 +10,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
   templateUrl: './role-management.component.html'
 })
 export class RoleManagementComponent implements OnInit, OnDestroy {
-    roles?: RoleBO[];
+    roles?: RoleBO[] = [];
     routeData: any;
     totalItems: any;
     itemsPerPage: any;
@@ -25,7 +24,7 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
         private activatedRoute: ActivatedRoute,
         private router: Router
     ) {
-        this.itemsPerPage = 2;
+        this.itemsPerPage = 5;
         this.routeData = this.activatedRoute.queryParams.subscribe(params => {
             this.page = params.page || 1;
             this.previousPage = params.page || 1;
@@ -73,10 +72,9 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
         });
         this.loadAll();
     }
-    search(value?: string) {
-        this.keyword = value;
+    search() {
         this.page = 1;
-        this.loadAll();
+        this.transition();
     }
     deleteRole(role: RoleBO) {
         this.confirmationService.confirm({
@@ -92,10 +90,7 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
             }
           });
     }
-    openModalDetail(role?: RoleBO) {
-      //  const modalRef = this.modalService.show(RoleMgmtDetailComponent);
-      //  modalRef.content.role = role;
-    }
+
     private onSuccess(data) {
         this.totalItems = data.totalResult;
         this.roles = data.results;

@@ -3,7 +3,6 @@ import { NgModule, Injectable } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule, Resolve } from '@angular/router';
 import { EditProfileComponent } from './edit-profile/edit-profile.component';
-import { AccountService } from 'src/app/core/auth/account.service';
 
 const profileRoute: Routes = [
   {

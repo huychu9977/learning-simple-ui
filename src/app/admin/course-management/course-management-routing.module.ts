@@ -34,7 +34,7 @@ export const courseMgmtState: Routes = [
         }
     },
     {
-        path: 'course-management/new',
+        path: 'course-management/create',
         component: CourseManagementUpdateComponent,
         resolve: {
             course: CourseMgmtResolve

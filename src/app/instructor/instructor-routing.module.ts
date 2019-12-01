@@ -5,6 +5,7 @@ import { CoursesComponent } from './courses/courses.component';
 import { BecomeInstructorComponent } from './become-instructor/become-instructor.component';
 import { CourseMgmtResolve } from '../admin/course-management/course-management-routing.module';
 import { LectureMgmtResolve } from '../admin/lecture-management/lecture-management-routing.module';
+import { PageProfileComponent } from '../client/page-profile/page-profile.component';
 
 const instructorRoute: Routes = [
   {
@@ -85,6 +86,13 @@ const instructorRoute: Routes = [
             pageTitle: 'lectureManagement.detail.quiz'
           }
       },
+      {
+        path: 'account',
+        component: PageProfileComponent,
+        data: {
+          pageTitle: 'global.profile.title'
+        }
+    },
       {
         path: 'become-instructor',
         component: BecomeInstructorComponent

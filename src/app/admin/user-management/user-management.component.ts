@@ -12,7 +12,7 @@ import { MessageService, ConfirmationService, DialogService } from 'primeng/api'
   styleUrls: ['./user-management.component.scss']
 })
 export class UserManagementComponent implements OnInit {
-    users?: UserBO[];
+    users?: UserBO[] = [];
     totalItems: any;
     itemsPerPage: any;
     page: any;
@@ -87,10 +87,9 @@ export class UserManagementComponent implements OnInit {
         });
         this.loadAll();
     }
-    search(value?: string) {
-        this.keyword = value;
+    search() {
         this.page = 1;
-        this.loadAll();
+        this.transition();
     }
     deleteUser(user: UserBO) {
         this.confirmationService.confirm({

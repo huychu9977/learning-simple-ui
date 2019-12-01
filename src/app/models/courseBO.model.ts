@@ -18,6 +18,7 @@ export class CourseBO {
         public activated?: boolean,
         public status?: string,
         public totalLecture?: any,
+        public totalLectureyStatus?: any,
         public totalObjective?: any,
         public totalRequirement?: any,
         public totalUserEnroll?: any,

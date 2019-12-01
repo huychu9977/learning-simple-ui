@@ -11,6 +11,7 @@ import { BannerImageModule } from 'src/app/shared/modules/banner-image/banner-im
     SharedLibsModule,
     BannerImageModule,
     PageProfileRoutingModule
-  ]
+  ],
+  exports: [PageProfileComponent, EditProfileComponent]
 })
 export class PageProfileModule { }

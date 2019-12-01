@@ -24,6 +24,7 @@ export class CoursePreviewComponent implements OnInit {
   @Output('registerSuccess') change = new EventEmitter<boolean>();
   isSaving = false;
   display = false;
+  currentAccount = null;
   constructor(
     private messageService: MessageService,
     private loginModalService: LoginModalService,
@@ -32,26 +33,27 @@ export class CoursePreviewComponent implements OnInit {
 
   ngOnInit() {
     this.totalTimeEstimateVideo = Math.floor(this.totalTimeEstimateVideo);
+    this.accountService.identity().then(account => {
+      this.currentAccount = account;
+    }).catch(() => {
+      this.loginModalService.open();
+    });
   }
 
   registrationCourse(courseCode) {
-    this.accountService.getCurrentAccount().subscribe(account => {
-      if (account) {
-        this.isSaving = true;
-        this.courseRegistrationService.registrationCourse(courseCode).subscribe(res => {
-          if (res) {
-            this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Đăng ký thành công!'});
-            this.change.emit(true);
-          } else {
-            this.isSaving = false;
-            this.messageService.add({severity: 'error', detail: 'Có lỗi xảy ra!'});
-          }
-        });
-      } else {
-        this.loginModalService.open();
-      }
-    }, (err) => {
-      console.log(err.error.message);
-    });
+    if (this.currentAccount) {
+      this.isSaving = true;
+      this.courseRegistrationService.registrationCourse(courseCode).subscribe(res => {
+        if (res) {
+          this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Đăng ký thành công!'});
+          this.change.emit(true);
+        } else {
+          this.isSaving = false;
+          this.messageService.add({severity: 'error', detail: 'Có lỗi xảy ra!'});
+        }
+      });
+    } else {
+      this.loginModalService.open();
+    }
   }
 }

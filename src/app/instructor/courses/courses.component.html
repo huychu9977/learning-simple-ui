@@ -9,11 +9,17 @@
               <span>Danh sách khóa học</span>
             </li>
             <li [routerLink]="['/instructor/courses/create']" routerLinkActive="active">
-              <i class="fa fa-trash"></i>
-              <span>Tajo moi khóa học</span>
+              <i class="fa fa-plus"></i>
+              <span>Tạo mới khóa học</span>
             </li>
-            <li>1</li>
-            <li>1</li>
+            <li [routerLink]="['/instructor/account']" routerLinkActive="active">
+              <i class="fa fa-user-circle-o"></i>
+              <span>Thông tin cá nhân</span>
+            </li>
+            <li [routerLink]="['/home']" routerLinkActive="active">
+              <i class="fa fa-home"></i>
+              <span>Quay lại trang chủ</span>
+            </li>
         </ul>
 
     </nav>

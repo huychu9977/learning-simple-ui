@@ -1,4 +1,7 @@
-<banner-image [imageSrc]="'../../../assets/images/main/02_about_us_Banner.png'"></banner-image>
+<banner-image
+ [imageSrc]="'../../../assets/images/main/02_about_us_Banner.png'"
+ [title]="'Thông tin cá nhân'"
+ [data]="currentRouter.url.includes('/instructor/') ? data : data1"></banner-image>
 <div class="container my-5">
     <div>
         <div id="main-section" class="row">
@@ -19,7 +22,7 @@
                             <h2>{{currentAccount?.name}}</h2>
                         </div>
                     </div>
-                    <ul>
+                    <ul *ngIf="!currentRouter.url.includes('/instructor/')">
                         <li class="">
                             <a href="/user/sfsf-asffas/" >
                             Hồ sơ công khai
@@ -28,6 +31,16 @@
                         <li>
                             <a href="javascript:void(0)" [routerLink]="[ '/user/account/edit-profile' ]" [routerLinkActive]="['on']">
                             Hồ sơ
+                            </a>
+                        </li>
+                    </ul>
+                    <ul *ngIf="currentRouter.url.includes('/instructor/')">
+                        <li class="">
+                            <a [routerLink]="[ '/home' ]">Trang chủ</a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" [routerLink]="[ '/instructor/courses' ]">
+                            Quản lý khóa học
                             </a>
                         </li>
                     </ul>

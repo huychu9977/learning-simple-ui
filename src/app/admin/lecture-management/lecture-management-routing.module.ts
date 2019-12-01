@@ -27,7 +27,7 @@ export class LectureMgmtResolve implements Resolve<any> {
 }
 export const lectureMgmtState: Routes = [
     {
-        path: 'course-management/:code/lecture',
+        path: 'course-management/:code/lectures',
         component: LectureManagementComponent,
         resolve: {
             course: CourseMgmtResolve
@@ -37,7 +37,7 @@ export const lectureMgmtState: Routes = [
         }
     },
     {
-        path: 'course-management/:code/lecture/new',
+        path: 'course-management/:code/lectures/create',
         component: LectureManagementUpdateComponent,
         resolve: {
             lecture: LectureMgmtResolve,
@@ -48,7 +48,7 @@ export const lectureMgmtState: Routes = [
         }
     },
     {
-        path: 'course-management/:code/lecture/:codeLecture/edit',
+        path: 'course-management/:code/lectures/:codeLecture/edit',
         component: LectureManagementUpdateComponent,
         resolve: {
           lecture: LectureMgmtResolve,
@@ -70,7 +70,7 @@ export const lectureMgmtState: Routes = [
         }
     },
     {
-        path: 'course-management/:code/lecture/:codeLecture/quiz',
+        path: 'course-management/:code/lectures/:codeLecture/quiz',
         component: QuizComponent,
         resolve: {
           lecture: LectureMgmtResolve

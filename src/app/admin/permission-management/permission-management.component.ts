@@ -11,28 +11,20 @@ import { ConfirmationService, MessageService } from 'primeng/api';
 })
 export class PermissionManagementComponent implements OnInit, OnDestroy {
 
-    currentAccount: any;
-    permissions?: PermissionBO[];
-    error: any;
-    success: any;
+    permissions?: PermissionBO[] = [];
     routeData: any;
     totalItems: any;
-    itemsPerPage: any = 2;
+    itemsPerPage: any = 5;
     page: any;
-    predicate: any;
-    previousPage: any;
-    reverse: any;
     keyword = '';
     constructor(
         private messageService: MessageService,
         private confirmationService: ConfirmationService,
         private permissionService: PermissionService,
-        private activatedRoute: ActivatedRoute,
-        private router: Router
+        private activatedRoute: ActivatedRoute
     ) {
         this.routeData = this.activatedRoute.queryParams.subscribe(params => {
             this.page = params.page || 1;
-            this.previousPage = params.page || 1;
             this.keyword = params.keyword || '';
         });
     }
@@ -60,25 +52,10 @@ export class PermissionManagementComponent implements OnInit, OnDestroy {
 
     loadPage(event: any) {
         this.page = event.page + 1;
-        if (this.page !== this.previousPage) {
-            this.transition();
-            this.previousPage = this.page;
-        }
-    }
-
-    transition() {
-        const param = {
-            page: this.page,
-            keyword: this.keyword
-        };
-        if (this.keyword === '' || !this.keyword) { delete param.keyword; }
-        this.router.navigate(['/admin/permission-management'], {
-            queryParams: param
-        });
         this.loadAll();
     }
-    search(value?: string) {
-        this.keyword = value;
+
+    search() {
         this.page = 1;
         this.loadAll();
     }

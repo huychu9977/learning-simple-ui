@@ -1,73 +1,68 @@
 <div class="animated fadeIn">
     <div class="row">
         <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3><span [translate]="'permissionManagement.home.title'">Users</span></h3>
+            <div class="row">
+                <div class="col-sm-4">
+                    <button class="btn btn-primary btn-sm create-organization"
+                            [routerLink]="['new']">
+                        <span [translate]="'permissionManagement.home.createLabel'">
+                Tạo mới
+                </span>
+                    </button>
                 </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-sm-12">
-                            <div class="row">
-                                <div class="col-sm-4">
-                                    <button class="btn btn-primary btn-sm create-organization"
-                                            [routerLink]="['new']">
-                                        <span [translate]="'permissionManagement.home.createLabel'">
-                               Tạo mới
-                               </span>
-                                    </button>
-                                </div>
-                                <div class="col-sm-2 col-lg-4"></div>
-                                <div class="col-sm-6 col-lg-4">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" [(ngModel)]="keyword" (input)="search($event.target.value)"
-                                               placeholder="..."/>
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="pi pi-search"></i></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <br/>
-                            <table class="table table-striped text-center">
-                                <thead>
-                                <tr jhiSort>
-                                    <th [translate]="'global.field.id'">ID</th>
-                                    <th [translate]="'permissionManagement.code'">code</th>
-                                    <th [translate]="'permissionManagement.name'">Email</th>
-                                    <th [translate]="'permissionManagement.action'">Action</th>
-                                </tr>
-                                </thead>
-                                <tbody *ngIf="permissions">
-                                <tr *ngFor="let permission of permissions">
-                                    <td>{{permission.id}}</td>
-                                    <td>{{permission.code}}</td>
-                                    <td>{{permission.name}}</td>
-                                    <td class="text-center">
-                                        <div class="btn-group flex-btn-group-container">
-                                            <button type="submit"
-                                                    [routerLink]="[ permission.id, 'edit']"
-                                                    queryParamsHandling="merge"
-                                                    class="btn btn-primary btn-sm">
-                                                <span class="d-none d-md-inline"
-                                                      [translate]="'entity.action.edit'">Edit</span>
-                                            </button>
-                                            <button type="button" (click)="deletePermission(permission)"
-                                                    class="btn btn-danger btn-sm">
-                                                <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
-                                            </button>
-                                        </div>
-                                    </td>
-                                </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div *ngIf="permissions && permissions.length" class="row justify-content-center w-100">
-                            <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
+                <div class="col-sm-2 col-lg-4"></div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="input-group">
+                        <input [(ngModel)]="keyword" name="keyword" (input)="search()" placeholder="Mã / Tên quyền hạn" class="form-control rounded-0" type="text">
+                        <div class="input-group-append">
+                            <button class="btn btn-dark" type="button" (click)="search()">
+                                <i class="fa fa-search"></i>
+                            </button>
                         </div>
                     </div>
                 </div>
             </div>
+            <br/>
+            <table class="table table-bordered" >
+                <thead class="thead-dark text-center">
+                <tr>
+                    <th [translate]="'global.field.id'">ID</th>
+                    <th [translate]="'permissionManagement.code'">code</th>
+                    <th [translate]="'permissionManagement.name'">Email</th>
+                    <th [translate]="'permissionManagement.action'">Action</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="permissions.length === 0">
+                    <tr>
+                        <td class="text-center" colspan="4">Không có dữ liệu</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="permissions.length > 0">
+                <tr *ngFor="let permission of permissions">
+                    <td>{{permission.id}}</td>
+                    <td>{{permission.code}}</td>
+                    <td>{{permission.name}}</td>
+                    <td class="text-center">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="submit"
+                                    [routerLink]="[ permission.id, 'edit']"
+                                    queryParamsHandling="merge"
+                                    class="btn btn-primary btn-sm">
+                                <span class="d-none d-md-inline"
+                                        [translate]="'entity.action.edit'">Edit</span>
+                            </button>
+                            <button type="button" (click)="deletePermission(permission)"
+                                    class="btn btn-danger btn-sm">
+                                <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="permissions && permissions.length" class="row justify-content-end w-100">
+            <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
         </div>
     </div>
 </div>

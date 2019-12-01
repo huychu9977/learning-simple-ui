@@ -1,98 +1,95 @@
 <div class="animated fadeIn">
     <div class="row">
-        <div class="col-sm-12">
-            <div class="card">
-                <div class="card-header">
-                    <h3><span [translate]="'roleManagement.home.createOrEditLabel'">createOrEditLabel</span></h3>
-                </div>
-                <div class="card-body">
-                    <form name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
-                        <div class="row justify-content-center">
-                            <div class="col-8">
-                                <div>
-                                    <div class="form-group" [hidden]="!role.id">
-                                        <input type="hidden" class="form-control" name="id" formControlName="id" readonly>
-                                    </div>
-                    
-                                    <div class="row">
-                                        <fieldset class="form-group col-md-7">
-                                            <label [translate]="'roleManagement.code'">code</label>
-                                            <div class="input-group">
-                                                <input class="form-control" id="code" name="code" type="text" formControlName="code" [readOnly]="role.id ? true : false">
-                                            </div>
-                                            <div *ngIf="editForm.get('code').invalid && (editForm.get('code').dirty || editForm.get('code').touched) || isSaving && f['code'].errors">
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['code'].errors.required" [translate]="'entity.validation.required'">
-                                                    This field is required.
-                                                </small>
-                            
-                                                <small class="form-text text-danger"
-                                                *ngIf="f['code'].errors.pattern" [translate]="'entity.validation.patternLogin'">
-                                                    This field can only contain letters, digits and e-mail addresses.
-                                                </small>
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                    <div class="row">
-                                        <fieldset class="form-group col-md-7">
-                                            <label [translate]="'roleManagement.name'">name</label>
-                                            <div class="input-group">
-                                                <input class="form-control" id="phone" name="name" type="text" formControlName="name">
-                                            </div>
-                                        </fieldset>
-                                    </div>
-                                    <div class="row">
-                                        <div class="offset-lg-7 col-sm-6 col-lg-5 pr-0">
-                                            <div class="input-group">
-                                                <input type="text" class="form-control" name="keyword" (input)="search($event.target.value)"
-                                                        placeholder="..."/>
-                                                <div class="input-group-prepend">
-                                                    <span class="input-group-text"><i class="pi pi-search"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <table class="text-center table table-bordered mt-3">
-                                            <thead>
-                                                <tr>
-                                                <th scope="col">ID</th>
-                                                <th scope="col"><span [translate]="'permissionManagement.code'">code</span></th>
-                                                <th scope="col"><span [translate]="'permissionManagement.name'">name</span></th>
-                                                <th scope="col">Chọn quyền hạn</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr *ngFor="let permission of permissionBOs">
-                                                    <td>{{permission.id}}</td>
-                                                    <td>{{permission.code}}</td>
-                                                    <td>{{permission.name}}</td>
-                                                    <td>
-                                                        <label class="checkbox-custom">
-                                                            <input type="checkbox" (change)="selectedPermission(permission.code)" [checked]="checkSelected(permission.code)">
-                                                            <span class="checkmark"></span>
-                                                        </label>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <div *ngIf="permissionBOs && permissionBOs.length" class="row justify-content-center w-100">
-                                            <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
-                                        </div>
-                                    </div>
+        <form class="col-12" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <div>
+                        <div class="form-group" [hidden]="!role.id">
+                            <input type="hidden" class="form-control" name="id" formControlName="id" readonly>
+                        </div>
+        
+                        <div class="row">
+                            <fieldset class="form-group col-md-7">
+                                <label [translate]="'roleManagement.code'">code</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="code" name="code" placeholder="Mã vai trò..." type="text" formControlName="code" [readOnly]="role.id ? true : false">
                                 </div>
-                                <div>
-                                    <button type="button" class="btn btn-secondary" (click)="previousState()">
-                                        <span [translate]="'entity.action.cancel'">Cancel</span>
-                                    </button>
-                                    <button type="submit" class="btn btn-primary">
-                                        <span [translate]="'entity.action.save'">Save</span>
-                                    </button>
+                                <div *ngIf="editForm.get('code').invalid && (editForm.get('code').dirty || editForm.get('code').touched) || isSaving && f['code'].errors">
+                                    <small class="form-text text-danger"
+                                    *ngIf="f['code'].errors.required" [translate]="'entity.validation.required'">
+                                        This field is required.
+                                    </small>
+                
+                                    <small class="form-text text-danger"
+                                    *ngIf="f['code'].errors.pattern" [translate]="'entity.validation.patternLogin'">
+                                        This field can only contain letters, digits and e-mail addresses.
+                                    </small>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <fieldset class="form-group col-md-7">
+                                <label [translate]="'roleManagement.name'">name</label>
+                                <div class="input-group">
+                                    <input class="form-control" placeholder="Tên vai trò..." id="phone" name="name" type="text" formControlName="name">
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <div class="offset-lg-7 col-sm-6 col-lg-5 pr-0 mb-2">
+                                <div class="input-group">
+                                    <input [(ngModel)]="keyword" name="keyword" (input)="search($event.target.value)" placeholder="Mã / Tên quyền hạn" class="form-control rounded-0" type="text">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-dark" type="button" (click)="search()">
+                                            <i class="fa fa-search"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
+                            <table class="table table-bordered" >
+                                <thead class="thead-dark text-center">
+                                    <tr>
+                                        <th scope="col">ID</th>
+                                        <th scope="col"><span [translate]="'permissionManagement.code'">code</span></th>
+                                        <th scope="col"><span [translate]="'permissionManagement.name'">name</span></th>
+                                        <th scope="col">Chọn quyền hạn</th>
+                                    </tr>
+                                </thead>
+                                <tbody *ngIf="permissionBOs.length === 0">
+                                    <tr>
+                                        <td class="text-center" colspan="4">Không có dữ liệu</td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="permissionBOs.length > 0">
+                                    <tr *ngFor="let permission of permissionBOs">
+                                        <td>{{permission.id}}</td>
+                                        <td>{{permission.code}}</td>
+                                        <td>{{permission.name}}</td>
+                                        <td>
+                                            <label class="checkbox-custom">
+                                                <input type="checkbox" (change)="selectedPermission(permission.code)" [checked]="checkSelected(permission.code)">
+                                                <span class="checkmark"></span>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div *ngIf="permissionBOs && permissionBOs.length" class="row justify-content-center w-100">
+                                <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
+                            </div>
                         </div>
-                    </form>
+                    </div>
+                    <div class="row justify-content-end">
+                        <button type="button" class="btn btn-secondary mr-1" (click)="previousState()">
+                            <span [translate]="'entity.action.cancel'">Cancel</span>
+                        </button>
+                        <button type="submit" class="btn btn-primary">
+                            <span [translate]="'entity.action.save'">Save</span>
+                        </button>
+                    </div>
                 </div>
             </div>
-        </div>
+        </form>
     </div>
 </div>
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>

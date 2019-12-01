@@ -7,6 +7,7 @@ import { Title } from '@angular/platform-browser';
 import { CourseRegistrationService } from 'src/app/services/course-registration.service';
 import { ReviewService } from 'src/app/services/review.service';
 import { CourseService } from 'src/app/services/course.service';
+import { SUCCESS } from 'src/app/shared/constants/status.constants';
 
 @Component({
   selector: 'page-course',
@@ -132,7 +133,7 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
   loadOne(code?: string) {
     this.courseService.findForEmpoyer(code).subscribe(
       (res: HttpResponse<CourseBO>) => this.onSuccess(res.body),
-      (res: HttpResponse<any>) => this.router.navigate(['/courses'])
+      (res: HttpResponse<any>) => this.router.navigate(['/not-found'])
     );
   }
   private onSuccess(data) {

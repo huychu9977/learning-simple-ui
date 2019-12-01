@@ -26,7 +26,12 @@
                                     <th style="width: 15%" [translate]="'courseManagement.action'">Action</th>
                                 </tr>
                                 </thead>
-                                <tbody *ngIf="objectives">
+                                <tbody *ngIf="objectives.length === 0">
+                                    <tr>
+                                        <td colspan="3">Không có dữ liệu</td>
+                                    </tr>
+                                </tbody>
+                                <tbody *ngIf="objectives.length > 0">
                                 <tr *ngFor="let o of objectives; let i=index">
                                     <td>{{i+1}}</td>
                                     <td *ngIf="!o.isEdit">{{o.name}}</td>
@@ -58,8 +63,8 @@
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col-sm-12">
-                            <button type="button" class="btn btn-secondary" (click)="previousState()">
+                        <div class="row w-100 justify-content-end">
+                            <button type="button" class="btn btn-secondary mr-1" (click)="previousState()">
                                 &nbsp;<span [translate]="'entity.action.cancel'">Cancel</span>
                             </button>
                             <button type="button" class="btn btn-primary" (click)="save()" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">

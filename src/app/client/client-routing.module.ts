@@ -10,7 +10,6 @@ import { PageCourseComponent } from './page-course/page-course.component';
 import { PageOurTeacherComponent } from './page-our-teacher/page-our-teacher.component';
 import { PageTeacherComponent } from './page-teacher/page-teacher.component';
 import { PageLectureComponent } from './page-lecture/page-lecture.component';
-import { UserRouteAccessCourseService } from '../core/auth/user-route-access-course-service';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { PageEventComponent } from './page-event/page-event.component';
 
@@ -74,7 +73,7 @@ const clientRoute: Routes = [
           path: 'account/my-courses',
           component: PageMyCourseComponent,
           data: {
-            pageTitle: 'courseManagement.home.title'
+            pageTitle: 'global.profile.title'
           }
         },
         {
@@ -91,8 +90,7 @@ const clientRoute: Routes = [
         },
         {
           path: 'course/:course-code/lecture/:code',
-          component: PageLectureComponent,
-          canActivate: [UserRouteAccessCourseService]
+          component: PageLectureComponent
         },
         { path: 'not-found', component: PageNotFoundComponent},
         { path: '**', redirectTo: 'not-found' }

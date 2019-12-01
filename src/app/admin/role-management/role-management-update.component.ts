@@ -15,11 +15,11 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 })
 export class RoleMgmtUpdateComponent implements OnInit {
   totalItems: any;
-  itemsPerPage: any = 2;
+  itemsPerPage: any = 5;
   page: any = 1;
   keyword = '';
   role: RoleBO;
-  permissionBOs: any[];
+  permissionBOs: any[] = [];
   isSaving: boolean;
   selectedPermissions;
   editForm = this.fb.group({

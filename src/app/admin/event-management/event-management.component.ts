@@ -25,7 +25,7 @@ export class EventManagementComponent implements OnInit {
         private activatedRoute: ActivatedRoute,
         private router: Router
     ) {
-        this.itemsPerPage = 2;
+        this.itemsPerPage = 10;
         this.activatedRoute.queryParams.subscribe(params => {
             this.page = params.page || 1;
             this.previousPage = params.page || 1;
@@ -79,10 +79,9 @@ export class EventManagementComponent implements OnInit {
         });
         this.loadAll();
     }
-    search(value?: string) {
-        this.keyword = value;
+    search() {
         this.page = 1;
-        this.loadAll();
+        this.transition();
     }
     deleteLecture(event: EventBO) {
         this.confirmationService.confirm({

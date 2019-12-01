@@ -1,7 +1,7 @@
 import { ReviewService } from './../../services/review.service';
 import { LectureBO } from './../../models/lectureBO.model';
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit, AfterContentChecked } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { Title } from '@angular/platform-browser';
 import { LectureService } from 'src/app/services/lecture.service';
@@ -12,6 +12,8 @@ import { CommentBO } from 'src/app/models/CommentBO.model';
 import { AccountService } from 'src/app/core/auth/account.service';
 import { QuestionService } from 'src/app/services/question.service';
 import { ConfirmationService } from 'primeng/api';
+import { SUCCESS } from 'src/app/shared/constants/status.constants';
+import { CourseRegistrationService } from 'src/app/services/course-registration.service';
 
 @Component({
   selector: 'page-lecture',
@@ -67,6 +69,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   display = false;
   fileAttachments: any = [];
   constructor(
+    private courseRegistrationService: CourseRegistrationService,
     private changeDetector: ChangeDetectorRef,
     private reviewService: ReviewService,
     private route: ActivatedRoute,
@@ -76,11 +79,19 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     private accountService: AccountService,
     private questionService: QuestionService,
     private courseService: CourseService,
+    private router: Router,
     private confirmationService: ConfirmationService
     ) {
     }
 
   ngOnInit() {
+    this.accountService.identity().then(account => {
+      if (!account) {
+        this.router.navigate(['/not-found']);
+        return;
+      }
+      this.currentAccount = account;
+    });
     this.route.params.subscribe(params => {
       this.courseCode = params['course-code'];
       this.code = params.code;
@@ -90,9 +101,6 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     this.loadReviewByCourse();
     this.loadLectureCompleted();
     this.loadAllComment();
-    this.accountService.identity().then(account => {
-        this.currentAccount = account;
-    });
     this.route.queryParams.subscribe(data => {
       if (data.commentId) {
         this.indexTab = 1;
@@ -358,11 +366,17 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   loadCourse(code?: string) {
     this.courseService.findForEmpoyer(code).subscribe(
       (res: HttpResponse<CourseBO>) => this.onSuccess(res.body),
-      (res: HttpResponse<any>) => console.log(res)
+      (res: HttpResponse<any>) => this.router.navigate(['/not-found'])
     );
   }
   private onSuccess(data) {
     this.course = data;
+    this.courseRegistrationService.findOne(this.course.code).subscribe(res => {
+      if (!res && this.currentAccount.username !== this.course.createdByUsername) {
+        this.router.navigate(['/course', this.courseCode]);
+        return;
+      }
+    });
     data.lectures.sort((t1, t2) => {
       if (t1.sortOrder > t2.sortOrder) { return 1; }
       if (t1.sortOrder < t2.sortOrder) { return -1; }

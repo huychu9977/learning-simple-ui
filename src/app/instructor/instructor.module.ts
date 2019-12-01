@@ -5,6 +5,7 @@ import { BecomeInstructorModule } from './become-instructor/become-instructor.mo
 import { HeaderModule } from '../client/page-header/header.module';
 import { CoursesModule } from './courses/courses.module';
 import { InstructorRoutingModule } from './instructor-routing.module';
+import { PageProfileModule } from '../client/page-profile/page-profile.module';
 
 @NgModule({
   declarations: [InstructorComponent],
@@ -13,6 +14,7 @@ import { InstructorRoutingModule } from './instructor-routing.module';
     BecomeInstructorModule,
     CoursesModule,
     HeaderModule,
+    PageProfileModule,
     InstructorRoutingModule
   ]
 })
