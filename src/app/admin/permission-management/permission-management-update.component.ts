@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { PermissionBO } from 'src/app/models/permissionBO.model';
-import { JhiLanguageHelper } from 'src/app/core/language/language.helper';
 import { PermissionService } from 'src/app/services/permission.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 

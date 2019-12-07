@@ -33,11 +33,4 @@ export class CommentService {
         return this.http.delete(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
-    getNotifications(): Observable<any[]> {
-        return this.http.get<any[]>(`${this.resourceUrl}/notifications`);
-    }
-
-    setIsSeenComment(id?: any): Observable<any> {
-        return this.http.post<any>(`${this.resourceUrl}/notifications/${id}`, { observe: 'response' });
-    }
 }

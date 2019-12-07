@@ -28,6 +28,7 @@
                 <table class="table table-bordered" style="position: relative;" [el-loading]="loading">
                     <thead class="thead-dark text-center">
                     <tr>
+                        <th *ngIf="currentAccount?.roleBOs.indexOf('ROLE_ADMIN') > -1">Duyệt</th>
                         <th>STT</th>
                         <th>Trạng thái</th>
                         <th [translate]="'lectureManagement.code'">code</th>
@@ -44,6 +45,12 @@
                     </tbody>
                     <tbody *ngIf="lectures?.length > 0">
                     <tr *ngFor="let lecture of lectures;">
+                        <td class="btn-action" *ngIf="currentAccount?.roleBOs.indexOf('ROLE_ADMIN') > -1">
+                            <div *ngIf="course?.ticketFollowBy === currentAccount?.username && lecture?.status === CHECKING">
+                                <button (click)="setStatus(lecture?.code, 'SUCCESS')" type="button" class="mb-1 btn btn-sm btn-success">Chấp nhận</button> <br>
+                                <button (click)="setStatus(lecture?.code, 'ERROR')" type="button" class="btn btn-sm btn-danger">Loại bỏ</button>
+                            </div>
+                        </td>
                         <td>{{lecture.sortOrder}}</td>
                         <td>
                            <strong><span class="badge badge-danger">{{lecture.status | statusText}}</span></strong>

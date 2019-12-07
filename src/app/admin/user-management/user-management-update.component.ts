@@ -3,7 +3,6 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { UserBO } from 'src/app/models/userBO.model';
-import { JhiLanguageHelper } from 'src/app/core/language/language.helper';
 import { UserService } from 'src/app/services/user.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 
@@ -46,7 +45,7 @@ export class UserMgmtUpdateComponent implements OnInit {
       this.updateForm(this.user);
     });
     this.roleBOs = [];
-    this.userService.roleBOs().pipe(map(data => data.map(v => {
+    this.userService.getRoles().pipe(map(data => data.map(v => {
       return {code: v, name: v};
     }))).subscribe(rol => {
       this.roleBOs = rol;

@@ -105,7 +105,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
       if (data.commentId) {
         this.indexTab = 1;
         this.openDetailComment(data.commentId);
-        this.commentService.setIsSeenComment(data.commentId).subscribe(res => {});
+        // this.commentService.setIsSeenComment(data.commentId).subscribe(res => {});
       }
     });
   }
@@ -267,8 +267,8 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     .query(param, this.courseCode)
     .subscribe(
         (res: HttpResponse<any>) => {
-          this.totalItems = res.body.totalResult;
-          this.comments = res.body.results;
+          this.totalItems = res.body.totalElements;
+          this.comments = res.body.content;
           this.load = false;
         },
         (res: HttpResponse<any>) => console.log(res.body)

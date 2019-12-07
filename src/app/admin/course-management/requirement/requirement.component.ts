@@ -7,8 +7,7 @@ import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'requirement',
-  templateUrl: './requirement.component.html',
-  styleUrls: ['./requirement.component.scss']
+  templateUrl: './requirement.component.html'
 })
 export class RequirementComponent implements OnInit {
   statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;

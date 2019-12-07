@@ -3,8 +3,9 @@ import { HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { LectureBO } from 'src/app/models/lectureBO.model';
 import { LectureService } from 'src/app/services/lecture.service';
-import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
+import { STATUS_CAN_NOT_EIDT_DELETE, CHECKING } from 'src/app/shared/constants/status.constants';
 import { DynamicDialogConfig, DynamicDialogRef, MessageService, ConfirmationService } from 'primeng/api';
+import { AccountService } from 'src/app/core/auth/account.service';
 
 @Component({
   selector: 'list-lecture',
@@ -20,6 +21,8 @@ export class ListLectureComponent implements OnInit {
     page: any = 1;
     keyword = '';
     href?: string;
+    isChecking = false;
+    CHECKING = CHECKING;
     statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
 
     constructor(
@@ -34,6 +37,9 @@ export class ListLectureComponent implements OnInit {
 
     ngOnInit(): void {
         this.lecture = this.config.data.lecture;
+        this.courseStatus = this.config.data.courseStatus;
+        this.chapterStatus = this.config.data.chapterStatus;
+        this.isChecking = this.config.data.isChecking;
         this.loadAll();
     }
 
@@ -54,6 +60,17 @@ export class ListLectureComponent implements OnInit {
                 this.loadAll();
             } else {
                 console.log('error');
+            }
+        });
+    }
+
+    setStatus(code?: string, status?: string) {
+        this.lectureService.setStatus(code, status).subscribe(res => {
+            if (res) {
+                this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thành công!'});
+                this.loadAll();
+            } else {
+                this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: 'Xét duyệt thất bại!'});
             }
         });
     }
@@ -85,7 +102,7 @@ export class ListLectureComponent implements OnInit {
 
     loadAll() {
         this.lectureService
-            .queryLectureByParent(this.lecture.code, {
+            .queryLectureByChapter(this.lecture.code, {
                 page: this.page - 1,
                 size: this.itemsPerPage,
                 keyword: this.keyword
@@ -95,7 +112,7 @@ export class ListLectureComponent implements OnInit {
             );
     }
     private onSuccess(data) {
-        this.totalItems = data.totalResult;
-        this.lectures = data.results;
+        this.totalItems = data.totalElements;
+        this.lectures = data.content;
     }
 }

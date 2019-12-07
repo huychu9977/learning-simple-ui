@@ -8,6 +8,7 @@ import { SERVER_API_URL } from '../app.constants';
 @Injectable({ providedIn: 'root' })
 export class CourseService {
     public resourceUrl = SERVER_API_URL + 'api/courses';
+    private levels?: any[] = [];
 
     constructor(private http: HttpClient) {}
 
@@ -19,8 +20,8 @@ export class CourseService {
         return this.http.put<CourseBO>(`${this.resourceUrl}/set-active`, course, { observe: 'response' });
     }
 
-    setStatus(courseCode: string): Observable<boolean> {
-        return this.http.put<boolean>(`${this.resourceUrl}/set-status/${courseCode}`, { observe: 'response' });
+    setStatus(courseCode: string, status: string): Observable<boolean> {
+        return this.http.put<boolean>(`${this.resourceUrl}/set-status/${courseCode}/${status}`, { observe: 'response' });
     }
 
     update(body: any) {
@@ -51,6 +52,22 @@ export class CourseService {
 
     getLevels(): Observable<any[]> {
         return this.http.get<any[]>(`${this.resourceUrl}/levels`);
+    }
+
+    getLevelsPromise() {
+        if (this.levels.length > 0) {
+            return Promise.resolve(this.levels);
+        }
+        return this.getLevels()
+        .toPromise()
+        .then(response => {
+            this.levels = response || [];
+            return this.levels;
+        })
+        .catch(err => {
+            this.levels = [];
+            return null;
+        });
     }
     //
     queryMyCourses(req?: any): Observable<HttpResponse<any>> {

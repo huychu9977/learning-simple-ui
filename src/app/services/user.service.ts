@@ -11,10 +11,6 @@ export class UserService {
 
     constructor(private http: HttpClient) {}
 
-    create(user: UserBO): Observable<HttpResponse<UserBO>> {
-        return this.http.post<UserBO>(this.resourceUrl, user, { observe: 'response' });
-    }
-
     createWithImage(body: any) {
         return this.http.post(this.resourceUrl, body, { observe: 'response' });
     }
@@ -23,12 +19,8 @@ export class UserService {
         return this.http.put(this.resourceUrl, body, {observe: 'response' });
     }
 
-    update(user: UserBO): Observable<HttpResponse<UserBO>> {
-        return this.http.put<UserBO>(this.resourceUrl, user, { observe: 'response' });
-    }
-
-    find(login: string): Observable<HttpResponse<UserBO>> {
-        return this.http.get<UserBO>(`${this.resourceUrl}/${login}`, { observe: 'response' });
+    find(username: string): Observable<HttpResponse<UserBO>> {
+        return this.http.get<UserBO>(`${this.resourceUrl}/${username}`, { observe: 'response' });
     }
 
     query(req?: any): Observable<HttpResponse<UserBO[]>> {
@@ -40,8 +32,8 @@ export class UserService {
         return this.http.delete(`${this.resourceUrl}/${login}`, { observe: 'response' });
     }
 
-    roleBOs(): Observable<string[]> {
-        return this.http.get<string[]>(SERVER_API_URL + 'api/users/roleBOs');
+    getRoles(): Observable<string[]> {
+        return this.http.get<string[]>(SERVER_API_URL + 'api/users/roles');
     }
 
     requestUpdateRoleTeacher(body): Observable<HttpResponse<boolean>> {

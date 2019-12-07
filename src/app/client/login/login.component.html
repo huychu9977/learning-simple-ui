@@ -38,6 +38,7 @@
                             formControlName="password">
                 </div>
                 <p class="text-sm text-danger">{{messageRegister}}</p>
+                <button type="button" class="btn btn-default my-3 mr-1" (click)="cancel()">Hủy</button>
                 <button type="submit" class="btn btn-primary my-3" [disabled]="isActiveRegister" [translate]="'register.form.button'">Sign up</button>
             </form>
             <form class="form" role="form" (ngSubmit)="registerFinish()" [formGroup]="activeKeyForm" *ngIf="isFormActiveKey">
@@ -96,7 +97,7 @@
             </form>
             <form *ngIf="isConfirmResetPassword" class="form" role="form" (ngSubmit)="confirmResetPassword()" [formGroup]="forgotPasswordConfirmForm">
                 <div class="form-group">
-                    <label for="newPassword" [translate]="'global.form.newpassword'">newPassword</label>
+                    <label for="newPassword" [translate]="'global.form.newpassword.label'">newPassword</label>
                     <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="{{'global.form.newpassword.placeholder' | translate}}"
                             formControlName="newPassword">
                 </div>

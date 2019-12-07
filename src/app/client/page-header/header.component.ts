@@ -20,7 +20,6 @@ export class HeaderComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private page: PageReloadService,
     private courseService: CourseService,
     private categoryService: CategoryService) { }
 
@@ -60,7 +59,7 @@ export class HeaderComponent implements OnInit {
     }
   }
   async loadCategory() {
-    this.categories = await this.categoryService.getCategoriesForEmployer().toPromise();
+    this.categories = await this.categoryService.getCategoriesPromise();
     this.parents = this.categories.filter(c => {
       return !c.parentCode;
     });

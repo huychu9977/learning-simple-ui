@@ -5,7 +5,6 @@ import { Injectable } from '@angular/core';
 import { CourseMgmtResolve } from '../course-management/course-management-routing.module';
 import { LectureManagementComponent } from './lecture-management.component';
 import { LectureManagementUpdateComponent } from './lecture-management-update.component';
-import { LectureManagementDetailComponent } from './lecture-management-detail.component';
 import { LectureService } from 'src/app/services/lecture.service';
 import { LectureBO } from 'src/app/models/lectureBO.model';
 
@@ -56,17 +55,6 @@ export const lectureMgmtState: Routes = [
         },
         data: {
             pageTitle: 'lectureManagement.home.chapter.createOrEditLabel'
-        }
-    },
-    {
-        path: 'course-management/:code/lecture/:codeLecture/view',
-        component: LectureManagementDetailComponent,
-        resolve: {
-          lecture: LectureMgmtResolve,
-          course: CourseMgmtResolve
-        },
-        data: {
-            pageTitle: 'courseManagement.home.title'
         }
     },
     {

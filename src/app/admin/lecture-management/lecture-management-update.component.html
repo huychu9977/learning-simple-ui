@@ -1,4 +1,4 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-bottom: 100px;">
     <div class="">
         <form name="editForm" role="form" novalidate
          (ngSubmit)="save()" [formGroup]="editForm" style="position: relative;"
@@ -18,7 +18,7 @@
                                 </div>
                             </fieldset>
                             <fieldset class="form-group col-md-12">
-                                <label [translate]="'lectureManagement.name'">name</label>
+                                <label [translate]="'lectureManagement.name'">name</label> 
                                 <div class="input-group">
                                     <input class="form-control" id="name" [placeholder]="'lectureManagement.create.placeholder.name' | translate" name="name" type="text" formControlName="name">
                                 </div>
@@ -49,7 +49,7 @@
                                     </small>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12" *ngIf="(lecture.id && lecture.lectures.length === 0 && editForm.get('type').value !== 'chapter') || (!lecture.id && editForm.get('type').value && editForm.get('type').value !== 'chapter')">
+                            <div class="form-group col-md-12" *ngIf="(lecture.id && lecture.lectures.length === 0 && editForm.get('type').value !== 'LECTURE_CHAPTER') || (!lecture.id && editForm.get('type').value && editForm.get('type').value !== 'LECTURE_CHAPTER')">
                                 <label [translate]="'lectureManagement.parents'">parents</label>
                                 <ng-select [items]="lectureParents" bindValue="code" bindLabel="name" [multiple]="false"
                                     placeholder="Chọn bài học..."
@@ -62,8 +62,8 @@
                                 </ng-select>
                             </div>
                             <fieldset class="form-group col-md-6" *ngIf="editForm.get('type').value">
-                                <label *ngIf="editForm.get('type').value && editForm.get('type').value === 'chapter'" [translate]="'lectureManagement.chapterOrder'">sortOrder</label>
-                                <label *ngIf="editForm.get('type').value && editForm.get('type').value !== 'chapter'" [translate]="'lectureManagement.lectureOrder'">sortOrder</label>
+                                <label *ngIf="editForm.get('type').value && editForm.get('type').value === 'LECTURE_CHAPTER'" [translate]="'lectureManagement.chapterOrder'">sortOrder</label>
+                                <label *ngIf="editForm.get('type').value && editForm.get('type').value !== 'LECTURE_CHAPTER'" [translate]="'lectureManagement.lectureOrder'">sortOrder</label>
                                 <div class="input-group">
                                     <input class="form-control" id="sortOrder" [placeholder]="'lectureManagement.create.placeholder.sortOrder' | translate" name="sortOrder" type="number" formControlName="sortOrder">
                                 </div>
@@ -77,7 +77,7 @@
                             </fieldset>
                         </div>
                         <div class="row py-3"></div>
-                        <div class="row selectFile" *ngIf="editForm.get('type').value === 'lecture'">
+                        <div class="row selectFile" *ngIf="editForm.get('type').value === 'LECTURE_VIDEO'">
                             <div class="col-md-6">
                                 <div class="col-md-12 text-center">
                                     <img *ngIf="!selectedVideos && !lecture?.id" class="img-fluid" width="150" src="{{videoUrl}}" alt="Ảnh đại diện" />

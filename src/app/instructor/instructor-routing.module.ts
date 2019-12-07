@@ -87,6 +87,28 @@ const instructorRoute: Routes = [
           }
       },
       {
+        path: 'courses/:code/objectives',
+        component: CoursesComponent,
+        resolve: {
+            course: CourseMgmtResolve
+        },
+        data: {
+            currentPage: 'objectives',
+            pageTitle: 'lectureManagement.home.chapter.title'
+        }
+      },
+      {
+        path: 'courses/:code/requireds',
+        component: CoursesComponent,
+        resolve: {
+            course: CourseMgmtResolve
+        },
+        data: {
+            currentPage: 'requireds',
+            pageTitle: 'lectureManagement.home.chapter.title'
+        }
+      },
+      {
         path: 'account',
         component: PageProfileComponent,
         data: {

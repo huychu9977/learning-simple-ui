@@ -1,4 +1,4 @@
-import { UserHeaderModule } from './../../core/user-header/user-header.module';
+import { UserHeaderModule } from '../../shared/modules/user-header/user-header.module';
 import { RouterModule } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { HeaderComponent } from './header.component';

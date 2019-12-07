@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { AuthInterceptor } from './blocks/interceptor/auth.interceptor';
 import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor';
-import { LoadingScreenInterceptor } from './blocks/interceptor/loading.interceptor';
 import { CommonModule } from '@angular/common';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -39,11 +38,6 @@ export function createTranslateLoader(http: HttpClient) {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthExpiredInterceptor,
       multi: true
-    },
-    {
-        provide: HTTP_INTERCEPTORS,
-        useClass: LoadingScreenInterceptor,
-        multi: true
     }
   ],
   bootstrap: [AppComponent]

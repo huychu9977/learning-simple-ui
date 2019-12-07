@@ -1,4 +1,4 @@
-<div class="animated fadeIn">
+<div class="animated fadeIn" style="margin-bottom: 100px;">
         <div>
            <form style="position: relative;" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" [el-loading]="loading">
            <div class="row justify-content-between m-0">
@@ -27,12 +27,6 @@
                        </fieldset>
                     </div>
                     <div class="row">
-                       <fieldset class="form-group col-md-6">
-                          <label [translate]="'courseManagement.requiredCompleteRate'">requiredCompleteRate</label>
-                          <div class="input-group">
-                             <input class="form-control" [placeholder]="'courseManagement.create.placeholder.requiredCompleteRate' | translate" id="requiredCompleteRate" name="requiredCompleteRate" type="number" formControlName="requiredCompleteRate">
-                          </div>
-                       </fieldset>
                        <div class="form-group col-md-6">
                           <label [translate]="'courseManagement.level'">level</label>
                           <ng-select [items]="levels" bindValue="code" bindLabel="name" [multiple]="false" placeholder="Chọn trình độ..." [searchable]="false" formControlName='level' class="form-control" required>

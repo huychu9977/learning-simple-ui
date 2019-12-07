@@ -74,8 +74,8 @@ export class PermissionManagementComponent implements OnInit, OnDestroy {
           });
     }
     private onSuccess(data) {
-        this.totalItems = data.totalResult;
-        this.permissions = data.results;
+        this.totalItems = data.totalElements;
+        this.permissions = data.content;
     }
 
     private onError(error) {

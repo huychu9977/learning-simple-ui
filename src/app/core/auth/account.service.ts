@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { SERVER_API_URL } from 'src/app/app.constants';
+import { SocketService } from './socket.service';
 
 
 @Injectable({ providedIn: 'root' })
@@ -11,7 +12,7 @@ export class AccountService {
   private authenticated = false;
   private authenticationState = new Subject<any>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private socketService: SocketService) {}
 
   updateCurrentUser(body?: any) {
     return this.http.put<boolean>(SERVER_API_URL + 'api/user/account/update', body, { observe: 'response' });
@@ -42,10 +43,6 @@ export class AccountService {
 
   fetch(): Observable<HttpResponse<Account>> {
     return this.http.get<Account>(SERVER_API_URL + 'api/account', { observe: 'response' });
-  }
-
-  getCurrentAccount(): Observable<Account> {
-    return this.http.get<Account>(SERVER_API_URL + 'api/user/account');
   }
 
   save(account: any): Observable<HttpResponse<any>> {
@@ -100,6 +97,7 @@ export class AccountService {
         if (account) {
           this.userIdentity = account;
           this.authenticated = true;
+          this.socketService.connect();
         } else {
           this.userIdentity = null;
           this.authenticated = false;

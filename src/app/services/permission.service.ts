@@ -28,7 +28,7 @@ export class PermissionService {
         return this.http.get<PermissionBO[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
-    delete(login: string): Observable<HttpResponse<any>> {
-        return this.http.delete(`${this.resourceUrl}/${login}`, { observe: 'response' });
+    delete(code: string): Observable<HttpResponse<any>> {
+        return this.http.delete(`${this.resourceUrl}/${code}`, { observe: 'response' });
     }
 }

@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { Validators, FormBuilder } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { CourseBO } from 'src/app/models/courseBO.model';
-import { JhiLanguageHelper } from 'src/app/core/language/language.helper';
 import { CourseService } from 'src/app/services/course.service';
 import { CategoryService } from 'src/app/services/category.service';
 import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
@@ -31,7 +30,6 @@ export class CourseManagementUpdateComponent implements OnInit {
     sortDescription: [''],
     description: ['', [Validators.required]],
     activated: [true],
-    requiredCompleteRate: ['', [Validators.maxLength(3)]],
     level: ['', [Validators.required]],
     courseTopic: ['', [Validators.required]],
     courseCategory: [''],
@@ -92,8 +90,7 @@ export class CourseManagementUpdateComponent implements OnInit {
       sortDescription: course.sortDescription,
       description: course.description,
       activated: course.activated === undefined ? true : course.activated,
-      requiredCompleteRate: course.requiredCompleteRate,
-      level: course.levelBO ? course.levelBO.code : null,
+      level: course.level ? course.level : null,
       courseCategory: course.topicDTO ? course.topicDTO.courseCategoryDTO.code : null,
       courseTopic: course.topicDTO ? course.topicDTO.code : null
     });
@@ -158,10 +155,7 @@ export class CourseManagementUpdateComponent implements OnInit {
       topicDTO : {
         code : this.editForm.get(['courseTopic']).value
       },
-      levelBO : {
-        code : this.editForm.get(['level']).value
-      },
-      requiredCompleteRate : this.editForm.get(['requiredCompleteRate']).value
+      level : this.editForm.get(['level']).value
     };
     if (!this.course.id) {
       courseTmp.code = this.slugifyPipe.transform(this.editForm.get(['name']).value);

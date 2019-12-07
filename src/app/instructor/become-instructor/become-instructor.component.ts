@@ -4,6 +4,7 @@ import { QUESTION_BECOME_INSTRUCTOR } from 'src/app/shared/constants/instructor-
 import { AccountService } from 'src/app/core/auth/account.service';
 import { UserService } from 'src/app/services/user.service';
 import { MessageService } from 'primeng/api';
+import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 
 @Component({
   selector: 'app-become-instructor',
@@ -110,7 +111,7 @@ export class BecomeInstructorComponent implements OnInit {
           this.answers = [];
           this.selectedFile = null;
           alert('Chờ duyệt!');
-          this.router.navigate(['home']);
+          window.location.href = 'home';
         }
       }, () => {
         this.isLoad = false;

@@ -90,10 +90,8 @@ export class DashboardComponent implements OnInit {
       });
       return;
     }
-    if (ticket.courseCode && !ticket.lectureCode) {
-      this.router.navigate(['admin/course-management', ticket.courseCode, 'view']);
-    } else if (ticket.courseCode && ticket.lectureCode) {
-      this.router.navigate(['admin/course-management', ticket.courseCode, 'lecture', ticket.lectureCode, 'view']);
+    if (ticket.courseCode) {
+      this.router.navigateByUrl('admin/course-management?keyword=' + ticket.courseCode);
     }
   }
   acceptUserToTeacher(isAccept: boolean, username: string) {

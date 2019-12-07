@@ -7,8 +7,7 @@ import { MessageService, ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-event-management',
-  templateUrl: './event-management.component.html',
-  styleUrls: ['./event-management.component.scss']
+  templateUrl: './event-management.component.html'
 })
 export class EventManagementComponent implements OnInit {
 
@@ -98,8 +97,8 @@ export class EventManagementComponent implements OnInit {
           });
     }
     private onSuccess(data) {
-        this.totalItems = data.totalResult;
-        this.events = data.results;
+        this.totalItems = data.totalElements;
+        this.events = data.content;
     }
 
     private onError(error) {

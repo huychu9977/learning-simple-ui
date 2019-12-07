@@ -36,10 +36,10 @@
       </button>
       <div class="lecture-container-content" [ngStyle]="{'width': expand ? '100%' : '75%'}">
         <div class="lecture-container-content-body">
-          <div class="video-play" *ngIf="lecture?.type.code === 'lecture'">
+          <div class="video-play" *ngIf="lecture?.type === 'LECTURE_VIDEO'">
             <video *ngIf="lecture?.videoUrl" src="{{lecture?.videoUrl}}" controls></video>
           </div>
-          <div class="quiz" *ngIf="lecture?.type.code === 'quiz'">
+          <div class="quiz" *ngIf="lecture?.type === 'LECTURE_QUIZ'">
             <div *ngIf="lectureCompleted.indexOf(lecture.id) > -1" style="position: absolute; top: 50%; text-align: center;">
                 <p class="text-danger my-3" [hidden]="!correctAnswer">Đúng hết rồi! Học làm gì nữa... </p>
                 <button class="btn btn-sm btn-primary mr-2" (click)="toggleCompletedLecture(lecture.id)">Bắt đầu lại</button>

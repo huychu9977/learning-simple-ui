@@ -39,17 +39,16 @@
                         </tbody>
                         <tbody *ngIf="courses?.length > 0" class="text-center">
                             <tr *ngFor="let course of courses;">
-                                <td class="btn-action">
-                                    <div *ngIf="currentAccount?.roleBOs.indexOf('ROLE_ADMIN') > -1 && course?.ticketFollowBy === currentAccount?.username
+                                <td class="btn-action" *ngIf="currentAccount?.roleBOs.indexOf('ROLE_ADMIN') > -1">
+                                    <div *ngIf="course?.ticketFollowBy === currentAccount?.username
                                             && course?.ticketStatus === CHECKING && course?.status === CHECKING">
-                                        <button type="button" class="mb-1 btn btn-sm btn-success">Chấp nhận</button> <br>
-                                        <button type="button" class="btn btn-sm btn-danger">Loại bỏ</button>
+                                        <button (click)="setStatus(course?.code, 'SUCCESS')" type="button" class="mb-1 btn btn-sm btn-success">Chấp nhận</button> <br>
+                                        <button (click)="setStatus(course?.code, 'ERROR')" type="button" class="btn btn-sm btn-danger">Loại bỏ</button>
                                     </div>
                                 </td>
                                 <td>
-                                    <button *ngIf="currentAccount?.username === course?.createdBy && (statusNeedCheck.indexOf(course.status) > -1 || course.totalLectureyStatus > 0)" type="button" class="btn btn-sm btn-info" (click)="setStatus(course?.code)">Xét duyệt</button>
-                                    <strong *ngIf="statusNeedCheck.indexOf(course.status) === -1 && course.totalLectureyStatus === 0"><span class="badge badge-primary">{{course?.status | statusText}}</span></strong>
-                                    <strong *ngIf="currentAccount?.username !== course?.createdBy && statusNeedCheck.indexOf(course.status) === -1"><span class="badge badge-primary">{{course?.status | statusText}}</span></strong>
+                                    <button *ngIf="currentAccount?.username === course?.createdBy && (statusNeedCheck.indexOf(course.status) > -1 || course.totalLectureyStatus > 0)" type="button" class="btn btn-sm btn-info" (click)="setStatus(course?.code, 'WAIT_CHECK')">Xét duyệt</button>
+                                    <strong *ngIf="statusNeedCheck.indexOf(course.status) === -1 && course.totalLectureyStatus === 0 || currentAccount?.roleBOs.indexOf('ROLE_ADMIN') > -1"><span class="badge badge-primary">{{course?.status | statusText}}</span></strong>
                                 </td>
                                 <td>{{course.code}}</td>
                                 <td>{{course.name}}</td>
@@ -77,14 +76,11 @@
                                     </div>
                                 </td>
                                 <td class="text-center">
-                                    <div class="btn-group flex-btn-group-container">
-                                        <button type="submit" target="_blank" [routerLink]="['/course', course?.code]" class="btn btn-info btn-sm color-white">
-                                            <span class="d-none d-md-inline" [translate]="'entity.action.view'">View</span>
-                                        </button>
-                                        <button type="submit" [routerLink]="[ 'edit', course.code]" queryParamsHandling="merge" class="btn btn-primary btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
+                                    <div class="btn-group flex-btn-group-container" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
+                                        <button type="submit" [routerLink]="[ 'edit', course.code]" class="btn btn-primary btn-sm">
                                             <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
                                         </button>
-                                        <button type="button" (click)="deleteCourse(course)" class="btn btn-danger btn-sm" *ngIf="statusCanNotEditAndDelete.indexOf(course.status) === -1">
+                                        <button type="button" (click)="deleteCourse(course)" class="btn btn-danger btn-sm">
                                             <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
                                         </button>
                                     </div>

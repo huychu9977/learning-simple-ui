@@ -33,6 +33,6 @@ export class RoleService {
     }
 
     permissionBOs(): Observable<string[]> {
-        return this.http.get<string[]>(SERVER_API_URL + 'api/roles/permissionBOs');
+        return this.http.get<string[]>(SERVER_API_URL + 'api/roles/permissions');
     }
 }

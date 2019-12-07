@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { AccountService } from './account.service';
 import { AuthServerProvider } from './auth-jwt.service';
+import { SocketService } from './socket.service';
 
 @Injectable({ providedIn: 'root' })
 export class LoginService {
-    constructor(private accountService: AccountService, private authServerProvider: AuthServerProvider) {}
+    constructor(
+        private accountService: AccountService, private socketService: SocketService,
+        private authServerProvider: AuthServerProvider) {}
 
     login(credentials, callback?) {
         // tslint:disable-next-line:only-arrow-functions
@@ -14,6 +17,7 @@ export class LoginService {
             this.authServerProvider.login(credentials).subscribe(
                 data => {
                     this.accountService.identity(true).then(account => {
+                        this.socketService.sendActivity();
                         resolve(data);
                     });
                     return cb();

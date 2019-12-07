@@ -21,6 +21,7 @@ export class CourseReviewsComponent implements OnInit {
   starNumber = 0;
   colors = ['#f4c150', '#76c5d6', '#686f7a', '#00576b'];
   ratesTmp: any[] = [];
+  loading = false;
   @Input() rates: any[] = [];
   @Input() rateAvg: any;
   @Input() rateAvgRound?: any = 0;
@@ -42,7 +43,6 @@ export class CourseReviewsComponent implements OnInit {
         this.ratesTmp = [...this.ratesTmp, {starNumber: star, percent: 0}];
       }
     }
-    console.log(this.ratesTmp);
   }
   getRate(star): any {
     return this.rates.filter(rate => rate.starNumber === star)[0];
@@ -63,6 +63,7 @@ export class CourseReviewsComponent implements OnInit {
     this.loadAll();
   }
   loadAll() {
+    this.loading = true;
     this.reviewService.query({
                 page: this.page - 1,
                 size: this.itemsPerPage,
@@ -71,12 +72,16 @@ export class CourseReviewsComponent implements OnInit {
                 starNumber: this.starNumber
               }).subscribe(
                 (res: HttpResponse<ReviewBO[]>) => this.onSuccess(res.body, res.headers),
-                (res: HttpResponse<any>) => console.log(res)
+                (res: HttpResponse<any>) => {
+                  console.log(res);
+                  this.loading = false;
+                }
             );
   }
   private onSuccess(data, headers) {
-    this.totalItems = data.totalResult;
-    this.reviews = data.results;
+    this.totalItems = data.totalElements;
+    this.reviews = data.content;
+    this.loading = false;
   }
   loadPage(event: any) {
     this.page = event.page + 1;

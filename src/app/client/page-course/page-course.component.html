@@ -26,7 +26,28 @@
 <div class="row">
   <div class="col-md-8">
     <div style="margin-top: 40px;">
-        <course-will-learn [objectives]="course?.objectiveSummaryBOs"></course-will-learn>
+        <div [ngClass]=" courseWillLearnMore ? 'collape-course-will-learn-more' : 'collape-course-will-learn'" #courseWillLearnE>
+        <div class="what-you-get">
+            <div class="what-you-get-card">
+                <div class="inner">
+                    <div class="what-you-get-content">
+                        <div class="what-you-get-title ">
+                          Mục tiêu
+                        </div>
+                        <ul class="what-you-get-items ">
+                            <li class="what-you-get-item what-you-get-item-columns" *ngFor="let o of course?.objectiveSummaryBOs">
+                                <span class="udi what-you-get-icon"><i class="fa fa-check" aria-hidden="true"></i></span>
+                                <span class="what-you-get-text">{{o?.name}}</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <span *ngIf="!courseWillLearnMore && courseWillLearnElement?.nativeElement?.offsetHeight >= 301" class="wrapper-more-btn">
+          <button (click)="courseWillLearnMore = true" class="more-btn btn-sm btn btn-link">+ See more</button>
+        </span>
+      </div>
     </div>
   </div>
 </div>
@@ -68,14 +89,14 @@
                       <div *ngFor="let lecture of getLectures(chapter.code)" class="lecture-container">
                           <div class="left-content">
                               <span class="udi">
-                                <i *ngIf="lecture.type.code === 'lecture'" class="fa fa-play-circle" aria-hidden="true"></i>
-                                <i *ngIf="lecture.type.code === 'quiz'" class="fa fa-question-circle-o" aria-hidden="true"></i>
+                                <i *ngIf="lecture.type === 'LECTURE_VIDEO'" class="fa fa-play-circle" aria-hidden="true"></i>
+                                <i *ngIf="lecture.type === 'LECTURE_QUIZ'" class="fa fa-question-circle-o" aria-hidden="true"></i>
                               </span>
                               <div class="top">
                                   <div class="title">{{lecture.name}} </div>
                               </div>
                           </div>
-                          <div class="details"><span class="content-summary" [hidden]="lecture.type.code !== 'lecture'">{{lecture.videoTimeEstimation | minuteSeconds}}</span></div>
+                          <div class="details"><span class="content-summary" [hidden]="lecture.type !== 'LECTURE_VIDEO'">{{lecture.videoTimeEstimation | minuteSeconds}}</span></div>
                       </div>
                     </div>
                 </div>

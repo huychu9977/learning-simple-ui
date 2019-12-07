@@ -92,8 +92,8 @@ export class RoleManagementComponent implements OnInit, OnDestroy {
     }
 
     private onSuccess(data) {
-        this.totalItems = data.totalResult;
-        this.roles = data.results;
+        this.totalItems = data.totalElements;
+        this.roles = data.content;
     }
 
     private onError(error) {

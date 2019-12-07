@@ -23,7 +23,7 @@
             "polyfills": "src/polyfills.ts",
             "tsConfig": "src/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
+              "src/favicon1.ico",
               "src/assets"
             ],
             "styles": [
@@ -67,8 +67,7 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "learning-simple-ui:build",
-            "proxyConfig": "proxy.conf.js"
+            "browserTarget": "learning-simple-ui:build"
           },
           "configurations": {
             "production": {
@@ -95,7 +94,7 @@
             ],
             "scripts": [],
             "assets": [
-              "src/favicon.ico",
+              "src/favicon1.ico",
               "src/assets"
             ]
           }

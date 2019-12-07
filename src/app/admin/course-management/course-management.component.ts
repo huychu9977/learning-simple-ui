@@ -5,6 +5,7 @@ import { CourseBO } from 'src/app/models/courseBO.model';
 import { CourseService } from 'src/app/services/course.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { AccountService } from 'src/app/core/auth/account.service';
+import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'course-management',
   templateUrl: './course-management.component.html',
@@ -25,23 +26,30 @@ export class CourseManagementComponent implements OnInit {
     constructor(
         private messageService: MessageService,
         private accountService: AccountService,
+        private route: ActivatedRoute,
         private confirmationService: ConfirmationService,
         private courseService: CourseService
     ) {}
 
     ngOnInit() {
+        this.route.queryParams.subscribe(params => {
+            this.keyword = params.keyword || '';
+        });
         this.accountService.identity().then(account => {
             this.currentAccount = account;
             this.loadAll();
         });
     }
-    setStatus(courseCode?: string) {
-        this.courseService.setStatus(courseCode).subscribe(res => {
+    setStatus(courseCode?: string, status?: string) {
+        this.loading = true;
+        this.courseService.setStatus(courseCode, status).subscribe(res => {
             if (res) {
-                this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Trong thời gian chờ duyệt!'});
+                this.messageService.add({severity: 'success', summary: 'Thành công!', detail: status === 'WAIT_CHECK'
+                ? 'Trong thời gian chờ duyệt!' : 'Thành công!'});
                 this.loadAll();
             } else {
                 this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: 'Xét duyệt thất bại!'});
+                this.loading = false;
             }
         });
     }
@@ -66,7 +74,7 @@ export class CourseManagementComponent implements OnInit {
             size: this.itemsPerPage,
             keyword: this.keyword
         };
-        if (this.accountService.hasAuthority('ROLE_ADMIN')) {
+        if (this.currentAccount.roleBOs.indexOf('ROLE_ADMIN') > -1) {
             this.courseService
             .query(param)
             .subscribe(

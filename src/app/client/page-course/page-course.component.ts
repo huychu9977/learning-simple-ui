@@ -17,7 +17,8 @@ import { SUCCESS } from 'src/app/shared/constants/status.constants';
 export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, AfterContentChecked {
   @ViewChild('hh', {static: true}) elementView: ElementRef;
   @ViewChild('script', {static: false}) script: ElementRef;
-
+  @ViewChild('courseWillLearnE', {static: false}) courseWillLearnElement?: ElementRef;
+  courseWillLearnMore = false;
   images1?: any[] = [
     {
       id: 1, // id of slide
@@ -147,9 +148,9 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
       return !l.parentCode;
     });
     this.course.lectures.forEach(l => {
-      if (l.type.code === 'quiz') { this.totalLectureQuiz++; }
-      if (l.type.code === 'coding_exercise') { this.totalLectureExercise++; }
-      if (l.type.code === 'lecture') { this.totalLectureVideo++; }
+      if (l.type === 'LECTURE_QUIZ') { this.totalLectureQuiz++; }
+      if (l.type === 'LECTURE_CODE') { this.totalLectureExercise++; }
+      if (l.type === 'LECTURE_VIDEO') { this.totalLectureVideo++; }
     });
     this.titleService.setTitle(this.course.name);
     this.checkIsRegistration();
@@ -172,7 +173,7 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
   totalTimeEstimate() {
     let time = 0;
     this.course.lectures.forEach(l => {
-      if (l.parentCode && l.type.code === 'lecture') {
+      if (l.parentCode && l.type === 'LECTURE_VIDEO') {
         time += l.videoTimeEstimation === null ? 0 : l.videoTimeEstimation;
       }
     });
@@ -181,7 +182,7 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
   totalChapterTimeEstimate(code?: string) {
     let time = 0;
     this.course.lectures.forEach(l => {
-      if (l.parentCode && l.parentCode === code && l.type.code === 'lecture') {
+      if (l.parentCode && l.parentCode === code && l.type === 'LECTURE_VIDEO') {
         time += l.videoTimeEstimation === null ? 0 : l.videoTimeEstimation;
       }
     });

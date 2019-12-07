@@ -79,7 +79,7 @@ export class PageOurCourseComponent implements OnInit {
   subCategoryCode?: string;
   topicCode?: string;
   levelCode?: string;
-  rate?: any;
+  rate?: any = null;
   params?: any = {};
   keyword = '';
   categories: any[] = [];
@@ -144,7 +144,7 @@ export class PageOurCourseComponent implements OnInit {
     }
   }
   loadLevels() {
-    this.courseService.getLevels().subscribe(res => {
+    this.courseService.getLevelsPromise().then(res => {
       this.levels = res;
     });
   }
@@ -159,7 +159,7 @@ export class PageOurCourseComponent implements OnInit {
     }
   }
   loadCategories() {
-    this.categoryService.getCategoriesForEmployer().subscribe(res => {
+    this.categoryService.getCategoriesPromise().then(res => {
       this.categories = res;
       this.parents = this.categories.filter(c => {
         return !c.parentCode;
@@ -272,18 +272,18 @@ export class PageOurCourseComponent implements OnInit {
       page: this.page,
       size: this.itemsPerPage
     };
-    this.params = {...this.params, ...param};
     if (this.keyword === '' || !this.keyword) { delete param.keyword; }
-    if (this.page === 1) { delete param.page; }
     if (!this.levelCode) { delete param.level; }
     if (!this.rate) { delete param.rate; }
+    this.params = {...this.params, ...param};
+    if (this.page === 1) { delete param.page; }
     delete param.size;
     return {link, param};
   }
 
   private onSuccess(data) {
-    this.totalItems = data.totalResult;
-    this.courses = data.results;
+    this.totalItems = data.totalElements;
+    this.courses = data.content;
   }
 
   private onError(error) {

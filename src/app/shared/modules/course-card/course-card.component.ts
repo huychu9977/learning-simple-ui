@@ -8,12 +8,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class CourseCardComponent implements OnInit {
   @Input() course?: any;
-  rateAvg;
+  rateAvg = 1;
   constructor() { }
 
   ngOnInit() {
     // tslint:disable-next-line:radix
-    this.rateAvg = parseInt(this.course.rateAvg);
+    this.rateAvg = this.course.rateAvg ? parseInt(this.course.rateAvg) : 1;
+    this.course.totalVideoDuration = Math.floor(this.course.totalVideoDuration / 60);
   }
 
 }

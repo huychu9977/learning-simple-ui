@@ -65,22 +65,22 @@ export class LectureManagementUpdateComponent implements OnInit {
   }
 
   updateSortOrder() {
-    if (this.editForm.get(['type']).value === 'chapter') {
+    if (this.editForm.get(['type']).value === 'LECTURE_CHAPTER') {
       this.editForm.get(['sortOrder']).setValue(this.editForm.get(['oldSortOrder']).value);
     } else if (this.editForm.get(['parent']).value) {
-      this.lectureService.getTotalChildren(this.editForm.get(['parent']).value)
+      this.lectureService.getTotalLectureByChapter(this.editForm.get(['parent']).value)
       // tslint:disable-next-line:radix
       .subscribe(data => this.editForm.get(['sortOrder']).setValue(parseInt(data) + 1));
     }
   }
 
   updateType() {
-    if (this.editForm.get(['type']).value === 'chapter') {
+    if (this.editForm.get(['type']).value === 'LECTURE_CHAPTER') {
       this.editForm.get(['parent']).setValue(null);
     }
-    if (this.editForm.get(['type']).value !== 'chapter' && this.editForm.get(['parent']).value === null) {
+    if (this.editForm.get(['type']).value !== 'LECTURE_CHAPTER' && this.editForm.get(['parent']).value === null) {
       this.editForm.get(['sortOrder']).setValue(1);
-    } else if (this.editForm.get(['type']).value !== 'chapter' && this.editForm.get(['parent']).value !== null) {
+    } else if (this.editForm.get(['type']).value !== 'LECTURE_CHAPTER' && this.editForm.get(['parent']).value !== null) {
       this.editForm.get(['sortOrder']).setValue(this.editForm.get(['sortOrder']).value);
     } else {
       this.editForm.get(['sortOrder']).setValue(this.editForm.get(['oldSortOrder']).value);
@@ -93,7 +93,7 @@ export class LectureManagementUpdateComponent implements OnInit {
       code: lecture.code,
       name: lecture.name,
       activated: lecture.activated === undefined ? true : lecture.activated,
-      type: lecture.type ? lecture.type.code : null,
+      type: lecture.type ? lecture.type : null,
       parent: lecture.parentCode ? lecture.parentCode : null,
       sortOrder: lecture.id ? lecture.sortOrder : 0
     });
@@ -107,7 +107,7 @@ export class LectureManagementUpdateComponent implements OnInit {
         this.editForm.get(['parent']).setValue(params.parentCode || null);
     });
     this.lectureParents = [];
-    this.lectureService.getParents(this.lecture.code, this.course.code).subscribe(data => {
+    this.lectureService.getChapters(this.lecture.code, this.course.code).subscribe(data => {
       this.lectureParents = data;
       this.editForm.get(['sortOrder']).setValue(lecture.id ? lecture.sortOrder : this.lectureParents.length + 1);
       this.editForm.get(['oldSortOrder']).setValue(lecture.id ? lecture.sortOrder : this.lectureParents.length + 1);
@@ -119,19 +119,19 @@ export class LectureManagementUpdateComponent implements OnInit {
         // chương học đã có bài học con
         if (lecture.lectures.length > 0) {
           this.types = this.types.filter(t => {
-            return t.code === 'chapter';
+            return t.code === 'LECTURE_CHAPTER';
           });
         } else if (lecture.parentCode) {
           // bài học đã thuộc 1 chương
           this.types = this.types.filter(t => {
-            return t.code !== 'chapter';
+            return t.code !== 'LECTURE_CHAPTER';
           });
         }
       } else {
         if (this.editForm.get(['parent']).value) {
           // tạo mới bài học từ 1 chương
           this.types = this.types.filter(t => {
-            return t.code !== 'chapter';
+            return t.code !== 'LECTURE_CHAPTER';
           });
         }
       }
@@ -195,9 +195,7 @@ export class LectureManagementUpdateComponent implements OnInit {
       name : this.editForm.get(['name']).value,
       activated : this.editForm.get(['activated']).value,
       courseCode : this.course.code,
-      type : {
-        code : this.editForm.get(['type']).value
-      },
+      type : this.editForm.get(['type']).value,
       parentCode : this.editForm.get(['parent']).value,
       sortOrder : this.editForm.get(['sortOrder']).value,
     };

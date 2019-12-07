@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { AccountService } from '../auth/account.service';
-import { LoginService } from '../auth/login.service';
-import { LoginModalService } from '../auth/login-modal.service';
-import { PageReloadService } from '../auth/page-reload.service';
+import { AccountService } from '../../../core/auth/account.service';
+import { LoginService } from '../../../core/auth/login.service';
+import { LoginModalService } from '../../../core/auth/login-modal.service';
+import { PageReloadService } from '../../../core/auth/page-reload.service';
 import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
@@ -19,7 +19,6 @@ export class UserHeaderComponent implements OnInit {
   constructor(
     private loginService: LoginService,
     private accountService: AccountService,
-    private commentService: CommentService,
     private loginModalService: LoginModalService,
     private router: Router,
     private page: PageReloadService) { }
@@ -29,9 +28,9 @@ export class UserHeaderComponent implements OnInit {
   }
   async init() {
     this.currentAccount = await this.accountService.identity();
-    this.commentService.getNotifications().subscribe(res => {
-      this.notifications = res;
-    });
+    // this.commentService.getNotifications().subscribe(res => {
+    //   this.notifications = res;
+    // });
     this.items = [
       {
         label: 'Đăng nhập', icon: 'fa fa-sign-in', visible: this.currentAccount === null, command: () => {

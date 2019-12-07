@@ -1,5 +1,4 @@
 import { LoadingScreenComponent } from './../layouts/loading-screen/loading-screen.component';
-import { FindLanguageFromKeyPipe } from './../shared/language/find-language-from-key.pipe';
 import { UserManagementModule } from './user-management/user-management.module';
 import { P404Component } from './page-error/404.component';
 import { TranslateModule } from '@ngx-translate/core';
@@ -34,7 +33,7 @@ import { EventManagementModule } from './event-management/event-management.modul
     EventManagementModule
   ],
   declarations: [
-    AdminComponent, P404Component, LoadingScreenComponent, FindLanguageFromKeyPipe,
+    AdminComponent, P404Component, LoadingScreenComponent,
   ]
 })
 export class AdminModule {}

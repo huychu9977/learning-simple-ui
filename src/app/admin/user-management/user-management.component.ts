@@ -9,7 +9,6 @@ import { MessageService, ConfirmationService, DialogService } from 'primeng/api'
 @Component({
   selector: 'user-management',
   templateUrl: './user-management.component.html',
-  styleUrls: ['./user-management.component.scss']
 })
 export class UserManagementComponent implements OnInit {
     users?: UserBO[] = [];
@@ -116,8 +115,8 @@ export class UserManagementComponent implements OnInit {
         });
     }
     private onSuccess(data) {
-        this.totalItems = data.totalResult;
-        this.users = data.results;
+        this.totalItems = data.totalElements;
+        this.users = data.content;
     }
 
     private onError(error) {

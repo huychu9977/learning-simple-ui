@@ -32,9 +32,9 @@ export class LectureService {
         return this.http.get<LectureBO[]>(this.resourceUrl, { params: options, observe: 'response' });
     }
 
-    queryLectureByParent(code?: string, req?: any): Observable<HttpResponse<LectureBO[]>> {
+    queryLectureByChapter(code?: string, req?: any): Observable<HttpResponse<LectureBO[]>> {
         const options = createRequestOption(req);
-        return this.http.get<LectureBO[]>(`${this.resourceUrl}/parent/${code}`, { params: options, observe: 'response' });
+        return this.http.get<LectureBO[]>(`${this.resourceUrl}/by-chapter/${code}`, { params: options, observe: 'response' });
     }
 
     delete(code: string): Observable<HttpResponse<any>> {
@@ -45,15 +45,15 @@ export class LectureService {
         return this.http.get<any[]>(`${this.resourceUrl}/types`);
     }
 
-    getParents(code?: string, courseCode?: string): Observable<any[]> {
-        return this.http.get<any[]>(`${this.resourceUrl}/${code}/${courseCode}/parents`);
+    getChapters(code?: string, courseCode?: string): Observable<any[]> {
+        return this.http.get<any[]>(`${this.resourceUrl}/chapters/${code}/${courseCode}`);
     }
 
-    canDeleted(code?: string): Observable<any[]> {
-        return this.http.get<any[]>(`${this.resourceUrl}/${code}/can-deleted`);
+    getTotalLectureByChapter(code?: string): Observable<any> {
+        return this.http.get<any>(`${this.resourceUrl}/total-by-chapter/${code}`);
     }
 
-    getTotalChildren(code?: string): Observable<any> {
-        return this.http.get<any>(`${this.resourceUrl}/${code}/total-children`);
+    setStatus(code: string, status: string): Observable<boolean> {
+        return this.http.put<boolean>(`${this.resourceUrl}/set-status/${code}/${status}`, { observe: 'response' });
     }
 }

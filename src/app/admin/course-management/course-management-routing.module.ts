@@ -5,7 +5,6 @@ import { Routes, Resolve, ActivatedRouteSnapshot } from '@angular/router';
 import { Injectable } from '@angular/core';
 import { CourseManagementComponent } from './course-management.component';
 import { CourseManagementUpdateComponent } from './course-management-update.component';
-import { CourseManagementDetailComponent } from './course-management-detail.component';
 import { CourseService } from 'src/app/services/course.service';
 import { CourseBO } from 'src/app/models/courseBO.model';
 
@@ -77,15 +76,4 @@ export const courseMgmtState: Routes = [
             defaultSort: 'id,asc'
         }
     },
-    {
-        path: 'course-management/:code/view',
-        component: CourseManagementDetailComponent,
-        resolve: {
-            course: CourseMgmtResolve
-        },
-        data: {
-            pageTitle: 'courseManagement.home.title',
-            defaultSort: 'id,asc'
-        }
-    }
 ];

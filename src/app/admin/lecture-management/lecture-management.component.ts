@@ -1,4 +1,4 @@
-import { STATUS_CAN_NOT_EIDT_DELETE } from './../../shared/constants/status.constants';
+import { STATUS_CAN_NOT_EIDT_DELETE, CHECKING } from './../../shared/constants/status.constants';
 import { LectureBO } from './../../models/lectureBO.model';
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -7,11 +7,11 @@ import { CourseBO } from 'src/app/models/courseBO.model';
 import { LectureService } from 'src/app/services/lecture.service';
 import { MessageService, DialogService, ConfirmationService } from 'primeng/api';
 import { ListLectureComponent } from './list-lecture/list-lecture.component';
+import { AccountService } from 'src/app/core/auth/account.service';
 
 @Component({
   selector: 'lecture-management',
-  templateUrl: './lecture-management.component.html',
-  styleUrls: ['./lecture-management.component.scss']
+  templateUrl: './lecture-management.component.html'
 })
 export class LectureManagementComponent implements OnInit {
     course: CourseBO;
@@ -21,12 +21,15 @@ export class LectureManagementComponent implements OnInit {
     page: any = 1;
     keyword = '';
     loading = false;
+    currentAccount = null;
     statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
+    CHECKING = CHECKING;
     constructor(
         private confirmationService: ConfirmationService,
         public dialogService: DialogService,
         private messageService: MessageService,
         private lectureService: LectureService,
+        private accountService: AccountService,
         private activatedRoute: ActivatedRoute
     ) {}
 
@@ -34,18 +37,35 @@ export class LectureManagementComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ course }) => {
           this.course = course.body ? course.body : course;
         });
-        this.loadAll();
+        this.accountService.identity().then(account => {
+            this.currentAccount = account;
+            this.loadAll();
+        });
     }
     openModal(lecture?: LectureBO) {
         this.dialogService.open(ListLectureComponent, {
             data: {
                 lecture,
                 courseStatus: this.course.status,
-                chapterStatus: lecture.status
+                chapterStatus: lecture.status,
+                isChecking: this.course.ticketFollowBy === this.currentAccount.username
             },
             header: 'Danh sách bài học',
             closeOnEscape: false,
             width: '80%'
+        });
+    }
+
+    setStatus(code?: string, status?: string) {
+        this.loading = true;
+        this.lectureService.setStatus(code, status).subscribe(res => {
+            if (res) {
+                this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thành công!'});
+                this.loadAll();
+            } else {
+                this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: 'Xét duyệt thất bại!'});
+                this.loading = false;
+            }
         });
     }
 
@@ -103,8 +123,8 @@ export class LectureManagementComponent implements OnInit {
     }
 
     private onSuccess(data) {
-        this.totalItems = data.totalResult;
-        this.lectures = data.results;
+        this.totalItems = data.totalElements;
+        this.lectures = data.content;
         this.loading = false;
     }
 

@@ -170,8 +170,8 @@
     "lectureManagement":{
       "create": {
          "placeholder" : {
-            "code": "Mã khóa học",
-            "name": "Tên khóa học",
+            "code": "Mã bài học",
+            "name": "Tên bài học",
             "sortOrder": "Thứ tự xuất hiện"
          }
        },

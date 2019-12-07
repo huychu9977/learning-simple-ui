@@ -5,6 +5,7 @@ export class LectureBO {
         public name?: string,
         public videoUrl?: string,
         public type?: any,
+        public typeName?: string,
         public createdBy?: string,
         public createdAt?: any,
         public modifiedBy?: string,

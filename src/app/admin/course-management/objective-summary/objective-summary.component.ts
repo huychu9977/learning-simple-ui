@@ -7,8 +7,7 @@ import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'objective-summary',
-  templateUrl: './objective-summary.component.html',
-  styleUrls: ['./objective-summary.component.scss']
+  templateUrl: './objective-summary.component.html'
 })
 export class ObjectiveSummaryComponent implements OnInit {
   statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;

@@ -34,6 +34,6 @@ export class ReviewService {
 
     getRating(req?: any): Observable<any[]> {
         const options = createRequestOption(req);
-        return this.http.get<any[]>(`${this.resourceUrl}/rating`, { params: options});
+        return this.http.get<any[]>(`${this.resourceUrl}/star-ratings`, { params: options});
     }
 }
