@@ -14,6 +14,9 @@ export class ChatComponent implements OnInit {
   constructor(private socketService: SocketService) { }
 
   ngOnInit() {
+    this.socketService.receiveMessage(res => {
+      console.log(res);
+    });
     this.socketService.listUserOnline(res => {
       if (res) {
         this.listUserOnline = res;

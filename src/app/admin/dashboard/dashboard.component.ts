@@ -31,9 +31,10 @@ export class DashboardComponent implements OnInit {
     private accountService: AccountService,
     private ticketService: TicketService) { }
   ngOnInit() {
-    this.socketService.listUserOnline(res => {
-      console.log(res);
-    });
+    // this.socketService.receiveMessage();
+    // this.socketService.receive().subscribe(res => {
+    //   console.log(res);
+    // });
     // this.socketService.receive().subscribe(activity => {
     //   console.log(activity);
     // });
@@ -47,8 +48,7 @@ export class DashboardComponent implements OnInit {
     });
   }
   send() {
-    // this.socketService.sendUser();
-    this.socketService.disconnect();
+    this.socketService.sendMessage('ahii', 'teacher');
   }
   loadAll() {
     this.loadTicketWaitCheck();
