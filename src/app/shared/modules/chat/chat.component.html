@@ -1,0 +1,25 @@
+
+<button type="button" (click)="visibleSidebar2 = !visibleSidebar2">open mmkk</button>
+<form-message [isShow]="show"></form-message>
+<p-sidebar [(visible)]="visibleSidebar2" position="right" [baseZIndex]="100000">
+    <div>
+        <ul class="list-group mt-3" *ngIf="listUserOnline.length > 0">
+            <li class="list-group-item d-flex border-bottom" (click)="show = !show" *ngFor="let user of listUserOnline">
+                <figure class="avatar avatar-state-success">
+                    <img [srcset]="user?.imageUrl" class="rounded-circle" alt="image">
+                </figure>
+                <div class="users-list-body d-flex flex-grow-1">
+                    <div class="w-100">
+                        <h5 class="text-primary">{{user?.username}}</h5>
+                        <p>What's up, how are you?</p>
+                    </div>
+                    <div>
+                            <i class="fa fa-telegram" aria-hidden="true"></i>
+                        <!-- <div class="new-message-count">3</div>
+                        <small class="text-primary">03:41 PM</small> -->
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </div>
+</p-sidebar>

@@ -1,8 +1,6 @@
 import { SERVER_API_URL } from './../../app.constants';
 import { Injectable } from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
-import { Observable, Observer, Subscription } from 'rxjs';
-import { Location } from '@angular/common';
 
 import { CSRFService } from '../auth/csrf.service';
 import { AuthServerProvider } from '../auth/auth-jwt.service';
@@ -13,51 +11,32 @@ import * as Stomp from 'webstomp-client';
 @Injectable({ providedIn: 'root' })
 export class SocketService {
   stompClient = null;
-  subscriber = null;
   connection: Promise<any>;
   connectedPromise: any;
-  listener: Observable<any>;
-  listenerObserver: Observer<any>;
-  alreadyConnectedOnce = false;
-  private subscription: Subscription;
 
   constructor(
     private router: Router,
     private authServerProvider: AuthServerProvider,
-    private location: Location,
     private csrfService: CSRFService
   ) {
     this.connection = this.createConnection();
-    this.listener = this.createListener();
   }
 
   connect() {
     if (this.connectedPromise === null) {
       this.connection = this.createConnection();
     }
-    // building absolute path so that websocket doesn't fail when deploying with a context path
-    let url = SERVER_API_URL + 'websocket/tracker';
+    let url = SERVER_API_URL + 'ws';
     const authToken = this.authServerProvider.getToken();
     if (authToken) {
       url += '?access_token=' + authToken;
     }
     const socket = new SockJS(url);
     this.stompClient = Stomp.over(socket);
-    const headers = {
-      Authorization : 'Bearer ' + authToken
-    };
+    const headers = {};
     this.stompClient.connect(headers, () => {
       this.connectedPromise('success');
       this.connectedPromise = null;
-      this.sendActivity();
-      if (!this.alreadyConnectedOnce) {
-        this.subscription = this.router.events.subscribe(event => {
-          if (event instanceof NavigationEnd) {
-            this.sendActivity();
-          }
-        });
-        this.alreadyConnectedOnce = true;
-      }
     });
   }
 
@@ -66,46 +45,61 @@ export class SocketService {
       this.stompClient.disconnect();
       this.stompClient = null;
     }
-    if (this.subscription) {
-      this.subscription.unsubscribe();
-      this.subscription = null;
-    }
-    this.alreadyConnectedOnce = false;
   }
 
-  receive() {
-    return this.listener;
-  }
 
-  sendActivity() {
+  sendMessage(message, to) {
     if (this.stompClient !== null && this.stompClient.connected) {
-      this.stompClient.send(
-        '/topic/activity', // destination
-        JSON.stringify({ page: this.router.routerState.snapshot.url }), // body
+      const destination = to === 'ALL' ? '/app/chat.message' : `/app/chat.private. ${to}`;
+      this.stompClient.send(destination, // destination
+        JSON.stringify({  message }), // body
         {} // header
       );
     }
   }
 
-  subscribe() {
+  listUserOnline(callback) {
     this.connection.then(() => {
-      this.subscriber = this.stompClient.subscribe('/topic/tracker', data => {
-        this.listenerObserver.next(JSON.parse(data.body));
+      if (!this.stompClient) {
+        callback(null);
+        return;
+      }
+      this.stompClient.subscribe('/app/chat.participants', data => {
+        callback(JSON.parse(data.body));
       });
     });
   }
 
-  unsubscribe() {
-    if (this.subscriber !== null) {
-      this.subscriber.unsubscribe();
-    }
-    this.listener = this.createListener();
+  userLogut(callback) {
+    this.connection.then(() => {
+      if (!this.stompClient) {
+        callback(null);
+        return;
+      }
+      this.stompClient.subscribe('/topic/chat.logout', data => {
+        callback(JSON.parse(data.body));
+      });
+    });
   }
 
-  private createListener(): Observable<any> {
-    return new Observable(observer => {
-      this.listenerObserver = observer;
+  userLogin(callback) {
+    this.connection.then(() => {
+      if (!this.stompClient) {
+        callback(null);
+        return;
+      }
+      this.stompClient.subscribe('/topic/chat.login', data => {
+        callback(JSON.parse(data.body));
+      });
     });
+  }
+
+  receiveMessage(callback) {
+    if (this.stompClient !== null && this.stompClient.connected) {
+      this.stompClient.subscribe('/user/exchange/amq.direct/chat.message' , data => {
+        callback(JSON.parse(data.body));
+      });
+    }
   }
 
   private createConnection(): Promise<any> {

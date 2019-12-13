@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit {
   }
   logout() {
     this.loginService.logout();
-    this.router.navigate(['admin']);
+    this.router.navigate(['admin/login']);
   }
   translateMenu() {
     // translate menu

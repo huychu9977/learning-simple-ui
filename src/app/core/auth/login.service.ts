@@ -17,7 +17,6 @@ export class LoginService {
             this.authServerProvider.login(credentials).subscribe(
                 data => {
                     this.accountService.identity(true).then(account => {
-                        this.socketService.sendActivity();
                         resolve(data);
                     });
                     return cb();
@@ -37,5 +36,6 @@ export class LoginService {
 
     logout() {
         this.authServerProvider.logout().subscribe(null, null, () => this.accountService.authenticate(null));
-      }
+        this.socketService.disconnect();
+    }
 }
