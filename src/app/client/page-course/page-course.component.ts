@@ -79,7 +79,6 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
   courseCode: string;
   course?: CourseBO = {lectures: []};
   descriptionMore = false;
-  chapters: any[] = [];
   totalLectureVideo: any = 0;
   totalLectureQuiz: any = 0;
   totalLectureExercise: any = 0;
@@ -87,6 +86,7 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
   rates: any[] = [];
   rateAvg: any;
   private sub: any;
+  loading = false;
 
   constructor(
     private courseRegistrationService: CourseRegistrationService,
@@ -108,7 +108,8 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
   checkIsRegistration() {
     this.courseRegistrationService.findOne(this.courseCode).subscribe(res => {
       this.userRegistration = res;
-    });
+      this.loading = false;
+    }, err => {this.loading = false; });
   }
 
   registerSuccess(data) {
@@ -127,11 +128,13 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
             this.rates[0].rateAvg = this.rates[0] ? Math.round(this.rates[0].rateAvg * 10) / 10 : 1;
             this.rateAvg = Math.floor(this.rates[0].rateAvg);
           }
+          this.loading = false;
         },
-        (res: HttpResponse<any>) => console.log(res)
+        (res: HttpResponse<any>) => {this.loading = false; }
     );
   }
   loadOne(code?: string) {
+    this.loading = true;
     this.courseService.findForEmpoyer(code).subscribe(
       (res: HttpResponse<CourseBO>) => this.onSuccess(res.body),
       (res: HttpResponse<any>) => this.router.navigate(['/not-found'])
@@ -139,14 +142,6 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
   }
   private onSuccess(data) {
     this.course = data;
-    this.course.lectures.sort((t1, t2) => {
-      if (t1.sortOrder > t2.sortOrder) { return 1; }
-      if (t1.sortOrder < t2.sortOrder) { return -1; }
-      return 0;
-    });
-    this.chapters = this.course.lectures.filter(l => {
-      return !l.parentCode;
-    });
     this.course.lectures.forEach(l => {
       if (l.type === 'LECTURE_QUIZ') { this.totalLectureQuiz++; }
       if (l.type === 'LECTURE_CODE') { this.totalLectureExercise++; }
@@ -165,36 +160,35 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
     parent.replaceChild(script, element);
   }
 // course-content
-  getLectures(code?: string) {
-    return this.course.lectures.filter(l => {
-      return (l.parentCode && l.parentCode === code);
-    });
-  }
   totalTimeEstimate() {
     let time = 0;
-    this.course.lectures.forEach(l => {
-      if (l.parentCode && l.type === 'LECTURE_VIDEO') {
-        time += l.videoTimeEstimation === null ? 0 : l.videoTimeEstimation;
-      }
+    this.course.lectures.forEach(chapter => {
+      chapter.lectures.forEach(lecture => {
+        time += lecture.videoTimeEstimation;
+      });
     });
     return time;
   }
   totalChapterTimeEstimate(code?: string) {
     let time = 0;
-    this.course.lectures.forEach(l => {
-      if (l.parentCode && l.parentCode === code && l.type === 'LECTURE_VIDEO') {
-        time += l.videoTimeEstimation === null ? 0 : l.videoTimeEstimation;
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.course.lectures.length; i++) {
+      if (this.course.lectures[i].code === code) {
+        for (const l of this.course.lectures[i].lectures) {
+          time += l.videoTimeEstimation;
+        }
+        break;
       }
-    });
+    }
     return time;
   }
   toggleAccordian(event, index) {
     const element = event.target;
     element.classList.toggle('active');
-    if (this.chapters[index].isActive) {
-      this.chapters[index].isActive = false;
+    if (this.course.lectures[index].isActive) {
+      this.course.lectures[index].isActive = false;
     } else {
-      this.chapters[index].isActive = true;
+      this.course.lectures[index].isActive = true;
     }
     const panel = element.nextElementSibling;
     if (panel.style.maxHeight) {

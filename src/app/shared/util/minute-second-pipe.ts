@@ -5,7 +5,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class MinuteSecondsPipe implements PipeTransform {
     transform(value: number): string {
-        const minutes: number = Math.floor(value / 60);
-        return minutes + ':' + (value - minutes * 60);
+        return new Date(value * 1000).toISOString().substr(11, 8);
     }
 }

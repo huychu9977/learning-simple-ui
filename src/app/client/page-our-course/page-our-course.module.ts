@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageOurCourseComponent } from './page-our-course.component';
-import { LoadingScreenComponent } from 'src/app/layouts/loading-screen/loading-screen.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { CourseCardModule } from 'src/app/shared/modules/course-card/course-card.module';
@@ -11,7 +10,7 @@ import { CarouselModule } from 'primeng/carousel';
 import { PaginatorModule } from 'primeng/paginator';
 
 @NgModule({
-  declarations: [PageOurCourseComponent, LoadingScreenComponent],
+  declarations: [PageOurCourseComponent],
   imports: [
     CommonModule,
     RouterModule,

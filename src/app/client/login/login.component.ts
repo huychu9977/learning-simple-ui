@@ -4,7 +4,8 @@ import { Router } from '@angular/router';
 import { LoginService } from '../../core/auth/login.service';
 import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 import { AccountService } from 'src/app/core/auth/account.service';
-import { DynamicDialogRef, MessageService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'login-modal',

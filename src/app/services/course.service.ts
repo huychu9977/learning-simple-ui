@@ -75,14 +75,6 @@ export class CourseService {
         return this.http.get<any>(`${this.resourceUrl}/employer/my-courses`, { params: options, observe: 'response' });
     }
 
-    queryLectureCompleted(courseCode?: string): Observable<any[]> {
-        return this.http.get<any[]>(`${this.resourceUrl}/employer/lecture-completed/${courseCode}`);
-    }
-
-    toggleCompletedLecture(lectureId?: any) {
-        return this.http.post(`${this.resourceUrl}/employer/lecture-completed/${lectureId}`, { observe: 'response' });
-    }
-
     queryCourseSuggest(keyword?: string): Observable<any[]> {
         return this.http.get<any[]>(`${this.resourceUrl}/suggest?keyword=${keyword}`);
     }

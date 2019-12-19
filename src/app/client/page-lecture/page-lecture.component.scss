@@ -113,21 +113,6 @@
                 .loading {
                     position: absolute;
                 }
-                .open-edit-delete {
-                    position: relative;
-                    height: max-content;
-                    .dropdown-toggle::after {
-                        display: none;
-                    }
-                    .dropdown-menu {
-                        min-width: 80px;
-                        margin: 0;
-                        padding: 0;
-                        a {
-                            margin: 0;
-                        }
-                    }
-                }
                 .description-dashboard-content-body {
                     margin: 32px 0;
                 }
@@ -178,8 +163,10 @@
                 }
             }
             .content-sidebar-content {
-                //position: fixed;
-                right: 0;
+                position: fixed;
+                top: 115px;
+                bottom: 0px;
+                width: 380px;
                 z-index: 1;
                 background-color: #fff;
                 border: 1px solid #e8e9eb;
@@ -325,6 +312,7 @@
 }
 video {
     width: 100%;
+    max-height: 500px;
 }
 .quiz {
     background: white;

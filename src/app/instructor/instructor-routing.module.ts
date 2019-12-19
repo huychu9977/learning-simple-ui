@@ -87,6 +87,17 @@ const instructorRoute: Routes = [
           }
       },
       {
+        path: 'courses/:code/lectures/:codeLecture/exercise',
+        component: CoursesComponent,
+        resolve: {
+          lecture: LectureMgmtResolve
+        },
+        data: {
+          currentPage: 'lectures_exercise',
+          pageTitle: 'lectureManagement.detail.quiz'
+        }
+    },
+      {
         path: 'courses/:code/objectives',
         component: CoursesComponent,
         resolve: {

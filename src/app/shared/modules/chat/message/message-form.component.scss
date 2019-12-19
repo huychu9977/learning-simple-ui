@@ -35,6 +35,7 @@
             padding-left: .71429rem;
             padding-right: .71429rem;
             max-height: 400px;
+            min-height: 300px;
             overflow-y: auto;
             &::-webkit-scrollbar-track {
                 border-radius: 10px;

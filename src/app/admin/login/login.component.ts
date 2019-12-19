@@ -12,8 +12,8 @@ export class LoginComponent implements OnInit {
   authenticationError: boolean;
   submitted = false;
   loginForm = this.fb.group({
-    username: ['admin', [Validators.required, Validators.pattern('^[_.@A-Za-z0-9-]*')]],
-    password: ['user', [Validators.required]],
+    username: ['', [Validators.required, Validators.pattern('^[_.@A-Za-z0-9-]*')]],
+    password: ['', [Validators.required]],
     rememberMe: [false]
   });
 

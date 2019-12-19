@@ -13,9 +13,9 @@ export class PermissionMgmtResolve implements Resolve<any> {
   constructor(private service: PermissionService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const id = route.params.id ? route.params.id : null;
-    if (id) {
-      return this.service.find(id);
+    const code = route.params.code ? route.params.code : null;
+    if (code) {
+      return this.service.find(code);
     }
     const permissionBO = new PermissionBO();
     permissionBO.id = null;
@@ -47,7 +47,7 @@ export const permissionMgmtState: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'permission-management/:id/edit',
+        path: 'permission-management/:code/edit',
         component: PermissionMgmtUpdateComponent,
         resolve: {
             permission: PermissionMgmtResolve

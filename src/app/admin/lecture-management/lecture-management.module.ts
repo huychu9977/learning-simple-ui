@@ -6,8 +6,10 @@ import { LectureManagementUpdateComponent } from './lecture-management-update.co
 import { QuestionModalComponent } from './quiz/question-modal.component';
 import { SharedLibsModule } from 'src/app/shared/shared-libs.module';
 import { AdminSharedLibsModule } from 'src/app/shared/admin-shared-lib.module';
-import { DialogService } from 'primeng/api';
+
 import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
+import { DialogService } from 'primeng/dynamicdialog';
+import { ExerciseComponent } from './exercise/exercise.component';
 
 
 @NgModule({
@@ -15,7 +17,8 @@ import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
     LectureManagementUpdateComponent,
     ListLectureComponent,
     QuestionModalComponent,
-    QuizComponent
+    QuizComponent,
+    ExerciseComponent
     ],
   imports: [
     SharedLibsModule,
@@ -23,6 +26,6 @@ import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
   ],
   providers: [SlugifyPipe, DialogService],
   entryComponents: [ListLectureComponent, QuestionModalComponent],
-  exports: [LectureManagementComponent, LectureManagementUpdateComponent, QuizComponent]
+  exports: [LectureManagementComponent, LectureManagementUpdateComponent, QuizComponent, ExerciseComponent]
 })
 export class LectureManagementModule { }

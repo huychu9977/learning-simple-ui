@@ -5,9 +5,10 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { HttpResponse } from '@angular/common/http';
 import { CourseBO } from 'src/app/models/courseBO.model';
 import { LectureService } from 'src/app/services/lecture.service';
-import { MessageService, DialogService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { ListLectureComponent } from './list-lecture/list-lecture.component';
 import { AccountService } from 'src/app/core/auth/account.service';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'lecture-management',
@@ -15,9 +16,9 @@ import { AccountService } from 'src/app/core/auth/account.service';
 })
 export class LectureManagementComponent implements OnInit {
     course: CourseBO;
-    lectures?: LectureBO[];
+    lectures?: any[];
     totalItems: any;
-    itemsPerPage: any = 2;
+    itemsPerPage: any = 10;
     page: any = 1;
     keyword = '';
     loading = false;

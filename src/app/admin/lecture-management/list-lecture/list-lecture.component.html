@@ -21,7 +21,7 @@
             </div>
         </div>
     </div>
-    <table class="mt-2 table table-bordered" >
+    <table class="mt-2 table table-bordered" [el-loading]="loading">
         <thead class="thead-dark text-center">
         <tr>
             <th *ngIf="isChecking">Duyệt</th>
@@ -60,6 +60,11 @@
             </td>
             <td class="text-center">
                 <div class="btn-group flex-btn-group-container">
+                    <button type="button" (click)="goToLink(lecture.code, 'exercise')" 
+                            *ngIf="lecture.fileAttachments.length > 0"
+                            class="btn btn-success btn-sm">
+                        <span class="d-none d-md-inline">Bài tập</span>
+                    </button>
                     <button type="button" (click)="goToLink(lecture.code, 'quiz')" 
                             *ngIf="lecture.type === 'LECTURE_QUIZ'"
                             class="btn btn-success btn-sm">

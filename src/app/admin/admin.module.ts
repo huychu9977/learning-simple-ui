@@ -15,6 +15,8 @@ import { LoginModule } from './login/login.module';
 import { CommonModule } from '@angular/common';
 import { DashboardModule } from './dashboard/dashboard.module';
 import { EventManagementModule } from './event-management/event-management.module';
+import { MessageFormModule } from '../shared/modules/chat/message/message-form.module';
+import { OverlayPanelModule } from 'primeng/overlaypanel';
 
 @NgModule({
   imports: [
@@ -30,7 +32,9 @@ import { EventManagementModule } from './event-management/event-management.modul
     LectureManagementModule,
     LoginModule,
     DashboardModule,
-    EventManagementModule
+    EventManagementModule,
+    MessageFormModule,
+    OverlayPanelModule
   ],
   declarations: [
     AdminComponent, P404Component, LoadingScreenComponent,

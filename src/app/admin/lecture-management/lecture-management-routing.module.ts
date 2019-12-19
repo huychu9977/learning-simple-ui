@@ -7,6 +7,7 @@ import { LectureManagementComponent } from './lecture-management.component';
 import { LectureManagementUpdateComponent } from './lecture-management-update.component';
 import { LectureService } from 'src/app/services/lecture.service';
 import { LectureBO } from 'src/app/models/lectureBO.model';
+import { ExerciseComponent } from './exercise/exercise.component';
 
 
 @Injectable({ providedIn: 'root' })
@@ -60,6 +61,16 @@ export const lectureMgmtState: Routes = [
     {
         path: 'course-management/:code/lectures/:codeLecture/quiz',
         component: QuizComponent,
+        resolve: {
+          lecture: LectureMgmtResolve
+        },
+        data: {
+            pageTitle: 'lectureManagement.detail.quiz'
+        }
+    },
+    {
+        path: 'course-management/:code/lectures/:codeLecture/exercise',
+        component: ExerciseComponent,
         resolve: {
           lecture: LectureMgmtResolve
         },

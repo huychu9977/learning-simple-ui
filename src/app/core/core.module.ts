@@ -7,9 +7,8 @@ import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 import { LoginModalModule } from '../client/login/login.module';
 import { CookieModule } from 'ngx-cookie';
 import { NgxWebstorageModule } from 'ngx-webstorage';
-import { DialogService } from 'primeng/api';
 import { LoginModalComponent } from '../client/login/login.component';
-import {DynamicDialogModule} from 'primeng/dynamicdialog';
+import {DynamicDialogModule, DialogService} from 'primeng/dynamicdialog';
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
 }

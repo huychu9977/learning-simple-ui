@@ -1,18 +1,15 @@
 import { ReviewService } from './../../services/review.service';
 import { LectureBO } from './../../models/lectureBO.model';
-import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterViewInit, AfterContentChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef, AfterContentChecked, HostListener } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CourseBO } from 'src/app/models/courseBO.model';
 import { Title } from '@angular/platform-browser';
 import { LectureService } from 'src/app/services/lecture.service';
-import { CourseService } from 'src/app/services/course.service';
 import { HttpResponse } from '@angular/common/http';
 import { CommentService } from 'src/app/services/comment.service';
 import { CommentBO } from 'src/app/models/CommentBO.model';
 import { AccountService } from 'src/app/core/auth/account.service';
 import { QuestionService } from 'src/app/services/question.service';
 import { ConfirmationService } from 'primeng/api';
-import { SUCCESS } from 'src/app/shared/constants/status.constants';
 import { CourseRegistrationService } from 'src/app/services/course-registration.service';
 
 @Component({
@@ -23,15 +20,14 @@ import { CourseRegistrationService } from 'src/app/services/course-registration.
 export class PageLectureComponent implements OnInit, AfterContentChecked {
 
   @ViewChild('more', {static: true}) elementView: ElementRef;
+  verticalOffset = 115;
   indexTab = 0;
   descriptionMore = false;
   expand = false;
-  course?: any;
-  chapters: any[];
   code: string;
   courseCode: string;
-  lectureSelected: any;
-  lecture?: LectureBO;
+  lectures?: any[] = [];
+  lectureSelected?: any;
   page?: any = 0;
   answerChecked?: any = [];
   currentReview: any;
@@ -67,7 +63,6 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   correctAnswer = false;
   listQuestionIncorrect: any[] = [];
   display = false;
-  fileAttachments: any = [];
   constructor(
     private courseRegistrationService: CourseRegistrationService,
     private changeDetector: ChangeDetectorRef,
@@ -78,7 +73,6 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     private commentService: CommentService,
     private accountService: AccountService,
     private questionService: QuestionService,
-    private courseService: CourseService,
     private router: Router,
     private confirmationService: ConfirmationService
     ) {
@@ -97,7 +91,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
       this.code = params.code;
       this.loadLecture(params['course-code'], params.code);
     });
-    this.loadCourse(this.courseCode);
+    this.loadAllLecture(this.courseCode);
     this.loadReviewByCourse();
     this.loadLectureCompleted();
     this.loadAllComment();
@@ -111,7 +105,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   }
   totalTimeEstimate() {
     let time = 0;
-    this.course.lectures.forEach(l => {
+    this.lectures.forEach(l => {
       if (l.parentCode && l.type.code === 'lecture') {
         time += l.videoTimeEstimation === null ? 0 : l.videoTimeEstimation;
       }
@@ -119,10 +113,6 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     return Math.floor(time / 60);
   }
   // attachment
-  openDialogAttachment(event, op, fileAttachments) {
-    this.fileAttachments = fileAttachments;
-    op.toggle(event);
-  }
   downloadAttachment(file) {
     const link = document.createElement('a');
     link.href = file.fileUrl;
@@ -151,7 +141,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     this.load = true;
     const commetDTO = {
       ...this.comment,
-      lectureId : this.lecture.id
+      lectureId : this.lectureSelected.id
     };
     this.commentService.create(commetDTO).subscribe(res => {
       if (res) {
@@ -198,7 +188,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
       this.load = true;
       const commetDTO = {
         ...this.comment,
-        lectureId : this.lecture.id
+        lectureId : this.lectureSelected.id
       };
       this.commentService.update(commetDTO).subscribe(res => {
         if (res) {
@@ -291,7 +281,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   }
   // comment end
   loadLectureCompleted() {
-    this.courseService.queryLectureCompleted(this.courseCode).subscribe(res => {
+    this.lectureService.queryLectureCompleted(this.courseCode).subscribe(res => {
       this.lectureCompleted = res;
     });
   }
@@ -299,7 +289,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     return Math.floor(this.lectureCompleted.length * 100 / this.totalLecture);
   }
   toggleCompletedLecture(id?: any) {
-    this.courseService.toggleCompletedLecture(id).subscribe(res => {
+    this.lectureService.toggleCompletedLecture(id).subscribe(res => {
       if (res) {
         // this.loadLectureCompleted();
         if (this.lectureCompleted.indexOf(id) > -1) {
@@ -337,7 +327,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
       this.questionService.checkAnswer(this.answerChecked).subscribe(res => {
         this.listQuestionIncorrect = res.body;
         if (this.listQuestionIncorrect.length === 0) {
-          this.toggleCompletedLecture(this.lecture.id);
+          this.toggleCompletedLecture(this.lectureSelected.id);
         }
         this.correctAnswer = true;
         setTimeout(() => {
@@ -347,58 +337,45 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     }
   }
   loadLecture(courseCode?: string, code?: string) {
-    this.isLoadLecture = true;
     this.lectureService.find(courseCode, code).subscribe(
       (res: HttpResponse<LectureBO>) => {
-        this.lecture = res.body;
-        this.titleService.setTitle(this.lecture.name);
-        for (let i = 1; i <= this.lecture.questions.length; i++) {
-          this.answerChecked.push({
-            id: 0,
-            questionId: this.lecture.questions[i - 1].id
-          });
+        this.lectureSelected = res.body;
+        this.titleService.setTitle(this.lectureSelected.name);
+        if (this.lectureSelected.type === 'LECTURE_QUIZ') {
+          for (let i = 1; i <= this.lectureSelected.questions.length; i++) {
+            this.answerChecked.push({
+              id: 0,
+              questionId: this.lectureSelected.questions[i - 1].id
+            });
+          }
         }
-        this.isLoadLecture = false;
       },
       (res: HttpResponse<any>) => console.log(res)
     );
   }
-  loadCourse(code?: string) {
-    this.courseService.findForEmpoyer(code).subscribe(
-      (res: HttpResponse<CourseBO>) => this.onSuccess(res.body),
-      (res: HttpResponse<any>) => this.router.navigate(['/not-found'])
+  loadAllLecture(code?: string) {
+    this.isLoadLecture = true;
+    this.lectureService.getAllLectureByCourseCodeForEmployer(code).subscribe(
+      res => this.onSuccess(res),
+      err => this.router.navigate(['/not-found'])
     );
   }
   private onSuccess(data) {
-    this.course = data;
-    this.courseRegistrationService.findOne(this.course.code).subscribe(res => {
-      if (!res && this.currentAccount.username !== this.course.createdByUsername) {
-        this.router.navigate(['/course', this.courseCode]);
-        return;
-      }
+    this.lectures = data;
+    // this.courseRegistrationService.findOne(this.course.code).subscribe(res => {
+    //   if (!res && this.currentAccount.username !== this.course.createdByUsername) {
+    //     this.router.navigate(['/course', this.courseCode]);
+    //     return;
+    //   }
+    // });
+    this.lectures.forEach(c => {
+      c.lectures.forEach(l => {
+        if (l.code === this.lectureSelected.code) { c.isActive = true; }
+      });
     });
-    data.lectures.sort((t1, t2) => {
-      if (t1.sortOrder > t2.sortOrder) { return 1; }
-      if (t1.sortOrder < t2.sortOrder) { return -1; }
-      return 0;
-    });
-    this.chapters = data.lectures.filter(l => {
-      if (l.code === this.code) {
-        this.lectureSelected = l;
-        l.isCurrent = true;
-      }
-      return !l.parentCode;
-    });
-    this.chapters.forEach(c => {
-      if (c.code === this.lectureSelected.parentCode) { c.isActive = true; }
-    });
-    this.totalLecture = data.lectures.length - this.chapters.length;
+    this.isLoadLecture = false;
   }
-  getLectures(code?: string) {
-    return this.course.lectures.filter(l => {
-      return (l.parentCode && l.parentCode === code);
-    });
-  }
+
   openReviewModal() {
     this.selectedValue = this.currentReview ? this.currentReview.rate : 1;
     this.reviewContent = this.currentReview ? this.currentReview.content : '';
@@ -444,5 +421,10 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   }
   close() {
     this.display = false;
+  }
+  @HostListener('window:scroll', ['$event']) // for window scroll events
+  onScroll(event) {
+    this.verticalOffset = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop || 0;
+    this.verticalOffset = 115 - this.verticalOffset < 0 ? 0 : 115 - this.verticalOffset;
   }
 }

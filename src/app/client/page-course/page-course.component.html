@@ -1,4 +1,4 @@
-<div class="course-banner" #banner>
+<div class="course-banner" #banner [el-loading]="loading">
   <div class="container">
     <div class="row">
       <div class="col-md-8">
@@ -12,7 +12,7 @@
           <course-preview 
           [userRegistration]="userRegistration"
           [course]="course"
-          [lectureCode]="getLectures(chapters[0]?.code)[0]?.code"
+          [lectureCode]="course?.lectures[0]?.lectures[0]?.code"
           [totalLectureQuiz]="totalLectureQuiz"
           [totalLectureVideo]="totalLectureVideo"
           [totalLectureExercise]="totalLectureExercise"
@@ -63,13 +63,13 @@
                   <div class="header-right">
                     <span>
                       <a class="sections-toggle" href="javascript:void(0)"></a> 
-                      <span class="dib">{{course?.lectures?.length - chapters?.length}} bài học</span>
+                      <span class="dib">{{course?.lectures?.length}} chương học</span>
                     </span>
                     <span class="curriculum-header-length">{{totalTimeEstimate() | minuteSeconds}}</span>
                   </div>
                 </div>
                 <!--  -->
-                <div *ngFor="let chapter of chapters;let i = index;">
+                <div *ngFor="let chapter of course?.lectures;let i = index;">
                     <a href="javascript:void(0)" class="accordion" (click)="toggleAccordian($event, i)">
                         <div class="section-header-left">
                           <span class="section-title-wrapper">
@@ -77,23 +77,23 @@
                               <span class="section-title-toggle-plus">+</span>
                               <span class="section-title-toggle-minus">–</span>
                             </span>
-                            <span class="section-title-text">{{chapter.name}}</span>
+                            <span class="section-title-text">{{chapter.sortOrder}}. {{chapter.name}}</span>
                           </span>
                         </div>
                         <div class="section-header-right">
-                          <span class="num-items-in-section">{{getLectures(chapter.code).length}} bài học</span>
+                          <span class="num-items-in-section">{{chapter?.lectures?.length}} bài học</span>
                           <span class="section-header-length">{{totalChapterTimeEstimate(chapter.code) | minuteSeconds}}</span>
                         </div>
                     </a>
                     <div class="panel" hide="!chapter.isActive">
-                      <div *ngFor="let lecture of getLectures(chapter.code)" class="lecture-container">
+                      <div *ngFor="let lecture of chapter?.lectures" class="lecture-container">
                           <div class="left-content">
                               <span class="udi">
                                 <i *ngIf="lecture.type === 'LECTURE_VIDEO'" class="fa fa-play-circle" aria-hidden="true"></i>
                                 <i *ngIf="lecture.type === 'LECTURE_QUIZ'" class="fa fa-question-circle-o" aria-hidden="true"></i>
                               </span>
                               <div class="top">
-                                  <div class="title">{{lecture.name}} </div>
+                                  <div class="title">{{lecture.sortOrder}}. {{lecture.name}} </div>
                               </div>
                           </div>
                           <div class="details"><span class="content-summary" [hidden]="lecture.type !== 'LECTURE_VIDEO'">{{lecture.videoTimeEstimation | minuteSeconds}}</span></div>

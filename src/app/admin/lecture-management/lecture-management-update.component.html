@@ -49,7 +49,7 @@
                                     </small>
                                 </div>
                             </div>
-                            <div class="form-group col-md-12" *ngIf="(lecture.id && lecture.lectures.length === 0 && editForm.get('type').value !== 'LECTURE_CHAPTER') || (!lecture.id && editForm.get('type').value && editForm.get('type').value !== 'LECTURE_CHAPTER')">
+                            <div class="form-group col-md-12" *ngIf="(lecture.id && lecture?.lectures?.length === 0 && editForm.get('type').value !== 'LECTURE_CHAPTER') || (!lecture.id && editForm.get('type').value && editForm.get('type').value !== 'LECTURE_CHAPTER')">
                                 <label [translate]="'lectureManagement.parents'">parents</label>
                                 <ng-select [items]="lectureParents" bindValue="code" bindLabel="name" [multiple]="false"
                                     placeholder="Chọn bài học..."
@@ -82,11 +82,11 @@
                                 <div class="col-md-12 text-center">
                                     <img *ngIf="!selectedVideos && !lecture?.id" class="img-fluid" width="150" src="{{videoUrl}}" alt="Ảnh đại diện" />
                                     <div class="fileName" *ngIf="selectedVideos">{{videoUrl}}</div>
-                                    <video *ngIf="lecture.id && !selectedVideos && lecture.videoUrl" src="{{lecture.videoUrl}}" width="150" height="120" controls></video>
+                                    <video *ngIf="lecture.id && !selectedVideos && lecture.videoUrl" src="{{lecture.videoUrl}}" width="300" height="200" controls></video>
                                 </div>
                                 <div class="col-md-12 text-center mt-3">
                                     <span class="btn btn-success btn-file">
-                                        <strong [translate]="'lectureManagement.video'"></strong>
+                                        <strong [translate]="'lectureManagement.video'"></strong> 
                                         <i class="fa fa-camera" aria-hidden="true"></i>
                                         <input type="file" accept="video/*" class="form-control" name="imageFile" id="fileVideo" (change)="onVideoChange($event)">
                                     </span>
@@ -97,11 +97,24 @@
                                         tập tin</button>
                                 <input type="file" (change)="onFileChange($event)" multiple #uploadFile hidden='true'>
                                 <div *ngIf="selectedFiles">
-                                    <span class="mt-1" *ngFor="let file of selectedFiles; let i=index;">
-                                        {{file?.name}}
-                                        <i class="fa fa-times" (click)="removeFileAttach(file?.id, i)"></i>
-                                        <br/>
-                                    </span> 
+                                    <table class="table table-bordered mt-1">
+                                        <tbody>
+                                          <tr *ngFor="let file of selectedFiles; let i=index;">
+                                            <th scope="row">{{i+1}}</th>
+                                            <td>{{file?.body?.name}}</td>
+                                            <td>
+                                                <div class="form-group">
+                                                    <select class="form-control" name="fileType" [(ngModel)]="file.fileType" [ngModelOptions]="{standalone: true}">
+                                                        <option *ngFor="let t of fileTypes" [value]="t.code">{{t.title}}</option>
+                                                    </select>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <i class="fa fa-times" (click)="removeFileAttach(file?.body?.id, i)"></i>
+                                            </td>
+                                          </tr>
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>

@@ -1,0 +1,73 @@
+<div class="lecture-ex" style="position: relative;" [el-loading]="loading">
+    <h1>Tệp bài tập</h1>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Tên tệp</th>
+            <th scope="col">Điều kiện</th>
+            <th scope="col">Nộp bài</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let file of exerciseFiles; let i=index">
+            <th scope="row">{{i}}</th>
+            <td>{{file.fileName}}</td>
+            <td>{{lecture.requiredCompleteRate}}</td>
+            <td>
+                <button type="button" class="btn btn-sm btn-success">Tải về</button>
+            </td>
+            </tr>
+        </tbody>
+    </table>
+    <div class="border p-2" *ngIf="!exerciseSubmitted">
+        <input type="file" name="file" id="file" (change)="onFileChange($event)">
+        <button type="button" class="btn btn-sm btn-primary pull-right" (click)="submitExercise()">Nộp bài</button>
+    </div>
+    <div class="border p-2" *ngIf="exerciseSubmitted">
+        <p>Lịch sử nộp: </p>
+        <table class="table table-bordered">
+            <tbody>
+                <tr>
+                    <td>{{exerciseSubmitted.fileName}}</td>
+                    <td>{{exerciseSubmitted.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{exerciseSubmitted.score || 'Chưa chấm'}}</td>
+                    <td>
+                        <button type="button" class="btn btn-sm btn-success" (click)="downloadAttachment(exerciseSubmitted.fileUrl, exerciseSubmitted.fileName)">Tải về</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <h1>Danh sách học viên đã nộp</h1>
+    <table class="table table-bordered">
+        <thead class="thead-dark">
+            <tr>
+            <th scope="col">STT</th>
+            <th scope="col">Họ tên</th>
+            <th scope="col">Tệp tin</th>
+            <th scope="col">Ngày nộp</th>
+            <th scope="col">Điểm</th>
+            <th scope="col">#</th>
+            </tr>
+        </thead>
+        <tbody *ngIf="listExercise.length === 0">
+            <tr>
+                <td colspan="5" class="text-center">Chưa có ai nộp</td>
+            </tr>
+        </tbody>
+        <tbody *ngIf="listExercise.length > 0">
+            <tr *ngFor="let ex of listExercise; let i=index">
+            <th scope="row">{{i + 1}}</th>
+            <td>{{ex.nameOfUser}}</td>
+            <td>{{ex.fileName}}</td>
+            <td>{{ex.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
+            <td>{{ex.score}}</td>
+            <td>
+                <button *ngIf="ex.fileUrl" type="button" class="btn btn-sm btn-success" (click)="downloadAttachment(exerciseSubmitted.fileUrl, exerciseSubmitted.fileName)">Tải về</button>
+            </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+<p-toast></p-toast>

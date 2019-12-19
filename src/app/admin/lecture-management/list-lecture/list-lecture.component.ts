@@ -4,8 +4,9 @@ import { Router } from '@angular/router';
 import { LectureBO } from 'src/app/models/lectureBO.model';
 import { LectureService } from 'src/app/services/lecture.service';
 import { STATUS_CAN_NOT_EIDT_DELETE, CHECKING } from 'src/app/shared/constants/status.constants';
-import { DynamicDialogConfig, DynamicDialogRef, MessageService, ConfirmationService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
 import { AccountService } from 'src/app/core/auth/account.service';
+import { DynamicDialogRef, DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'list-lecture',
@@ -22,6 +23,7 @@ export class ListLectureComponent implements OnInit {
     keyword = '';
     href?: string;
     isChecking = false;
+    loading = false;
     CHECKING = CHECKING;
     statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
 
@@ -101,6 +103,7 @@ export class ListLectureComponent implements OnInit {
     }
 
     loadAll() {
+        this.loading = true;
         this.lectureService
             .queryLectureByChapter(this.lecture.code, {
                 page: this.page - 1,
@@ -108,11 +111,13 @@ export class ListLectureComponent implements OnInit {
                 keyword: this.keyword
             })
             .subscribe(
-                (res: HttpResponse<LectureBO[]>) => this.onSuccess(res.body)
+                (res: HttpResponse<LectureBO[]>) => this.onSuccess(res.body),
+                (err) => {this.loading = false; }
             );
     }
     private onSuccess(data) {
         this.totalItems = data.totalElements;
         this.lectures = data.content;
+        this.loading = false;
     }
 }

@@ -6,7 +6,8 @@ import { LectureBO } from 'src/app/models/lectureBO.model';
 import { QuestionBO } from 'src/app/models/questionBO.model';
 import { QuestionService } from 'src/app/services/question.service';
 import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
-import { MessageService, DialogService } from 'primeng/api';
+import { MessageService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'lecture-quiz',

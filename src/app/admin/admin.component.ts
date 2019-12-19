@@ -4,6 +4,7 @@ import { TranslateService, LangChangeEvent } from '@ngx-translate/core';
 import { Router } from '@angular/router';
 import { LoginService } from '../core/auth/login.service';
 import { AccountService } from '../core/auth/account.service';
+import { SocketService } from '../core/auth/socket.service';
 
 @Component({
     selector: 'page-admin',
@@ -11,10 +12,13 @@ import { AccountService } from '../core/auth/account.service';
     styleUrls: ['./admin.component.scss']
 })
 export class AdminComponent implements OnInit {
-  languages: any[];
-  public navItems = navItems;
-  public route;
+  navItems = navItems;
+  route;
+  listUser?: any[] = [];
+  listMessage?: any[] = [];
+  newMessage = false;
   constructor(
+    private socketService: SocketService,
     private translateService: TranslateService,
     private loginService: LoginService,
     private principal: AccountService,
@@ -27,7 +31,61 @@ export class AdminComponent implements OnInit {
   }
   ngOnInit(): void {
     this.translateMenu();
+    this.socketService.receiveMessage(res => {
+      this.newMessage = true;
+      let check = false;
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.listUser.length; i++) {
+        if (this.listUser[i].username === res.username) {
+          this.listUser[i].notification = true;
+          check = true;
+          break;
+        }
+      }
+      if (!check) {
+        this.listUser.push({
+          username: res.username,
+          notification: true
+        });
+      }
+    });
   }
+
+  async getListMessage(user) {
+    this.principal.identity().then(async account => {
+      const mess = await this.socketService.getListMessage(user.username).toPromise();
+      let isHasUser = false;
+      // tslint:disable-next-line:prefer-for-of
+      for (let i = 0; i < this.listMessage.length; i++) {
+        if (this.listMessage[i].user === user.username) {
+          this.listMessage[i].messages = [];
+          this.listMessage[i].messages = mess.map(m => {
+            return {
+              content: m.content,
+              createdAt: m.createdAt,
+              isSent: m.senderId === account.id
+            };
+          });
+          isHasUser = true;
+        }
+      }
+      if (!isHasUser) {
+        this.listMessage.push({
+          username: user.username,
+          name: user.username,
+          messages : mess.length > 0 ? mess.map(m => {
+            return {content: m.content, createdAt: m.createdAt, isSent: m.senderId === account.id};
+          }) : []
+        });
+      }
+      user.notification = false;
+    });
+  }
+
+  onClose(event) {
+    this.listMessage.splice(event - 1, 1);
+  }
+
   logout() {
     this.loginService.logout();
     this.router.navigate(['admin/login']);

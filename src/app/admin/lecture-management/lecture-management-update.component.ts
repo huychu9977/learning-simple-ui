@@ -24,6 +24,16 @@ export class LectureManagementUpdateComponent implements OnInit {
   parentCode;
   videoUrl;
   loading = false;
+  fileTypes = [
+    {
+      code: 'DOCUMENT',
+      title: 'Tài liệu'
+    },
+    {
+      code: 'EXERCISE',
+      title: 'Bài tập'
+    }
+  ];
 
   editForm = this.fb.group({
     id: [null],
@@ -98,7 +108,7 @@ export class LectureManagementUpdateComponent implements OnInit {
       sortOrder: lecture.id ? lecture.sortOrder : 0
     });
     this.selectedFiles = lecture.fileAttachments ? lecture.fileAttachments.map(file => {
-      return {id: file.id, name: file.fileName};
+      return {fileType: file.type, body: {id: file.id, name: file.fileName} };
     }) : [];
     this.idDeletedFile = [];
     this.route
@@ -117,7 +127,7 @@ export class LectureManagementUpdateComponent implements OnInit {
       this.types = data;
       if (lecture.id) {
         // chương học đã có bài học con
-        if (lecture.lectures.length > 0) {
+        if (!lecture.parentCode) {
           this.types = this.types.filter(t => {
             return t.code === 'LECTURE_CHAPTER';
           });
@@ -164,17 +174,25 @@ export class LectureManagementUpdateComponent implements OnInit {
   confirm() {
     this.loading = true;
     const formdata: FormData = new FormData();
+    const fileTypes = [];
     formdata.append('videoFile', this.selectedVideos ? this.selectedVideos.item(0) : null);
     if (this.selectedFiles.length === 0) {
       formdata.append('files', null);
     } else {
       // tslint:disable-next-line:prefer-for-of
       for (let i = 0; i < this.selectedFiles.length; i++) {
-        if (!this.selectedFiles[i].id) {
-          formdata.append('files', this.selectedFiles[i]);
+        if (!this.selectedFiles[i].body.id) {
+          formdata.append('files', this.selectedFiles[i].body);
         }
       }
     }
+    // tslint:disable-next-line:prefer-for-of
+    for (let i = 0; i < this.selectedFiles.length; i++) {
+      fileTypes.push(this.selectedFiles[i].fileType);
+    }
+    formdata.append('types', new Blob([JSON.stringify(fileTypes)], {
+      type: 'application/json'
+    }));
     formdata.append('lectureDTO', new Blob([JSON.stringify(this.updateLecture())], {
       type: 'application/json'
     }));
@@ -230,6 +248,10 @@ export class LectureManagementUpdateComponent implements OnInit {
     }
   }
   onFileChange(event) {
+    if (this.selectedFiles.length >= 5) {
+      this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Tối đa 5 tệp!'});
+      return;
+    }
     let checkList = false;
     // tslint:disable-next-line:prefer-for-of
     for (let i = 0; i < event.target.files.length; i++) {
@@ -250,7 +272,8 @@ export class LectureManagementUpdateComponent implements OnInit {
             break;
         }
         if (checkList) {
-            this.selectedFiles = [...this.selectedFiles, event.target.files[i]];
+            const t = {fileType: 'DOCUMENT', body: event.target.files[i]};
+            this.selectedFiles = [...this.selectedFiles, t];
         }
     }
   }

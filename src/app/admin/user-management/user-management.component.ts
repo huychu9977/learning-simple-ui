@@ -4,7 +4,8 @@ import { Component, OnInit } from '@angular/core';
 import { UserMgmtDetailComponent } from './user-management-detail.component';
 import { UserBO } from 'src/app/models/userBO.model';
 import { UserService } from 'src/app/services/user.service';
-import { MessageService, ConfirmationService, DialogService } from 'primeng/api';
+import { MessageService, ConfirmationService } from 'primeng/api';
+import { DialogService } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'user-management',

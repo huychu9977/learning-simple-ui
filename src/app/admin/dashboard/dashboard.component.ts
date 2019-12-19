@@ -6,7 +6,6 @@ import { UserService } from 'src/app/services/user.service';
 import { QUESTION_BECOME_INSTRUCTOR } from 'src/app/shared/constants/instructor-question-become.constants';
 import { MessageService } from 'primeng/api';
 import { CHECKING, WAIT_CHECK, ERROR, SUCCESS } from 'src/app/shared/constants/status.constants';
-import { SocketService } from 'src/app/core/auth/socket.service';
 @Component({
   selector: 'dashboard',
   templateUrl: './dashboard.component.html',
@@ -24,32 +23,18 @@ export class DashboardComponent implements OnInit {
   quickQuestion = QUESTION_BECOME_INSTRUCTOR;
 
   constructor(
-    private socketService: SocketService,
     private router: Router,
     private userService: UserService,
     private messageService: MessageService,
     private accountService: AccountService,
     private ticketService: TicketService) { }
   ngOnInit() {
-    // this.socketService.receiveMessage();
-    // this.socketService.receive().subscribe(res => {
-    //   console.log(res);
-    // });
-    // this.socketService.receive().subscribe(activity => {
-    //   console.log(activity);
-    // });
-    // this.socketService.userLogin();
-    // this.socketService.receive1().subscribe(res => {
-    //   console.log('mess: ', res);
-    // });
     this.accountService.identity().then(account => {
           this.currentAccount = account;
           this.loadAll();
     });
   }
-  send() {
-    this.socketService.sendMessage('ahii', 'teacher');
-  }
+
   loadAll() {
     this.loadTicketWaitCheck();
     this.loadTicketCheking();

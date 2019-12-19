@@ -20,7 +20,7 @@ export class RoleService {
     }
 
     find(id: any): Observable<HttpResponse<RoleBO>> {
-        return this.http.get<RoleBO>(`${this.resourceUrl}/id/${id}`, { observe: 'response' });
+        return this.http.get<RoleBO>(`${this.resourceUrl}/${id}`, { observe: 'response' });
     }
 
     query(req?: any): Observable<HttpResponse<RoleBO[]>> {

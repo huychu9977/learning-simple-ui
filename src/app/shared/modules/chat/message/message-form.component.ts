@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { SocketService } from 'src/app/core/auth/socket.service';
 @Component({
   selector: 'form-message',
@@ -6,13 +6,31 @@ import { SocketService } from 'src/app/core/auth/socket.service';
   styleUrls: ['./message-form.component.scss']
 })
 export class MessageFormComponent implements OnInit {
-  visibleSidebar2 = false;
-  @Input() isShow = false;
+  content = '';
+  @Input() message?: any;
+  @Input() index?: any;
+  // tslint:disable-next-line:no-output-rename
+  @Output('onClose') closeEmit = new EventEmitter<boolean>();
   constructor(private socketService: SocketService) { }
 
   ngOnInit() {
+    this.socketService.receiveMessage(res => {
+      this.message.messages.push({
+        content: res.content, createdAt: res.createdAt, isSent: false
+      });
+    });
   }
-  send() {
-    // this.socketService.sendUser();
+  close() {
+    this.closeEmit.emit(this.index);
+  }
+
+  send(username) {
+    if (this.content.trim() !== '') {
+      this.socketService.sendMessage(this.content, username);
+      this.message.messages.push({
+        content: this.content, createdAt: new Date(), isSent: true
+      });
+      this.content = '';
+    }
   }
 }

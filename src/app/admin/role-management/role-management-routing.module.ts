@@ -13,9 +13,9 @@ export class RoleMgmtResolve implements Resolve<any> {
   constructor(private service: RoleService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-    const id = route.params.id ? route.params.id : null;
-    if (id) {
-      return this.service.find(id);
+    const code = route.params.code ? route.params.code : null;
+    if (code) {
+      return this.service.find(code);
     }
     const roleBO = new RoleBO();
     roleBO.id = null;
@@ -47,7 +47,7 @@ export const roleMgmtState: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'role-management/:id/edit',
+        path: 'role-management/:code/edit',
         component: RoleMgmtUpdateComponent,
         resolve: {
         role: RoleMgmtResolve

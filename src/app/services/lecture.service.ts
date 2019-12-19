@@ -56,4 +56,16 @@ export class LectureService {
     setStatus(code: string, status: string): Observable<boolean> {
         return this.http.put<boolean>(`${this.resourceUrl}/set-status/${code}/${status}`, { observe: 'response' });
     }
+
+    getAllLectureByCourseCodeForEmployer(courseCode?: string): Observable<any[]> {
+        return this.http.get<any[]>(`${this.resourceUrl}/employer/${courseCode}`);
+    }
+
+    queryLectureCompleted(courseCode?: string): Observable<any[]> {
+        return this.http.get<any[]>(`${this.resourceUrl}/employer/lecture-completed/${courseCode}`);
+    }
+
+    toggleCompletedLecture(lectureId?: any) {
+        return this.http.post(`${this.resourceUrl}/employer/lecture-completed/${lectureId}`, { observe: 'response' });
+    }
 }

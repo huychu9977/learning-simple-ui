@@ -12,9 +12,10 @@ import { EditorModule } from 'primeng/editor';
 import {OverlayPanelModule} from 'primeng/overlaypanel';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
 import { ConfirmationService } from 'primeng/api';
+import { LectureExerciseComponent } from './lecture-exercise/lecture-exercise.component';
 
 @NgModule({
-  declarations: [PageLectureComponent],
+  declarations: [PageLectureComponent, LectureExerciseComponent],
   imports: [
     RouterModule,
     UserHeaderModule,

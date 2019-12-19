@@ -13,12 +13,12 @@
   </nav>
   <div class="app-body w-100">
     <div id="admin-header" class="py-3 bg-secondary text-right overflow-hidden">
-      <a href="javascript:void(0)" class="mr-3 text-white" (click)="logout()">Logout</a>
+      <a href="javascript:void(0)" class="mr-3 text-white" (click)="list.toggle($event); newMessage = false;">Message <span *ngIf="newMessage">*1</span></a>
+      <a href="javascript:void(0)" class="mr-3 text-white" (click)="logout()">Đăng xuất</a>
     </div>
     <!-- Main content -->
     <main class="main">
       <div class="container-fluid page-admin" style="position: relative;min-height: 605px;padding: 30px;">
-        <lbp-loading-screen></lbp-loading-screen>
         <router-outlet></router-outlet>
       </div>
     </main>
@@ -27,3 +27,13 @@
     </div>
   </div>
 </div>
+<p-overlayPanel #list>
+  <ul *ngIf="listUser.length > 0">
+    <li *ngFor="let user of listUser" (click)="getListMessage(user)">
+      <span>{{user?.username}}</span>
+      <strong>{{user?.notification}}</strong>
+    </li>
+  </ul>
+</p-overlayPanel>
+<form-message *ngFor="let chatF of listMessage; let i=index" [message]="chatF" [index]="i"
+(onClose)="onClose($event)"></form-message>
