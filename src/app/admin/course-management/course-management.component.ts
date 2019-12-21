@@ -101,14 +101,17 @@ export class CourseManagementComponent implements OnInit {
         this.loadAll();
     }
     deleteCourse(course: CourseBO) {
+        this.loading = true;
         this.confirmationService.confirm({
             message: 'Đồng ý thực hiện thao tác này?',
             accept: () => {
                 this.courseService.delete(course.code).subscribe(res => {
                     this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Xoá khóa học thành công!'});
+                    this.loadAll();
                 },
                 err => {
                     this.messageService.add({severity: 'error', detail: err.error.message});
+                    this.loading = false;
                 });
             }
         });
