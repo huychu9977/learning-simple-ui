@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { CoursePreviewComponent } from './course-preview.component';
 import {DialogModule} from 'primeng/dialog';
 import { ToastModule } from 'primeng/toast';
+import { SharedLibsModule } from '../../shared-libs.module';
 @NgModule({
   declarations: [CoursePreviewComponent],
   imports: [
-    CommonModule,
     RouterModule,
     DialogModule,
-    ToastModule
+    ToastModule,
+    SharedLibsModule
   ],
   exports: [CoursePreviewComponent]
 })

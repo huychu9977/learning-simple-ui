@@ -59,3 +59,10 @@
 .main {
     min-height: 636px;
 }
+#admin-header a{
+    color: white;
+    margin-right: 15px;
+    &:hover {
+        color: #20a8d8;
+    }
+}

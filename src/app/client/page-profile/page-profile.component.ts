@@ -11,7 +11,7 @@ export class PageProfileComponent implements OnInit {
   currentAccount: any;
   currentRouter;
   data: any[] = [
-    {name: 'Quản lý khoá học', url: '/instructor/courses', active: false},
+    {name: 'Quản lý khoá học', url: 'instructor', active: false},
     {name: 'Thông tin', url: '', active: true}
   ];
   data1: any[] = [

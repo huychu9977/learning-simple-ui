@@ -1,6 +1,6 @@
 
 <div class="animated fadeIn">
-    <div class="card-body justify-content-center" style="min-height: 500px; position: relative;" [el-loading]="loading">
+    <div class="card-body justify-content-center" style="min-height: 430px; position: relative;" [el-loading]="loading">
         <div class="row mb-4 ml-4">
             <button class="btn btn-md btn-primary" (click)="open(null)" [translate]="'lectureManagement.home.chapter.createLabel'">add</button>
         </div>
@@ -30,7 +30,7 @@
                 </div>
             </div>
         </div>
-        <div class="row" style="position: absolute; bottom: 0; right: 5%;">
+        <div class="row mt-3">
             <button type="button" class="btn btn-secondary" (click)="previousState()">
                 <span [translate]="'entity.action.cancel'">Cancel</span>
             </button>

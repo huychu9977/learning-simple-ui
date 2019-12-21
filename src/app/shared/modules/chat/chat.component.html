@@ -1,18 +1,26 @@
-
-<button type="button" (click)="visibleSidebar2 = !visibleSidebar2">open mmkk</button>
 <form-message *ngFor="let chatF of listMessage; let i=index" [message]="chatF" [index]="i + 1"
 (onClose)="onClose($event)"></form-message>
-<p-sidebar [(visible)]="visibleSidebar2" position="right" [baseZIndex]="100000">
+<p-sidebar [(visible)]="openListUserOnline" position="right" [baseZIndex]="-998">
+    <p class="bg-dark py-2 text-white pl-3">Online:</p>
     <div [el-loading]="openingChatForm">
+        <div *ngIf="listUserOnline.length === 0" class="text-center mt-5">
+            <img width="100" height="50" src="assets/images/main/oops.png" alt="">
+            <p class="mt-1">Hiện tại chưa có nhân viên thường trực!</p>
+            <p class="mt-1">Xin lỗi vì sự bất tiện này.</p>
+        </div>
         <ul class="list-group mt-3" *ngIf="listUserOnline.length > 0">
             <li class="list-group-item d-flex border-bottom" (click)="getListMessage(user?.username, user?.name)" *ngFor="let user of listUserOnline">
-                <figure class="avatar avatar-state-success">
+                <figure class="avatar avatar-state-success" *ngIf="user?.imageUrl">
                     <img [srcset]="user?.imageUrl" class="rounded-circle" alt="image">
                 </figure>
+                <div  *ngIf="!user?.imageUrl" class="avatar-circle" style="background-color: cadetblue;">
+                    <span class="initials">{{user?.name | avatarText}}</span>
+                </div>
                 <div class="users-list-body d-flex flex-grow-1">
                     <div class="w-100">
                         <h5 class="text-primary">{{user?.name}}</h5>
-                        <p>What's up, how are you?</p>
+                        <p class="ml-1" *ngIf="user?.roles.indexOf('ROLE_ADMIN') > -1">Nhân viên</p>
+                        <p class="ml-1" *ngIf="user?.roles.indexOf('ROLE_ADMIN') < 0 && user?.roles.indexOf('ROLE_TEACHER') > -1">Giảng viên</p>
                     </div>
                     <div>
                             <i class="fa fa-telegram" aria-hidden="true"></i>

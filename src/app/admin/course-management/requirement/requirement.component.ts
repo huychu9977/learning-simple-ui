@@ -14,6 +14,8 @@ export class RequirementComponent implements OnInit {
   courseRequireds?: any[] = [];
   requiredName?: string;
   course?: CourseBO;
+  loading = false;
+  isSaving = false;
   constructor(
     private messageService: MessageService,
     private route: ActivatedRoute,
@@ -26,9 +28,10 @@ export class RequirementComponent implements OnInit {
     this.loadAll();
   }
   loadAll() {
+    this.loading = true;
     this.courseRequireds = [];
     this.requirementService.findAll(this.course.code)
-    .subscribe(data => {this.courseRequireds = data; });
+    .subscribe(data => {this.courseRequireds = data; this.loading = false; });
   }
   add() {
     if (this.requiredName.trim()) {
@@ -43,6 +46,8 @@ export class RequirementComponent implements OnInit {
     this.courseRequireds.splice(index, 1);
   }
   save() {
+    this.loading = true;
+    this.isSaving = true;
     const body = this.courseRequireds.map(o => {
       return o.id ? {id: o.id , name: o.name} : { name: o.name};
     });
@@ -53,6 +58,7 @@ export class RequirementComponent implements OnInit {
   }
   private onSaveSuccess(result) {
     this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
+    this.loading = false;
     setTimeout(() => {
       this.previousState();
     }, 1200);
@@ -60,6 +66,8 @@ export class RequirementComponent implements OnInit {
 
   private onSaveError() {
    this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: 'Thao tác thất bại!'});
+   this.loading = false;
+   this.isSaving = false;
   }
 
   previousState() {

@@ -103,7 +103,7 @@ export class SocketService {
     if (this.stompClient !== null && this.stompClient.connected) {
       const destination = to === 'ALL' ? '/app/chat.message' : `/app/chat.private.${to}`;
       this.stompClient.send(destination, // destination
-        JSON.stringify({  message }), // body
+        JSON.stringify({  content: message }), // body
         {} // header
       );
     }

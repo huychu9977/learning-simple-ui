@@ -47,6 +47,7 @@ export class CoursePreviewComponent implements OnInit {
         if (res) {
           this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Đăng ký thành công!'});
           this.change.emit(true);
+          this.isSaving = false;
         } else {
           this.isSaving = false;
           this.messageService.add({severity: 'error', detail: 'Có lỗi xảy ra!'});

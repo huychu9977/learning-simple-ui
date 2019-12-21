@@ -17,6 +17,7 @@ export class AdminComponent implements OnInit {
   listUser?: any[] = [];
   listMessage?: any[] = [];
   newMessage = false;
+  currentAccount = null;
   constructor(
     private socketService: SocketService,
     private translateService: TranslateService,
@@ -45,6 +46,7 @@ export class AdminComponent implements OnInit {
       if (!check) {
         this.listUser.push({
           username: res.username,
+          roles: res.roles,
           notification: true
         });
       }
@@ -104,6 +106,7 @@ export class AdminComponent implements OnInit {
     }
     const principal = this.principal;
     this.principal.identity().then(account => {
+        this.currentAccount = account;
         this.navItems = (this.navItems || []).filter(menu => {
           if (menu.hasOwnProperty('authorities')) {
             const authorities = menu.authorities;

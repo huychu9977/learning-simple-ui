@@ -3,7 +3,7 @@
         <div class="chat-header">
             <h1>{{message?.name}} <span class="pull-right" (click)="close()"><i class="fa fa-times"></i></span></h1>
         </div>
-        <div class="chat-content">
+        <div class="chat-content" #scrollMe [scrollTop]="scrollMe.scrollHeight">
             <div *ngIf="message.messages.length === 0" class="text-center">Bắt đầu trò chuyện!
                 <br/><i class="fa fa-comments-o" aria-hidden="true"></i>
             </div>

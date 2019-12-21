@@ -16,7 +16,6 @@ import { PageProfileModule } from './page-profile/page-profile.module';
 import { FooterModule } from './page-footer/footer.module';
 import { PageEventModule } from './page-event/page-event.module';
 import { ClientRoutingModule } from './client-routing.module';
-import { ChatModule } from '../shared/modules/chat/chat.module';
 
 @NgModule({
     declarations: [ClientComponent, PageNotFoundComponent],
@@ -35,8 +34,7 @@ import { ChatModule } from '../shared/modules/chat/chat.module';
       PageMyCourseModule,
       PageProfileModule,
       PageEventModule,
-      FooterModule,
-      ChatModule
+      FooterModule
     ]
   })
   export class ClientModule { }

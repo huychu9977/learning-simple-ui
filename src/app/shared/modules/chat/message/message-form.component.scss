@@ -1,8 +1,8 @@
 .chat {
     position: fixed;
     z-index: 99999;
-    width: 357px;
-    max-height: 565px;
+    width: 315px;
+    max-height: 355px;
     min-height: 150px;
     margin-left: 8px;
     margin-right: 8px;
@@ -34,8 +34,8 @@
             padding-top: 1.07143rem;
             padding-left: .71429rem;
             padding-right: .71429rem;
-            max-height: 400px;
-            min-height: 300px;
+            max-height: 215px;
+            min-height: 215px;
             overflow-y: auto;
             &::-webkit-scrollbar-track {
                 border-radius: 10px;
@@ -54,7 +54,7 @@
             }
             .chat-item {
                 > div {
-                    padding: .57143rem .85714rem;
+                    padding: 6px 7px;
                     border-radius: 1.14286rem;
                     line-height: 1.14286rem;
                     max-width: 17.5rem;

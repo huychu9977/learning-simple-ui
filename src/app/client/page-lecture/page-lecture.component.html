@@ -3,7 +3,7 @@
     <div class="lecture-header">
       <div class="lecture-content-row">
         <div class="lecture-header-dashboard">
-          <a href="/"><img class="udemy-logo" alt="udemy-logo" width="110" height="32" src="assets/images/download.png"></a>
+          <a href="javascript:void(0)" [routerLink]="[ '/home' ]"><img class="udemy-logo" alt="udemy-logo" width="110" height="32" src="assets/images/download.png"></a>
           <div class="lecture-header-vertical"></div>
           <div class="lecture-header-title">
             <a href="javascript:void(0)" class="header-link" [routerLink]="[ '../../']">
@@ -30,7 +30,7 @@
 
       </div>
     </div>
-    <div class="lecture-container">
+    <div class="lecture-container" style="position: relative;" [el-loading]="isLoadingLecture">
       <button class="open-course-content" title="OPEN COURSE CONTENT" [hidden]="!expand" (click)="expand = false">
         <span><i class="fa fa-arrow-left"></i></span>
       </button>
@@ -39,16 +39,21 @@
           <div class="video-play" *ngIf="lectureSelected?.type === 'LECTURE_VIDEO'">
             <video *ngIf="lectureSelected?.videoUrl" src="{{lectureSelected?.videoUrl}}" controls></video>
           </div>
-          <div class="quiz" *ngIf="lectureSelected?.type === 'LECTURE_QUIZ'">
-            <div *ngIf="lectureCompleted.indexOf(lectureSelected.id) > -1" style="position: absolute; top: 50%; text-align: center;">
-                <p class="text-danger my-3" [hidden]="!correctAnswer">Đúng hết rồi! Học làm gì nữa... </p>
-                <button class="btn btn-sm btn-primary mr-2" (click)="toggleCompletedLecture(lectureSelected.id)">Bắt đầu lại</button>
+
+          <div class="quiz" *ngIf="lectureSelected?.type === 'LECTURE_QUIZ'" style="position: relative; min-height: 460px;" [el-loading]="isChecking">
+            <div *ngIf="lectureCompleted && !isOpenQuiz" style="position: absolute; top: 50%; text-align: center;">
+                <p class="text-danger my-3">Kết quả gần nhất: {{lectureCompleted?.completedRate}}%</p>
+                <button class="btn btn-sm btn-primary mr-2" (click)="isOpenQuiz = true">Bắt đầu lại</button>
             </div>
-            <div *ngIf="lectureCompleted.indexOf(lectureSelected.id) === -1">
+            <div *ngIf="!lectureCompleted && !isOpenQuiz" style="position: absolute; top: 50%; text-align: center;">
+              <p class="text-danger my-3">Bài kiểm tra cần đạt {{lectureSelected?.requiredCompleteRate}}%</p>
+              <button class="btn btn-sm btn-primary mr-2" (click)="isOpenQuiz = true">Bắt đầu</button>
+          </div>
+            <div *ngIf="isOpenQuiz == true">
               <div class="quiz-header">
                 <span>Câu {{page+1}}: </span>
                 <div class="quiz-header-content">
-                  <p [ngClass]="{'text-danger': listQuestionIncorrect.indexOf(lecture?.questions[page]?.id) > -1}" [innerHTML]="lectureSelected?.questions[page]?.content"></p>
+                  <p [ngClass]="{'text-danger': listQuestionIncorrect.indexOf(lectureSelected?.questions[page]?.id) > -1}" [innerHTML]="lectureSelected?.questions[page]?.content"></p>
                 </div>
               </div>
               <ul>
@@ -67,9 +72,9 @@
                 </li>
               </ul>
             </div>
-            <footer *ngIf="lectureCompleted.indexOf(lectureSelected.id) === -1">
+            <footer *ngIf="isOpenQuiz == true">
               <div class="footer-left">
-                <span>Câu {{page + 1}} of {{lectureSelected?.questions?.length}}</span>
+                <span>Câu {{page + 1}} trên {{lectureSelected?.questions?.length}}</span>
               </div>
               <div class="footer-right">
                 <span class="text-danger mr-3" [hidden]="!errorAnswer">Vui lòng trả lời hết câu hỏi!</span>
@@ -86,7 +91,7 @@
                 </div>
               </div>
             </footer>
-            <footer *ngIf="lectureCompleted.indexOf(lectureSelected.id) > -1">
+            <footer *ngIf="!isOpenQuiz">
 
               <div class="footer-right">
                 <div class="tooltip-container">
@@ -101,6 +106,7 @@
             <div class="my-5">
                 <p-tabView [activeIndex]="indexTab" (onChange)="onTabChange($event)">
                     <p-tabPanel header="Tổng quan">
+                      <div style="min-height: 400px;"></div>
                         <!-- <div class="description-dashboard-content">
                           <div [ngClass]=" descriptionMore ? 'collape-description-more' : 'collape-description'" #more>
                             <div class="description-dashboard-content-body">
@@ -287,7 +293,7 @@
                             </div>
                         </div>
                     </p-tabPanel>
-                    <p-tabPanel header="Bài tập">
+                    <p-tabPanel header="Bài tập" *ngIf="exerciseFiles.length > 0">
                       <div *ngIf="lectureSelected"><lecture-exercise [lecture]="lectureSelected"></lecture-exercise></div>
                     </p-tabPanel>
                 </p-tabView>
@@ -305,19 +311,22 @@
           </div>
           <div class="content-sidebar-content" [style.top]="verticalOffset + 'px'" [el-loading]="isLoadLecture">
             <div *ngIf="lectures && lectures.length > 0">
-              <div class="sidebar-content-section" *ngFor="let c of lectures; let i=index">
-                <div class="sidebar-content-section-header" [ngClass]="{'active': c.isActive}" (click)="c.isActive = !c.isActive">
+              <div class="sidebar-content-section" *ngFor="let c of lectures; let i=index" >
+                <div class="sidebar-content-section-header" [ngClass]="{'active': c.isActive}" (click)="openListLecture(c)">
                     <div class="section-header-title">
                       <span>Chương {{c?.sortOrder}}: {{c?.name}}</span>
                     </div>
-                    <span><i class="fa fa-chevron-up" aria-hidden="true"></i></span>
+                    <span>
+                      <i *ngIf="c.isOpen" class="fa fa-chevron-up" aria-hidden="true"></i>
+                      <i *ngIf="!c.isOpen" class="fa fa-trash" aria-hidden="true"></i>
+                    </span>
                 </div>
-                <ul [style.max-height]="c.isActive ? 'unset' : '0px'" class="section-list">
+                <ul [style.max-height]="c.isActive ? 'unset' : '0px'" class="section-list" *ngIf="c.isOpen">
                   <li class="section-item" *ngFor="let l of c?.lectures"
-                   [ngClass]="{'item-current': l?.code === lectureSelected.code}">
+                   [ngClass]="{'item-current': l?.code === lectureSelected?.code}">
                     <div>
                         <label class="checkbox-custom">
-                            <input type="checkbox" (change)="toggleCompletedLecture(l.id)" [checked]="lectureCompleted.indexOf(l.id) > -1">
+                            <input type="checkbox">
                             <span class="checkmark"></span>
                         </label>
                       <div class="section-item-container">

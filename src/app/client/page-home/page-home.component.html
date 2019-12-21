@@ -6,17 +6,17 @@
 ********************-->
 <section id="banner">
     <div class="full_slider">
-        <p-carousel [value]="images" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="7000">
+        <p-carousel [value]="slides" [numVisible]="1" [numScroll]="1" [circular]="true" [autoplayInterval]="7000">
             <ng-template let-slide pTemplate="item">
                 <div class="slider" [ngStyle]="{'background-image': 'url(' + slide.src + ')'}">
                         <div class="container ">
                             <div class="row">
                                 <div class="col-lg-12">
                                     <div class="bnr_text">
-                                        <h1><span>Let’s Learn</span> {{slide.title}}</h1>
+                                        <h1><span>S-Learning</span> {{slide.title}}</h1>
                                         <p>{{slide.content}}</p>
-                                        <a class="start_course" href="our_course.html">Start a Course</a>
-                                        <a class="take_tour" href="index.html">Take a Tour</a>
+                                        <a class="start_course" href="javascript:void(0)" [routerLink]="[ '/home' ]">Khóa học</a>
+                                        <a class="take_tour" href="javascript:void(0)" [routerLink]="[ '/home' ]">Giảng viên</a>
                                     </div>
                                 </div>
                             </div>

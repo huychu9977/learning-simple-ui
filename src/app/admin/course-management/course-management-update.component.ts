@@ -23,6 +23,7 @@ export class CourseManagementUpdateComponent implements OnInit {
   selectedImages: FileList;
   selectedVideos: FileList;
   loading = false;
+  isDisabledSave = true;
   editForm = this.fb.group({
     id: [null],
     code: [''],
@@ -125,11 +126,12 @@ export class CourseManagementUpdateComponent implements OnInit {
     });
   }
   confirm() {
-    if (!this.selectedImages && !this.course.id) {
-      this.messageService.add({severity: 'error', summary: 'Cảnh báo!', detail: 'Vui lòng chọn file image!'});
-    } else if (!this.selectedVideos && !this.course.id) {
-      this.messageService.add({severity: 'error', summary: 'Cảnh báo!', detail: 'Vui lòng chọn file video!'});
-    } else {
+    // if (!this.selectedImages && !this.course.id) {
+    //   this.messageService.add({severity: 'error', summary: 'Cảnh báo!', detail: 'Vui lòng chọn file image!'});
+    // } else if (!this.selectedVideos && !this.course.id) {
+    //   this.messageService.add({severity: 'error', summary: 'Cảnh báo!', detail: 'Vui lòng chọn file video!'});
+    // } else {
+      this.isDisabledSave = true;
       this.loading = true;
       const formdata: FormData = new FormData();
       formdata.append('imageFile', this.selectedImages ? this.selectedImages.item(0) : null);
@@ -142,7 +144,7 @@ export class CourseManagementUpdateComponent implements OnInit {
       } else {
         this.courseService.create(formdata).subscribe(response => this.onSaveSuccess(response), (err) => this.onSaveError(err));
       }
-    }
+    // }
   }
   private updateCourse() {
     const courseTmp = {
@@ -216,13 +218,14 @@ export class CourseManagementUpdateComponent implements OnInit {
     this.loading = false;
     setTimeout(() => {
       this.previousState();
-    }, 1200);
+    }, 1000);
   }
 
   private onSaveError(err) {
     this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
     this.loading = false;
     this.isSaving = false;
+    this.isDisabledSave = true;
   }
 
 }

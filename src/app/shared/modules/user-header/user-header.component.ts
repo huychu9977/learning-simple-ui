@@ -4,7 +4,6 @@ import { AccountService } from '../../../core/auth/account.service';
 import { LoginService } from '../../../core/auth/login.service';
 import { LoginModalService } from '../../../core/auth/login-modal.service';
 import { PageReloadService } from '../../../core/auth/page-reload.service';
-import { CommentService } from 'src/app/services/comment.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -14,8 +13,8 @@ import { CommentService } from 'src/app/services/comment.service';
 })
 export class UserHeaderComponent implements OnInit {
   currentAccount: any = null;
-  notifications: any[] = [];
   items = [];
+  openChat = false;
   constructor(
     private loginService: LoginService,
     private accountService: AccountService,
@@ -28,9 +27,6 @@ export class UserHeaderComponent implements OnInit {
   }
   async init() {
     this.currentAccount = await this.accountService.identity();
-    // this.commentService.getNotifications().subscribe(res => {
-    //   this.notifications = res;
-    // });
     this.items = [
       {
         label: 'Đăng nhập', icon: 'fa fa-sign-in', visible: this.currentAccount === null, command: () => {
@@ -68,8 +64,5 @@ export class UserHeaderComponent implements OnInit {
         }
       }
     ];
-  }
-  isShowNotification() {
-    return this.currentAccount && this.notifications.length > 0 && !this.router.url.includes('/lecture/');
   }
 }

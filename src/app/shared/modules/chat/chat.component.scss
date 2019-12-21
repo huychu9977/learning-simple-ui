@@ -34,3 +34,14 @@ button {
     bottom: 200px;
     right: 25em;
 }
+:host ::ng-deep {
+    .ui-sidebar {
+        padding-top: 0 !important;
+        .ui-sidebar-close {
+            margin-top: 9px;
+            &:hover {
+                color: white;
+            }
+        }
+    }
+}

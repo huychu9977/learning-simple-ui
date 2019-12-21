@@ -24,6 +24,7 @@ export class LectureManagementUpdateComponent implements OnInit {
   parentCode;
   videoUrl;
   loading = false;
+  isDisabledSave = false;
   fileTypes = [
     {
       code: 'DOCUMENT',
@@ -43,6 +44,7 @@ export class LectureManagementUpdateComponent implements OnInit {
     type: ['', [Validators.required]],
     parent: [''],
     sortOrder: [''],
+    requiredCompleteRate: [''],
     oldSortOrder: ['']
   });
   statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
@@ -105,7 +107,8 @@ export class LectureManagementUpdateComponent implements OnInit {
       activated: lecture.activated === undefined ? true : lecture.activated,
       type: lecture.type ? lecture.type : null,
       parent: lecture.parentCode ? lecture.parentCode : null,
-      sortOrder: lecture.id ? lecture.sortOrder : 0
+      sortOrder: lecture.id ? lecture.sortOrder : 0,
+      requiredCompleteRate: lecture.requiredCompleteRate
     });
     this.selectedFiles = lecture.fileAttachments ? lecture.fileAttachments.map(file => {
       return {fileType: file.type, body: {id: file.id, name: file.fileName} };
@@ -172,6 +175,7 @@ export class LectureManagementUpdateComponent implements OnInit {
   }
 
   confirm() {
+    this.isDisabledSave = true;
     this.loading = true;
     const formdata: FormData = new FormData();
     const fileTypes = [];
@@ -216,6 +220,7 @@ export class LectureManagementUpdateComponent implements OnInit {
       type : this.editForm.get(['type']).value,
       parentCode : this.editForm.get(['parent']).value,
       sortOrder : this.editForm.get(['sortOrder']).value,
+      requiredCompleteRate: this.editForm.get(['requiredCompleteRate']).value,
     };
     if (!this.lecture.id) {
       delete lectureTmp.id;
@@ -288,12 +293,13 @@ export class LectureManagementUpdateComponent implements OnInit {
     this.loading = false;
     setTimeout(() => {
       this.previousState();
-    }, 1200);
+    }, 1000);
   }
 
   private onSaveError(err) {
     this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
     this.loading = false;
     this.isSaving = false;
+    this.isDisabledSave = false;
   }
 }

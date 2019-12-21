@@ -15,7 +15,7 @@ export class AccountService {
   constructor(private http: HttpClient, private socketService: SocketService) {}
 
   updateCurrentUser(body?: any) {
-    return this.http.put<boolean>(SERVER_API_URL + 'api/user/account/update', body, { observe: 'response' });
+    return this.http.put<boolean>(SERVER_API_URL + 'api/user/update-current', body, { observe: 'response' });
   }
 
   registerInit(account?: any) {

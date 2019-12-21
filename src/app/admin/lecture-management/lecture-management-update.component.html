@@ -9,7 +9,26 @@
                         <div class="form-group" [hidden]="!lecture.id">
                             <input type="hidden" class="form-control" name="id" formControlName="id" readonly>
                         </div>
-        
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label [translate]="'lectureManagement.type'">type</label>
+                                <ng-select [items]="types" bindValue="code" bindLabel="name" [multiple]="false"
+                                    placeholder="Chọn thể loại..."
+                                    [searchable]="false"
+                                    (change)="updateType()"
+                                    formControlName='type'  class="form-control" required>
+                                    <ng-template ng-option-tmp let-item="item">
+                                        {{item.name}}
+                                    </ng-template>
+                                </ng-select>
+                                <div *ngIf="editForm.get('type').invalid && (editForm.get('type').dirty || editForm.get('type').touched) || isSaving && f['type'].errors">
+                                    <small class="form-text text-danger"
+                                    *ngIf="f['type'].errors.required" [translate]="'entity.validation.required'">
+                                        This field is required.
+                                    </small>
+                                </div>
+                            </div>
+                        </div>
                         <div class="row">
                             <fieldset class="form-group col-md-12" *ngIf="lecture.id">
                                 <label [translate]="'lectureManagement.code'">code</label>
@@ -31,24 +50,6 @@
                             </fieldset>
                         </div>
                         <div class="row">
-                            <div class="form-group col-md-6">
-                                <label [translate]="'lectureManagement.type'">type</label>
-                                <ng-select [items]="types" bindValue="code" bindLabel="name" [multiple]="false"
-                                    placeholder="Chọn thể loại..."
-                                    [searchable]="false"
-                                    (change)="updateType()"
-                                    formControlName='type'  class="form-control" required>
-                                    <ng-template ng-option-tmp let-item="item">
-                                        {{item.name}}
-                                    </ng-template>
-                                </ng-select>
-                                <div *ngIf="editForm.get('type').invalid && (editForm.get('type').dirty || editForm.get('type').touched) || isSaving && f['type'].errors">
-                                    <small class="form-text text-danger"
-                                    *ngIf="f['type'].errors.required" [translate]="'entity.validation.required'">
-                                        This field is required.
-                                    </small>
-                                </div>
-                            </div>
                             <div class="form-group col-md-12" *ngIf="(lecture.id && lecture?.lectures?.length === 0 && editForm.get('type').value !== 'LECTURE_CHAPTER') || (!lecture.id && editForm.get('type').value && editForm.get('type').value !== 'LECTURE_CHAPTER')">
                                 <label [translate]="'lectureManagement.parents'">parents</label>
                                 <ng-select [items]="lectureParents" bindValue="code" bindLabel="name" [multiple]="false"
@@ -61,6 +62,8 @@
                                     </ng-template>
                                 </ng-select>
                             </div>
+                        </div>
+                        <div class="row">
                             <fieldset class="form-group col-md-6" *ngIf="editForm.get('type').value">
                                 <label *ngIf="editForm.get('type').value && editForm.get('type').value === 'LECTURE_CHAPTER'" [translate]="'lectureManagement.chapterOrder'">sortOrder</label>
                                 <label *ngIf="editForm.get('type').value && editForm.get('type').value !== 'LECTURE_CHAPTER'" [translate]="'lectureManagement.lectureOrder'">sortOrder</label>
@@ -73,7 +76,18 @@
                                         This field is required.
                                     </small>
                                 </div>
-                                <small class="text-muted">ex. Java Dev</small>
+                            </fieldset>
+                            <fieldset class="form-group col-md-6" *ngIf="editForm.get('type').value === 'LECTURE_CHAPTER'">
+                                <label [translate]="'courseManagement.create.placeholder.requiredCompleteRate'">requiredCompleteRate</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="requiredCompleteRate" [placeholder]="'courseManagement.create.placeholder.requiredCompleteRate' | translate" name="requiredCompleteRate" type="number" formControlName="requiredCompleteRate">
+                                </div>
+                                <div *ngIf="editForm.get('requiredCompleteRate').invalid && (editForm.get('requiredCompleteRate').dirty || editForm.get('requiredCompleteRate').touched) || isSaving && f['requiredCompleteRate'].errors">
+                                    <small class="form-text text-danger"
+                                    *ngIf="f['requiredCompleteRate'].errors.required" [translate]="'entity.validation.required'">
+                                        This field is required.
+                                    </small>
+                                </div>
                             </fieldset>
                         </div>
                         <div class="row py-3"></div>
@@ -124,7 +138,7 @@
                         <button type="button" class="btn btn-secondary" (click)="previousState()">
                             <span [translate]="'entity.action.cancel'">Cancel</span>
                         </button>
-                        <button type="submit" class="ml-2 btn btn-primary">
+                        <button type="submit" class="ml-2 btn btn-primary" [disabled]="isDisabledSave">
                             <span [translate]="'entity.action.save'">Save</span>
                         </button>
                     </div>

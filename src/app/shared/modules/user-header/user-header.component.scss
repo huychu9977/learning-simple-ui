@@ -4,7 +4,7 @@ a {
 ::ng-deep .user-account {
     .ui-tieredmenu {
         left: 0 !important;
-        top: 45.7619px !important;
+        top: 54px !important;
         width: 200px;
         border-radius: unset;
         text-align: left;
@@ -20,36 +20,16 @@ a {
         border-width: 10px;
     }
 }
-.badge-notification {
-    background: none;
-    position: relative;
-    margin-right: 10px;
-    top: 25px;
-    border: none;
-    outline: none;
-    cursor: pointer;
+.btn-help {
+  background: none;
+  border: 1px solid transparent;
+  border-radius: 3px;
+  font-size: 15px;
+  outline: none;
+  color: #505763;
+  &:hover {
+    background: rgba(20,23,28,.05);
+    border-color: rgba(20,23,28,.05);
+    color: blue;
   }
-  .badge-notification[data-badge]::after {
-    content: attr(data-badge);
-    position: absolute;
-    top: -11px;
-    right: -10px;
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    width: 18px;
-    height: 18px;
-    line-height: 18px;
-    font-size: 10px;
-    font-weight: 600;
-    border-radius: 50%;
-    background: #ff4081;
-    color: #fff;
-  }
-  span.badge-notification {
-    margin-right: 24px;
-  }
-  span.badge-notification[data-badge]::after {
-    top: -11px;
-    right: -24px;
-  }
+}

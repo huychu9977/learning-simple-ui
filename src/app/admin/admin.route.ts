@@ -12,6 +12,7 @@ import { UserRouteAccessService } from '../core/auth/user-route-access-service';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { NOT_USER } from '../shared/constants/roles.constants';
 import { eventMgmtState } from './event-management/event-management-routing.module';
+import { StatisticalComponent } from './statistical/statistical.component';
 
 export const adminState: Routes = [
   {
@@ -35,12 +36,19 @@ export const adminState: Routes = [
       ...courseMgmtState,
       ...lectureMgmtState,
       ...eventMgmtState,
-      { path: '', redirectTo: 'dashboard', pathMatch: 'full'},
+      { path: '', redirectTo: 'statistical', pathMatch: 'full'},
+      {
+        path: 'statistical',
+        component: StatisticalComponent,
+        data : {
+            pageTitle: 'global.statistical.navName'
+        }
+      },
       {
           path: 'dashboard',
           component: DashboardComponent,
           data : {
-              pageTitle: 'userManagement.home.title'
+              pageTitle: 'global.dashboard.navName'
           }
       }
     ]

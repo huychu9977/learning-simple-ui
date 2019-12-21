@@ -26,10 +26,10 @@ export class MessageFormComponent implements OnInit {
 
   send(username) {
     if (this.content.trim() !== '') {
-      this.socketService.sendMessage(this.content, username);
       this.message.messages.push({
         content: this.content, createdAt: new Date(), isSent: true
       });
+      this.socketService.sendMessage(this.content, username);
       this.content = '';
     }
   }

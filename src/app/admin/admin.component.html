@@ -1,7 +1,7 @@
 <div class="wrapper">
   <nav id="sidebar">
     <ul class="nav">
-      <li class="nav-title">Theme</li>
+      <li class="nav-title">Trang chủ</li>
       <li *ngFor="let item of navItems" [ngClass]="item.title ? 'nav-title' : 'nav-item'">
         <a href="javascript:void(0)" class="nav-link" [routerLink]="[ item.url ]" [routerLinkActive]="['active']" *ngIf="!item.title">
           <i class="nav-icon fa {{item.icon}}"></i>
@@ -12,9 +12,14 @@
     </ul>
   </nav>
   <div class="app-body w-100">
-    <div id="admin-header" class="py-3 bg-secondary text-right overflow-hidden">
-      <a href="javascript:void(0)" class="mr-3 text-white" (click)="list.toggle($event); newMessage = false;">Message <span *ngIf="newMessage">*1</span></a>
-      <a href="javascript:void(0)" class="mr-3 text-white" (click)="logout()">Đăng xuất</a>
+    <div  id="admin-header" class="row bg-secondary m-0">
+      <div class="py-3 col-md-6 pl-3">
+        <a href="javascript:void(0)" (click)="list.toggle($event); newMessage = false;">Tin nhắn <span *ngIf="newMessage">*1</span></a>
+      </div>
+      <div class="py-3 text-right col-md-6">
+        <a href="javascript:void(0)" class="font-weight-bold text-info">{{currentAccount?.name}}</a>
+        <a href="javascript:void(0)" (click)="logout()">Đăng xuất</a>
+      </div>
     </div>
     <!-- Main content -->
     <main class="main">
@@ -28,10 +33,16 @@
   </div>
 </div>
 <p-overlayPanel #list>
-  <ul *ngIf="listUser.length > 0">
-    <li *ngFor="let user of listUser" (click)="getListMessage(user)">
-      <span>{{user?.username}}</span>
-      <strong>{{user?.notification}}</strong>
+  <p *ngIf="listUser.length === 0">
+    Không có tin nhắn mới.
+  </p>
+  <ul class="list-group" *ngIf="listUser.length > 0">
+    <li class="list-group-item list-group-item-action" *ngFor="let user of listUser" (click)="getListMessage(user)">
+      <div class="w-100">
+        <h5 class="text-primary">{{user?.username}}</h5>
+        <p class="ml-1" *ngIf="user?.roles.indexOf('ROLE_USER') > -1 && user?.roles.indexOf('ROLE_TEACHER') < 0">Học viên</p>
+        <p class="ml-1" *ngIf="user?.roles.indexOf('ROLE_TEACHER') > -1">Giảng viên</p>
+      </div>
     </li>
   </ul>
 </p-overlayPanel>

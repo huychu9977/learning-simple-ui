@@ -1,7 +1,14 @@
-<div style="display: -webkit-box;"> 
-    <button type="button" data-badge="1" (click)="op.toggle($event)" class="badge-notification" *ngIf="isShowNotification()"><i class="fa fa-bell" aria-hidden="true"></i></button>
-    <div  class="w-100 dropdown pl-3 py-4">
-        <a class="text-center user-account dropdown-toggle" href="javascript:void(0)"  style="position: relative;" (click)="menuAccount.toggle($event)">
+<div style="display: -webkit-box;">
+    <div class="py-3">
+        <button type="button" class="btn btn-sm btn-help mr-2" style="margin-top: 2px;" (click)="openChat = !openChat">
+            <i class="fa fa-question-circle mt-1" aria-hidden="true"></i> Trợ giúp
+        </button> 
+        <button type="button" class="btn btn-sm btn-help" style="margin-top: 2px;" (click)="op.toggle($event)">
+            <i class="fa fa-bell" aria-hidden="true"></i> Thông báo
+        </button>
+    </div>
+    <div  class="w-100 border-left py-4">
+        <a class="text-center user-account dropdown-toggle btn-help px-3 py-2" href="javascript:void(0)"  style="position: relative;" (click)="menuAccount.toggle($event)">
                 <i class="fa fa-user-circle-o mr-1" aria-hidden="true"></i> 
                 <span *ngIf="currentAccount">{{currentAccount.name}}</span>
                 <span *ngIf="!currentAccount">Tài khoản</span>
@@ -11,9 +18,10 @@
 </div>
 <p-overlayPanel #op>
     <div class="list-group">
-        <button type="button" class="list-group-item list-group-item-action" *ngFor="let notifi of notifications"
-        [routerLink]="[ '/course', notifi.courseCode, 'lecture', notifi.lectureCode ]" [queryParams]="{commentId: notifi.commentId}">
-            {{notifi.createdBy}} đã phản hồi bình luận của bạn
+        <button type="button" class="list-group-item list-group-item-action"
+        [routerLink]="[ '/course', 'notifi.courseCode', 'lecture', '1' ]" [queryParams]="''">
+             đã phản hồi bình luận của bạn
         </button>
     </div>
 </p-overlayPanel>
+<form-chat [openListUserOnline]="openChat"></form-chat>

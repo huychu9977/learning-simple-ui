@@ -9,24 +9,24 @@ import { EventBO } from 'src/app/models/eventBO.model';
   styleUrls: ['./page-home.component.scss']
 })
 export class PageHomeComponent implements OnInit {
-  images?: any[] = [
+  slides?: any[] = [
     {
       id: 1, // id of slide
       src: '../../../../assets/images/main/Banner-02.jpg',
-      title: 'title 1',
-      content: 'content 1'
+      title: 'Khóa học chất lượng',
+      content: 'Chất lượng là uy tín hàng đầu được S-Learning đề ra.'
     },
     {
       id: 2, // id of slide
       src: '../../../../assets/images/main/banner1.png',
-      title: 'title 2',
-      content: 'content 2'
+      title: 'Giảng viên',
+      content: 'Đội ngũ giảng viên đầy kinh nghiệm đến từ nhiều trường đại học cũng như nhiều công ty lớn.'
     },
     {
       id: 3, // id of slide
       src: '../../../../assets/images/main/banner_03.jpg',
-      title: 'title 3',
-      content: 'content 3'
+      title: 'Học viên',
+      content: 'Số lượng học viên đăng ký lớn và liên tục tăng tạo nên sự uy tín của chương trình.'
     }
   ];
   images1?: any[] = [

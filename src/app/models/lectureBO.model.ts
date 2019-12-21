@@ -16,6 +16,7 @@ export class LectureBO {
         public lectures?: any[],
         public questions?: any[],
         public sortOrder?: any,
-        public fileAttachments?: any[]
+        public fileAttachments?: any[],
+        public requiredCompleteRate?: any
     ) {}
 }

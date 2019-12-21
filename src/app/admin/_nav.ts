@@ -1,6 +1,12 @@
 import { NOT_USER_AND_TEACHER } from './../shared/constants/roles.constants';
 export const navItems = [
   {
+    name: 'Thống kê',
+    url: '/admin/statistical',
+    icon: 'icon-speedometer',
+    key: 'global.statistical.navName'
+  },
+  {
     name: 'Dashboard',
     url: '/admin/dashboard',
     icon: 'icon-speedometer',

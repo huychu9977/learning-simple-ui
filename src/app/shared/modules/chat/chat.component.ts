@@ -8,17 +8,24 @@ import { AccountService } from 'src/app/core/auth/account.service';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  visibleSidebar2 = false;
+  @Input() openListUserOnline = false;
   show = false;
   listUserOnline: any[] = [];
   listMessage: any[] = [];
   openingChatForm = false;
+  listChatting = [];
   constructor(private socketService: SocketService, private accountService: AccountService) { }
 
   ngOnInit() {
     this.socketService.listUserOnline(res => {
       if (res) {
-        this.listUserOnline = res;
+        this.accountService.identity().then(account => {
+          if (account) {
+            this.listUserOnline = res.filter(r => {
+              return r.username !== account.username;
+            });
+          }
+        });
       }
     });
     this.socketService.userLogin(res => {
@@ -50,38 +57,42 @@ export class ChatComponent implements OnInit {
   }
 
   async getListMessage(username, name) {
-    this.openingChatForm = true;
-    this.accountService.identity().then(async account => {
-      const mess = await this.socketService.getListMessage(username).toPromise();
-      let isHasUser = false;
-      // tslint:disable-next-line:prefer-for-of
-      for (let i = 0; i < this.listMessage.length; i++) {
-        if (this.listMessage[i].user === username) {
-          this.listMessage[i].messages = [];
-          this.listMessage[i].messages = mess.map(m => {
-            return {
-              content: m.content,
-              createdAt: m.createdAt,
-              isSent: m.senderId === account.id
-            };
-          });
-          isHasUser = true;
+    if (this.listChatting.indexOf(username) < 0) {
+      this.openingChatForm = true;
+      this.accountService.identity().then(async account => {
+        const mess = await this.socketService.getListMessage(username).toPromise();
+        let isHasUser = false;
+        // tslint:disable-next-line:prefer-for-of
+        for (let i = 0; i < this.listMessage.length; i++) {
+          if (this.listMessage[i].user === username) {
+            this.listMessage[i].messages = [];
+            this.listMessage[i].messages = mess.map(m => {
+              return {
+                content: m.content,
+                createdAt: m.createdAt,
+                isSent: m.senderId === account.id
+              };
+            });
+            isHasUser = true;
+          }
         }
-      }
-      if (!isHasUser) {
-        this.listMessage.push({
-          username,
-          name,
-          messages : mess.length > 0 ? mess.map(m => {
-            return {content: m.content, createdAt: m.createdAt, isSent: m.senderId === account.id};
-          }) : []
-        });
-      }
-      this.openingChatForm = false;
-    });
+        if (!isHasUser) {
+          this.listMessage.push({
+            username,
+            name,
+            messages : mess.length > 0 ? mess.map(m => {
+              return {content: m.content, createdAt: m.createdAt, isSent: m.senderId === account.id};
+            }) : []
+          });
+        }
+        this.openingChatForm = false;
+      });
+      this.listChatting.push(username);
+    }
   }
 
   onClose(event) {
     this.listMessage.splice(event - 1, 1);
+    this.listChatting.splice(event - 1, 1);
   }
 }

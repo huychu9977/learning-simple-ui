@@ -14,6 +14,8 @@ export class ObjectiveSummaryComponent implements OnInit {
   objectives?: any[] = [];
   objectiveName?: string;
   course?: CourseBO;
+  loading = false;
+  isSaving = false;
   constructor(
     private messageService: MessageService,
     private route: ActivatedRoute,
@@ -26,9 +28,10 @@ export class ObjectiveSummaryComponent implements OnInit {
     this.loadAll();
   }
   loadAll() {
+    this.loading = true;
     this.objectives = [];
     this.courseObjectiveService.findAll(this.course.code)
-    .subscribe(data => {this.objectives = data; });
+    .subscribe(data => {this.objectives = data; this.loading = false; });
   }
   add() {
     if (this.objectiveName.trim()) {
@@ -43,6 +46,8 @@ export class ObjectiveSummaryComponent implements OnInit {
     this.objectives.splice(index, 1);
   }
   save() {
+    this.isSaving = true;
+    this.loading = true;
     const body = this.objectives.map(o => {
       return o.id ? {id: o.id , name: o.name} : { name: o.name};
     });
@@ -53,13 +58,16 @@ export class ObjectiveSummaryComponent implements OnInit {
   }
   private onSaveSuccess(result) {
     this.messageService.add({severity: 'success', summary: 'Thành công!', detail: 'Thao tác thành công!'});
+    this.loading = false;
     setTimeout(() => {
       this.previousState();
-    }, 1200);
+    }, 1000);
   }
 
   private onSaveError() {
    this.messageService.add({severity: 'error', summary: 'Thất bại!', detail: 'Thao tác thất bại!'});
+   this.loading = false;
+   this.isSaving = false;
   }
   previousState() {
     window.history.back();

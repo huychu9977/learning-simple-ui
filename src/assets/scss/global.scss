@@ -1595,3 +1595,16 @@ mark {
       }
   }
 }
+.ui-sidebar-right {
+  top: 71px;
+}
+.input-group-text {
+  background: #51a1f6;
+  color: white;
+}
+.ui-inputtext {
+  font-family: initial !important;
+  &:hover {
+    border-color: #51a1f6 !important;
+  }
+}

@@ -24,6 +24,10 @@ export class LectureService {
     }
 
     find(courseCode: string, code: string): Observable<HttpResponse<LectureBO>> {
+        return this.http.get<LectureBO>(`${this.resourceUrl}/employer/${courseCode}/${code}`, { observe: 'response' });
+    }
+
+    findOne(courseCode: string, code: string): Observable<HttpResponse<LectureBO>> {
         return this.http.get<LectureBO>(`${this.resourceUrl}/${courseCode}/${code}`, { observe: 'response' });
     }
 
@@ -62,10 +66,10 @@ export class LectureService {
     }
 
     queryLectureCompleted(courseCode?: string): Observable<any[]> {
-        return this.http.get<any[]>(`${this.resourceUrl}/employer/lecture-completed/${courseCode}`);
+        return this.http.get<any[]>(`${this.resourceUrl}/employer/list-lecture-completed/${courseCode}`);
     }
 
-    toggleCompletedLecture(lectureId?: any) {
-        return this.http.post(`${this.resourceUrl}/employer/lecture-completed/${lectureId}`, { observe: 'response' });
+    getLectureCompletedByeLectureCode(lectureCode?: string): Observable<any> {
+        return this.http.get<any>(`${this.resourceUrl}/employer/lecture-completed/${lectureCode}`);
     }
 }

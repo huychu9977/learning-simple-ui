@@ -84,8 +84,11 @@
          "email.placeholder": "Nhập email của bạn"
        },
        "dashboard":{
-          "navName":"Trang chủ"
+          "navName":"Xử lý yêu cầu"
        },
+       "statistical":{
+         "navName":"Thống kê"
+      },
        "messages": {
          "info": {
            "register": {

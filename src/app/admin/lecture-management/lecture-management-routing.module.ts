@@ -18,7 +18,7 @@ export class LectureMgmtResolve implements Resolve<any> {
     const code = route.params.codeLecture ? route.params.codeLecture : null;
     const courseCode = route.params.code ? route.params.code : null;
     if (code) {
-      return this.service.find(courseCode, code);
+      return this.service.findOne(courseCode, code);
     }
     const lecture = new LectureBO();
     lecture.id = null;

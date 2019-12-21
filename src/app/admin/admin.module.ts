@@ -17,6 +17,8 @@ import { DashboardModule } from './dashboard/dashboard.module';
 import { EventManagementModule } from './event-management/event-management.module';
 import { MessageFormModule } from '../shared/modules/chat/message/message-form.module';
 import { OverlayPanelModule } from 'primeng/overlaypanel';
+import { SharedLibsModule } from '../shared/shared-libs.module';
+import { StatisticalModule } from './statistical/statistical.module';
 
 @NgModule({
   imports: [
@@ -34,7 +36,9 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
     DashboardModule,
     EventManagementModule,
     MessageFormModule,
-    OverlayPanelModule
+    OverlayPanelModule,
+    SharedLibsModule,
+    StatisticalModule
   ],
   declarations: [
     AdminComponent, P404Component, LoadingScreenComponent,
