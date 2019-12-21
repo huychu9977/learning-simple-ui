@@ -23,7 +23,7 @@ export class CourseManagementUpdateComponent implements OnInit {
   selectedImages: FileList;
   selectedVideos: FileList;
   loading = false;
-  isDisabledSave = true;
+  isDisabledSave = false;
   editForm = this.fb.group({
     id: [null],
     code: [''],

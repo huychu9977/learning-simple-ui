@@ -39,7 +39,7 @@ export const courseMgmtState: Routes = [
             course: CourseMgmtResolve
         },
         data: {
-            pageTitle: 'courseManagement.home.title',
+            pageTitle: 'courseManagement.home.createOrEditLabel',
             defaultSort: 'id,asc'
         }
     },
@@ -50,7 +50,7 @@ export const courseMgmtState: Routes = [
             course: CourseMgmtResolve
         },
         data: {
-            pageTitle: 'courseManagement.home.title',
+            pageTitle: 'courseManagement.home.createOrEditLabel',
             defaultSort: 'id,asc'
         }
     },
@@ -61,7 +61,7 @@ export const courseMgmtState: Routes = [
             course: CourseMgmtResolve
         },
         data: {
-            pageTitle: 'courseManagement.home.title',
+            pageTitle: 'courseManagement.objective.title',
             defaultSort: 'id,asc'
         }
     },
@@ -72,7 +72,7 @@ export const courseMgmtState: Routes = [
             course: CourseMgmtResolve
         },
         data: {
-            pageTitle: 'courseManagement.home.title',
+            pageTitle: 'courseManagement.required.title',
             defaultSort: 'id,asc'
         }
     },

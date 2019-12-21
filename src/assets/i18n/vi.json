@@ -11,9 +11,9 @@
          }
        },
        "home":{
-          "title":"Danh sách Khóa học",
-          "createLabel":"Tạo Khóa học mới",
-          "createOrEditLabel":"Tạo hoặc sửa Khóa học"
+          "title":"Danh sách khóa học",
+          "createLabel":"Tạo mới khóa học",
+          "createOrEditLabel":"Tạo hoặc sửa khóa học"
        },
        "detail":{
           "title":"Khóa học"
@@ -170,6 +170,11 @@
          "patternLogin": "Trường này phải đúng định dạng mã."
        }
     },
+    "instructor": {
+      "home" : {
+         "title" : "Giảng viên"
+      }
+    },
     "lectureManagement":{
       "create": {
          "placeholder" : {
@@ -186,19 +191,26 @@
           },
           "chapter":{
              "title":"Danh sách chương",
-             "createLabel":"Tạo mới",
+             "createLabel":"Tạo mới chương",
              "createOrEditLabel":"Tạo hoặc sửa chương"
           }
+          
        },
        "detail":{
           "title":"Bài học",
           "quiz":"Bài quiz",
+          "exercise": "Bài tập",
           "fileAttach": "Tài liệu"
        },
        "quiz":{
           "list":"Danh sách câu hỏi",
           "created":"Tạo câu hỏi",
           "updated":"Sửa câu hỏi"
+       },
+       "exercise": {
+         "list":"Danh sách bài tập",
+         "created":"Tạo câu hỏi",
+         "updated":"Sửa câu hỏi"
        },
        "parents":"Chương",
        "chapterOrder":"Số thứ tự chương",

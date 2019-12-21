@@ -15,6 +15,7 @@ export class UserHeaderComponent implements OnInit {
   currentAccount: any = null;
   items = [];
   openChat = false;
+  isLecturePage = false;
   constructor(
     private loginService: LoginService,
     private accountService: AccountService,
@@ -24,6 +25,7 @@ export class UserHeaderComponent implements OnInit {
 
   ngOnInit() {
     this.init();
+    this.isLecturePage = this.router.url.indexOf('/lecture/') > -1 ? true : false;
   }
   async init() {
     this.currentAccount = await this.accountService.identity();

@@ -18,6 +18,7 @@ export class UserManagementComponent implements OnInit {
     page: any;
     previousPage: any;
     keyword = '';
+    loading = false;
     constructor(
         public dialogService: DialogService,
         private messageService: MessageService,
@@ -56,6 +57,7 @@ export class UserManagementComponent implements OnInit {
     }
 
     loadAll() {
+        this.loading = true;
         this.userService
             .query({
                 page: this.page - 1,
@@ -88,10 +90,12 @@ export class UserManagementComponent implements OnInit {
         this.loadAll();
     }
     search() {
+        this.loading = true;
         this.page = 1;
         this.transition();
     }
     deleteUser(user: UserBO) {
+        this.loading = true;
         this.confirmationService.confirm({
             message: 'Đồng ý thực hiện thao tác này?',
             accept: () => {
@@ -101,6 +105,7 @@ export class UserManagementComponent implements OnInit {
                 },
                 (err) => {
                     this.messageService.add({severity: 'error', summary: 'Thao tác thất bại!', detail: err.error.message});
+                    this.loading = false;
                 });
             }
           });
@@ -118,9 +123,11 @@ export class UserManagementComponent implements OnInit {
     private onSuccess(data) {
         this.totalItems = data.totalElements;
         this.users = data.content;
+        this.loading = false;
     }
 
     private onError(error) {
+        this.loading = false;
         console.log(error);
     }
 

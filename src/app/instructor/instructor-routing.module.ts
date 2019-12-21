@@ -17,7 +17,8 @@ const instructorRoute: Routes = [
         path: 'courses',
         component: CoursesComponent,
         data: {
-            currentPage: 'courses'
+            currentPage: 'courses',
+            pageTitle: 'courseManagement.home.title'
         }
       },
       {
@@ -27,7 +28,8 @@ const instructorRoute: Routes = [
         },
         component: CoursesComponent,
         data: {
-            currentPage: 'courses_update'
+            currentPage: 'courses_update',
+            pageTitle: 'courseManagement.home.createOrEditLabel'
         }
       },
       {
@@ -37,7 +39,8 @@ const instructorRoute: Routes = [
         },
         component: CoursesComponent,
         data: {
-            currentPage: 'courses_update'
+            currentPage: 'courses_update',
+            pageTitle: 'courseManagement.home.createOrEditLabel'
         }
       },
       {
@@ -94,7 +97,7 @@ const instructorRoute: Routes = [
         },
         data: {
           currentPage: 'lectures_exercise',
-          pageTitle: 'lectureManagement.detail.quiz'
+          pageTitle: 'lectureManagement.detail.exercise'
         }
     },
       {
@@ -105,7 +108,7 @@ const instructorRoute: Routes = [
         },
         data: {
             currentPage: 'objectives',
-            pageTitle: 'lectureManagement.home.chapter.title'
+            pageTitle: 'courseManagement.objective.title'
         }
       },
       {
@@ -116,7 +119,7 @@ const instructorRoute: Routes = [
         },
         data: {
             currentPage: 'requireds',
-            pageTitle: 'lectureManagement.home.chapter.title'
+            pageTitle: 'courseManagement.required.title'
         }
       },
       {

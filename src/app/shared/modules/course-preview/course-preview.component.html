@@ -26,8 +26,8 @@
           
         </h1>
         <div style="position: relative;" [el-loading]="isSaving">
-            <button *ngIf="userRegistration || course?.createdByUsername === currentAccount?.username" [routerLink]="[ 'lecture', lectureCode ]" type="button" class="course-cta btn btn-lg btn-secondary btn-block">Vào học</button>
-            <button *ngIf="!userRegistration && course?.createdByUsername !== currentAccount?.username" [disabled]="isSaving" (click)="registrationCourse(course?.code)" type="button" class="mt-3 course-cta btn btn-lg btn-register btn-block">Đăng ký</button>
+            <button *ngIf="userRegistration" [routerLink]="[ 'lecture', lectureCode ]" type="button" class="course-cta btn btn-lg btn-secondary btn-block">Vào học</button>
+            <button *ngIf="!userRegistration" [disabled]="isSaving" (click)="registrationCourse(course?.code)" type="button" class="mt-3 course-cta btn btn-lg btn-register btn-block">Đăng ký</button>
         </div>
       </div>
       <div>

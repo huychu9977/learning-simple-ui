@@ -7,6 +7,7 @@ import { LectureService } from 'src/app/services/lecture.service';
 import { SlugifyPipe } from 'src/app/shared/util/string-to-slug.pipe';
 import { STATUS_CAN_NOT_EIDT_DELETE } from 'src/app/shared/constants/status.constants';
 import { MessageService, ConfirmationService } from 'primeng/api';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'lecture-management-update',
@@ -55,6 +56,7 @@ export class LectureManagementUpdateComponent implements OnInit {
     private lectureService: LectureService,
     private route: ActivatedRoute,
     private router: Router,
+    private titleService: Title,
     private elRef: ElementRef,
     private fb: FormBuilder,
     private slugifyPipe: SlugifyPipe
@@ -118,6 +120,9 @@ export class LectureManagementUpdateComponent implements OnInit {
       .queryParams
       .subscribe(params => {
         this.editForm.get(['parent']).setValue(params.parentCode || null);
+        if (params.parentCode) {
+          this.titleService.setTitle('Tạo hoặc sửa bài học');
+        }
     });
     this.lectureParents = [];
     this.lectureService.getChapters(this.lecture.code, this.course.code).subscribe(data => {

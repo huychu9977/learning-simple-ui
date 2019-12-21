@@ -142,10 +142,12 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
   }
   private onSuccess(data) {
     this.course = data;
-    this.course.lectures.forEach(l => {
-      if (l.type === 'LECTURE_QUIZ') { this.totalLectureQuiz++; }
-      if (l.type === 'LECTURE_CODE') { this.totalLectureExercise++; }
-      if (l.type === 'LECTURE_VIDEO') { this.totalLectureVideo++; }
+    this.course.lectures.forEach(c => {
+      c.lectures.forEach(l => {
+        if (l.type === 'LECTURE_QUIZ') { this.totalLectureQuiz++; }
+        if (l.type === 'LECTURE_CODE') { this.totalLectureExercise++; }
+        if (l.type === 'LECTURE_VIDEO') { this.totalLectureVideo++; }
+      });
     });
     this.titleService.setTitle(this.course.name);
     this.checkIsRegistration();

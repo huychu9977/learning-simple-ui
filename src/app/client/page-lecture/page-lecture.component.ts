@@ -21,7 +21,6 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
 
   @ViewChild('more', {static: true}) elementView: ElementRef;
   verticalOffset = 115;
-  indexTab = 0;
   descriptionMore = false;
   expand = false;
   code: string;
@@ -35,9 +34,9 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   reviewContent = '';
   titleRates = ['Bad', 'Not Bad', 'OK', 'Good', 'Excellent'];
   reviewContentError = false;
-  lstLectureCompleted: any[] = [];
   lectureCompleted: any = null;
   totalLecture = 0;
+  totalLectureCompleted = 0;
   keyword = '';
   currentAccount;
   exerciseFiles?: any[] = [];
@@ -60,6 +59,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   isAlert = false;
   load = false;
   isLoadLecture = false;
+  isLoadReview = false;
   colors = ['#f4c150', '#76c5d6', '#686f7a', '#00576b'];
   errorAnswer = false;
   correctAnswer = false;
@@ -91,22 +91,18 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
       }
       this.currentAccount = account;
     });
-    this.loadAllComment();
     this.route.params.subscribe(params => {
       this.courseCode = params['course-code'];
       this.code = params.code;
       this.loadLecture();
     });
-    this.loadAllLecture(this.courseCode);
-    this.loadReviewByCourse();
-    // this.loadListLectureCompleted();
-    this.route.queryParams.subscribe(data => {
-      if (data.commentId) {
-        this.indexTab = 1;
-        this.openDetailComment(data.commentId);
-        // this.commentService.setIsSeenComment(data.commentId).subscribe(res => {});
+    this.courseRegistrationService.findOne(this.courseCode).subscribe(res => {
+      if (!res) {
+        this.router.navigate(['/course', this.courseCode]);
+        return;
       }
     });
+    this.loadAllLecture(this.courseCode);
   }
   openListLecture(c?: any) {
     if (c.isOpen) {
@@ -137,6 +133,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   }
   onTabChange(event) {
     if (event.index === 1) {
+      this.loadAllComment();
       this.isAddComment = false;
     }
   }
@@ -290,27 +287,21 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
     this.loadAllComment();
   }
   // comment end
-  loadListLectureCompleted() {
-    this.lectureService.queryLectureCompleted(this.courseCode).subscribe(res => {
-      this.lstLectureCompleted = res;
-    });
-  }
   loadLectureCompleted() {
     this.lectureService.getLectureCompletedByeLectureCode(this.lectureSelected.code).subscribe(res => {
       this.lectureCompleted = res;
     });
   }
   getPercentCompleted() {
-    return Math.floor(this.lstLectureCompleted.length * 100 / this.totalLecture);
+    return Math.floor((this.totalLectureCompleted - 1) * 100 / this.totalLecture);
   }
 
   loadReviewByCourse() {
-    this.reviewService.findOneByCourseAndCreatedBy(this.courseCode).subscribe(
-      (res) => {
-        this.currentReview = res;
-      },
-      (err) => console.log(err)
-    );
+    return this.reviewService.findOneByCourseAndCreatedBy(this.courseCode).toPromise().then(res => {
+      return res;
+    }).catch(err => {
+      console.log(err);
+    });
   }
   timeEstimate(time) {
     return Math.floor(time / 60);
@@ -374,14 +365,12 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   }
   private onSuccess(data) {
     this.lectures = data;
-    // this.courseRegistrationService.findOne(this.course.code).subscribe(res => {
-    //   if (!res && this.currentAccount.username !== this.course.createdByUsername) {
-    //     this.router.navigate(['/course', this.courseCode]);
-    //     return;
-    //   }
-    // });
     this.loadLecture().then(res => {
       this.lectures.forEach(c => {
+        this.totalLecture ++;
+        if (c.isOpen) {
+          this.totalLectureCompleted++;
+        }
         c.lectures.forEach(l => {
           if (l.code === this.lectureSelected.code) { c.isActive = true; }
         });
@@ -391,15 +380,19 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   }
 
   openReviewModal() {
-    this.selectedValue = this.currentReview ? this.currentReview.rate : 1;
-    this.reviewContent = this.currentReview ? this.currentReview.content : '';
-    this.display = true;
+    this.loadReviewByCourse().then(res => {
+      this.currentReview = res;
+      this.selectedValue = this.currentReview ? this.currentReview.rate : 1;
+      this.reviewContent = this.currentReview ? this.currentReview.content : '';
+      this.display = true;
+    });
   }
   update() {
     if (this.reviewContent === '') {
       this.reviewContentError = true;
       return;
     } else {
+      this.isLoadReview = true;
       this.reviewContentError = false;
       const review = {
         courseCode : this.courseCode,
@@ -410,24 +403,26 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
         this.reviewService.update(review).subscribe(
           (res) => {
             if (res) {
-              this.loadReviewByCourse();
+              this.isLoadReview = false;
               this.display = false;
             }
           },
           (err) => {
             console.log('error update rating');
+            this.isLoadReview = false;
           }
         );
       } else {
         this.reviewService.create(review).subscribe(
           (res) => {
             if (res) {
-              this.loadReviewByCourse();
+              this.isLoadReview = false;
               this.display = false;
             }
           },
           (err) => {
             console.log('error create rating');
+            this.isLoadReview = false;
           }
         );
       }

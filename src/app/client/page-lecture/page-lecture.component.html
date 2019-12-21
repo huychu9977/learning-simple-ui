@@ -14,13 +14,9 @@
               <p-progressBar [value]="getPercentCompleted()"></p-progressBar>
           </div>
           <div class="lecture-header-user">
-            <div class="lecture-header-rate" *ngIf="!currentReview" (click)="openReviewModal()">
-              <span><i class="fa fa-star-o"></i></span>
-              <span class="ml-1 font-weight-normal">Để lại đánh giá</span>
-            </div>
-            <div class="lecture-header-rate" *ngIf="currentReview" (click)="openReviewModal()">
+            <div class="lecture-header-rate" (click)="openReviewModal()">
               <span><i class="fa fa-star"></i></span>
-              <span class="ml-1 font-weight-normal">Chỉnh sửa đánh giá</span>
+              <span class="ml-1 font-weight-normal">Đánh giá khóa học</span>
             </div>
             <div class="lecture-header-user-label">
                 <user-header></user-header>
@@ -104,7 +100,7 @@
         <div class="lecture-container-content-description">
           <div class="lecture-container-content-description-row">
             <div class="my-5">
-                <p-tabView [activeIndex]="indexTab" (onChange)="onTabChange($event)">
+                <p-tabView (onChange)="onTabChange($event)">
                     <p-tabPanel header="Tổng quan">
                       <div style="min-height: 400px;"></div>
                         <!-- <div class="description-dashboard-content">
@@ -171,7 +167,7 @@
                                   <div *ngIf="isEditComment">
                                     <div class="form-group mt-2">
                                         <label for="title">Tiêu đề</label>
-                                        <input type="text" id="title" class="form-control" [(ngModel)]="comment.title">
+                                        <input type="text" id="title" class="form-control" placeholder="Nhập tiêu đề câu hỏi" [(ngModel)]="comment.title">
                                       </div>
                                       <label for="content">Nội dung</label>
                                       <p-editor [(ngModel)]="comment.content" [placeholder]="'Nhập nội dung...'" [style]="{'height':'200px'}"></p-editor>
@@ -222,7 +218,7 @@
                           <p><strong>Bạn đang gặp vấn đề?</strong></p>
                           <div class="form-group mt-2">
                             <label for="title">Tiêu đề</label>
-                            <input type="text" id="title" class="form-control" [(ngModel)]="comment.title">
+                            <input type="text" id="title" class="form-control" placeholder="Nhập tiêu đề câu hỏi" [(ngModel)]="comment.title">
                           </div>
                           <label for="content">Nội dung</label>
                             <p-editor [(ngModel)]="comment.content" [placeholder]="'Nhập vào nội dung bình luận...'" [style]="{'height':'200px'}"></p-editor>
@@ -231,7 +227,7 @@
                             <button class="btn btn-sm btn-primary mx-2" [disabled]="comment.title === '' || comment.content === ''" (click)="createdComment()">Đăng bình luận</button>
                           </div>
                         </div>
-                        <div class="description-dashboard-content" *ngIf="!isAddComment && !isDetailComment">
+                        <div class="description-dashboard-content" *ngIf="!isAddComment && !isDetailComment" style="position: relative;" [el-loading]="load">
                             <form class="mt-3 d-flex justify-content-center">
                               <div class="input-group mw-90">
                                 <input type="text" name="keyword" class="form-control" (keyup.enter)="search()" placeholder="Tìm kiếm" [(ngModel)]="keyword">
@@ -256,13 +252,11 @@
                                 Tạo câu hỏi của bạn
                               </a>
                             </div>
-                            <div class="question-list text-center text-danger" *ngIf="comments?.length === 0">Không có bình luận về khóa học này!!</div>
-                            <div class="loading" *ngIf="load">
-                              <div class="lds-ripple"><div></div><div></div></div>
-                            </div>
+                            
                             <div class="alert alert-success" role="alert" *ngIf="isAlert">
                                 <strong>Success!</strong>Đăng bình luận thành công.
                             </div>
+                            <div class="question-list text-center text-danger" *ngIf="comments?.length === 0">Không có bình luận về khóa học này!!</div>
                             <div class="question-list" *ngIf="comments?.length > 0">
                               <div class="question-list-item" *ngFor="let cmt of comments; let i=index;">
                                 <div class="avatar-circle" [ngStyle]="{'background-color': colors[i%4]}">
@@ -318,7 +312,7 @@
                     </div>
                     <span>
                       <i *ngIf="c.isOpen" class="fa fa-chevron-up" aria-hidden="true"></i>
-                      <i *ngIf="!c.isOpen" class="fa fa-trash" aria-hidden="true"></i>
+                      <i *ngIf="!c.isOpen" class="fa fa-lock" aria-hidden="true"></i>
                     </span>
                 </div>
                 <ul [style.max-height]="c.isActive ? 'unset' : '0px'" class="section-list" *ngIf="c.isOpen">
@@ -366,7 +360,7 @@
 <p class="copyright">Copyright © <span>Learning Simple</span> 2019-2019</p>
 <hr class="hr-primary">
 <p-dialog [showHeader]="false" [positionTop]="100" [style]="{width: '700px', height: '200px'}" [(visible)]="display">
-    <div class="modal-body">
+    <div class="modal-body" [el-loading]="isLoadReview">
         <h4 class="modal-title mb-3">Đánh giá của bạn</h4>
         <p class="mb-2 text-center"><span>{{titleRates[selectedValue-1]}}</span></p>
         <div class="row d-flex justify-content-center mb-2 rating1">

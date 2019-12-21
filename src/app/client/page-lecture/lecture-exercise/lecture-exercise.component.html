@@ -11,9 +11,9 @@
         </thead>
         <tbody>
             <tr *ngFor="let file of exerciseFiles; let i=index">
-            <th scope="row">{{i}}</th>
+            <th scope="row">{{i+1}}</th>
             <td>{{file.fileName}}</td>
-            <td>{{lecture.requiredCompleteRate}}</td>
+            <td>{{lecture.requiredCompleteRate}}%</td>
             <td>
                 <button type="button" class="btn btn-sm btn-success">Tải về</button>
             </td>
