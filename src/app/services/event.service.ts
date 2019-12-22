@@ -34,8 +34,8 @@ export class EventService {
 
     // for employer
 
-    queryForEmployer(req?: any): Observable<HttpResponse<EventBO[]>> {
+    queryForEmployer(req?: any): Observable<any> {
         const options = createRequestOption(req);
-        return this.http.get<EventBO[]>(`${this.resourceUrl}/employer/list`, { params: options, observe: 'response' });
+        return this.http.get<any>(`${this.resourceUrl}/employer/list`, { params: options, observe: 'response' });
     }
 }

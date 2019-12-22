@@ -1,5 +1,5 @@
 <div class="lecture-ex" style="position: relative;" [el-loading]="loading">
-    <h1>Tệp bài tập</h1>
+    <h3>Tệp bài tập</h3>
     <table class="table table-bordered">
         <thead class="thead-dark">
             <tr>
@@ -20,26 +20,30 @@
             </tr>
         </tbody>
     </table>
-    <div class="border p-2" *ngIf="!exerciseSubmitted">
+    <div class="border p-2 mt-2" *ngIf="!exerciseSubmitted || exerciseSubmitted?.status === 'WAIT_CHECK' || exerciseSubmitted?.status === 'ERROR'">
         <input type="file" name="file" id="file" (change)="onFileChange($event)">
         <button type="button" class="btn btn-sm btn-primary pull-right" (click)="submitExercise()">Nộp bài</button>
     </div>
     <div class="border p-2" *ngIf="exerciseSubmitted">
-        <p>Lịch sử nộp: </p>
+        <p class="text-info">Lịch sử nộp: </p>
         <table class="table table-bordered">
             <tbody>
                 <tr>
                     <td>{{exerciseSubmitted.fileName}}</td>
                     <td>{{exerciseSubmitted.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
-                    <td>{{exerciseSubmitted.score || 'Chưa chấm'}}</td>
+                    <td>{{exerciseSubmitted.score || 0}} đ</td>
+                    <td [hidden]="exerciseSubmitted?.status !== 'CHECKING'">Đang kiểm tra</td>
+                    <td [hidden]="exerciseSubmitted?.status !== 'SUCCESS'">Đạt</td>
+                    <td [hidden]="exerciseSubmitted?.status !== 'ERROR'">Chưa Đạt</td>
                     <td>
                         <button type="button" class="btn btn-sm btn-success" (click)="downloadAttachment(exerciseSubmitted.fileUrl, exerciseSubmitted.fileName)">Tải về</button>
+                        <button *ngIf="exerciseSubmitted?.content" type="button" (click)="exerciseSelected = exerciseSubmitted; op1.toggle($event)" class="ml-1 btn btn-warning btn-sm">Xem đánh giá</button>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
-    <h1>Danh sách học viên đã nộp</h1>
+    <h3 class="mt-2">Danh sách học viên đã nộp</h3>
     <table class="table table-bordered">
         <thead class="thead-dark">
             <tr>
@@ -62,7 +66,7 @@
             <td>{{ex.nameOfUser}}</td>
             <td>{{ex.fileName}}</td>
             <td>{{ex.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
-            <td>{{ex.score}}</td>
+            <td>{{ex.score}} đ</td>
             <td>
                 <button *ngIf="ex.fileUrl" type="button" class="btn btn-sm btn-success" (click)="downloadAttachment(exerciseSubmitted.fileUrl, exerciseSubmitted.fileName)">Tải về</button>
             </td>
@@ -71,3 +75,8 @@
     </table>
 </div>
 <p-toast></p-toast>
+<p-overlayPanel #op1>
+    <div class="p-2">
+    <p>{{exerciseSelected?.content}}</p>
+    </div>
+</p-overlayPanel>

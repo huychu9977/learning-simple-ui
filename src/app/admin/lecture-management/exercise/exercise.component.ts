@@ -32,7 +32,7 @@ export class ExerciseComponent implements OnInit {
             console.log(err);
         });
     }
-    updateScore(id, score) {
+    updateScore(id, score, content) {
         if (score < 0 || score > 10) {
             this.messageService.add({severity: 'error', summary: 'Lỗi', detail: 'Điểm trong khoảng 0-10'});
             return;
@@ -41,7 +41,8 @@ export class ExerciseComponent implements OnInit {
         const formdata: FormData = new FormData();
         formdata.append('dto', new Blob([JSON.stringify({
             id,
-            score
+            score,
+            content
         })], {
             type: 'application/json'
         }));
@@ -49,6 +50,15 @@ export class ExerciseComponent implements OnInit {
             this.messageService.add({severity: 'success', summary: 'Thành công'});
             this.loadAll();
         }, err => { this.loading = false; console.log(err); });
+    }
+    checking(exerciseId?: any) {
+        this.loading = true;
+        this.exerciseService.checkingExercise(exerciseId).subscribe(res => {
+            if  (res) {
+                this.messageService.add({severity: 'success', summary: 'Đang kiểm tra'});
+                this.loadAll();
+            }
+        }, err => { this.loading = false; });
     }
     downloadAttachment(fileUrl, fileName) {
         const link = document.createElement('a');

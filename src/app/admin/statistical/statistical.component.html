@@ -1,1 +1,60 @@
-<p-chart type="polarArea" [data]="data"></p-chart>
+<p-tabView (onChange)="handleChange($event)">
+    <p-tabPanel header="Biểu đồ">
+       <p-chart type="polarArea" [data]="data"></p-chart>
+    </p-tabPanel>
+    <p-tabPanel header="Bảng biểu">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-sm-12 row">
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary" (click)="downloadCSV()">Export CSV file</button>
+                    </div>
+                    <div class="form-group col-sm-9">
+                        <label for="sel1">Hiển thị theo:</label>
+                        <select class="form-control" id="sel1" (change)="changeSelect($event.target.value)">
+                          <option value="TOTAL_ENROLL">Học viên</option>
+                          <option value="RATE_AVG">Tỷ lệ đánh giá</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <br/>
+                    <table class="table table-bordered" style="position: relative;" [el-loading]="loading">
+                        <thead class="thead-dark text-center">
+                        <tr>
+                            <th>STT</th>
+                            <th>Ảnh</th>
+                            <th>Tên</th>
+                            <th>Giảng viên</th>
+                            <th>Đề tài</th>
+                            <th>Học viên</th>
+                            <th>Tỷ lệ</th>
+                        </tr>
+                        </thead>
+                        <tbody *ngIf="listCourse.length === 0">
+                            <tr>
+                                <td class="text-center" colspan="7">Không có dữ liệu</td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="listCourse.length > 0">
+                        <tr *ngFor="let course of listCourse; let i=index">
+                            <td>{{i + 1}}</td>
+                            <td>
+                                <img [src]="course?.imageUrl" alt="" width="100" height="50">
+                            </td>
+                            <td>{{course?.name}}</td>
+                            <td>{{course?.createdBy}}</td>
+                            <td>{{course?.topicName}}</td>
+                            <td>{{course?.totalUserEnroll}}</td>
+                            <td>{{course?.rateAvg}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div *ngIf="listCourse && listCourse.length" class="row justify-content-end w-100">
+                    <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+</p-tabView>

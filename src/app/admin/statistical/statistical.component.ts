@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { CourseService } from 'src/app/services/course.service';
+import { exportCSV } from 'src/app/shared/util/file-util';
 
 @Component({
   selector: 'app-statistical',
@@ -7,7 +9,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class StatisticalComponent implements OnInit {
   data: any;
-  constructor() { }
+  totalItems: any;
+  itemsPerPage: any = 10;
+  page: any = 1;
+  listCourse?: any[] = [];
+  loading = false;
+  searchType = 'RATE_AVG';
+  constructor(private courseService: CourseService) { }
 
   ngOnInit() {
     this.data = {
@@ -37,5 +45,50 @@ export class StatisticalComponent implements OnInit {
       ]
     };
   }
+  handleChange(e) {
+    if (e.index === 1) {
+      this.loadAllCourse();
+    }
+  }
+  loadAllCourse() {
+    this.loading = true;
+    if (this.searchType === 'TOTAL_ENROLL') {
+      this.courseService.getListCoursePopular({
+        page: this.page - 1,
+        size: this.itemsPerPage
+      }).subscribe(res => {
+        this.listCourse = res.content;
+        this.totalItems = res.totalElements;
+        this.loading = false;
+      }, err => {this.loading = false; });
+    } else if (this.searchType === 'RATE_AVG') {
+      this.courseService.getListCourseMostRating({
+        page: this.page - 1,
+        size: this.itemsPerPage
+      }).subscribe(res => {
+        this.listCourse = res.content;
+        this.totalItems = res.totalElements;
+        this.loading = false;
+      }, err => {this.loading = false; });
+    }
+  }
 
+  loadPage(event) {
+    this.page = event.page + 1;
+    this.loadAllCourse();
+  }
+
+  changeSelect(value) {
+    this.searchType = value;
+    this.loadAllCourse();
+  }
+
+  downloadCSV() {
+    this.loading  = true;
+    const list = this.listCourse.map(c => {
+      return [c.id, c.name, c.imageUrl, c.createdBy, c.topicName, c.totalUserEnroll, c.rateAvg];
+    });
+    exportCSV(list, 'data.csv');
+    this.loading  = false;
+  }
 }

@@ -14,6 +14,7 @@ export class LectureExerciseComponent implements OnInit {
     loading = false;
     exerciseSubmitted?: any = null;
     exerciseFiles?: any[] = [];
+    exerciseSelected?: any = null;
     constructor(
         private exerciseService: ExerciseService,
         private elRef: ElementRef,

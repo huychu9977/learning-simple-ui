@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LoginService } from 'src/app/core/auth/login.service';
 
 @Component({
   templateUrl: '404.component.html'
@@ -7,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 export class P404Component implements OnInit {
   error403: boolean;
   error404: boolean;
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private loginService: LoginService, private router: Router) { }
   ngOnInit() {
     this.route.data.subscribe(routeData => {
       if (routeData.error403) {
@@ -17,5 +18,10 @@ export class P404Component implements OnInit {
         this.error404 = routeData.error404;
       }
     });
+  }
+
+  logout() {
+    this.loginService.logout();
+    this.router.navigate(['/admin/login']);
   }
 }

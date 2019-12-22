@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -8,9 +8,13 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CourseListComponent implements OnInit {
 
+  @Input() course?: any;
+  rateAvg = 1;
   constructor() { }
 
   ngOnInit() {
+    // tslint:disable-next-line:radix
+    this.rateAvg = this.course.rateAvg ? parseInt(this.course.rateAvg) : 1;
   }
 
 }

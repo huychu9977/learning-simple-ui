@@ -162,84 +162,36 @@ banner part end
 <!--********************
     Our Courses part start
 **********************-->
-<section id="our_course">
+<section class="our_course" *ngIf="listCoursePopular?.length > 0">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
                 <div class="section_title">
-                    <h1>Our Courses</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incidiunt ut labore et dolore magna aliqua.</p>
+                    <h1>Một số khóa học phổ biến</h1>
+                    <p>Các khóa học đưa ra dựa theo số lượng học viên đã đăng ký.</p>
                 </div>
             </div>
         </div>
-        <p-carousel [value]="images3" [numVisible]="3" [numScroll]="1" [circular]="true" [autoplayInterval]="5000">
+        <p-carousel [value]="listCoursePopular" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="10000">
             <ng-template let-data pTemplate="item">
-                <div class="col-lg-12 ">
-                    <div class="course-one">
-                        <div class="course-banner">
-                            <img [src]="data?.src" alt="1">
-                            <div class="course-banner-overlay">
-                                <a href="#"> <i class="fa fa-link"></i></a>
-                            </div>
-                        </div>
-                        <div class="trainer_pro_details">
-                            <div class="row">
-                                <div class="col-lg-2">
-                                    <div class="Pro_img">
-                                        <img [src]="data?.srcT" alt="profile pic">
-                                    </div>
-                                </div>
-                                <div class="col-lg-6 ">
-                                    <div class="profile">
-                                        <p>Conduct by:</p><br>
-                                        <h5>Sujon Shaha</h5>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 pl-0">
-                                    <div class="pro-rating">
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star"></i>
-                                        <i class="fa fa-star-half"></i>
-                                        <p>4.8 Ratings</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-lg-12">
-                                <div class="crs-details">
-                                    <h4>Advance Graphic Design</h4>
-                                    <p>{{data.description}}</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row b-top">
-                            <div class="col-lg-4  col-4  p-0">
-                                <div class="crs_footer">
-                                    <p><span>Course</span> Duration</p>
-                                    <p class="m_name">5 Months</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-4  col-4 p-0">
-                                <div class="crs_footer">
-                                    <p>Course Fee</p>
-                                    <p class="m_name">375 USD</p>
-                                </div>
-                            </div>
-                            <div class="col-lg-4  col-4 p-0">
-                                <div class="crs_footer">
-                                    <p>Total Classes</p>
-                                    <p class="m_name">40 Classes</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="enroll">
-                            <a href="our_course.html">Enroll Now</a>
-                        </div>
-                    </div>                          
+                <course-list [course]="data"></course-list>
+            </ng-template>
+        </p-carousel>       
+    </div>
+</section>
+
+<section class="our_course" *ngIf="listCourseNewest?.length > 0">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section_title">
+                    <h1>Một số khóa học mới</h1>
                 </div>
+            </div>
+        </div>
+        <p-carousel [value]="listCourseNewest" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="10000">
+            <ng-template let-data pTemplate="item">
+                <course-list [course]="data"></course-list>
             </ng-template>
         </p-carousel>       
     </div>
@@ -250,7 +202,7 @@ banner part end
 <!--*****************************
     Our Event part start
 **********************-->
-<section id="event" *ngIf="events.length > 0">
+<section id="event" class="mt-5" *ngIf="events.length > 0">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -266,8 +218,8 @@ banner part end
                     <div class="row event-details-top">
                         <div class="col-lg-5  col-sm-5 ">
                             <div class="event-img">
-                                <img [src]="event?.imageUrl" class="w-100" alt="ux">
-                                <div class="event-img-text">
+                                <img [src]="event?.imageUrl" class="w-100" style="height: 130px;" alt="ux">
+                                <div class="event-img-text" *ngIf="event?.sameDay">
                                     <p>{{event.date.day}} <span>{{event.date.month}}</span></p>
                                 </div>
                             </div>
@@ -291,31 +243,6 @@ banner part end
                         </div>
                     </div>
                 </div>
-                <!-- <div class="event_bg">
-                    <div class="row event-details-top">
-                        <div class="col-lg-5  col-sm-5">
-                            <div class="event-img1">
-                                <img src="../../../../assets/images/main/event2.png" class="w-100" alt="ux">
-                                <div class="event-img1-text">
-                                    <p>25 <span>Nov</span></p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-7 col-sm-7">
-                            <div class="event-text">
-                                <h3>UI/UX Bootcamp Meetup 2019</h3>
-                                <p>Lorem ipsum dolor sit amet, consecteturng elit sed do eiusmod temor</p>
-                                <i class="fas fa-map-marker-alt"></i>
-                                <P class="sem_title"> Seminar Room</P>
-                                <i class="far fa-clock  icon"></i>
-                                <P class="sem_title"> 9:00 AM - 1:00 PM</P>
-                                <div class="">
-                                    <a href="event_details.html">Join Now</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
             </div>
         </div>
     </div>
@@ -326,7 +253,7 @@ banner part end
  <!--*********************************
         Our Teacher part start
 *******************************-->
-<section id="teacher">
+<!-- <section id="teacher">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -365,7 +292,7 @@ banner part end
             </p-carousel> 
         </div>
     </div>
-</section>
+</section> -->
 <!--*********************************
         Our Teacher part end
 *******************************-->

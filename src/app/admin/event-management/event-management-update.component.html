@@ -1,6 +1,6 @@
 <div class="animated fadeIn">
     <div class="row">
-        <form class="w-100" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+        <form class="w-100" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" style="position: relative;" [el-loading]="loading">
             <div class="row justify-content-center">
                 <div class="col-md-12">
                     <div class="form-group" [hidden]="!event.id">

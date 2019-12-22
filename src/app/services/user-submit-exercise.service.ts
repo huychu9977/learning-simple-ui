@@ -24,4 +24,8 @@ export class ExerciseService {
     getExerciseSubmitted(lectureId?: any): Observable<any> {
         return this.http.get<any>(this.resourceUrl + '/submitted/' + lectureId);
     }
+
+    checkingExercise(exerciseId: any): Observable<boolean> {
+        return this.http.get<boolean>(this.resourceUrl + '/checking/' + exerciseId);
+    }
 }

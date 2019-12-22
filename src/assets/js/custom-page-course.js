@@ -24,7 +24,7 @@ if (document.URL.includes("/course/")) {
                 elePreview.classList.add('slideDown');
                 elePreview.style.position = 'fixed';
                 elePreview.style.top = this.eleHeader.offsetHeight - 10 + 'px';
-                elePreview.style.zIndex  = '110';
+                elePreview.style.zIndex  = '1';
             }
         } else {
             elePreview.classList.remove('slideDown');

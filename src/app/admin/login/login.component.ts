@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
 
   authenticationError: boolean;
   submitted = false;
+  loading = false;
   loginForm = this.fb.group({
     username: ['', [Validators.required, Validators.pattern('^[_.@A-Za-z0-9-]*')]],
     password: ['', [Validators.required]],
@@ -33,7 +34,7 @@ export class LoginComponent implements OnInit {
     if (this.loginForm.invalid) {
       return;
     }
-
+    this.loading = true;
     this.loginService
       .login({
         username: this.loginForm.get('username').value,
@@ -42,10 +43,12 @@ export class LoginComponent implements OnInit {
       })
       .then(() => {
         this.authenticationError = false;
+        this.loading = false;
         this.router.navigateByUrl('admin');
       })
       .catch(() => {
         this.authenticationError = true;
+        this.loading = false;
       });
   }
 

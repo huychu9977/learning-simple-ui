@@ -8,6 +8,7 @@
             <th scope="col">Ngày nộp</th>
             <th scope="col">Tệp nộp</th>
             <th scope="col">Điểm</th>
+            <th scope="col">Chú thích</th>
             <th scope="col">#</th>
         </tr>
         </thead>
@@ -23,11 +24,19 @@
             <td>{{item?.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
             <td>{{item?.fileName}}</td>
             <td>
-                <input type="number" name="score" [(ngModel)]="item.score" id="" min="0" max="10">
+                <input *ngIf="item?.status === 'CHECKING'" type="number" name="score" placeholder="Điểm..." [(ngModel)]="item.score" id="" min="0" max="10">
+                <span *ngIf="item?.status === 'SUCCESS' || item?.status === 'ERROR'">{{item?.score}}</span>
             </td>
             <td>
-                <button type="button" class="btn btn-sm btn-success mr-1" (click)="updateScore(item?.id, item?.score)">Xác nhận</button>
-                <button type="button" class="btn btn-sm btn-primary" (click)="downloadAttachment(item.fileUrl, item.fileName)">Tải về</button>
+                <textarea *ngIf="item?.status === 'CHECKING'" name="content" id="" placeholder="Đánh giá..." [(ngModel)]="item.content" cols="30" rows="5"></textarea>
+                <p *ngIf="item?.status === 'SUCCESS' || item?.status === 'ERROR'">{{item?.content}}</p>
+            </td>
+            <td>
+                <button *ngIf="item?.status === 'CHECKING'" type="button" class="btn btn-sm btn-success mr-1" (click)="updateScore(item?.id, item?.score, item?.content)">Xác nhận</button>
+                <button *ngIf="item?.status === 'WAIT_CHECK'" type="button" class="btn btn-sm btn-success mr-1" (click)="checking(item?.id)">Kiểm tra</button>
+                <button *ngIf="item?.status === 'SUCCESS'" type="button" [disabled]="true" class="btn btn-sm btn-success mr-1" >Đạt</button>
+                <button *ngIf="item?.status === 'ERROR'" type="button" [disabled]="true" class="btn btn-sm btn-success mr-1" >Chưa Đạt</button>
+                <button *ngIf="item?.status === 'CHECKING'" type="button" class="btn btn-sm btn-primary" (click)="downloadAttachment(item.fileUrl, item.fileName)">Tải về</button>
             </td>
         </tr>
         </tbody>

@@ -76,12 +76,33 @@ export class CourseService {
     }
 
     queryCourseSuggest(keyword?: string): Observable<any[]> {
-        return this.http.get<any[]>(`${this.resourceUrl}/suggest?keyword=${keyword}`);
+        return this.http.get<any[]>(`${this.resourceUrl}/employer/suggest?keyword=${keyword}`);
+    }
+
+    getListCoursePopularForEmployer(req?: any): Observable<any> {
+        const options = createRequestOption(req);
+        return this.http.get<any>(`${this.resourceUrl}/employer/popular`, { params: options});
+    }
+
+    getListCourseNewestForEmployer(req?: any): Observable<any> {
+        const options = createRequestOption(req);
+        return this.http.get<any>(`${this.resourceUrl}/employer/newest`, { params: options});
     }
 
     // instructor
     queryForInstructor(req?: any): Observable<HttpResponse<CourseBO[]>> {
         const options = createRequestOption(req);
         return this.http.get<CourseBO[]>(`${SERVER_API_URL}api/instructor/courses`, { params: options, observe: 'response' });
+    }
+
+    // thống kê
+    getListCoursePopular(req?: any): Observable<any> {
+        const options = createRequestOption(req);
+        return this.http.get<any>(`${this.resourceUrl}/popular`, { params: options});
+    }
+
+    getListCourseMostRating(req?: any): Observable<any> {
+        const options = createRequestOption(req);
+        return this.http.get<any>(`${this.resourceUrl}/most-rating`, { params: options});
     }
 }

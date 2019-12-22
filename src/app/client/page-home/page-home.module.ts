@@ -1,3 +1,4 @@
+import { CourseListModule } from './../../shared/modules/course-list/course-list.module';
 import { PageHomeComponent } from './page-home.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -8,7 +9,8 @@ import {CarouselModule} from 'primeng/carousel';
   imports: [
     CommonModule,
     RouterModule,
-    CarouselModule
+    CarouselModule,
+    CourseListModule
   ],
   exports: [PageHomeComponent]
 })
