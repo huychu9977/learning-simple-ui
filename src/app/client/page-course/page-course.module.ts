@@ -1,3 +1,4 @@
+import { CarouselModule } from 'primeng/carousel';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PageCourseComponent } from './page-course.component';
@@ -16,6 +17,7 @@ import { SharedLibsModule } from 'src/app/shared/shared-libs.module';
     CourseReviewsModule,
     CourseListModule,
     CoursePreviewModule,
+    CarouselModule,
     SharedLibsModule
   ],
   exports: [PageCourseComponent]

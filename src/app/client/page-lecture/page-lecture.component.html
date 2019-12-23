@@ -37,11 +37,12 @@
           </div>
 
           <div class="quiz" *ngIf="lectureSelected?.type === 'LECTURE_QUIZ'" style="position: relative; min-height: 460px;" [el-loading]="isChecking">
-            <div *ngIf="lectureCompleted && !isOpenQuiz" style="position: absolute; top: 50%; text-align: center;">
-                <p class="text-danger my-3">Kết quả gần nhất: {{lectureCompleted?.completedRate}}%</p>
+            <div *ngIf="lectureCompleted && !isOpenQuiz && lectureCompleted?.completedRate" style="position: absolute; top: 50%; text-align: center;">
+              <p [hidden]="lectureCompleted?.completedRate < lectureSelected?.requiredCompleteRate">Chúc mừng bạn đã mở chuơng tiếp theo.</p>  
+              <p class="text-danger my-3">Kết quả gần nhất: {{lectureCompleted?.completedRate}}%</p>
                 <button class="btn btn-sm btn-primary mr-2" (click)="isOpenQuiz = true">Bắt đầu lại</button>
             </div>
-            <div *ngIf="!lectureCompleted && !isOpenQuiz" style="position: absolute; top: 50%; text-align: center;">
+            <div *ngIf="lectureCompleted && !isOpenQuiz && !lectureCompleted?.completedRate" style="position: absolute; top: 50%; text-align: center;">
               <p class="text-danger my-3">Bài kiểm tra cần đạt {{lectureSelected?.requiredCompleteRate}}%</p>
               <button class="btn btn-sm btn-primary mr-2" (click)="isOpenQuiz = true">Bắt đầu</button>
           </div>
@@ -103,36 +104,8 @@
                 <p-tabView (onChange)="onTabChange($event)">
                     <p-tabPanel header="Tổng quan">
                       <div style="min-height: 400px;"></div>
-                        <!-- <div class="description-dashboard-content">
-                          <div [ngClass]=" descriptionMore ? 'collape-description-more' : 'collape-description'" #more>
-                            <div class="description-dashboard-content-body">
-                              <div class="lecture-overview-header">
-                                  <div class="font-heading-lg mb-space-sm">Thông tin khóa học</div>
-                                  <p>{{course?.sortDescription}}</p>
-                              </div>
-                              <div class="lecture-overview-row">
-                                <div>Thông số</div>
-                                <div>
-                                  <div>Mức độ: {{course?.levelName}}</div>
-                                  <div>Học viên: {{course?.totalUserEnroll}}</div>
-                                  <div>Languages: English</div>
-                                </div>
-                                <div>
-                                  <div>Lectures: {{course?.lectures.length - chapters?.length}}</div>
-                                  <div *ngIf="course?.lectures">Video: {{totalTimeEstimate()}} phút</div>
-                                </div>
-                              </div>
-                              <div class="lecture-overview-row">
-                                <div>Miêu tả</div>
-                                <div class="p-magrin" style="width: 60%;" [innerHTML]="course?.description">
-                                </div>
-                              </div>
-                            </div>
-                            <span *ngIf="!descriptionMore && elementView.nativeElement.offsetHeight >= 260" class="wrapper-more-btn">
-                              <button (click)="descriptionMore = true" class="more-btn btn-sm btn btn-link">+ See more</button>
-                            </span>
-                          </div>
-                        </div> -->
+                        <div [innerHTML]="lectureSelected?.content"></div>
+                       <!-- content text -->
                     </p-tabPanel>
                     <p-tabPanel header="Hỏi đáp">
                         <div class="description-dashboard-content mt-3" *ngIf="isDetailComment">

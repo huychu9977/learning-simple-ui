@@ -122,6 +122,9 @@ export class LectureManagementUpdateComponent implements OnInit {
         this.editForm.get(['parent']).setValue(params.parentCode || null);
         if (params.parentCode) {
           this.titleService.setTitle('Tạo hoặc sửa bài học');
+          this.editForm.get('type').setValue('LECTURE_VIDEO');
+        } else {
+          this.editForm.get('type').setValue('LECTURE_CHAPTER');
         }
     });
     this.lectureParents = [];

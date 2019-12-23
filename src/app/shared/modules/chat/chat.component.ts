@@ -22,7 +22,7 @@ export class ChatComponent implements OnInit {
         this.accountService.identity().then(account => {
           if (account) {
             this.listUserOnline = res.filter(r => {
-              return r.username !== account.username;
+              return r.username !== account.username && (r.roles.indexOf('ROLE_TEACHER') > -1 || r.roles.indexOf('ROLE_ADMIN') > -1);
             });
           }
         });

@@ -147,7 +147,14 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-md-12" *ngIf="listCoursePopular?.length > 0">
+        <div style="margin-top: 40px;" class="course-recommend owl-carousel-width">
+          <p-carousel [value]="listCoursePopular" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="10000">
+            <ng-template let-data pTemplate="item">
+                <course-list [course]="data"></course-list>
+            </ng-template>
+          </p-carousel>
+        </div>
       </div>
     </div>
 </div>

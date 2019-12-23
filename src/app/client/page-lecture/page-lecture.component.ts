@@ -109,15 +109,6 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
       c.isActive = !c.isActive;
     }
   }
-  totalTimeEstimate() {
-    let time = 0;
-    this.lectures.forEach(l => {
-      if (l.parentCode && l.type.code === 'lecture') {
-        time += l.videoTimeEstimation === null ? 0 : l.videoTimeEstimation;
-      }
-    });
-    return Math.floor(time / 60);
-  }
   // attachment
   downloadAttachment(file) {
     const link = document.createElement('a');
@@ -288,7 +279,7 @@ export class PageLectureComponent implements OnInit, AfterContentChecked {
   }
   // comment end
   loadLectureCompleted() {
-    this.lectureService.getLectureCompletedByeLectureCode(this.lectureSelected.code).subscribe(res => {
+    this.lectureService.getLectureCompletedByLectureCode(this.lectureSelected.code).subscribe(res => {
       this.lectureCompleted = res;
     });
   }

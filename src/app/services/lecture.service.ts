@@ -69,7 +69,7 @@ export class LectureService {
         return this.http.get<any[]>(`${this.resourceUrl}/employer/list-lecture-completed/${courseCode}`);
     }
 
-    getLectureCompletedByeLectureCode(lectureCode?: string): Observable<any> {
+    getLectureCompletedByLectureCode(lectureCode?: string): Observable<any> {
         return this.http.get<any>(`${this.resourceUrl}/employer/lecture-completed/${lectureCode}`);
     }
 }
