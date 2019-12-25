@@ -11,7 +11,6 @@ import { PageOurTeacherComponent } from './page-our-teacher/page-our-teacher.com
 import { PageTeacherComponent } from './page-teacher/page-teacher.component';
 import { PageLectureComponent } from './page-lecture/page-lecture.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { PageEventComponent } from './page-event/page-event.component';
 
 const clientRoute: Routes = [
     {
@@ -34,13 +33,6 @@ const clientRoute: Routes = [
                 pageTitle: 'global.menu.home'
             }
         },
-        {
-            path: 'events/:code',
-            component: PageEventComponent,
-            data: {
-              pageTitle: 'eventManagement.home.title'
-            }
-          },
         {
           path: 'courses',
           component: PageOurCourseComponent,

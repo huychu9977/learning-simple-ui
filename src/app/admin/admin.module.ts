@@ -19,6 +19,8 @@ import { MessageFormModule } from '../shared/modules/chat/message/message-form.m
 import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { SharedLibsModule } from '../shared/shared-libs.module';
 import { StatisticalModule } from './statistical/statistical.module';
+import { NotificationModule } from './notification/notification.module';
+import { CategoriesModule } from './categories/categories.module';
 
 @NgModule({
   imports: [
@@ -38,7 +40,9 @@ import { StatisticalModule } from './statistical/statistical.module';
     MessageFormModule,
     OverlayPanelModule,
     SharedLibsModule,
-    StatisticalModule
+    StatisticalModule,
+    NotificationModule,
+    CategoriesModule
   ],
   declarations: [
     AdminComponent, P404Component, LoadingScreenComponent,

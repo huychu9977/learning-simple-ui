@@ -237,7 +237,7 @@ banner part end
                                     {{event?.endDate}}
                                 </P>
                                 <div class="detail">
-                                    <a href="jascript:void(0)" [routerLink]="[ '/events', event?.code ]">Chi tiết</a>
+                                    <a href="jascript:void(0)" (click)="enrollEvent(event?.code)">Tham gia</a>
                                 </div>
                             </div>
                         </div>

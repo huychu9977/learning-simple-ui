@@ -16,6 +16,30 @@ export class CategoryService {
         return this.http.get<any[]>(`${this.resourceUrl}`);
     }
 
+    getSubCategories(code?: string): Observable<any[]> {
+        return this.http.get<any[]>(`${this.resourceUrl}/sub/${code}`);
+    }
+
+    updateCategory(body: any): Observable<any> {
+        return this.http.post<any>(this.resourceUrl, body);
+    }
+
+    updateTopic(body: any): Observable<any> {
+        return this.http.post<any>(this.resourceUrl + '/topic', body);
+    }
+
+    deleteCategoty(id: any): Observable<any> {
+        return this.http.delete(`${this.resourceUrl}/${id}`);
+    }
+
+    deleteTopic(id: any): Observable<any> {
+        return this.http.delete(`${this.resourceUrl}/topic/${id}`);
+    }
+
+    find(id: any): Observable<any> {
+        return this.http.get<any>(`${this.resourceUrl}/${id}`);
+    }
+
     getCategoriesForEmployer(): Observable<any[]> {
         return this.http.get<any[]>(`${this.resourceUrl}/employer`);
     }

@@ -134,15 +134,15 @@
             <!-- <button type="button" class="btn btn-link btn-block">Trending</button> -->
         </div>
     </div>
-    <div class="container owl-carousel-nav-custom">
-        <p-carousel [value]="images1" [numVisible]="4" [numScroll]="1" [circular]="true" [autoplayInterval]="10000">
-            <ng-template let-slide pTemplate="item">
-                <div>
-                    <div class="course-item">
-                        <course-list ></course-list>
-                    </div>
-                </div>
-            </ng-template>
-        </p-carousel>
+    <div class="row">
+        <div class="col-md-12" *ngIf="listCoursePopular?.length > 0">
+            <div style="margin-top: 40px;" class="course-recommend owl-carousel-width">
+              <p-carousel [value]="listCoursePopular" [numVisible]="5" [numScroll]="1" [circular]="true" [autoplayInterval]="10000">
+                <ng-template let-data pTemplate="item">
+                    <course-list [course]="data"></course-list>
+                </ng-template>
+              </p-carousel>
+            </div>
+          </div>
     </div>
 </section>

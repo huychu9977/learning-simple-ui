@@ -9,6 +9,7 @@ import {ConfirmDialogModule} from 'primeng/confirmdialog';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { RouterModule } from '@angular/router';
 import {DynamicDialogModule} from 'primeng/dynamicdialog';
+import { DialogModule } from 'primeng/dialog';
 
 @NgModule({
   declarations: [],
@@ -22,7 +23,8 @@ import {DynamicDialogModule} from 'primeng/dynamicdialog';
     ConfirmDialogModule,
     ToastModule,
     NgSelectModule,
-    DynamicDialogModule
+    DynamicDialogModule,
+    DialogModule
   ]
 })
 export class AdminSharedLibsModule {}

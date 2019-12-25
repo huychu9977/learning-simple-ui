@@ -2,7 +2,7 @@
     <p-tabPanel header="Biểu đồ">
        <p-chart type="polarArea" [data]="data"></p-chart>
     </p-tabPanel>
-    <p-tabPanel header="Bảng biểu">
+    <p-tabPanel header="Thống kê khóa học">
         <div class="animated fadeIn">
             <div class="row">
                 <div class="col-sm-12 row">
@@ -52,6 +52,52 @@
                     </table>
                 </div>
                 <div *ngIf="listCourse && listCourse.length" class="row justify-content-end w-100">
+                    <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
+                </div>
+            </div>
+        </div>
+    </p-tabPanel>
+    <p-tabPanel header="Thống kê người dùng" *ngIf="isAdmin">
+        <div class="animated fadeIn">
+            <div class="row">
+                <div class="col-sm-12 row">
+                    <div class="col-sm-3">
+                        <button type="button" class="btn btn-primary" (click)="downloadCSV()">Export CSV file</button>
+                    </div>
+                </div>
+                <div class="col-sm-12">
+                    <br/>
+                    <table class="table table-bordered" style="position: relative;" [el-loading]="loading">
+                        <thead class="thead-dark text-center">
+                        <tr>
+                            <th>STT</th>
+                            <th>Tài khoản</th>
+                            <th>Tên</th>
+                            <th>Email</th>
+                            <th>Sđt</th>
+                            <th>Địa chỉ</th>
+                            <th>Đã tham gia</th>
+                        </tr>
+                        </thead>
+                        <tbody *ngIf="listUser?.length === 0">
+                            <tr>
+                                <td class="text-center" colspan="7">Không có dữ liệu</td>
+                            </tr>
+                        </tbody>
+                        <tbody *ngIf="listUser?.length > 0">
+                        <tr *ngFor="let user of listUser; let i=index">
+                            <td>{{i + 1}}</td>
+                            <td>{{user?.username}}</td>
+                            <td>{{user?.name}}</td>
+                            <td>{{user?.email}}</td>
+                            <td>{{user?.phone}}</td>
+                            <td>{{user?.address}}</td>
+                            <td>{{user?.totalEnrolled}}</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div *ngIf="listUser && listUser.length" class="row justify-content-end w-100">
                     <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
                 </div>
             </div>

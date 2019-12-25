@@ -91,8 +91,8 @@
                             </fieldset>
                         </div>
                         <div class="row py-3"></div>
-                        <div class="row selectFile" *ngIf="editForm.get('type').value === 'LECTURE_VIDEO'">
-                            <div class="col-md-6">
+                        <div class="row selectFile" *ngIf="editForm.get('type').value === 'LECTURE_VIDEO' || editForm.get('type').value === 'LECTURE_QUIZ'">
+                            <div class="col-md-6" *ngIf="editForm.get('type').value === 'LECTURE_VIDEO'">
                                 <div class="col-md-12 text-center">
                                     <img *ngIf="!selectedVideos && !lecture?.id" class="img-fluid" width="150" src="{{videoUrl}}" alt="Ảnh đại diện" />
                                     <div class="fileName" *ngIf="selectedVideos">{{videoUrl}}</div>
@@ -132,7 +132,17 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="row py-3"></div>
+                        <div class="row" *ngIf="editForm.get('type').value === 'LECTURE_VIDEO' || editForm.get('type').value === 'LECTURE_QUIZ'">
+                            <div class="form-group ckedit w-100">
+                               <label [translate]="'courseManagement.description'">description</label>
+                               <p-editor formControlName='content' [placeholder]="'courseManagement.create.placeholder.description' | translate" [style]="{'height':'200px'}"></p-editor>
+                               <div *ngIf="editForm.get('content').invalid && (editForm.get('content').dirty || editForm.get('content').touched) || isSaving && f['content'].errors">
+                                  <small class="form-text text-danger" *ngIf="f['content'].errors.required" [translate]="'entity.validation.required'">
+                                  This field is required.
+                                  </small>
+                               </div>
+                            </div>
+                         </div>
                     </div>
                     <div class="row justify-content-end">
                         <button type="button" class="btn btn-secondary" (click)="previousState()">

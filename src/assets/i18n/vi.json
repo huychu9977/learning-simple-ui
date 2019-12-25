@@ -271,6 +271,45 @@
         }
       }
     },
+    "notificationManagement" : {
+       "navName": "Quản lý thông báo",
+      "home" : {
+          "title": "Thông báo",
+          "createLabel": "Tạo thông báo"
+      },
+      "update": {
+          "title": "Tạo hoặc sửa thông báo",
+          "placeholder": {
+              "title": "Nhập vào tiêu đề",
+              "url": "Nhập vào url",
+              "content": "Nhập vào nội dung"
+          }
+      },
+      "content": "Nội dung",
+      "url": "Url",
+      "action": "Hành động",
+      "title": "Tiêu đề",
+      "sentTime": "Thời điểm gửi",
+      "createdAt": "Thời điểm tạo",
+      "createdBy": "Người tạo"
+    },
+    "categoryManagement" : {
+      "navName": "Quản lý danh mục",
+     "home" : {
+         "title": "Danh mục",
+         "createLabel": "Tạo danh mục"
+     },
+     "update": {
+         "title": "Tạo hoặc sửa danh mục",
+         "placeholder": {
+             "code": "Nhập vào mã",
+             "name": "Nhập vào tên"
+         }
+     },
+     "code": "Mã",
+     "name": "Tên",
+     "action": "Hành động"
+   },
     "permissionManagement":{
        "navName":"Quản lý quyền hạn",
        "home":{

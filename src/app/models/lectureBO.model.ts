@@ -17,6 +17,7 @@ export class LectureBO {
         public questions?: any[],
         public sortOrder?: any,
         public fileAttachments?: any[],
-        public requiredCompleteRate?: any
+        public requiredCompleteRate?: any,
+        public content?: string,
     ) {}
 }

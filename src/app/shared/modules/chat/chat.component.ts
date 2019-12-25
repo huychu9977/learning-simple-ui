@@ -15,14 +15,18 @@ export class ChatComponent implements OnInit {
   openingChatForm = false;
   listChatting = [];
   constructor(private socketService: SocketService, private accountService: AccountService) { }
-
+  //
   ngOnInit() {
-    this.socketService.listUserOnline(res => {
-      if (res) {
-        this.accountService.identity().then(account => {
-          if (account) {
+    this.accountService.identity().then(account => {
+      if (account) {
+        this.socketService.listUserOnline(res => {
+          if (res) {
+            const listTmp = [];
             this.listUserOnline = res.filter(r => {
-              return r.username !== account.username && (r.roles.indexOf('ROLE_TEACHER') > -1 || r.roles.indexOf('ROLE_ADMIN') > -1);
+              const check = listTmp.indexOf(r.username) < 0 && r.username !== account.username
+              && (r.roles.indexOf('ROLE_TEACHER') > -1 || r.roles.indexOf('ROLE_ADMIN') > -1);
+              listTmp.push(r.username);
+              return check;
             });
           }
         });

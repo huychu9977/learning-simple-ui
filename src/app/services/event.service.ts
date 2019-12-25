@@ -38,4 +38,8 @@ export class EventService {
         const options = createRequestOption(req);
         return this.http.get<any>(`${this.resourceUrl}/employer/list`, { params: options, observe: 'response' });
     }
+
+    enroll(code: string): Observable<boolean> {
+        return this.http.get<boolean>(`${this.resourceUrl}/enroll/${code}`);
+    }
 }

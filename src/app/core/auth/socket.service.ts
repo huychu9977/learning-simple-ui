@@ -99,6 +99,18 @@ export class SocketService {
     });
   }
 
+  receiveNotification(callback) {
+    this.connection.then(() => {
+      if (!this.stompClient) {
+        callback(null);
+        return;
+      }
+      this.stompClient.subscribe('/user/exchange/amq.direct/chat.noti', data => {
+        callback(data.body);
+      });
+    });
+  }
+
   sendMessage(message, to) {
     if (this.stompClient !== null && this.stompClient.connected) {
       const destination = to === 'ALL' ? '/app/chat.message' : `/app/chat.private.${to}`;

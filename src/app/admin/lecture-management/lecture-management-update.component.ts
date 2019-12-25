@@ -46,7 +46,8 @@ export class LectureManagementUpdateComponent implements OnInit {
     parent: [''],
     sortOrder: [''],
     requiredCompleteRate: [''],
-    oldSortOrder: ['']
+    oldSortOrder: [''],
+    content: ['']
   });
   statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
 
@@ -110,7 +111,8 @@ export class LectureManagementUpdateComponent implements OnInit {
       type: lecture.type ? lecture.type : null,
       parent: lecture.parentCode ? lecture.parentCode : null,
       sortOrder: lecture.id ? lecture.sortOrder : 0,
-      requiredCompleteRate: lecture.requiredCompleteRate
+      requiredCompleteRate: lecture.requiredCompleteRate,
+      content: lecture.content
     });
     this.selectedFiles = lecture.fileAttachments ? lecture.fileAttachments.map(file => {
       return {fileType: file.type, body: {id: file.id, name: file.fileName} };
@@ -229,6 +231,7 @@ export class LectureManagementUpdateComponent implements OnInit {
       parentCode : this.editForm.get(['parent']).value,
       sortOrder : this.editForm.get(['sortOrder']).value,
       requiredCompleteRate: this.editForm.get(['requiredCompleteRate']).value,
+      content: this.editForm.get(['content']).value,
     };
     if (!this.lecture.id) {
       delete lectureTmp.id;

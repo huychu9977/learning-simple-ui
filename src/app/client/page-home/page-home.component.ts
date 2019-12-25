@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { EventService } from 'src/app/services/event.service';
 import { EventBO } from 'src/app/models/eventBO.model';
 import { CourseService } from 'src/app/services/course.service';
+import { AccountService } from 'src/app/core/auth/account.service';
 
 @Component({
   // tslint:disable-next-line:component-selector
@@ -53,7 +54,11 @@ export class PageHomeComponent implements OnInit {
   listCoursePopular?: any[] = [];
   listCourseNewest?: any[] = [];
   events: any[] = [];
-  constructor(private eventService: EventService, private courseService: CourseService) { }
+  constructor(
+    private eventService: EventService,
+    private courseService: CourseService,
+    private accountService: AccountService
+    ) { }
 
   ngOnInit() {
     this.loadCoursePopular();
@@ -77,6 +82,23 @@ export class PageHomeComponent implements OnInit {
     }).subscribe(res => {
       this.listCourseNewest = res.content;
     }, err => { console.log(err.error.message); });
+  }
+
+
+  enrollEvent(code?: string) {
+    this.accountService.identity().then(account => {
+      if (account) {
+        this.eventService.enroll(code).subscribe(res => {
+          if (res) {
+            alert('Tham gia thàng công.');
+          } else {
+            alert('Bạn đã tham gia sự kiện này.');
+          }
+        });
+      } else {
+        alert('Vui lòng đăng nhập.');
+      }
+    });
   }
 
   loadEvents() {

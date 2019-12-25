@@ -15,65 +15,10 @@ import { PageReloadService } from 'src/app/core/auth/page-reload.service';
 export class PageOurCourseComponent implements OnInit {
   page = 1;
   previousPage;
-  itemsPerPage = 2;
+  itemsPerPage = 10;
   totalItems: any = 100;
+  listCoursePopular?: any[] = [];
 
-  images1?: any[] = [
-    {
-      id: 1, // id of slide
-      src: '../../../../assets/images/main/ourcourse1.png',
-      srcT: '../../../../assets/images/main/ourcourse1Image.png',
-      title: 'title 1',
-      // tslint:disable-next-line:max-line-length
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      content: 'content 1'
-    },
-    {
-      id: 2, // id of slide
-      src: '../../../../assets/images/main/ourcourse2.png',
-      srcT: '../../../../assets/images/main/ourcourse2Image.png',
-      title: 'title 2',
-      // tslint:disable-next-line:max-line-length
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      content: 'content 2'
-    },
-    {
-      id: 3, // id of slide
-      src: '../../../../assets/images/main/ourcourse3.png',
-      srcT: '../../../../assets/images/main/ourcourse3Image.png',
-      title: 'title 3',
-      // tslint:disable-next-line:max-line-length
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      content: 'content 3'
-    },
-    {
-      id: 4, // id of slide
-      src: '../../../../assets/images/main/Our_Courses_page_04.png',
-      srcT: '../../../../assets/images/main/ourcourse4Image.png',
-      title: 'title 3',
-      // tslint:disable-next-line:max-line-length
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      content: 'content 3'
-    },
-    {
-      id: 5, // id of slide
-      src: '../../../../assets/images/main/Ethical%20Hacking.jpg',
-      srcT: '../../../../assets/images/main/Conductor%2002.png',
-      title: 'title 3',
-      // tslint:disable-next-line:max-line-length
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      content: 'content 3'
-    },
-    {
-      id: 6, // id of slide
-      src: '../../../../assets/images/main/3D%20Animation.jpg',
-      srcT: '../../../../assets/images/main/Conductor%2001.png',
-      title: 'title 3',
-      // tslint:disable-next-line:max-line-length
-      description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
-      content: 'content 3'
-    }
-  ];
   courses?: any[];
   categoryCode?: string;
   subCategoryCode?: string;
@@ -120,6 +65,7 @@ export class PageOurCourseComponent implements OnInit {
     this.loadCategories();
     this.loadLevels();
     this.loadRates();
+    this.loadCoursePopular();
   }
   loadAll() {
     this.params.page -= 1;
@@ -129,6 +75,15 @@ export class PageOurCourseComponent implements OnInit {
             (res: HttpResponse<CourseBO[]>) => this.onSuccess(res.body),
             (res: HttpResponse<any>) => this.onError(res.body)
         );
+  }
+
+  loadCoursePopular() {
+    this.courseService.getListCoursePopularForEmployer({
+      page: 0,
+      size: 10
+    }).subscribe(res => {
+      this.listCoursePopular = res.content;
+    }, err => { console.log(err.error.message); });
   }
 
   loadPage(event: any) {

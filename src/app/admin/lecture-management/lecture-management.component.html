@@ -74,6 +74,7 @@
                         </td>
                         <td class="text-center">
                             <div class="btn-group flex-btn-group-container">
+                                <button type="button" class="btn btn-sm btn-info" (click)="openDialog(lecture?.code)">Tiến trình</button>
                                 <button type="submit"
                                         [routerLink]="[ lecture.code, 'edit']"
                                         queryParamsHandling="merge"
@@ -98,3 +99,32 @@
 </div>
 <p-toast></p-toast>
 <p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-dialog header="Danh sách tiến trình học viên" [(visible)]="isOpenDialog" [positionTop]="100" [style]="{width: '700px', height: '300px'}">
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark text-center">
+                <tr>
+                    <th>STT</th>
+                    <th>Tài khoản</th>
+                    <th>Tên</th>
+                    <th>% hiện tại</th>
+                    <th>Thời điểm hoàn thành</th>
+                </tr>
+            </thead>
+            <tbody *ngIf="listUserProcess?.length === 0">
+                <tr>
+                    <td colspan="6" class="text-center">Chưa có học viên hoàn thành chương học nào.</td>
+                </tr>
+            </tbody>
+            <tbody *ngIf="listUserProcess?.length > 0" class="text-center">
+                <tr *ngFor="let lp of listUserProcess; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{lp.username}}</td>
+                    <td>{{lp.name}}</td>
+                    <td>{{lp.percentCompleted}}</td>
+                    <td>{{lp.completedTime | date:'dd/MM/yyyy HH:mm'}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</p-dialog>

@@ -13,6 +13,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { NOT_USER } from '../shared/constants/roles.constants';
 import { eventMgmtState } from './event-management/event-management-routing.module';
 import { StatisticalComponent } from './statistical/statistical.component';
+import { notificationMgmtState } from './notification/notification-routing.module';
+import { categoryMgmtState } from './categories/categories-routing.module';
 
 export const adminState: Routes = [
   {
@@ -36,6 +38,8 @@ export const adminState: Routes = [
       ...courseMgmtState,
       ...lectureMgmtState,
       ...eventMgmtState,
+      ...notificationMgmtState,
+      ...categoryMgmtState,
       { path: '', redirectTo: 'statistical', pathMatch: 'full'},
       {
         path: 'statistical',
@@ -48,8 +52,10 @@ export const adminState: Routes = [
           path: 'dashboard',
           component: DashboardComponent,
           data : {
-              pageTitle: 'global.dashboard.navName'
-          }
+              pageTitle: 'global.dashboard.navName',
+              authorities: ['ROLE_ADMIN']
+          },
+          canActivate: [UserRouteAccessService]
       }
     ]
   },

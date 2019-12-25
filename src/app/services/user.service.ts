@@ -43,4 +43,9 @@ export class UserService {
     updateRoleTeacher(isAccept?: boolean, username?: string): Observable<boolean> {
         return this.http.put<boolean>(this.resourceUrl + '/update-role-teacher/' + username + '/' + isAccept, { observe: 'response' });
     }
+
+    getListTopUserEnroll(req?: any): Observable<any> {
+        const options = createRequestOption(req);
+        return this.http.get<any>(this.resourceUrl + '/top-enroll', { params: options});
+    }
 }

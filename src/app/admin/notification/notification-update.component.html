@@ -1,0 +1,104 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <form class="col-12" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" style="position: relative;" [el-loading]="isLoading">
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <div>
+                        <div class="form-group" [hidden]="!notification.id">
+                            <input type="text" class="form-control" name="id" formControlName="id" readonly>
+                        </div>
+                        <div class="row">
+                            <fieldset class="form-group col-md-12">
+                                <label [translate]="'notificationManagement.title'">title</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="title" name="title" type="text" formControlName="title" [placeholder]="'notificationManagement.update.placeholder.title' | translate">
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <fieldset class="form-group col-md-12">
+                                <label [translate]="'notificationManagement.url'">url</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="url" name="url" type="text" formControlName="url" [placeholder]="'notificationManagement.update.placeholder.url' | translate">
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <div class="form-group ckedit w-100 col-md-12">
+                               <label [translate]="'notificationManagement.content'">content</label>
+                               <p-editor formControlName='content' [placeholder]="'notificationManagement.update.placeholder.content' | translate" [style]="{'height':'200px'}"></p-editor>
+                            </div>
+                         </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-7">
+                            <button type="button" class="btn btn-success" (click)="isOpenDialog = !isOpenDialog">ĐÃ CHỌN</button>
+                        </div>
+                        <div class="col-md-5 pr-0 mb-2">
+                            <div class="input-group">
+                                <input name="keyword" (input)="search($event.target.value)" placeholder="Tìm kiếm..." class="form-control rounded-0" type="text">
+                                <div class="input-group-append">
+                                    <button class="btn btn-dark" type="button" (click)="search()">
+                                        <i class="fa fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <table class="table table-bordered" >
+                            <thead class="thead-dark text-center">
+                                <tr>
+                                    <th scope="col">ID</th>
+                                    <th [translate]="'userManagement.username'">username</th>
+                                    <th [translate]="'userManagement.name'">name</th>
+                                    <th [translate]="'userManagement.email'">email</th>
+                                    <th scope="col">Chọn</th>
+                                </tr>
+                            </thead>
+                            <tbody *ngIf="users.length === 0">
+                                <tr>
+                                    <td class="text-center" colspan="5">Không có dữ liệu</td>
+                                </tr>
+                            </tbody>
+                            <tbody *ngIf="users.length > 0">
+                                <tr *ngFor="let user of users">
+                                    <td>{{user.id}}</td>
+                                    <td>{{user.username}}</td>
+                                    <td>{{user.name}}</td>
+                                    <td>{{user.email}}</td>
+                                    <td>
+                                        <label class="checkbox-custom">
+                                            <input type="checkbox" (change)="selecteUser(user?.id)" [checked]="checkSelected(user?.id)">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <div *ngIf="users && users.length" class="row justify-content-center w-100">
+                            <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
+                        </div>
+                    </div>
+                    <div class="row justify-content-end col-12">
+                        <button type="button" class="btn btn-secondary" (click)="previousState()">
+                            <span [translate]="'entity.action.cancel'">Cancel</span>
+                        </button>
+                        <button type="submit" class="ml-2 btn btn-primary">
+                            <span [translate]="'entity.action.save'">Save</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>
+<p-dialog header="Người dùng nhận thông báo" [(visible)]="isOpenDialog">
+   <div *ngIf="selectedUsernames.length > 0">
+    <ul>
+        <ol  *ngFor="let username of selectedUsernames; let i=index">
+        <strong class="mr-1">{{i+1}}. {{username}}</strong>
+        </ol>
+    </ul>
+   </div>
+</p-dialog>

@@ -5,6 +5,7 @@ import { EventManagementComponent } from './event-management.component';
 import { EventManagementUpdateComponent } from './event-management-update.component';
 import { EventService } from 'src/app/services/event.service';
 import { EventBO } from 'src/app/models/eventBO.model';
+import { UserRouteAccessService } from 'src/app/core/auth/user-route-access-service';
 
 
 @Injectable({ providedIn: 'root' })
@@ -26,8 +27,10 @@ export const eventMgmtState: Routes = [
         path: 'event-management',
         component: EventManagementComponent,
         data: {
-            pageTitle: 'eventManagement.home.title'
-        }
+            pageTitle: 'eventManagement.home.title',
+            authorities: ['ROLE_ADMIN']
+        },
+        canActivate: [UserRouteAccessService]
     },
     {
         path: 'event-management/new',
@@ -36,8 +39,10 @@ export const eventMgmtState: Routes = [
             event: EventMgmtResolve
         },
         data: {
-            pageTitle: 'eventManagement.home.createOrEditLabel'
-        }
+            pageTitle: 'eventManagement.home.createOrEditLabel',
+            authorities: ['ROLE_ADMIN']
+        },
+        canActivate: [UserRouteAccessService]
     },
     {
         path: 'event-management/:code/edit',
@@ -46,17 +51,9 @@ export const eventMgmtState: Routes = [
             event: EventMgmtResolve
         },
         data: {
-            pageTitle: 'eventManagement.home.createOrEditLabel'
-        }
-    },
-    {
-        path: 'event-management/:code/view',
-        // component: EventManagementDetailComponent,
-        resolve: {
-            event: EventMgmtResolve
+            pageTitle: 'eventManagement.home.createOrEditLabel',
+            authorities: ['ROLE_ADMIN']
         },
-        data: {
-            pageTitle: 'eventManagement.detail.title',
-        }
+        canActivate: [UserRouteAccessService]
     }
 ];

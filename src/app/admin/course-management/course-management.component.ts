@@ -6,6 +6,7 @@ import { CourseService } from 'src/app/services/course.service';
 import { MessageService, ConfirmationService } from 'primeng/api';
 import { AccountService } from 'src/app/core/auth/account.service';
 import { ActivatedRoute } from '@angular/router';
+import { LectureService } from 'src/app/services/lecture.service';
 @Component({
   selector: 'course-management',
   templateUrl: './course-management.component.html',
@@ -22,13 +23,19 @@ export class CourseManagementComponent implements OnInit {
     CHECKING = CHECKING;
     loading = false;
     currentAccount = null;
+    listUserProcess?: any[] = [];
+    listLectureProcess?: any[] = [];
+    isOpenDialog = false;
+    isOpenDialogDetail = false;
+    courseCodeSelected?: any;
 
     constructor(
         private messageService: MessageService,
         private accountService: AccountService,
         private route: ActivatedRoute,
         private confirmationService: ConfirmationService,
-        private courseService: CourseService
+        private courseService: CourseService,
+        private lectureService: LectureService
     ) {}
 
     ngOnInit() {
@@ -120,5 +127,19 @@ export class CourseManagementComponent implements OnInit {
         this.totalItems = data.totalElements;
         this.courses = data.content;
         this.loading = false;
+    }
+    //
+    openDialog(courseCode?: string) {
+        this.lectureService.getProcessCompletedCourse(courseCode).subscribe(res => {
+            this.listUserProcess = res;
+            this.courseCodeSelected = courseCode;
+            this.isOpenDialog = true;
+        });
+    }
+    openDialogDetail(userId?: any) {
+        this.lectureService.getListChapterCompletedByUser(this.courseCodeSelected, userId).subscribe(res => {
+            this.listLectureProcess = res;
+            this.isOpenDialogDetail = true;
+        });
     }
 }

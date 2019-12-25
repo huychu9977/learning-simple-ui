@@ -72,4 +72,15 @@ export class LectureService {
     getLectureCompletedByLectureCode(lectureCode?: string): Observable<any> {
         return this.http.get<any>(`${this.resourceUrl}/employer/lecture-completed/${lectureCode}`);
     }
+
+    //
+    getProcessCompletedCourse(courseCode?: string): Observable<any> {
+        return this.http.get<any>(`${this.resourceUrl}/process-completed/${courseCode}`);
+    }
+    getListUsernameCompletedLecture(chapterCode?: string): Observable<any> {
+        return this.http.get<any>(`${this.resourceUrl}/list-user-completed/${chapterCode}`);
+    }
+    getListChapterCompletedByUser(courseCode?: string, userId?: any): Observable<any> {
+        return this.http.get<any>(`${this.resourceUrl}/list-chapter-completed/${courseCode}/${userId}`);
+    }
 }

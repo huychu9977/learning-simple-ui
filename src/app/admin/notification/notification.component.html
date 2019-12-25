@@ -1,0 +1,74 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="row">
+                <div class="col-sm-4">
+                    <button class="btn btn-primary btn-sm create-organization"
+                            [routerLink]="['new']">
+                        <span [translate]="'notificationManagement.home.createLabel'">
+                Tạo mới
+                </span>
+                    </button>
+                </div>
+                <div class="col-sm-2 col-lg-4"></div>
+                <div class="col-sm-6 col-lg-4">
+                    <div class="input-group">
+                        <input [(ngModel)]="keyword" name="keyword" (input)="search()" placeholder="Tiêu đề / Nội dung..." class="form-control rounded-0" type="text">
+                        <div class="input-group-append">
+                            <button class="btn btn-dark" type="button" (click)="search()">
+                                <i class="fa fa-search"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br/>
+            <table class="table table-bordered" style="position: relative;" [el-loading]="loading">
+                <thead class="thead-dark text-center">
+                <tr>
+                    <th [translate]="'global.field.id'">ID</th>
+                    <th [translate]="'notificationManagement.title'">title</th>
+                    <th [translate]="'notificationManagement.url'">url</th>
+                    <th [translate]="'notificationManagement.createdAt'">createdAt</th>
+                    <th [translate]="'notificationManagement.createdBy'">createdBy</th>
+                    <th [translate]="'notificationManagement.sentTime'">sentTime</th>
+                    <th [translate]="'notificationManagement.action'">Action</th>
+                </tr>
+                </thead>
+                <tbody *ngIf="notifications.length === 0">
+                    <tr>
+                        <td class="text-center" colspan="7">Không có dữ liệu</td>
+                    </tr>
+                </tbody>
+                <tbody *ngIf="notifications.length > 0">
+                <tr *ngFor="let noti of notifications">
+                    <td>{{noti?.id}}</td>
+                    <td>{{noti?.title}}</td>
+                    <td>{{noti?.url}}</td>
+                    <td>{{noti?.createdAt | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <td>{{noti?.createdBy}}</td>
+                    <td>{{noti?.sentTime | date:'dd/MM/yyyy HH:mm'}}</td>
+                    <td class="text-center">
+                        <div class="btn-group flex-btn-group-container">
+                            <button type="button" class="btn btn-sm btn-warning" *ngIf="!noti?.isSent" (click)="pushNotification(noti?.id)">Gửi</button>
+                            <button type="submit" [routerLink]="[ noti?.id, 'edit']" *ngIf="!noti?.isSent"
+                                    class="btn btn-primary btn-sm">
+                                <span class="d-none d-md-inline" [translate]="'entity.action.edit'">Edit</span>
+                            </button>
+                            <button type="button" (click)="delete(noti)"
+                                    class="btn btn-danger btn-sm">
+                                <span class="d-none d-md-inline" [translate]="'entity.action.delete'">Delete</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <div *ngIf="notifications && notifications.length" class="row justify-content-end w-100">
+            <p-paginator [first]="(page - 1) * itemsPerPage" [totalRecords]="totalItems" [rows]="itemsPerPage" (onPageChange)="loadPage($event)"></p-paginator>
+        </div>
+    </div>
+</div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>

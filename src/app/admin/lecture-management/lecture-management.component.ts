@@ -25,6 +25,8 @@ export class LectureManagementComponent implements OnInit {
     currentAccount = null;
     statusCanNotEditAndDelete = STATUS_CAN_NOT_EIDT_DELETE;
     CHECKING = CHECKING;
+    listUserProcess?: any[] = [];
+    isOpenDialog = false;
     constructor(
         private confirmationService: ConfirmationService,
         public dialogService: DialogService,
@@ -139,5 +141,12 @@ export class LectureManagementComponent implements OnInit {
 
     previousState() {
         window.history.back();
+    }
+    //
+    openDialog(lectureCode?: string) {
+        this.lectureService.getListUsernameCompletedLecture(lectureCode).subscribe(res => {
+            this.listUserProcess = res;
+            this.isOpenDialog = true;
+        });
     }
 }

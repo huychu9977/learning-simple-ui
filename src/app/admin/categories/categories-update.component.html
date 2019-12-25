@@ -1,0 +1,41 @@
+<div class="animated fadeIn">
+    <div class="row">
+        <form class="col-12" name="editForm" role="form" novalidate (ngSubmit)="save()" [formGroup]="editForm" style="position: relative;" [el-loading]="isLoading">
+            <div class="row justify-content-center">
+                <div class="col-10">
+                    <div>
+                        <div class="form-group" [hidden]="!category.id">
+                            <input type="text" class="form-control" name="id" formControlName="id" readonly>
+                        </div>
+                        <div class="row">
+                            <fieldset class="form-group col-md-12">
+                                <label [translate]="'categoryManagement.code'">code</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="code" name="code" type="text" formControlName="code" [placeholder]="'categoryManagement.update.placeholder.code' | translate">
+                                </div>
+                            </fieldset>
+                        </div>
+                        <div class="row">
+                            <fieldset class="form-group col-md-12">
+                                <label [translate]="'categoryManagement.name'">name</label>
+                                <div class="input-group">
+                                    <input class="form-control" id="name" name="name" type="text" formControlName="name" [placeholder]="'categoryManagement.update.placeholder.name' | translate">
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row justify-content-end col-12">
+                        <button type="button" class="btn btn-secondary" (click)="previousState()">
+                            <span [translate]="'entity.action.cancel'">Cancel</span>
+                        </button>
+                        <button type="submit" class="ml-2 btn btn-primary">
+                            <span [translate]="'entity.action.save'">Save</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<p-confirmDialog header="Confirmation" icon="pi pi-exclamation-triangle"></p-confirmDialog>
+<p-toast></p-toast>

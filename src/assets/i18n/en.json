@@ -203,6 +203,45 @@
             "forgot":"Did you forget your password?"
         }
     },
+    "categoryManagement" : {
+        "navName": "Category",
+       "home" : {
+           "title": "Category",
+           "createLabel": "Create category"
+       },
+       "update": {
+           "title": "Update category",
+           "placeholder": {
+               "code": "Enter code",
+               "name": "Enter name"
+           }
+       },
+       "code": "code",
+       "name": "name",
+       "action": "Action"
+     },
+    "notificationManagement" : {
+        "navName": "Notification Management",
+        "home" : {
+            "title": "Notification",
+            "createLabel": "Create Notification"
+        },
+        "update": {
+            "title": "Update Notification",
+            "placeholder": {
+                "title": "Enter title",
+                "url": "Enter url",
+                "content": "Enter content"
+            }
+        },
+        "content": "Content",
+        "url": "Url",
+        "action": "Action",
+        "title": "Title",
+        "sentTime": "Sent Time",
+        "createdAt": "Created At",
+        "createdBy": "Created By"
+    },
     "permissionManagement":{
         "navName":"Permission Management",
         "home":{

@@ -19,7 +19,6 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
   @ViewChild('script', {static: false}) script: ElementRef;
   @ViewChild('courseWillLearnE', {static: false}) courseWillLearnElement?: ElementRef;
   courseWillLearnMore = false;
-  listCoursePopular?: any[] = [];
   courseCode: string;
   course?: CourseBO = {lectures: []};
   descriptionMore = false;
@@ -47,16 +46,6 @@ export class PageCourseComponent implements OnInit, OnDestroy, AfterViewInit, Af
       this.courseCode = params['course-code'];
       this.loadOne(this.courseCode);
     });
-    this.loadCoursePopular();
-  }
-
-  loadCoursePopular() {
-    this.courseService.getListCoursePopularForEmployer({
-      page: 0,
-      size: 10
-    }).subscribe(res => {
-      this.listCoursePopular = res.content;
-    }, err => { console.log(err.error.message); });
   }
 
   checkIsRegistration() {
